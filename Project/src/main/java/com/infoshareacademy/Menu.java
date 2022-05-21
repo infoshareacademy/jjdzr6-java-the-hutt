@@ -1,22 +1,29 @@
 package com.infoshareacademy.model;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     Scanner scanner1 = new Scanner(System.in);
 
-    private int chooseMainNumber;
-    private String chooseFunction;
-
     public void mainMenu() {
 
+
+        int chooseMainNumber;
         do {
             printMenu();
-            chooseMainNumber = scanner.nextInt();
+            try {
+                chooseMainNumber = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("");
+                chooseMainNumber = -2;
+                scanner.nextLine();
+            }
+
             switch (chooseMainNumber) {
                 case 1:
                     goTo1Menu();
-                    chooseFunction = scanner1.nextLine();
+                    String chooseFunction = scanner1.nextLine();
                     if (chooseFunction.equals("0")) { //code will be complete after add functionality
                         chooseMainNumber = -2;
                     }
@@ -62,7 +69,7 @@ public class Menu {
                     System.out.println("Niepoprawny numer. Wybierz opcje 0-5.");
                     try {
                         Thread.sleep(1000);
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException ignored) {
                     }
             }
         } while (chooseMainNumber < -1 || chooseMainNumber > 5);
@@ -76,19 +83,19 @@ public class Menu {
         System.out.println("======================================");
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         System.out.println("             Menu główne");
         System.out.println("======================================");
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         System.out.println("Wybierz jedną z ponizszych opcji:");
         System.out.println("");
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         System.out.println("1. Preferencje żywieniowe użytkownika.");
         System.out.println("2. Zawartość lodówki.");
@@ -113,7 +120,7 @@ public class Menu {
         System.out.println("======================================");
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         System.out.println("");
         System.out.println("0. Powrót do menu głównego.");
@@ -127,7 +134,7 @@ public class Menu {
         System.out.println("======================================");
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         System.out.println("");
         System.out.println("1. Lista produktów.");
@@ -144,7 +151,7 @@ public class Menu {
         System.out.println("======================================");
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         System.out.println("");
         System.out.println("1. Wyszukaj przepis.");
@@ -161,7 +168,7 @@ public class Menu {
         System.out.println("======================================");
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         System.out.println("");
         System.out.println("0. Powrót do menu głównego.");
@@ -175,7 +182,7 @@ public class Menu {
         System.out.println("======================================");
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         System.out.println("");
         System.out.println("1. Pojedynczy przepis.");
@@ -189,5 +196,4 @@ public class Menu {
     }
 
 }
-
 
