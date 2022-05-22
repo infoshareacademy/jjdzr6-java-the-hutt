@@ -1,13 +1,14 @@
 package com.infoshareacademy;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+//clearowanie menu po przejsciu do kolejnej funkcji <- dac znac czy poszlo
 public class Menu {
+
     Scanner scanner = new Scanner(System.in);
-    Scanner scanner1 = new Scanner(System.in);
 
+    private boolean flagMenu = true;
     public void mainMenu() {
-
 
         int chooseMainNumber;
         do {
@@ -16,53 +17,54 @@ public class Menu {
                 chooseMainNumber = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("");
-                chooseMainNumber = -2;
                 scanner.nextLine();
+                continue;
             }
 
             switch (chooseMainNumber) {
                 case 1:
                     goTo1Menu();
-                    String chooseFunction = scanner1.nextLine();
-                    if (chooseFunction.equals("0")) { //code will be complete after add functionality
-                        chooseMainNumber = -2;
+                    int chooseFunction = scanner.nextInt();
+                    if (chooseFunction == 0) { //code will be complete after add functionality
+                        continue;
                     }
                     break;
                 case 2:
                     goTo2Menu();
-                    chooseFunction = scanner1.nextLine();
-                    if (chooseFunction.equals("0")) { //code will be complete after add functionality
-                        chooseMainNumber = -2;
+                    chooseFunction = scanner.nextInt();
+                    if (chooseFunction == 0) { //code will be complete after add functionality
+                        continue;
                     }
                     break;
                 case 3:
                     goTo3Menu();
-                    chooseFunction = scanner1.nextLine();
-                    if (chooseFunction.equals("0")) { //code will be complete after add functionality
-                        chooseMainNumber = -2;
+                    chooseFunction = scanner.nextInt();
+                    if (chooseFunction == 0) { //code will be complete after add functionality
+                        continue;
                     }
                     break;
                 case 4:
                     goTo4Menu();
-                    chooseFunction = scanner1.nextLine();
-                    if (chooseFunction.equals("0")) { //code will be complete after add functionality
-                        chooseMainNumber = -2;
+                    chooseFunction = scanner.nextInt();
+                    if (chooseFunction == 0) { //code will be complete after add functionality
+                        continue;
                     }
                     break;
                 case 5:
                     goTo5Menu();
-                    chooseFunction = scanner1.nextLine();
-                    if (chooseFunction.equals("0")) { //code will be complete after add functionality
-                        chooseMainNumber = -2;
+                    chooseFunction = scanner.nextInt();
+                    if (chooseFunction == 0) { //code will be complete after add functionality
+                        continue;
                     }
                     break;
                 case 0:
                     goTo0Menu();
-                    chooseFunction = scanner1.nextLine();
-                    if (chooseFunction.toUpperCase().equals("T")) {
-                        break;
-                    } else if (chooseFunction.toUpperCase().equals("N")) {
-                        chooseMainNumber = -2;
+                    scanner = new Scanner(System.in);
+                    String chooseExit = scanner.nextLine();
+                    if (chooseExit.toUpperCase().equals("T")) {
+                        flagMenu = false;
+                    } else if (chooseExit.toUpperCase().equals("N")) {
+                        continue;
                     }
                     break;
                 default:
@@ -72,7 +74,7 @@ public class Menu {
                     } catch (InterruptedException ignored) {
                     }
             }
-        } while (chooseMainNumber < -1 || chooseMainNumber > 5);
+        } while (flagMenu);
 
     }
 
