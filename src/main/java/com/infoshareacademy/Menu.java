@@ -3,6 +3,7 @@ package com.infoshareacademy;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Menu {
+
     PrintMenu printMenu = new PrintMenu();
     Scanner scanner = new Scanner(System.in);
     private boolean flagMenu = true;
@@ -74,7 +75,6 @@ public class Menu {
                     }
             }
         } while (flagMenu);
-
     }
 }
 
