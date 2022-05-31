@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "title": "Kotlet schabowy",
+    "meal": "Obiad",
+    "recipeSteps": [
+      "1. Pokroić mięso na 4 plastry i dokładnie rozbić na cieniutkie kotlety",
+      "2. Schab namoczyć w mleku z dodatkiem soli i pieprzu (2h)",
+      "3. Wyjąć kotlety z mleka i osuszyć je papierowymi ręcznikami. Doprawić solą, pieprzem, obtoczyć w mące, następnie w roztrzepanym jajku, a na koniec w bułce tartej",
+      "4. Smażyć partiami na oleju do zarumienienia się z każdej strony"
+    ],
+    "ingredients": [
+      "schab",
+      "sól",
+      "pieprz",
+      "mleko",
+      "mąka",
+      "bułka tarta",
+      "olej"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Owsianka z masłem orzechowym i bananem",
+    "meal": "Śniadania",
+    "recipeSteps": [
+      "1. Płatki owsiane zalać wodą, odstawić na noc pod przykryciem",
+      "2. Odlać wodę, pokroić banana w plastry, dodać masło orzechowe i jogurt naturalny, wymieszać"
+    ],
+    "ingredients": [
+      "płatki owsiane",
+      "masło orzechowe",
+      "banan",
+      "jogurt naturalny"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Jajecznica na boczku",
+    "meal": "Śniadania",
+    "recipeSteps": [
+      "1. Boczek podsmażyć na suchej patelni",
+      "2. Jajka roztrzepać w osobnej miseczce",
+      "3. Dodać jajka i łyżkę oliwy, smażyć do ścięcia składników"
+    ],
+    "ingredients": [
+      "jajka",
+      "boczek w plastrach",
+      "sól",
+      "pieprz",
+      "oliwa"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Pasta z makreli",
+    "meal": "Kolacje",
+    "recipeSteps": [
+      "1. Oddzielić rybę od ości",
+      "2. Mięso włożyć do miski, doprawić pieprzem i dodać drobno posiekaną natkę pietruszki",
+      "3. Cebulę obrać i pokroić w drobną kosteczkę, dodać do salaterki z makrelą, posolić, wymieszać",
+      "4. Otrzymaną pastę rozsmarować na pieczywie I podawać z dodatkiem ogórka kiszonego"
+    ],
+    "ingredients": [
+      "wędzona makrela",
+      "sól",
+      "pieprz",
+      "natka pietruszki",
+      "cebula",
+      "ogórek kiszony"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Placki ziemniaczane",
+    "meal": "Obiady",
+    "recipeSteps": [
+      "1. Ziemniaki obrać i zetrzeć na tarce, zostawić w misce bez mieszania na ok. 5 minut",
+      "2. Odlać zbierający się sok",
+      "3. Dodać mąkę, drobno startą cebulę, jajko oraz szczyptę soli i pieprz",
+      "4. Rozgrzać patelnię, wlać olej. Masę ziemniaczaną wymieszać. Smażyć placki na średnim ogniu z dwóch stron przez ok. 2 - 3 minuty na złoty kolor"
+    ],
+    "ingredients": [
+      "ziemniaki",
+      "sól",
+      "pieprz",
+      "olej",
+      "cebula",
+      "mąka pszenna",
+      "jajko"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Koktajl bananowy",
+    "meal": "Kolacje",
+    "recipeSteps": [
+      "1. Płatki owsiane zalać wodą, odstawić na noc pod przykryciem",
+      "2. Składniki połączyć i zmiksować na gładką masę"
+    ],
+    "ingredients": [
+      "płatki owsiane",
+      "masło orzechowe",
+      "banan",
+      "cukier",
+      "mleko"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Omlet ze szpinakiem",
+    "meal": "Kolacje",
+    "recipeSteps": [
+      "1. Szpinak opłukać i osuszyć. Na patelni podgrzać łyżkę masła, dodać starty czosnek i chwilę podsmażyć. Włożyć szpinak i mieszając smażyć go przez ok. 1 - 2 minuty aż zwiędnie. Doprawić solą",
+      "2. Jajka energicznie roztrzepać widelcem z dodatkiem mleka, soli i pieprzu, dodać pomidorki koktajlowe, połączyć ze szpinakiem na patelni",
+      "3. Ustawić mały ogień, przykryć patelnię pokrywą i podgrzewać aż masa się zetnie przez ok. 5 minut"
+    ],
+    "ingredients": [
+      "świeży szpinak",
+      "masło",
+      "czosnek",
+      "pomidorki koktajlowe",
+      "mleko",
+      "sól",
+      "pieprz"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Twarożek z rzodkiewką",
+    "meal": "Śniadania",
+    "recipeSteps": [
+      "1. Rzodkiewkę I szczypiorek kroimy w kosteczkę",
+      "2. Do miseczki dodajemy twaróg, śmietanę, sól, pieprz, rzodkiewkę, szczypiorek, całość mieszamy za pomocą widelca rozdrabniając twaróg. Podajemy na pieczywie"
+    ],
+    "ingredients": [
+      "twaróg w kostce",
+      "rzodkiewka",
+      "śmietana 18%",
+      "szczypiorek",
+      "sól",
+      "pieprz"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Owsianka z truskawkami i białą czekoladą",
+    "meal": "Śniadania",
+    "recipeSteps": [
+      "1. Płatki owsiane zalać wodą, odstawić na noc pod przykryciem",
+      "2. Odlać wodę, pokroić truskawki w słupki, dodać pokruszoną białą czekoladę i jogurt naturalny, wymieszać"
+    ],
+    "ingredients": [
+      "płatki owsiane",
+      "truskawki",
+      "jogurt naturalny",
+      "biała czekolada"
+    ]
+  }
+,
+  {
+    "id": 10,
+    "title": "Koktajl z jarmużu",
+    "meal": "Kolacje",
+    "recipeSteps": [
+      "1. Jarmuż przelać wrzątkiem, a następnie zimną wodą. Odłożyć na durszlak do odcedzenia. Usunąć twarde nerwy z liści i wrzuć do pojemnika blendera",
+      "2. Gruszkę i banana obrać, pokroić na mniejsze kawałki. Z gruszki usunąć gniazda nasienne. Owoce dodać do pojemnika",
+      "3. Składniki połączyć i zmiksować na gładką masę"
+    ],
+    "ingredients": [
+      "jarmuż",
+      "banan",
+      "gruszka",
+      "sok z pomarańczy"
+    ]
+  }
+]
