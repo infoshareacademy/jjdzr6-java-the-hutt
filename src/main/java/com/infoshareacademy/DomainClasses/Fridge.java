@@ -1,6 +1,4 @@
-package com.infoshareacademy.DomenClasses;
-
-import java.util.List;
+package com.infoshareacademy.DomainClasses;
 
 public class Fridge {
 

@@ -1,6 +1,5 @@
-package com.infoshareacademy.DomenClasses;
+package com.infoshareacademy.DomainClasses;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
