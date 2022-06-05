@@ -14,7 +14,7 @@ public class App
         AllergenName allergenName = new AllergenName();
         FoodPreferences foodPreferences = new FoodPreferences();
 
-        System.out.println(foodPreferences.setAllergen());
+        System.out.println(foodPreferences.setMeat());
     }
 
 }
