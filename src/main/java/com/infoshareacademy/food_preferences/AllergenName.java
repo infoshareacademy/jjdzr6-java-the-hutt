@@ -36,4 +36,17 @@ public class AllergenName {
     public void setOther(String other) {
         this.other = other;
     }
+
+    @Override
+    public String toString() {
+        return "AllergenName{" +
+                "shellfish=" + shellfish +
+                ", chocolate=" + chocolate +
+                ", nuts=" + nuts +
+                ", eggs=" + eggs +
+                ", strawberries=" + strawberries +
+                ", dairy=" + dairy +
+                ", other='" + other + '\'' +
+                '}';
+    }
 }
