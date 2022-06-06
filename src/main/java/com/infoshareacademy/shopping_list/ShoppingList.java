@@ -1,11 +1,17 @@
 package com.infoshareacademy.shopping_list;
 
-import com.infoshareacademy.product.Product;
-
 import java.util.Map;
 
 public class ShoppingList {
 
-    private Map<Product, Double> productList;
+    private Map<String, Object> productList;
 
+
+    public Map<String, Object> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(Map<String, Object> productList) {
+        this.productList = productList;
+    }
 }
