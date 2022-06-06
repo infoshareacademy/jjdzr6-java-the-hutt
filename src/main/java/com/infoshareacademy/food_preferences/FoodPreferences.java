@@ -5,53 +5,31 @@ import java.util.Scanner;
 public class FoodPreferences {
     private AllergenName allergenName;
     private Meat meat;
-    Scanner scanner = new Scanner(System.in);
-    ;
 
-    public boolean preferencesFlag() {
-        boolean yesPreferences = true;
-        String answer = scanner.nextLine();
-        if (answer.equalsIgnoreCase("T")) {
-            yesPreferences = true;
-        } else {
-            yesPreferences = false;
-        }
-        return yesPreferences;
+    public FoodPreferences() {
     }
 
-    public AllergenName setAllergen() {
-        AllergenName allergenName = new AllergenName();
-        FoodPreferences foodPreferences = new FoodPreferences();
+    @Override
+    public String toString() {
+        return "FoodPreferences{" +
+                "allergenName=" + allergenName +
+                ", meat=" + meat +
+                '}';
+    }
 
-        System.out.println("Skorupiaki[T/N]: ");
-        allergenName.setShellfish(foodPreferences.preferencesFlag());
-        System.out.println("Czekolada[T/N]:");
-        allergenName.setChocolate(foodPreferences.preferencesFlag());
-        System.out.println("Orzechy[T/N]:");
-        allergenName.setNuts(foodPreferences.preferencesFlag());
-        System.out.println("Jajka[T/N]:");
-        allergenName.setEggs(foodPreferences.preferencesFlag());
-        System.out.println("Truskawki[T/N]:");
-        allergenName.setStrawberries(foodPreferences.preferencesFlag());
-        System.out.println("Produkty mleczne[T/N]:");
-        allergenName.setDairy(foodPreferences.preferencesFlag());
-        System.out.println("Inne alergie (podaj): ");
-        allergenName.setOther(scanner.nextLine());
+    public void setAllergenName(AllergenName allergenName) {
+        this.allergenName = allergenName;
+    }
+
+    public void setMeat(Meat meat) {
+        this.meat = meat;
+    }
+
+    public AllergenName getAllergenName() {
         return allergenName;
     }
 
-    public Meat setMeat() {
-        Meat meat = new Meat();
-        FoodPreferences foodPreferences = new FoodPreferences();
-
-        System.out.println("Mięso[T/N]: ");
-        meat.setMeatEat(foodPreferences.preferencesFlag());
-        System.out.println("Dieta Wegetariańska[T/N]: ");
-        meat.setVegetarian(foodPreferences.preferencesFlag());
-        System.out.println("Dieta Wegańska[T/N]: ");
-        meat.setVegan(foodPreferences.preferencesFlag());
-
+    public Meat getMeat() {
         return meat;
     }
-
 }

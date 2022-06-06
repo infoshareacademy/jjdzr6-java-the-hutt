@@ -9,6 +9,7 @@ public class AllergenName {
     private boolean dairy;
     private String other;
 
+
     public void setShellfish(boolean shellfish) {
         this.shellfish = shellfish;
     }

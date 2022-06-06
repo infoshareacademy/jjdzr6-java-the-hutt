@@ -1,20 +1,13 @@
 package com.infoshareacademy;
 
-import com.infoshareacademy.food_preferences.AllergenName;
-import com.infoshareacademy.food_preferences.FoodPreferences;
+import com.infoshareacademy.food_preferences.FoodPreferencesMethod;
+import java.io.IOException;
 
-public class App
-{
-    public static void main( String[] args )
-    {
-//        System.out.println( "Team name: Java The Hutt" );
-//        Menu menu = new Menu();
-//        menu.mainMenu();
+public class App {
+    public static void main(String[] args) throws IOException {
+        FoodPreferencesMethod foodPreferencesMethod = new FoodPreferencesMethod();
+        foodPreferencesMethod.writeFoodPreferencesToJson();
 
-        AllergenName allergenName = new AllergenName();
-        FoodPreferences foodPreferences = new FoodPreferences();
-
-        System.out.println(foodPreferences.setMeat());
     }
 
 }
