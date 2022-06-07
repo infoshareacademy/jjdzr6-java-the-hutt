@@ -10,7 +10,7 @@ public class Recipe {
 
     private String name;
     private String description;
-    private Map<Product, Double> neccesaryProducts;
+    private Map<String, Double> neccesaryProducts;
     private int preparationTime;
     private List<FoodPreferences> mealPreferences;
 

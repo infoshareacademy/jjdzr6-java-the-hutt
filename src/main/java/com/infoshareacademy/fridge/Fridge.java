@@ -7,13 +7,13 @@ import java.util.Map;
 
 public class Fridge {
 
-    private Map<Product, Double> productInFridge;
+    private Map<String, Double> productsInFridge;
 
-    public Map<Product, Double> getProductInFridge() {
-        return productInFridge;
+    public Map<String, Double> getProductInFridge() {
+        return productsInFridge;
     }
 
-    public void setProductInFridge(Map<Product, Double> productInFridge) {
-        this.productInFridge = productInFridge;
+    public void setProductInFridge(Map<String, Double> productInFridge) {
+        this.productsInFridge = productInFridge;
     }
 }

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "tosty",
+    "description": "Pyszne tosty z szynką I serem",
+    "neccesary Products": {
+      "Chleb": 2,
+      "Szynka": 2,
+      "Ser": 2
+    },
+    "preparationTime": "15 min",
+    "mealPreferences": "-"
+  },
+  {
+    "name": "herbata",
+    "description": "Herbata czarna",
+    "neccesary Products": {
+      "herbata": 1,
+      "woda": 300
+    },
+    "preparationTime": "5 min",
+    "mealPreferences": "-"
+  }
+]
