@@ -14,17 +14,18 @@ import java.util.Scanner;
 public class FoodPreferencesMethod {
     Scanner scanner = new Scanner(System.in);
 
-    public Boolean preferencesFlag() {
+    public boolean preferencesFlag() {
         boolean yesPreferences = false;
 
         String answer = scanner.nextLine();
-        if (answer.equalsIgnoreCase("T")) {
-            yesPreferences = true;
-        } else if (answer.equalsIgnoreCase("N")) {
-            yesPreferences = false;
-        } else {
-            System.out.println("Błędny format odpowiedzi.");
-        }
+            if (answer.equalsIgnoreCase("T")) {
+                yesPreferences = true;
+            } else if (answer.equalsIgnoreCase("N")) {
+                yesPreferences = false;
+            } else {
+                System.out.println("Błędny format odpowiedzi. Spróbuj ponownie.");
+                System.exit(0);
+            }
         return yesPreferences;
     }
 
@@ -61,6 +62,7 @@ public class FoodPreferencesMethod {
         System.out.println("Dieta Wegetariańska[T/N]: ");
         meat.setVegetarian(preferencesFlag());
 
+        System.out.println(meat);
         return meat;
     }
 
@@ -77,9 +79,8 @@ public class FoodPreferencesMethod {
         foodPreferences.setMeat(meat);
 
         String foodPreferencesJson = objectWriter.writeValueAsString(foodPreferences);
-        Files.writeString(path,foodPreferencesJson);
+        Files.writeString(path, foodPreferencesJson);
     }
-
 
 
 }
