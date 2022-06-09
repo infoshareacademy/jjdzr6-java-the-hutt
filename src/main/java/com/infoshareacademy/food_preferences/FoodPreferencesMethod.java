@@ -2,30 +2,38 @@ package com.infoshareacademy.food_preferences;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class FoodPreferencesMethod {
     Scanner scanner = new Scanner(System.in);
-
+    boolean run;
     public boolean preferencesFlag() {
         boolean yesPreferences = false;
+        run = false;
 
-        String answer = scanner.nextLine();
+        do {
+            try{
+            String answer = scanner.nextLine();
             if (answer.equalsIgnoreCase("T")) {
                 yesPreferences = true;
+                run = true;
             } else if (answer.equalsIgnoreCase("N")) {
                 yesPreferences = false;
+                run = true;
             } else {
-                System.out.println("Błędny format odpowiedzi. Spróbuj ponownie.");
-                System.exit(0);
+                System.out.println("Błędny format odpowiedzi. Wprowadź odpowiedź ponownie.");
+                }
+            } catch (InputMismatchException exception){
+                System.out.println("Błędny format odpowiedzi. Wprowadź odpowiedź ponownie.");
             }
+        } while (!run);
         return yesPreferences;
     }
 
@@ -48,6 +56,7 @@ public class FoodPreferencesMethod {
         System.out.println("Inne alergie (podaj): ");
         allergenName.setOther(scanner.nextLine());
 
+        System.out.println(allergenName);
         return allergenName;
     }
 
