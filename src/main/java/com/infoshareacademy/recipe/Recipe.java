@@ -46,8 +46,8 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
-
-
+    public Recipe() {
+    }
 
     @Override
     public String toString() {
