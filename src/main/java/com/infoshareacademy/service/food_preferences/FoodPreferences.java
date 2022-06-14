@@ -1,4 +1,4 @@
-package com.infoshareacademy.food_preferences;
+package com.infoshareacademy.service.food_preferences;
 
 public class FoodPreferences {
     private AllergenName allergenName;

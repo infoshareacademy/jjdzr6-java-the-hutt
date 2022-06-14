@@ -1,4 +1,4 @@
-package com.infoshareacademy.shopping_list;
+package com.infoshareacademy.service.shopping_list;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

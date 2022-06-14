@@ -1,8 +1,8 @@
-package com.infoshareacademy.fridge;
+package com.infoshareacademy.service.fridge;
 
 import com.infoshareacademy.product.*;
+import com.infoshareacademy.service.product.Product;
 
-import java.util.List;
 import java.util.Map;
 
 public class Fridge {
