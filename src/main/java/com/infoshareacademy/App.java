@@ -1,6 +1,8 @@
 package com.infoshareacademy;
 
-public class App 
+import com.infoshareacademy.fridge.Fridge;
+
+public class App
 {
     public static void main( String[] args )
     {
