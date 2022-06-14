@@ -1,9 +1,10 @@
-package com.infoshareacademy.fridge;
+package com.infoshareacademy.service;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.infoshareacademy.fridge.Fridge;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FridgeMethods {
+public class FridgeService {
 
 
     public void writeJson(Fridge fridge) throws IOException {

@@ -1,8 +1,6 @@
 package com.infoshareacademy;
 
-import com.infoshareacademy.fridge.Fridge;
-import com.infoshareacademy.fridge.FridgeMethods;
-import com.infoshareacademy.recipe.RecipeMethods;
+import com.infoshareacademy.service.RecipeService;
 
 import java.io.IOException;
 
@@ -19,9 +17,9 @@ public class App {
         }
     }*/
 
-        RecipeMethods recipeMethods = new RecipeMethods();
+        RecipeService recipeService = new RecipeService();
         try {
-            recipeMethods.getJson();
+            recipeService.getJson();
         } catch (IOException e) {
             System.out.println("IO");
         }

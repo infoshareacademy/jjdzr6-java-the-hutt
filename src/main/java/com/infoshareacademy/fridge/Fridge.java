@@ -16,4 +16,14 @@ public class Fridge {
     public void setProductInFridge(Map<String, Double> productInFridge) {
         this.productsInFridge = productInFridge;
     }
+
+    public Fridge() {
+    }
+
+    @Override
+    public String toString() {
+        return "Fridge{" +
+                "productsInFridge=" + productsInFridge +
+                '}';
+    }
 }

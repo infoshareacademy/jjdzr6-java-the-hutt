@@ -15,7 +15,6 @@ public class Recipe {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -55,5 +54,17 @@ public class Recipe {
     private int preparationTime;
     private List<FoodPreferences> mealPreferences;
 
+    public Recipe() {
+    }
 
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", neccesaryProducts=" + neccesaryProducts +
+                ", preparationTime=" + preparationTime +
+                ", mealPreferences=" + mealPreferences +
+                '}';
+    }
 }
