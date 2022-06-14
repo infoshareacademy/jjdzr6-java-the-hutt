@@ -15,8 +15,7 @@ import java.util.Map;
 public class ShoppingListService {
 
     public void writeJson(ShoppingList shoppingList) throws IOException {
-        Path path = Path.of("src", "main", "java", "com",
-                "infoshareacademy", "shopping_list", "shopping_list.json");
+        Path path = Path.of("src", "main", "resources", "shopping_list.json");
         File file = new File(path.toString());
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
@@ -24,8 +23,7 @@ public class ShoppingListService {
     }
 
     public void getJson() throws IOException  {
-        Path path = Path.of("src", "main", "java", "com",
-                "infoshareacademy", "shopping_list", "shopping_list.json");
+        Path path = Path.of("src", "main", "resources", "shopping_list.json");
         ObjectMapper objectMapper = new ObjectMapper();
         String file = Files.readString(path);
         TypeReference<HashMap<String , Double>> typeReference = new TypeReference<HashMap<String, Double>>() {};

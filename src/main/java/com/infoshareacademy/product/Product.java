@@ -8,7 +8,14 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
+    public Product(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

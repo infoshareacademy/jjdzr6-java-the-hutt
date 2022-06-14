@@ -11,7 +11,14 @@ public class ShoppingList {
         return productList;
     }
 
-    public void setProductList(Map<String, Object> productList) {
+    public ShoppingList(Map<String, Object> productList) {
         this.productList = productList;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingList{" +
+                "productList=" + productList +
+                '}';
     }
 }
