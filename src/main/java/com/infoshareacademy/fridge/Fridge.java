@@ -1,7 +1,6 @@
-package com.infoshareacademy.service.fridge;
+package com.infoshareacademy.fridge;
 
-import com.infoshareacademy.product.*;
-import com.infoshareacademy.service.product.Product;
+import com.infoshareacademy.product.Product;
 
 import java.util.Map;
 

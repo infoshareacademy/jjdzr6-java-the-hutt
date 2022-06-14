@@ -1,4 +1,4 @@
-package com.infoshareacademy.service.food_preferences;
+package com.infoshareacademy.food_preferences;
 
 public class AllergenName {
     private boolean shellfish;

@@ -1,8 +1,8 @@
 package com.infoshareacademy;
 
-import com.infoshareacademy.service.product.Product;
-import com.infoshareacademy.service.shopping_list.ShoppingList;
-import com.infoshareacademy.service.shopping_list.ShoppingListMethods;
+import com.infoshareacademy.product.Product;
+import com.infoshareacademy.shopping_list.ShoppingList;
+import com.infoshareacademy.service.ShoppingListService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,13 +19,13 @@ public class App {
         product.setName("jabłko");
         product2.setName("jajka");
         ShoppingList shoppingList = new ShoppingList();
-        ShoppingListMethods shoppingListMethods = new ShoppingListMethods();
+        ShoppingListService shoppingListService = new ShoppingListService();
         Map<String, Object>map = new HashMap<String, Object>();
         map.put(product.getName(), Double.valueOf(3));
         map.put(product2.getName(), Double.valueOf(3));
         shoppingList.setProductList(map);
-        shoppingListMethods.writeJson(shoppingList);
-        shoppingListMethods.getJson();
+        shoppingListService.writeJson(shoppingList);
+        shoppingListService.getJson();
 
     }
 }

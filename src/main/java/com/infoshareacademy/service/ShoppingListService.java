@@ -1,8 +1,9 @@
-package com.infoshareacademy.service.shopping_list;
+package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.infoshareacademy.shopping_list.ShoppingList;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ShoppingListMethods {
+public class ShoppingListService {
 
     public void writeJson(ShoppingList shoppingList) throws IOException {
         Path path = Path.of("src", "main", "java", "com",
