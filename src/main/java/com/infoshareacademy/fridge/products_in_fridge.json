@@ -1,8 +1,10 @@
 
   {
     "ziemniaki": 2.5,
-    "pomidory": 4,
-    "makaron": 2,
-    "jajka": 12,
-    "mleko": 6
+    "herbata" : 5.0,
+    "woda" : 500.0,
+    "pomidory": 4.0,
+    "makaron": 2.0,
+    "jajka": 12.0,
+    "mleko": 6.0
   }

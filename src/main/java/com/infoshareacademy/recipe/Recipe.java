@@ -1,5 +1,6 @@
 package com.infoshareacademy.recipe;
 
+
 import com.infoshareacademy.food_preferences.*;
 import com.infoshareacademy.product.Product;
 
@@ -10,6 +11,7 @@ public class Recipe {
 
     private String name;
     private String description;
+    private int preparationTime;
     private Map<String, Double> neccesaryProducts;
 
     public String getName() {
@@ -44,16 +46,15 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
-    public List<FoodPreferences> getMealPreferences() {
-        return mealPreferences;
+
+
+
+    @Override
+    public String toString() {
+        return "Przepis na: " +
+                  name +
+                "\n Opis: " + description  +
+                ", Niezbędne produkty: " + neccesaryProducts +
+                ", czas przygotowania: [min] " + preparationTime;
     }
-
-    public void setMealPreferences(List<FoodPreferences> mealPreferences) {
-        this.mealPreferences = mealPreferences;
-    }
-
-    private int preparationTime;
-    private List<FoodPreferences> mealPreferences;
-
-
 }
