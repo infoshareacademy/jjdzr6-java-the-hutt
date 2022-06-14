@@ -1,9 +1,12 @@
-package com.infoshareacademy.food_preferences;
+package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.infoshareacademy.food_preferences.AllergenName;
+import com.infoshareacademy.food_preferences.FoodPreferences;
+import com.infoshareacademy.food_preferences.Meat;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +14,7 @@ import java.nio.file.Path;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class FoodPreferencesMethod {
+public class FoodPreferencesService {
     Scanner scanner = new Scanner(System.in);
     boolean run;
     public boolean preferencesFlag() {
@@ -62,7 +65,6 @@ public class FoodPreferencesMethod {
 
     public Meat setMeatPreferences() {
         Meat meat = new Meat();
-        boolean flagMeat = false;
 
         System.out.println("Mięso[T/N]: ");
         meat.setMeatEat(preferencesFlag());

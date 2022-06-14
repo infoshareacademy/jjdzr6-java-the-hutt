@@ -1,12 +1,12 @@
 package com.infoshareacademy;
 
-import com.infoshareacademy.food_preferences.FoodPreferencesMethod;
+import com.infoshareacademy.service.FoodPreferencesService;
 import java.io.IOException;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        FoodPreferencesMethod foodPreferencesMethod = new FoodPreferencesMethod();
-        foodPreferencesMethod.writeFoodPreferencesToJson();
+        FoodPreferencesService foodPreferencesService = new FoodPreferencesService();
+        foodPreferencesService.writeFoodPreferencesToJson();
 
 //        foodPreferencesMethod.setMeatPreferences();
     }

@@ -1,7 +1,5 @@
 package com.infoshareacademy.food_preferences;
 
-import java.util.Scanner;
-
 public class FoodPreferences {
     private AllergenName allergenName;
     private Meat meat;
