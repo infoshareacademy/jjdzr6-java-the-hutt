@@ -16,4 +16,13 @@ public class Meat {
     public void setVegetarian(boolean vegetarian) {
         isVegetarian = vegetarian;
     }
+
+    @Override
+    public String toString() {
+        return "Meat{" +
+                "meatEater=" + meatEater +
+                ", isVegan=" + isVegan +
+                ", isVegetarian=" + isVegetarian +
+                '}';
+    }
 }

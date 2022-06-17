@@ -9,6 +9,9 @@ public class AllergenName {
     private boolean dairy;
     private String other;
 
+    public AllergenName() {
+    }
+
     public void setShellfish(boolean shellfish) {
         this.shellfish = shellfish;
     }
@@ -35,5 +38,18 @@ public class AllergenName {
 
     public void setOther(String other) {
         this.other = other;
+    }
+
+    @Override
+    public String toString() {
+        return "AllergenName{" +
+                "shellfish=" + shellfish +
+                ", chocolate=" + chocolate +
+                ", nuts=" + nuts +
+                ", eggs=" + eggs +
+                ", strawberries=" + strawberries +
+                ", dairy=" + dairy +
+                ", other='" + other + '\'' +
+                '}';
     }
 }
