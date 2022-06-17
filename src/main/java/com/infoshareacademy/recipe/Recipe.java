@@ -1,7 +1,7 @@
 package com.infoshareacademy.recipe;
 
-import com.infoshareacademy.food_preferences.*;
 import com.infoshareacademy.product.Product;
+import com.infoshareacademy.food_preferences.FoodPreferences;
 
 import java.util.List;
 import java.util.Map;

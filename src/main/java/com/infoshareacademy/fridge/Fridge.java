@@ -1,8 +1,7 @@
 package com.infoshareacademy.fridge;
 
-import com.infoshareacademy.product.*;
+import com.infoshareacademy.product.Product;
 
-import java.util.List;
 import java.util.Map;
 
 public class Fridge {
