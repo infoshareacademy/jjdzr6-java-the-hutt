@@ -2,26 +2,20 @@ package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.infoshareacademy.fridge.Fridge;
+import com.infoshareacademy.Json;
 import com.infoshareacademy.recipe.Recipe;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class RecipeService {
 
     public void writeJson(List<Recipe> recipe) throws IOException {
-        Path path = Path.of("src", "resources", "recipe.json");
-        File file = new File(path.toString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(file, recipe);
+        Json.writeJson(recipe,"recipe.json");
     }
 
     public List<Recipe> getJson() throws IOException {
@@ -33,11 +27,8 @@ public class RecipeService {
         return recipe;
     }
 
-    public void showAll(List<Recipe> recipe) {
-        for (int i = 0; i < recipe.size(); i++) {
-            System.out.println(recipe.get(i).toString());
-
-        }
+    public void showAllRecipes(List<Recipe> recipe) {
+        recipe.forEach(oneRecipe -> System.out.println(oneRecipe));
     }
 
     public void findRecipeByName(List<Recipe> recipe) {
@@ -45,7 +36,7 @@ public class RecipeService {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Szukam przepisu na: \n");
         String search = scanner.nextLine();
-        List<Recipe> findRecipe = recipe.stream().filter(list -> list.getName().equals(search)).collect(Collectors.toList());
+        List<Recipe> findRecipe = recipe.stream().filter(list -> list.getName().equalsIgnoreCase(search)).collect(Collectors.toList());
         System.out.println(findRecipe.toString());
 
     }

@@ -4,13 +4,12 @@ package com.infoshareacademy.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.infoshareacademy.Json;
 import com.infoshareacademy.fridge.Fridge;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 
 public class FridgeService {
@@ -23,19 +22,13 @@ public class FridgeService {
 
 /*    public void findInFridge(Fridge fridge, String search){
 
-
         List<Fridge> findInFridge = list.stream().filter(list -> list.getProductInFridge().keySet().equals(search)).collect(Collectors.toList());
-
 
     }*/
 
 
     public void writeJson(Fridge fridge) throws IOException {
-        Path path = Path.of("src", "resources", "products_in_fridge.json");
-        File file = new File(path.toString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(file, fridge);
+        Json.writeJson(fridge, "products_in_fridge.json");
     }
 
     public Map<String,Double> getJson() throws IOException {
