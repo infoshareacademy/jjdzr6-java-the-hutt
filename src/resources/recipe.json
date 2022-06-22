@@ -39,4 +39,12 @@
     "kakao" : 10.0,
     "mleko" : 20.0
   }
+}, {
+  "name" : "Jajka",
+  "description" : "Jajka na miekko",
+  "preparationTime" : 3,
+  "neccesaryProducts" : {
+    "woda" : 100.0,
+    "jajko" : 1.0
+  }
 } ]

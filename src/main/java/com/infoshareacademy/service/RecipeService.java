@@ -61,7 +61,7 @@ public class RecipeService {
 
     public Recipe addRecipe() {
         Recipe recipe = new Recipe();
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner;
         boolean run = false;
 
         do {
