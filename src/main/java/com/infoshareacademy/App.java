@@ -4,7 +4,6 @@ import com.infoshareacademy.fridge.Fridge;
 import com.infoshareacademy.service.FridgeService;
 import com.infoshareacademy.recipe.Recipe;
 import com.infoshareacademy.service.RecipeService;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,19 +17,12 @@ public class App {
         RecipeService recipeService = new RecipeService();
         try {
 
-
             List<Recipe> recipe = recipeService.getJson();
             recipeService.showAll(recipe);
             recipeService.findRecipeByName(recipe);
             recipeService.findRecipeByTime(recipe);
-
         } catch (IOException e) {
             System.out.println("IO");
         }
-
-
-
-
-
     }
 }
