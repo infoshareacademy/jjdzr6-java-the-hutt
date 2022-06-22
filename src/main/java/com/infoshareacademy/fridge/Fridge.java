@@ -1,13 +1,16 @@
 package com.infoshareacademy.fridge;
 
-import com.infoshareacademy.product.*;
-
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Fridge {
 
-private Map <String, Double> productsInFridge;
+private Map <String, Double> productsInFridge = new HashMap<>();
+
+    public Map<String, Double> addFridgeProduct(String name, Double howMany){
+        productsInFridge.put(name, howMany);
+        return productsInFridge;
+    }
 
     public Fridge() {
     }
