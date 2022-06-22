@@ -2,22 +2,39 @@
   {
     "name": "tosty",
     "description": "Pyszne tosty z szynką I serem",
-    "neccesary Products": {
-      "Chleb": 2,
-      "Szynka": 2,
-      "Ser": 2
-    },
-    "preparationTime": "15 min",
-    "mealPreferences": "-"
+    "preparationTime": 15,
+    "neccesaryProducts": {
+      "Chleb": 2.0,
+      "Szynka": 2.0,
+      "Ser": 2.0
+    }
+
   },
   {
     "name": "herbata",
     "description": "Herbata czarna",
-    "neccesary Products": {
-      "herbata": 1,
-      "woda": 300
-    },
-    "preparationTime": "5 min",
-    "mealPreferences": "-"
+    "preparationTime": 5,
+    "neccesaryProducts": {
+      "herbata": 1.0,
+      "woda": 300.0
+    }
+  },
+  {
+    "name": "kawa",
+    "description": "Kawa czarna",
+    "preparationTime": 5,
+    "neccesaryProducts": {
+      "kawa": 1.0,
+      "woda": 300.0
+    }
+  },
+  {
+    "name": "owsianka z mlekiem",
+    "description": "Pyszna owsianka",
+    "preparationTime": 5,
+    "neccesaryProducts": {
+      "owsianka": 10.0,
+      "mleko": 300.0
+    }
   }
 ]

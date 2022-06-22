@@ -1,52 +1,28 @@
 package com.infoshareacademy;
 
-import com.infoshareacademy.product.Product;
-import com.infoshareacademy.shopping_list.ShoppingList;
-import com.infoshareacademy.service.ShoppingListService;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-public class App {
-    public static void main( String[] args ) throws IOException {
-//        System.out.println( "Team name: Java The Hutt" );
-//        Menu menu = new Menu();
-//        menu.mainMenu();
-
-        Product product = new Product("jabłka");
-        Product product2 = new Product("jajka");
-        ShoppingListService shoppingListService = new ShoppingListService();
-        Map<String, Object>map = new HashMap<String, Object>();
-        map.put(product.getName(), Double.valueOf(3));
-        map.put(product2.getName(), Double.valueOf(3));
-        ShoppingList shoppingList = new ShoppingList(map);
-        shoppingListService.writeJson(shoppingList);
-        shoppingListService.getJson();
-
+import com.infoshareacademy.fridge.Fridge;
+import com.infoshareacademy.service.FridgeService;
+import com.infoshareacademy.recipe.Recipe;
 import com.infoshareacademy.service.RecipeService;
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
         System.out.println("Team name: Java The Hutt");
 
-/*        FridgeMethods fridgeMethods = new FridgeMethods();
-
-       try{
-           fridgeMethods.getJson();
-       } catch (IOException e) {
-           System.out.println("IO");
-        }
-    }*/
-
         RecipeService recipeService = new RecipeService();
         try {
-            recipeService.getJson();
+
+            List<Recipe> recipe = recipeService.getJson();
+            recipeService.showAll(recipe);
+            recipeService.findRecipeByName(recipe);
+            recipeService.findRecipeByTime(recipe);
         } catch (IOException e) {
             System.out.println("IO");
         }
-
     }
 }

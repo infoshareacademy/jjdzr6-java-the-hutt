@@ -6,14 +6,24 @@ import java.util.Map;
 
 public class Fridge {
 
-    private Map<String, Double> productsInFridge;
+private Map <String, Double> productsInFridge;
 
-    public Map<String, Double> getProductInFridge() {
+    public Fridge() {
+    }
+
+    public Map<String, Double> getProductsInFridge() {
         return productsInFridge;
     }
 
-    public void setProductInFridge(Map<String, Double> productInFridge) {
-        this.productsInFridge = productInFridge;
+    public void setProductsInFridge(Map<String, Double> productsInFridge) {
+        this.productsInFridge = productsInFridge;
+    }
+
+    @Override
+    public String toString() {
+        return "Fridge{" +
+                "productsInFridge=" + productsInFridge +
+                '}';
     }
 
     public Fridge() {
