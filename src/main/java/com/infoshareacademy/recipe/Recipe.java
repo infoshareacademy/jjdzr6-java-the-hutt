@@ -1,6 +1,5 @@
 package com.infoshareacademy.recipe;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +8,7 @@ public class Recipe {
     private String name;
     private String description;
     private int preparationTime;
-    private Map<String, Double> neccesaryProducts = new HashMap<>();;
-
+    private Map<String, Double> neccesaryProducts = new HashMap<>();
 
     public Map<String, Double> addNecessaryProducts(String name, Double howMany){
         neccesaryProducts.put(name, howMany);

@@ -3,14 +3,12 @@ package com.infoshareacademy.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.infoshareacademy.fridge.Fridge;
 import com.infoshareacademy.recipe.Recipe;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -59,5 +57,38 @@ public class RecipeService {
         System.out.println(findRecipe.toString());
 
     }
+
+    public Recipe addRecipe(){
+        Recipe recipe = new Recipe();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("name");
+        recipe.setName(scanner.nextLine());
+        System.out.println("desc");
+        recipe.setDescription(scanner.nextLine());
+        System.out.println("time");
+        recipe.setPreparationTime(scanner.nextInt());
+        System.out.println("set How many");
+        int howMany = scanner.nextInt();
+        while (howMany > 0) {
+            System.out.println("products name");
+            scanner = new Scanner(System.in);
+            String necessaryProductsName = scanner.nextLine();
+            System.out.println("products amount");
+            scanner = new Scanner(System.in);
+            double necessaryProductsAmount = scanner.nextDouble();
+            recipe.addNecessaryProducts(necessaryProductsName, necessaryProductsAmount);
+            howMany--;
+        }
+
+
+        return recipe;
+        //Wywołanie:
+//        RecipeService recipeService = new RecipeService();
+//        Recipe recipe = recipeService.addRecipe();
+//
+//        System.out.println(recipe);
+    }
 }
+
 
