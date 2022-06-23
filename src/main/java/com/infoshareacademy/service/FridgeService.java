@@ -60,5 +60,6 @@ public class FridgeService {
         File file = new File(path.toString());
         Map<String, Double> fridge = objectMapper.readValue(file, new TypeReference<Map<String, Double>>(){});
         return fridge;
+
     }
 }

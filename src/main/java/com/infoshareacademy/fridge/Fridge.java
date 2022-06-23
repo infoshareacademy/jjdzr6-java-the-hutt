@@ -29,4 +29,14 @@ private Map <String, Double> productsInFridge = new HashMap<>();
                 "productsInFridge=" + productsInFridge +
                 '}';
     }
+
+    public Fridge() {
+    }
+
+    @Override
+    public String toString() {
+        return "Fridge{" +
+                "productsInFridge=" + productsInFridge +
+                '}';
+    }
 }
