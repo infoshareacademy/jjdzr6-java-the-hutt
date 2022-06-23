@@ -30,7 +30,7 @@ public class FridgeService {
     }*/
 
 
-    public void writeJson(Fridge fridge) throws IOException {
+    public void writeJson(Map<String,Double> fridge) throws IOException {
         Path path = Path.of("src", "resources", "products_in_fridge.json");
         File file = new File(path.toString());
         ObjectMapper objectMapper = new ObjectMapper();

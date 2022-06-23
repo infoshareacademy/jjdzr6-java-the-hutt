@@ -17,7 +17,8 @@ public class App {
         Map<String, Double> json = fridgeService.getJson();
         json.putAll(fridge.getProductsInFridge());
         System.out.println(json);
-//        fridgeService.writeJson(fridge); //<=nadpisuje
+        fridge.setProductsInFridge(json);
+        fridgeService.writeJson(fridge.getProductsInFridge());
 
 
 
