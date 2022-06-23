@@ -32,11 +32,8 @@ public class RecipeService {
         return recipe;
     }
 
-    public void showAll(List<Recipe> recipe) {
-        for (int i = 0; i < recipe.size(); i++) {
-            System.out.println(recipe.get(i).toString());
-
-        }
+    public void showAllRecipes(List<Recipe> recipe) {
+        recipe.forEach(oneRecipe -> System.out.println(oneRecipe));
     }
 
     public void findRecipeByName(List<Recipe> recipe) {
@@ -46,7 +43,6 @@ public class RecipeService {
         String search = scanner.nextLine();
         List<Recipe> findRecipe = recipe.stream().filter(list -> list.getName().equals(search)).collect(Collectors.toList());
         System.out.println(findRecipe.toString());
-
     }
 
     public void findRecipeByTime(List<Recipe> recipe) {
@@ -56,7 +52,6 @@ public class RecipeService {
         Double search = scanner.nextDouble();
         List<Recipe> findRecipe = recipe.stream().filter(list -> list.getPreparationTime() <= (search)).collect(Collectors.toList());
         System.out.println(findRecipe.toString());
-
     }
 
     public Recipe addRecipe() {

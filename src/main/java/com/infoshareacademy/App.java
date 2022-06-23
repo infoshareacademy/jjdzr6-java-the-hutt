@@ -1,9 +1,8 @@
 package com.infoshareacademy;
 
 import com.infoshareacademy.fridge.Fridge;
-import com.infoshareacademy.recipe.Recipe;
 import com.infoshareacademy.service.FridgeService;
-import com.infoshareacademy.service.RecipeService;
+
 
 import java.io.IOException;
 import java.util.*;

@@ -15,37 +15,6 @@ import java.util.Scanner;
 
 public class FridgeService {
 
-    public void showAllProductsInFridge(Map map) {
-        for (Object key : map.keySet()) {
-            System.out.println(key + " = " + map.get(key));
-        }
-    }
-
-/*    public void findInFridge(Fridge fridge, String search){
-
-
-        List<Fridge> findInFridge = list.stream().filter(list -> list.getProductInFridge().keySet().equals(search)).collect(Collectors.toList());
-
-
-    }*/
-
-
-    public void writeJson(Map<String,Double> fridge) throws IOException {
-        Path path = Path.of("src", "resources", "products_in_fridge.json");
-        File file = new File(path.toString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(file, fridge);
-    }
-
-    public Map<String,Double> getJson() throws IOException {
-        Path path = Path.of("src", "resources", "products_in_fridge.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File(path.toString());
-        Map<String, Double> fridge = objectMapper.readValue(file, new TypeReference<Map<String, Double>>(){});
-        return fridge;
-    }
-
     public Fridge addProductToFridge() {
         Fridge fridge = new Fridge();
         Scanner scanner;
@@ -71,4 +40,25 @@ public class FridgeService {
         return fridge;
     }
 
+    public void showAllProductsInFridge(Map map) {
+        for (Object key : map.keySet()) {
+            System.out.println(key + " = " + map.get(key));
+        }
+    }
+
+    public void writeJson(Map<String,Double> fridge) throws IOException {
+        Path path = Path.of("src", "resources", "products_in_fridge.json");
+        File file = new File(path.toString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
+        objectWriter.writeValue(file, fridge);
+    }
+
+    public Map<String,Double> getJson() throws IOException {
+        Path path = Path.of("src", "resources", "products_in_fridge.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File(path.toString());
+        Map<String, Double> fridge = objectMapper.readValue(file, new TypeReference<Map<String, Double>>(){});
+        return fridge;
+    }
 }
