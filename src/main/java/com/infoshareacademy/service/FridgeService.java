@@ -3,7 +3,6 @@ package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.infoshareacademy.Json;
 import com.infoshareacademy.fridge.Fridge;
 
@@ -19,13 +18,6 @@ public class FridgeService {
             System.out.println(key + " = " + map.get(key));
         }
     }
-
-/*    public void findInFridge(Fridge fridge, String search){
-
-        List<Fridge> findInFridge = list.stream().filter(list -> list.getProductInFridge().keySet().equals(search)).collect(Collectors.toList());
-
-    }*/
-
 
     public void writeJson(Fridge fridge) throws IOException {
         Json.writeJson(fridge, "products_in_fridge.json");
