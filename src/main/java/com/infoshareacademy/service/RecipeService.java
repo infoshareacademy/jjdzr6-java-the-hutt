@@ -3,7 +3,6 @@ package com.infoshareacademy.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoshareacademy.Json;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.infoshareacademy.recipe.Recipe;
 
 import java.io.File;
@@ -14,10 +13,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+
 public class RecipeService {
 
     public void writeJson(List<Recipe> recipe) throws IOException {
-        Json.writeJson(recipe,"recipe.json");
+        Json.writeJson(recipe, "recipe.json");
     }
 
     public List<Recipe> getJson() throws IOException {
@@ -84,5 +84,43 @@ public class RecipeService {
             }
         } while (!run);
         return recipe;
+    }
+
+    public void removeRecipe() {
+        Recipe recipe = new Recipe();
+        Scanner scanner;
+        int removeKey = 0;
+
+        boolean run = false;
+
+        do {
+            try {
+                scanner = new Scanner(System.in);
+                System.out.println("Tytuł przepisu:");
+                String recipeName = scanner.nextLine();
+
+                RecipeService recipeService = new RecipeService();
+                List<Recipe> listRecipe = null;
+                try {
+                    listRecipe = recipeService.getJson();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                for (Recipe recipe1 : listRecipe) {
+
+                    if (recipe1.getName().equalsIgnoreCase(recipeName)) {
+                        removeKey = listRecipe.indexOf(recipe1);
+                    }
+                }
+                listRecipe.remove(removeKey);
+                recipeService.writeJson(listRecipe);
+                run = true;
+            } catch (InputMismatchException | IOException e) {
+                System.out.println("Niepoprawny format odpowiedzi.");
+                run = false;
+            }
+        } while (!run);
+
+
     }
 }

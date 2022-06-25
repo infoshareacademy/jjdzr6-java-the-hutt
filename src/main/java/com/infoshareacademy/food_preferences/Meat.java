@@ -5,7 +5,7 @@ public class Meat {
     private boolean isVegan;
     private boolean isVegetarian;
 
-    public void setMeatEat(boolean meatEater) {
+    public void setMeatEater(boolean meatEater) {
         this.meatEater = meatEater;
     }
 

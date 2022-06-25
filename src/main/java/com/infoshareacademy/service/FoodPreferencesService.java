@@ -2,16 +2,20 @@ package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.infoshareacademy.food_preferences.AllergenName;
 import com.infoshareacademy.food_preferences.FoodPreferences;
 import com.infoshareacademy.food_preferences.Meat;
+import com.infoshareacademy.recipe.Recipe;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class FoodPreferencesService {
@@ -67,7 +71,7 @@ public class FoodPreferencesService {
         Meat meat = new Meat();
 
         System.out.println("Mięso[T/N]: ");
-        meat.setMeatEat(preferencesFlag());
+        meat.setMeatEater(preferencesFlag());
         System.out.println("Dieta Wegańska[T/N]: ");
         meat.setVegan(preferencesFlag());
         System.out.println("Dieta Wegetariańska[T/N]: ");
@@ -91,6 +95,16 @@ public class FoodPreferencesService {
 
         String foodPreferencesJson = objectWriter.writeValueAsString(foodPreferences);
         Files.writeString(path, foodPreferencesJson);
+    }
+
+    public FoodPreferences getJson() throws IOException {
+        Path path = Path.of("src","resources","food_preferences.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        File file = new File(path.toString());
+        FoodPreferences foodPreferences = objectMapper.readValue(file, new TypeReference<FoodPreferences>() {
+        });
+        return foodPreferences;
     }
 
 
