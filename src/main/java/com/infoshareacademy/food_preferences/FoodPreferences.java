@@ -9,10 +9,9 @@ public class FoodPreferences {
 
     @Override
     public String toString() {
-        return "FoodPreferences{" +
-                "allergenName=" + allergenName +
-                ", meat=" + meat +
-                '}';
+        return "Preferencje żywieniowe: \n" +
+                "Alergeny:" + allergenName +
+                "Preferencje mięsne:" + meat;
     }
 
     public void setAllergenName(AllergenName allergenName) {

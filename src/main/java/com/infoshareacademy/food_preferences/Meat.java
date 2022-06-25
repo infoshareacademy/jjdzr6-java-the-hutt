@@ -19,10 +19,8 @@ public class Meat {
 
     @Override
     public String toString() {
-        return "Meat{" +
-                "meatEater=" + meatEater +
-                ", isVegan=" + isVegan +
-                ", isVegetarian=" + isVegetarian +
-                '}';
+        return "\n preferuje mięso: " + meatEater +
+                "\n weganin: " + isVegan +
+                "\n wegetarianin: " + isVegetarian;
     }
 }
