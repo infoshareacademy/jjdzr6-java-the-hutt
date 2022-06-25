@@ -8,12 +8,16 @@ public class Recipe {
     private String name;
     private String description;
     private int preparationTime;
-    private Map<String, Double> neccesaryProducts;
+    private Map<String, Double> neccesaryProducts = new HashMap<>();
+
+    public Map<String, Double> addNecessaryProducts(String name, Double howMany){
+        neccesaryProducts.put(name, howMany);
+        return neccesaryProducts;
+    }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -53,4 +57,5 @@ public class Recipe {
                 ", Niezbędne produkty: " + neccesaryProducts +
                 ", czas przygotowania: [min] " + preparationTime;
     }
+
 }

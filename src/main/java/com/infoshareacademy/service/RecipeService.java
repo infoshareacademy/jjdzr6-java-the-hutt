@@ -3,11 +3,13 @@ package com.infoshareacademy.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoshareacademy.Json;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.infoshareacademy.recipe.Recipe;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -38,7 +40,6 @@ public class RecipeService {
         String search = scanner.nextLine();
         List<Recipe> findRecipe = recipe.stream().filter(list -> list.getName().equalsIgnoreCase(search)).collect(Collectors.toList());
         System.out.println(findRecipe.toString());
-
     }
 
     public void findRecipeByTime(List<Recipe> recipe) {
@@ -48,7 +49,40 @@ public class RecipeService {
         Double search = scanner.nextDouble();
         List<Recipe> findRecipe = recipe.stream().filter(list -> list.getPreparationTime() <= (search)).collect(Collectors.toList());
         System.out.println(findRecipe.toString());
+    }
 
+    public Recipe addRecipe() {
+        Recipe recipe = new Recipe();
+        Scanner scanner;
+        boolean run = false;
+
+        do {
+            try {
+                scanner = new Scanner(System.in);
+                System.out.println("Tytuł przepisu:");
+                recipe.setName(scanner.nextLine());
+                System.out.println("Krótki opis:");
+                recipe.setDescription(scanner.nextLine());
+                System.out.println("Czas przygotowania (w min.):");
+                recipe.setPreparationTime(scanner.nextInt());
+                System.out.println("Ilość niezbędnych składników (w szt.):");
+                int howMany = scanner.nextInt();
+                while (howMany > 0) {
+                    System.out.println("Nazwa składnika:");
+                    scanner = new Scanner(System.in);
+                    String necessaryProductsName = scanner.nextLine();
+                    System.out.println("Ilość składnika:");
+                    scanner = new Scanner(System.in);
+                    double necessaryProductsAmount = scanner.nextDouble();
+                    recipe.addNecessaryProducts(necessaryProductsName, necessaryProductsAmount);
+                    howMany--;
+                    run = true;
+                }
+            } catch (InputMismatchException exception) {
+                System.out.println("Niepoprawny format odpowiedzi.");
+                run = false;
+            }
+        } while (!run);
+        return recipe;
     }
 }
-
