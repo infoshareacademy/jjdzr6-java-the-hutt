@@ -3,6 +3,7 @@ package com.infoshareacademy.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.infoshareacademy.Json;
 import com.infoshareacademy.shopping_list.ShoppingList;
 
 import java.io.File;
@@ -15,11 +16,7 @@ import java.util.Map;
 public class ShoppingListService {
 
     public void writeJson(ShoppingList shoppingList) throws IOException {
-        Path path = Path.of("src", "main", "resources", "shopping_list.json");
-        File file = new File(path.toString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(file, shoppingList.getProductList());
+        Json.writeJson(shoppingList,"products_in_fridge.json");
     }
 
     public void getJson() throws IOException  {
