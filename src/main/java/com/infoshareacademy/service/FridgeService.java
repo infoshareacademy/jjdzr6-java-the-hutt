@@ -3,7 +3,7 @@ package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import com.infoshareacademy.Json;
 import com.infoshareacademy.fridge.Fridge;
 
 import java.io.File;
@@ -47,11 +47,9 @@ public class FridgeService {
     }
 
     public void writeJson(Map<String,Double> fridge) throws IOException {
-        Path path = Path.of("src", "resources", "products_in_fridge.json");
-        File file = new File(path.toString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(file, fridge);
+
+        Json.writeJson(fridge, "products_in_fridge.json");
+
     }
 
     public Map<String,Double> getJson() throws IOException {

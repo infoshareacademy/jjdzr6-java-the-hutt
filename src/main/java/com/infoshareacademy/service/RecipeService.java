@@ -2,6 +2,7 @@ package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infoshareacademy.Json;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.infoshareacademy.recipe.Recipe;
 
@@ -16,11 +17,7 @@ import java.util.stream.Collectors;
 public class RecipeService {
 
     public void writeJson(List<Recipe> recipe) throws IOException {
-        Path path = Path.of("src", "resources", "recipe.json");
-        File file = new File(path.toString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(file, recipe);
+        Json.writeJson(recipe,"recipe.json");
     }
 
     public List<Recipe> getJson() throws IOException {
@@ -41,7 +38,7 @@ public class RecipeService {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Szukam przepisu na: \n");
         String search = scanner.nextLine();
-        List<Recipe> findRecipe = recipe.stream().filter(list -> list.getName().equals(search)).collect(Collectors.toList());
+        List<Recipe> findRecipe = recipe.stream().filter(list -> list.getName().equalsIgnoreCase(search)).collect(Collectors.toList());
         System.out.println(findRecipe.toString());
     }
 

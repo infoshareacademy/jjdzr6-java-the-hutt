@@ -1,6 +1,6 @@
 package com.infoshareacademy.fridge;
 
-import java.util.HashMap;
+
 import java.util.Map;
 
 public class Fridge {
