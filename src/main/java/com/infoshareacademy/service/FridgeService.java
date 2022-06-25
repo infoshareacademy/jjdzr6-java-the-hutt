@@ -19,7 +19,7 @@ public class FridgeService {
         }
     }
 
-    public void writeJson(Fridge fridge) throws IOException {
+    public void writeJson(Map<String,Double> fridge) throws IOException {
         Json.writeJson(fridge, "products_in_fridge.json");
     }
 
