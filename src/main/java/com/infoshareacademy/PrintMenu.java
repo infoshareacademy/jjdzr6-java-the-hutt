@@ -25,8 +25,6 @@ public class PrintMenu {
         System.out.println("1. Preferencje żywieniowe użytkownika.");
         System.out.println("2. Zawartość lodówki.");
         System.out.println("3. Przepisownik.");
-/*        System.out.println("4. Lista zakupów.");
-        System.out.println("5. Generuj (na podstawie produktów).");*/
         System.out.println("0. Zamknij aplikację.");
         System.out.println("");
         System.out.println("=====================================");
