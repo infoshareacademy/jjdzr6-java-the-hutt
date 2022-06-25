@@ -8,12 +8,37 @@ import com.infoshareacademy.fridge.Fridge;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
+import java.util.InputMismatchException;
 import java.util.Map;
+import java.util.Scanner;
 
 public class FridgeService {
+
+    public Fridge addProductToFridge() {
+        Fridge fridge = new Fridge();
+        Scanner scanner;
+        boolean run = false;
+
+        do {
+            try {
+                scanner = new Scanner(System.in);
+                System.out.println("Nazwa produktu:");
+                String fridgeProductName = scanner.nextLine();
+                System.out.println("Ilość produktu (szt.):");
+                scanner = new Scanner(System.in);
+                double fridgeProductAmount = scanner.nextDouble();
+                Map<String, Double> product = fridge.addFridgeProduct(fridgeProductName, fridgeProductAmount);
+                fridge.setProductsInFridge(product);
+                run = true;
+            } catch (InputMismatchException exception) {
+                System.out.println("Niepoprawny format odpowiedzi.");
+                run = false;
+            }
+        } while (!run);
+        System.out.println(fridge);
+        return fridge;
+    }
 
     public void showAllProductsInFridge(Map map) {
         for (Object key : map.keySet()) {
@@ -21,16 +46,7 @@ public class FridgeService {
         }
     }
 
-/*    public void findInFridge(Fridge fridge, String search){
-
-
-        List<Fridge> findInFridge = list.stream().filter(list -> list.getProductInFridge().keySet().equals(search)).collect(Collectors.toList());
-
-
-    }*/
-
-
-    public void writeJson(Fridge fridge) throws IOException {
+    public void writeJson(Map<String,Double> fridge) throws IOException {
         Path path = Path.of("src", "resources", "products_in_fridge.json");
         File file = new File(path.toString());
         ObjectMapper objectMapper = new ObjectMapper();

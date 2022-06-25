@@ -1,10 +1,6 @@
 package com.infoshareacademy.recipe;
 
-import com.infoshareacademy.food_preferences.*;
-import com.infoshareacademy.product.Product;
-import com.infoshareacademy.food_preferences.FoodPreferences;
-
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Recipe {
@@ -12,7 +8,12 @@ public class Recipe {
     private String name;
     private String description;
     private int preparationTime;
-    private Map<String, Double> neccesaryProducts;
+    private Map<String, Double> neccesaryProducts = new HashMap<>();
+
+    public Map<String, Double> addNecessaryProducts(String name, Double howMany){
+        neccesaryProducts.put(name, howMany);
+        return neccesaryProducts;
+    }
 
     public String getName() {
         return name;
@@ -56,4 +57,5 @@ public class Recipe {
                 ", Niezbędne produkty: " + neccesaryProducts +
                 ", czas przygotowania: [min] " + preparationTime;
     }
+
 }

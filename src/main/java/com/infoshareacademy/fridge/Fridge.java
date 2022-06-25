@@ -1,12 +1,16 @@
 package com.infoshareacademy.fridge;
 
-import com.infoshareacademy.product.Product;
-
+import java.util.HashMap;
 import java.util.Map;
 
 public class Fridge {
 
-private Map <String, Double> productsInFridge;
+private Map <String, Double> productsInFridge = new HashMap<>();
+
+    public Map<String, Double> addFridgeProduct(String name, Double howMany){
+        productsInFridge.put(name, howMany);
+        return productsInFridge;
+    }
 
     public Fridge() {
     }
@@ -17,16 +21,6 @@ private Map <String, Double> productsInFridge;
 
     public void setProductsInFridge(Map<String, Double> productsInFridge) {
         this.productsInFridge = productsInFridge;
-    }
-
-    @Override
-    public String toString() {
-        return "Fridge{" +
-                "productsInFridge=" + productsInFridge +
-                '}';
-    }
-
-    public Fridge() {
     }
 
     @Override
