@@ -1,6 +1,5 @@
 package com.infoshareacademy;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoshareacademy.food_preferences.FoodPreferences;
 import com.infoshareacademy.recipe.Recipe;
 import com.infoshareacademy.service.FoodPreferencesService;
@@ -8,7 +7,6 @@ import com.infoshareacademy.service.RecipeService;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) throws IOException {
@@ -22,8 +20,11 @@ public class App {
 
         RecipeService recipeService = new RecipeService();
         Recipe recipe = new Recipe();
+//        Recipe recipe1 = recipeService.addRecipe();
         List<Recipe> recipeList = recipeService.getJson();
 
+//        recipeList.add(recipe1);
+//        recipeService.writeJson(recipeList);
 
     }
 }

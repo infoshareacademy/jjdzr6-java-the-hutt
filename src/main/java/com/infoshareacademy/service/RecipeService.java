@@ -53,6 +53,7 @@ public class RecipeService {
 
     public Recipe addRecipe() {
         Recipe recipe = new Recipe();
+        FoodPreferencesService foodPreferencesService = new FoodPreferencesService();
         Scanner scanner;
         boolean run = false;
 
@@ -65,6 +66,10 @@ public class RecipeService {
                 recipe.setDescription(scanner.nextLine());
                 System.out.println("Czas przygotowania (w min.):");
                 recipe.setPreparationTime(scanner.nextInt());
+                System.out.println("Czy wegetariański (T/N)");
+                recipe.setVegetarian(foodPreferencesService.preferencesFlag());
+                System.out.println("Czy przepis wegański (T/N)");
+                recipe.setVegan(foodPreferencesService.preferencesFlag());
                 System.out.println("Ilość niezbędnych składników (w szt.):");
                 int howMany = scanner.nextInt();
                 while (howMany > 0) {

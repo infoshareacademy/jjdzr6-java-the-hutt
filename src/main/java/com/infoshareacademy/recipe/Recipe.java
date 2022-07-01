@@ -10,6 +10,8 @@ public class Recipe {
     private String name;
     private String description;
     private int preparationTime;
+    private boolean vegetarian;
+    private boolean vegan;
     private Map<String, Double> neccesaryProducts = new HashMap<>();
 
     public Map<String, Double> addNecessaryProducts(String name, Double howMany){
@@ -71,5 +73,21 @@ public class Recipe {
     @Override
     public int hashCode() {
         return Objects.hash(name, description, preparationTime, neccesaryProducts);
+    }
+
+    public boolean isVegetarian() {
+        return vegetarian;
+    }
+
+    public void setVegetarian(boolean vegetarian) {
+        this.vegetarian = vegetarian;
+    }
+
+    public boolean isVegan() {
+        return vegan;
+    }
+
+    public void setVegan(boolean vegan) {
+        this.vegan = vegan;
     }
 }

@@ -17,6 +17,18 @@ public class Meat {
         isVegetarian = vegetarian;
     }
 
+    public boolean isMeatEater() {
+        return meatEater;
+    }
+
+    public boolean isVegan() {
+        return isVegan;
+    }
+
+    public boolean isVegetarian() {
+        return isVegetarian;
+    }
+
     @Override
     public String toString() {
         return "\n preferuje mięso: " + meatEater +

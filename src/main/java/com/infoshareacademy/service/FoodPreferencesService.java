@@ -107,7 +107,6 @@ public class FoodPreferencesService {
     }
 
     public void recipeListContainAllergens() throws IOException {
-        Recipe recipe = new Recipe();
         RecipeService recipeService = new RecipeService();
         List<Recipe> recipeList = recipeService.getJson();
 
@@ -139,7 +138,6 @@ public class FoodPreferencesService {
                     .collect(Collectors.toList());
             recipeList = strawberries;
         }
-
         if (foodPreferencesJson.getAllergenName().isDairy()) {
             List<Recipe> diary = recipeList.stream()
                     .filter(s -> !s.getNeccesaryProducts().keySet().contains("mleko"))
@@ -156,6 +154,18 @@ public class FoodPreferencesService {
                     .filter(s -> !s.getNeccesaryProducts().keySet().contains(foodPreferencesJson.getAllergenName().getOther()))
                     .collect(Collectors.toList());
             recipeList = other;
+        }
+        if (foodPreferencesJson.getMeat().isVegetarian()) {
+            List<Recipe> vegetarian = recipeList.stream()
+                    .filter(Recipe::isVegetarian)
+                    .collect(Collectors.toList());
+            recipeList = vegetarian;
+        }
+        if (foodPreferencesJson.getMeat().isVegan()) {
+            List<Recipe> vegan = recipeList.stream()
+                    .filter(Recipe::isVegan)
+                    .collect(Collectors.toList());
+            recipeList = vegan;
         }
         System.out.println(recipeList);
     }
