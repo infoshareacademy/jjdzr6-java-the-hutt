@@ -3,9 +3,9 @@
   "description" : "Pyszne tosty z szynką I serem",
   "preparationTime" : 15,
   "neccesaryProducts" : {
-    "Chleb" : 2.0,
-    "Szynka" : 2.0,
-    "Ser" : 2.0
+    "chleb" : 2.0,
+    "szynka" : 2.0,
+    "ser" : 2.0
   }
 }, {
   "name" : "herbata",
@@ -33,11 +33,27 @@
   }
 }, {
   "name" : "Kakao",
-  "description" : "Pyszne kakao.",
+  "description" : "Pyszne kakao",
   "preparationTime" : 10,
   "neccesaryProducts" : {
     "kakao" : 10.0,
     "mleko" : 20.0
+  }
+}, {
+  "name" : "Orzechy w karmelu",
+  "description" : "Pyszne orzechy",
+  "preparationTime" : 10,
+  "neccesaryProducts" : {
+    "karmel" : 10.0,
+    "orzechy" : 20.0
+  }
+}, {
+  "name" : "Czekolada",
+  "description" : "Pyszna czekolada",
+  "preparationTime" : 10,
+  "neccesaryProducts" : {
+    "czekolada" : 10.0,
+    "woda" : 20.0
   }
 }, {
   "name" : "Jajka",
@@ -46,5 +62,13 @@
   "neccesaryProducts" : {
     "woda" : 100.0,
     "jajko" : 1.0
+  }
+}, {
+  "name" : "Peple meple",
+  "description" : "Pyszne peple meple",
+  "preparationTime" : 10,
+  "neccesaryProducts" : {
+    "chałka" : 10.0,
+    "mleko" : 20.0
   }
 } ]
