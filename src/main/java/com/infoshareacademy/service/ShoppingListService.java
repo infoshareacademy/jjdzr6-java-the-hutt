@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoshareacademy.Json;
 import com.infoshareacademy.recipe.Recipe;
-import com.infoshareacademy.shopping_list.ShoppingList;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,7 +23,8 @@ public class ShoppingListService {
         Path path = Path.of("src", "main", "resources", "shopping_list.json");
         ObjectMapper objectMapper = new ObjectMapper();
         String file = Files.readString(path);
-        TypeReference<HashMap<String , Double>> typeReference = new TypeReference<HashMap<String, Double>>() {};
+        TypeReference<HashMap<String , Double>> typeReference = new TypeReference<>() {
+        };
         Map<String, Double> map = objectMapper.readValue(file, typeReference);
         for(String key : map.keySet()){
             System.out.println(key + " = " + map.get(key));
@@ -58,10 +58,10 @@ public class ShoppingListService {
 
     }
 
-    public  HashMap hashMapDifference(Map<String, Double> a, Map<String, Double> b) {
-        Iterator bKeyIterator = b.keySet().iterator();
-        Object key;
-        Object value;
+    public Map hashMapDifference(Map<String, Double> a, Map<String, Double> b) {
+        Iterator<String> bKeyIterator = b.keySet().iterator();
+        String key;
+        Double value;
         HashMap difference = new HashMap();
 
         while (bKeyIterator.hasNext()) {
@@ -71,7 +71,7 @@ public class ShoppingListService {
                 } else {
                     value = b.get(key) - a.get(key);
                 }
-                if(((Double) value) > 0){
+                if(value > 0){
                     difference.put(key, value);
                 } 
         }
