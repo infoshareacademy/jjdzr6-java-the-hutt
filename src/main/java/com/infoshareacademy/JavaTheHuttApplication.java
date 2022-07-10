@@ -1,4 +1,4 @@
-package com.infoshareacademy.javathehutt;
+package com.infoshareacademy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
