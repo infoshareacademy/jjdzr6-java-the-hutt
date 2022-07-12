@@ -5,7 +5,7 @@ public class Meat {
     private boolean isVegan;
     private boolean isVegetarian;
 
-    public void setMeatEat(boolean meatEater) {
+    public void setMeatEater(boolean meatEater) {
         this.meatEater = meatEater;
     }
 
@@ -19,10 +19,8 @@ public class Meat {
 
     @Override
     public String toString() {
-        return "Meat{" +
-                "meatEater=" + meatEater +
-                ", isVegan=" + isVegan +
-                ", isVegetarian=" + isVegetarian +
-                '}';
+        return "\n preferuje mięso: " + meatEater +
+                "\n weganin: " + isVegan +
+                "\n wegetarianin: " + isVegetarian;
     }
 }

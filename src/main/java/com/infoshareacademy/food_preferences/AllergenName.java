@@ -42,14 +42,12 @@ public class AllergenName {
 
     @Override
     public String toString() {
-        return "AllergenName{" +
-                "shellfish=" + shellfish +
-                ", chocolate=" + chocolate +
-                ", nuts=" + nuts +
-                ", eggs=" + eggs +
-                ", strawberries=" + strawberries +
-                ", dairy=" + dairy +
-                ", other='" + other + '\'' +
-                '}';
+        return "\n owoce morza: " + shellfish +
+                "\n czekolada: " + chocolate +
+                "\n orzechy: " + nuts +
+                "\n jajka: " + eggs +
+                "\n truskawki: " + strawberries +
+                "\n nabiał: " + dairy +
+                "\n inne: " + other + "\n";
     }
 }

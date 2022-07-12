@@ -36,9 +36,39 @@ public class FridgeService {
                 run = false;
             }
         } while (!run);
-        System.out.println(fridge);
+        System.out.println("Dodano produkt: "+fridge);
         return fridge;
     }
+
+    public Fridge removeProductFromFridge() {
+        Fridge fridge = new Fridge();
+        FridgeService fridgeService = new FridgeService();
+        Map<String,Double> result = null;
+        try {
+            result = fridgeService.getJson();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scanner scanner;
+        boolean run = false;
+
+        do {
+            try {
+                scanner = new Scanner(System.in);
+                System.out.println("Nazwa produktu:");
+                String fridgeProductName = scanner.nextLine();
+                result.remove(fridgeProductName);
+                fridge.setProductsInFridge(result);
+                run = true;
+            } catch (InputMismatchException exception) {
+                System.out.println("Niepoprawny format odpowiedzi.");
+                run = false;
+            }
+        } while (!run);
+        System.out.println("Usunięto produkt, w lodówce pozostało: )"+result);
+        return fridge;
+    }
+
 
     public void showAllProductsInFridge(Map map) {
         for (Object key : map.keySet()) {

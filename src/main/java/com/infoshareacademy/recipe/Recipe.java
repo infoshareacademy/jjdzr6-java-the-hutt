@@ -1,7 +1,9 @@
 package com.infoshareacademy.recipe;
 
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Recipe {
 
@@ -58,4 +60,16 @@ public class Recipe {
                 ", czas przygotowania: [min] " + preparationTime;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return preparationTime == recipe.preparationTime && Objects.equals(name, recipe.name) && Objects.equals(description, recipe.description) && Objects.equals(neccesaryProducts, recipe.neccesaryProducts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, preparationTime, neccesaryProducts);
+    }
 }
