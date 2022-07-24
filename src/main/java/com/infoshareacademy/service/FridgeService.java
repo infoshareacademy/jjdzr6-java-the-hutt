@@ -3,8 +3,8 @@ package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infoshareacademy.Json;
-import com.infoshareacademy.fridge.Fridge;
+import com.infoshareacademy.other.Json;
+import com.infoshareacademy.entity.fridge.Fridge;
 
 import java.io.File;
 import java.io.IOException;

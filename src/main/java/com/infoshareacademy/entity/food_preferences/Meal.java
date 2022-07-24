@@ -1,4 +1,4 @@
-package com.infoshareacademy.food_preferences;
+package com.infoshareacademy.entity.food_preferences;
 
 public enum Meal {
     BREAKFAST,

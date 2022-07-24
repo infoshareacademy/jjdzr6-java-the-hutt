@@ -1,4 +1,4 @@
-package com.infoshareacademy.fridge;
+package com.infoshareacademy.entity.fridge;
 
 
 import java.util.HashMap;

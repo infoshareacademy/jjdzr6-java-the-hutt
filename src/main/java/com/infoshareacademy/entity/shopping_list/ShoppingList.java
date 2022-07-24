@@ -1,4 +1,4 @@
-package com.infoshareacademy.shopping_list;
+package com.infoshareacademy.entity.shopping_list;
 
 import java.util.Map;
 

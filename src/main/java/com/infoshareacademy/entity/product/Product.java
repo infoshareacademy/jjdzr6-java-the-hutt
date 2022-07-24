@@ -1,4 +1,4 @@
-package com.infoshareacademy.product;
+package com.infoshareacademy.entity.product;
 
 public class Product {
 
