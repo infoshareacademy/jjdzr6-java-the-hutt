@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class RecipeController {
@@ -20,11 +21,18 @@ public class RecipeController {
     }
 
     //TODO - wyszukiwanie po części nazwy produktu
-    @GetMapping("/recipe/{name}/search")
+    @GetMapping("/recipe/byname/{name}/search")
     @ResponseBody
-    public List<Recipe> findByName(@PathVariable String name, RecipeService recipeService) throws IOException {
+    public List<Recipe> findingRecipeByName(@PathVariable String name, RecipeService recipeService) throws IOException {
         List<Recipe> recipe = recipeService.getJson();
         return recipe.stream().filter(list -> list.getName().equalsIgnoreCase(name)).toList();
+    }
+
+    @GetMapping("/recipe/bytime/{time}/search")
+    @ResponseBody
+    public List<Recipe> findingRecipeByTime(@PathVariable Integer time, RecipeService recipeService) throws IOException {
+        List<Recipe> recipe = recipeService.getJson();
+        return recipe.stream().filter(list -> list.getPreparationTime() <= (time)).collect(Collectors.toList());
     }
 
 }
