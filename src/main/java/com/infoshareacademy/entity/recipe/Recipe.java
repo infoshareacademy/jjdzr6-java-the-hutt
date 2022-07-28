@@ -51,6 +51,13 @@ public class Recipe {
     public Recipe() {
     }
 
+    public Recipe(String name, String description, int preparationTime, Map<String, Double> neccesaryProducts) {
+        this.name = name;
+        this.description = description;
+        this.preparationTime = preparationTime;
+        this.neccesaryProducts = neccesaryProducts;
+    }
+
     @Override
     public String toString() {
         return "Przepis na: " +

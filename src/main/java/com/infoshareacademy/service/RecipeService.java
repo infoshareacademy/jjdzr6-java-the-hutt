@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoshareacademy.other.Json;
 import com.infoshareacademy.entity.recipe.Recipe;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-
+@Service
 public class RecipeService {
 
     public void writeJson(List<Recipe> recipe) throws IOException {
@@ -29,10 +30,11 @@ public class RecipeService {
         return recipe;
     }
 
+    // DONE
     public void showAllRecipes(List<Recipe> recipe) {
         recipe.forEach(oneRecipe -> System.out.println(oneRecipe));
     }
-
+    // DONE
     public void findRecipeByName(List<Recipe> recipe) {
 
         Scanner scanner = new Scanner(System.in);
