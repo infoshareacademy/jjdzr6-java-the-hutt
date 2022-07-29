@@ -20,12 +20,12 @@ public class RecipeController {
         return recipeService.getJson();
     }
 
-    //TODO - wyszukiwanie po części nazwy produktu
     @GetMapping("/recipe/byname/{name}/search")
     @ResponseBody
     public List<Recipe> findingRecipeByName(@PathVariable String name, RecipeService recipeService) throws IOException {
         List<Recipe> recipe = recipeService.getJson();
-        return recipe.stream().filter(list -> list.getName().equalsIgnoreCase(name)).toList();
+        return  recipe.stream().filter(list->list.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
+//        return recipe.stream().filter(list -> list.getName().equalsIgnoreCase(name)).toList();
     }
 
     @GetMapping("/recipe/bytime/{time}/search")
