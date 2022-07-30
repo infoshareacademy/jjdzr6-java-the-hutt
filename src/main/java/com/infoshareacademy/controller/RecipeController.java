@@ -20,7 +20,7 @@ public class RecipeController {
         return recipeService.getJson();
     }
 
-    @GetMapping("/recipe/byname/{name}/search")
+    @GetMapping("/recipe/{name}/searchbyname")
     @ResponseBody
     public List<Recipe> findingRecipeByName(@PathVariable String name, RecipeService recipeService) throws IOException {
         List<Recipe> recipe = recipeService.getJson();
@@ -28,11 +28,13 @@ public class RecipeController {
 //        return recipe.stream().filter(list -> list.getName().equalsIgnoreCase(name)).toList();
     }
 
-    @GetMapping("/recipe/bytime/{time}/search")
+    @GetMapping("/recipe/{time}/searchbytime")
     @ResponseBody
     public List<Recipe> findingRecipeByTime(@PathVariable Integer time, RecipeService recipeService) throws IOException {
         List<Recipe> recipe = recipeService.getJson();
         return recipe.stream().filter(list -> list.getPreparationTime() <= (time)).collect(Collectors.toList());
     }
+
+
 
 }

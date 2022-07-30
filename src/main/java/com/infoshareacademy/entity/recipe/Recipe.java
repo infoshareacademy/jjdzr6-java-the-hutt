@@ -17,9 +17,20 @@ public class Recipe {
         return neccesaryProducts;
     }
 
+    public Recipe() {
+    }
+
+    public Recipe(String name, String description, int preparationTime, Map<String, Double> neccesaryProducts) {
+        this.name = name;
+        this.description = description;
+        this.preparationTime = preparationTime;
+        this.neccesaryProducts = neccesaryProducts;
+    }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -46,16 +57,6 @@ public class Recipe {
 
     public void setPreparationTime(int preparationTime) {
         this.preparationTime = preparationTime;
-    }
-
-    public Recipe() {
-    }
-
-    public Recipe(String name, String description, int preparationTime, Map<String, Double> neccesaryProducts) {
-        this.name = name;
-        this.description = description;
-        this.preparationTime = preparationTime;
-        this.neccesaryProducts = neccesaryProducts;
     }
 
     @Override
