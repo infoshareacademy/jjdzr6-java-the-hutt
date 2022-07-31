@@ -1,6 +1,10 @@
 package com.infoshareacademy.entity.food_preferences;
 
+import javax.persistence.*;
+
+
 public class FoodPreferences {
+
     private AllergenName allergenName;
     private Meat meat;
 

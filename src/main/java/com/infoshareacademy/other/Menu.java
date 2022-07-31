@@ -41,12 +41,12 @@ public class Menu {
                         case 0:
                             continue;
                         case 1:
-                            FoodPreferences foodPreferences = foodPreferencesService.getJson();
-                            System.out.println(foodPreferences);
+/*                            FoodPreferences foodPreferences = foodPreferencesService.getJson();
+                            System.out.println(foodPreferences);*/
                             break;
                         case 2:
 
-                            foodPreferencesService.writeFoodPreferencesToJson();
+/*                            foodPreferencesService.writeFoodPreferencesToJson();*/
                             break;
                     }
                     break;
