@@ -12,7 +12,7 @@
   "description" : "Herbata czarna",
   "preparationTime" : 5,
   "neccesaryProducts" : {
-    "herbata" : 1.0,
+    "" : 1.0,
     "woda" : 300.0
   }
 }, {

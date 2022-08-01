@@ -1,15 +1,10 @@
 package com.infoshareacademy.entity.recipe;
 
 
-import com.vladmihalcea.hibernate.type.json.JsonType;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-@TypeDef(name = "json", typeClass = JsonType.class)
 @Entity
 @Table(name = "recipes")
 public class Recipe {
@@ -32,8 +27,6 @@ public class Recipe {
             joinColumns = {@JoinColumn(name = "recipe_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "name")
     @Column(name = "howMany")
-//    @Type(type = "json")
-//    @Column(name = "neccesaryProducts", columnDefinition = "jsonb")
     private Map<String, Double> neccesaryProducts = new HashMap<>();
     public Map<String, Double> addNecessaryProducts(String name, Double howMany){
         neccesaryProducts.put(name, howMany);
