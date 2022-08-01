@@ -1,17 +1,40 @@
 package com.infoshareacademy.entity.recipe;
 
 
+import com.vladmihalcea.hibernate.type.json.JsonType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
+@TypeDef(name = "json", typeClass = JsonType.class)
+@Entity
+@Table(name = "recipes")
 public class Recipe {
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "id")
+    private Long id;
 
+    @Column(name = "name")
     private String name;
-    private String description;
-    private int preparationTime;
-    private Map<String, Double> neccesaryProducts = new HashMap<>();
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "preparation_time")
+    private int preparationTime;
+
+    @ElementCollection
+    @CollectionTable(name = "neccessary_products_mapping",
+            joinColumns = {@JoinColumn(name = "recipe_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "name")
+    @Column(name = "howMany")
+//    @Type(type = "json")
+//    @Column(name = "neccesaryProducts", columnDefinition = "jsonb")
+    private Map<String, Double> neccesaryProducts = new HashMap<>();
     public Map<String, Double> addNecessaryProducts(String name, Double howMany){
         neccesaryProducts.put(name, howMany);
         return neccesaryProducts;
@@ -25,6 +48,15 @@ public class Recipe {
         this.description = description;
         this.preparationTime = preparationTime;
         this.neccesaryProducts = neccesaryProducts;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
