@@ -2,15 +2,19 @@ package com.infoshareacademy.entity.recipe;
 
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
 @Entity
 @Table(name = "recipes")
+
 public class Recipe {
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "id")
+//    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
@@ -25,9 +29,10 @@ public class Recipe {
     @ElementCollection
     @CollectionTable(name = "neccessary_products_mapping",
             joinColumns = {@JoinColumn(name = "recipe_id", referencedColumnName = "id")})
-    @MapKeyColumn(name = "name")
     @Column(name = "howMany")
+    @MapKeyColumn(name = "name")
     private Map<String, Double> neccesaryProducts = new HashMap<>();
+
     public Map<String, Double> addNecessaryProducts(String name, Double howMany){
         neccesaryProducts.put(name, howMany);
         return neccesaryProducts;
@@ -36,12 +41,18 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(String name, String description, int preparationTime, Map<String, Double> neccesaryProducts) {
+    public Recipe(String name, String description, int preparationTime) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.preparationTime = preparationTime;
-        this.neccesaryProducts = neccesaryProducts;
     }
+//    public Recipe(String name, String description, int preparationTime, Map<String, Double> neccesaryProducts) {
+//        this.name = name;
+//        this.description = description;
+//        this.preparationTime = preparationTime;
+//        this.neccesaryProducts = neccesaryProducts;
+//    }
 
 
     public Long getId() {

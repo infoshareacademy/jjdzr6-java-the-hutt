@@ -2,6 +2,7 @@ package com.infoshareacademy;
 
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
+import com.infoshareacademy.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,22 +25,24 @@ public class JavaTheHuttApplication implements CommandLineRunner {
     }
 
     @Autowired
-    private RecipeRepository repository;
+    private RecipeRepository recipeRepository;
 
     @Override
     public void run(String... args) {
-        Recipe  tostyRecipe = new Recipe();
-        tostyRecipe.addNecessaryProducts("herbata", 2.0);
-        tostyRecipe.addNecessaryProducts("woda", 1.0);
+//        Recipe tostyRecipe = new Recipe();
+//        tostyRecipe.addNecessaryProducts("owsianka", 1.0);
+//        tostyRecipe.addNecessaryProducts("mleko", 1.0);
+//        tostyRecipe.addNecessaryProducts("banan", 2.0);
+//
+//        tostyRecipe.setName("owsianka z bananem");
+//        tostyRecipe.setDescription("pyszna owsianka");
+//        tostyRecipe.setPreparationTime(10);
+//
+//        System.out.println(tostyRecipe);
+//
+//        recipeRepository.save(tostyRecipe);
 
-        tostyRecipe.setName("herbata");
-        tostyRecipe.setDescription("herbata czarna");
-        tostyRecipe.setPreparationTime(3);
-//        Recipe recipe1 = new Recipe("tosty", "Pyszne tosty z szynką I serem", 15, tostyRecipe.getNeccesaryProducts());
-        System.out.println(tostyRecipe);
-
-        repository.save(tostyRecipe);
-
-
+        RecipeService recipeService = new RecipeService(recipeRepository);
+        System.out.println(recipeService.getAllRecipe());
     }
 }

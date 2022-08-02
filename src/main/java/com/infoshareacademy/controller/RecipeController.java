@@ -1,40 +1,49 @@
 package com.infoshareacademy.controller;
 
-import com.infoshareacademy.entity.recipe.Recipe;
+
 import com.infoshareacademy.service.RecipeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 @Controller
 public class RecipeController {
+//    //----------------------JSON----------------------
+//    @GetMapping("/recipesJson")
+//    @ResponseBody
+//    public List<Recipe> getAllJsonRecipes(RecipeService recipeService) throws IOException {
+//        return recipeService.getJson();
+//    }
+//
+//    @GetMapping("/recipesJson/{name}/searchbyname")
+//    @ResponseBody
+//    public List<Recipe> findingJsonRecipeByName(@PathVariable String name, RecipeService recipeService) throws IOException {
+//        List<Recipe> recipe = recipeService.getJson();
+//        return recipe.stream().filter(list -> list.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
+////        return recipe.stream().filter(list -> list.getName().equalsIgnoreCase(name)).toList();
+//    }
+//
+//    @GetMapping("/recipesJson/{time}/searchbytime")
+//    @ResponseBody
+//    public List<Recipe> findingJsonRecipeByTime(@PathVariable Integer time, RecipeService recipeService) throws IOException {
+//        List<Recipe> recipe = recipeService.getJson();
+//        return recipe.stream().filter(list -> list.getPreparationTime() <= (time)).collect(Collectors.toList());
+//    }
 
-    @GetMapping("/recipe")
-    @ResponseBody
-    public List<Recipe> getAllRecipes(RecipeService recipeService) throws IOException {
-        return recipeService.getJson();
+    //----------------------WEB----------------------
+    private RecipeService recipeService;
+
+    public RecipeController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
 
-    @GetMapping("/recipe/{name}/searchbyname")
-    @ResponseBody
-    public List<Recipe> findingRecipeByName(@PathVariable String name, RecipeService recipeService) throws IOException {
-        List<Recipe> recipe = recipeService.getJson();
-        return  recipe.stream().filter(list->list.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
-//        return recipe.stream().filter(list -> list.getName().equalsIgnoreCase(name)).toList();
+    @GetMapping("/recipes")
+    public String listRecipes(Model model) {
+        model.addAttribute("recipes", recipeService.getAllRecipe());
+        return "recipes";
     }
-
-    @GetMapping("/recipe/{time}/searchbytime")
-    @ResponseBody
-    public List<Recipe> findingRecipeByTime(@PathVariable Integer time, RecipeService recipeService) throws IOException {
-        List<Recipe> recipe = recipeService.getJson();
-        return recipe.stream().filter(list -> list.getPreparationTime() <= (time)).collect(Collectors.toList());
-    }
-
-
 
 }
+
