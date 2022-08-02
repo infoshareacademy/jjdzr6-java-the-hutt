@@ -43,7 +43,7 @@
         <tr th:each = "recipe: ${recipes}">
             <td th:text = "${recipe.name}"></td>
             <td th:text = "${recipe.description}"></td>
-            <td th:text = "${recipe.preparation_time}"></td>
+            <td th:text = "${recipe.preparationTime}"></td>
             <td>
                 <a th:href = "@{/recipes/edit/{id}(id=${recipe.id})}"
                    class = "btn btn-primary">Update</a>
