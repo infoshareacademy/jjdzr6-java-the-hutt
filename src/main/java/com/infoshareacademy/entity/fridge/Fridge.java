@@ -1,33 +1,53 @@
 package com.infoshareacademy.entity.fridge;
 
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
+@Table(name = "fridge")
 public class Fridge {
 
-private Map <String, Double> productsInFridge = new HashMap<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Map<String, Double> addFridgeProduct(String name, Double howMany){
-        productsInFridge.put(name, howMany);
-        return productsInFridge;
-    }
+    @Column(name = "product_name", unique = true)
+    private String productInFridgeName;
+
+    @Column(name = "quantity")
+    private Double quantity;
 
     public Fridge() {
     }
 
-    public Map<String, Double> getProductsInFridge() {
-        return productsInFridge;
+    public Fridge(String productInFridgeName, Double quantity) {
+        this.productInFridgeName = productInFridgeName;
+        this.quantity = quantity;
     }
 
-    public void setProductsInFridge(Map<String, Double> productsInFridge) {
-        this.productsInFridge = productsInFridge;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Fridge{" +
-                "productsInFridge=" + productsInFridge +
-                '}';
+    public Long getId() {
+        return id;
+    }
+
+    public String getProductInFridgeName() {
+        return productInFridgeName;
+    }
+
+    public void setProductInFridgeName(String productInFridgeName) {
+        this.productInFridgeName = productInFridgeName;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
     }
 }
