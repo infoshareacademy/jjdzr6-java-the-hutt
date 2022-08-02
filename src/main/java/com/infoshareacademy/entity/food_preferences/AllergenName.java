@@ -1,7 +1,6 @@
 package com.infoshareacademy.entity.food_preferences;
 
 public class AllergenName {
-    private boolean shellfish;
     private boolean chocolate;
     private boolean nuts;
     private boolean eggs;
@@ -10,10 +9,6 @@ public class AllergenName {
     private String other;
 
     public AllergenName() {
-    }
-
-    public void setShellfish(boolean shellfish) {
-        this.shellfish = shellfish;
     }
 
     public void setChocolate(boolean chocolate) {
@@ -40,14 +35,39 @@ public class AllergenName {
         this.other = other;
     }
 
+    public boolean isChocolate() {
+        return chocolate;
+    }
+
+    public boolean isNuts() {
+        return nuts;
+    }
+
+    public boolean isEggs() {
+        return eggs;
+    }
+
+    public boolean isStrawberries() {
+        return strawberries;
+    }
+
+    public boolean isDairy() {
+        return dairy;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
     @Override
     public String toString() {
-        return "\n owoce morza: " + shellfish +
-                "\n czekolada: " + chocolate +
+        return "\n czekolada: " + chocolate +
                 "\n orzechy: " + nuts +
                 "\n jajka: " + eggs +
                 "\n truskawki: " + strawberries +
                 "\n nabiał: " + dairy +
                 "\n inne: " + other + "\n";
+
     }
+
 }

@@ -36,14 +36,14 @@ public class FridgeService {
                 run = false;
             }
         } while (!run);
-        System.out.println("Dodano produkt: "+fridge);
+        System.out.println("Dodano produkt: " + fridge);
         return fridge;
     }
 
     public Fridge removeProductFromFridge() {
         Fridge fridge = new Fridge();
         FridgeService fridgeService = new FridgeService();
-        Map<String,Double> result = null;
+        Map<String, Double> result = null;
         try {
             result = fridgeService.getJson();
         } catch (IOException e) {
@@ -65,7 +65,7 @@ public class FridgeService {
                 run = false;
             }
         } while (!run);
-        System.out.println("Usunięto produkt, w lodówce pozostało: )"+result);
+        System.out.println("Usunięto produkt, w lodówce pozostało: )" + result);
         return fridge;
     }
 
@@ -76,17 +76,18 @@ public class FridgeService {
         }
     }
 
-    public void writeJson(Map<String,Double> fridge) throws IOException {
+    public void writeJson(Map<String, Double> fridge) throws IOException {
 
         Json.writeJson(fridge, "products_in_fridge.json");
 
     }
 
-    public Map<String,Double> getJson() throws IOException {
+    public Map<String, Double> getJson() throws IOException {
         Path path = Path.of("src", "resources", "products_in_fridge.json");
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(path.toString());
-        Map<String, Double> fridge = objectMapper.readValue(file, new TypeReference<Map<String, Double>>(){});
+        Map<String, Double> fridge = objectMapper.readValue(file, new TypeReference<Map<String, Double>>() {
+        });
         return fridge;
 
     }

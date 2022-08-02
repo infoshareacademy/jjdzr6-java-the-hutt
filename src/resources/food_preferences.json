@@ -1,16 +1,15 @@
 {
   "allergenName" : {
-    "shellfish" : true,
     "chocolate" : false,
-    "nuts" : true,
-    "eggs" : true,
-    "strawberries" : true,
-    "dairy" : true,
+    "nuts" : false,
+    "eggs" : false,
+    "strawberries" : false,
+    "dairy" : false,
     "other" : "-"
   },
   "meat" : {
-    "meatEater" : true,
-    "isVegan" : false,
+    "meatEater" : false,
+    "isVegan" : true,
     "isVegetarian" : false
   }
 }

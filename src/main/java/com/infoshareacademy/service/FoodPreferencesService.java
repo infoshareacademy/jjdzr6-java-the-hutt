@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class FoodPreferencesService {
     Scanner scanner = new Scanner(System.in);
@@ -46,8 +47,6 @@ public class FoodPreferencesService {
         AllergenName allergenName = new AllergenName();
 
 
-        System.out.println("Skorupiaki[T/N]: ");
-        allergenName.setShellfish(preferencesFlag());
         System.out.println("Czekolada[T/N]:");
         allergenName.setChocolate(preferencesFlag());
         System.out.println("Orzechy[T/N]:");
@@ -105,5 +104,68 @@ public class FoodPreferencesService {
         return foodPreferences;
     }
 
+    public void recipeListContainAllergens() throws IOException {
+        RecipeService recipeService = new RecipeService();
+        List<Recipe> recipeList = recipeService.getJson();
+
+        FoodPreferencesService foodPreferencesService = new FoodPreferencesService();
+        FoodPreferences foodPreferencesJson = foodPreferencesService.getJson();
+
+        System.out.println(foodPreferencesJson.getAllergenName().getOther());
+        if (foodPreferencesJson.getAllergenName().isChocolate()) {
+            List<Recipe> chocolate = recipeList.stream()
+                    .filter(s -> !s.getNeccesaryProducts().keySet().contains("czekolada"))
+                    .collect(Collectors.toList());
+            recipeList = chocolate;
+        }
+        if (foodPreferencesJson.getAllergenName().isNuts()) {
+            List<Recipe> nuts = recipeList.stream()
+                    .filter(s -> !s.getNeccesaryProducts().keySet().contains("orzechy"))
+                    .collect(Collectors.toList());
+            recipeList = nuts;
+        }
+        if (foodPreferencesJson.getAllergenName().isEggs()) {
+            List<Recipe> eggs = recipeList.stream()
+                    .filter(s -> !s.getNeccesaryProducts().keySet().contains("jajka"))
+                    .collect(Collectors.toList());
+            recipeList = eggs;
+        }
+        if (foodPreferencesJson.getAllergenName().isStrawberries()) {
+            List<Recipe> strawberries = recipeList.stream()
+                    .filter(s -> !s.getNeccesaryProducts().keySet().contains("truskawki"))
+                    .collect(Collectors.toList());
+            recipeList = strawberries;
+        }
+        if (foodPreferencesJson.getAllergenName().isDairy()) {
+            List<Recipe> diary = recipeList.stream()
+                    .filter(s -> !s.getNeccesaryProducts().keySet().contains("mleko"))
+                    .collect(Collectors.toList());
+            recipeList = diary;
+        }
+        if (!foodPreferencesJson.getAllergenName().getOther().equals("-")) {
+            List<Recipe> other = recipeList.stream()
+                    .filter(s -> !s.getNeccesaryProducts().keySet().contains(foodPreferencesJson.getAllergenName().getOther()))
+                    .collect(Collectors.toList());
+            recipeList = other;
+        } else if (!foodPreferencesJson.getAllergenName().getOther().equals("brak")){
+            List<Recipe> other = recipeList.stream()
+                    .filter(s -> !s.getNeccesaryProducts().keySet().contains(foodPreferencesJson.getAllergenName().getOther()))
+                    .collect(Collectors.toList());
+            recipeList = other;
+        }
+        if (foodPreferencesJson.getMeat().isVegetarian()) {
+            List<Recipe> vegetarian = recipeList.stream()
+                    .filter(Recipe::isVegetarian)
+                    .collect(Collectors.toList());
+            recipeList = vegetarian;
+        }
+        if (foodPreferencesJson.getMeat().isVegan()) {
+            List<Recipe> vegan = recipeList.stream()
+                    .filter(Recipe::isVegan)
+                    .collect(Collectors.toList());
+            recipeList = vegan;
+        }
+        System.out.println(recipeList);
+    }
 
 }
