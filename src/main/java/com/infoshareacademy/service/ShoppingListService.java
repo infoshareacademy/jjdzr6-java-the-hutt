@@ -2,8 +2,9 @@ package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infoshareacademy.Json;
-import com.infoshareacademy.recipe.Recipe;
+import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.other.Json;
+import com.infoshareacademy.entity.shopping_list.ShoppingList;
 
 import java.io.IOException;
 import java.nio.file.Files;

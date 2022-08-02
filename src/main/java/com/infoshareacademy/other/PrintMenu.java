@@ -1,4 +1,4 @@
-package com.infoshareacademy;
+package com.infoshareacademy.other;
 
 public class PrintMenu {
     public void printMenu() {

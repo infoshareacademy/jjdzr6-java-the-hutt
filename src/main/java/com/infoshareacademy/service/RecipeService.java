@@ -2,14 +2,13 @@ package com.infoshareacademy.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infoshareacademy.Json;
-import com.infoshareacademy.recipe.Recipe;
+import com.infoshareacademy.other.Json;
+import com.infoshareacademy.entity.recipe.Recipe;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;

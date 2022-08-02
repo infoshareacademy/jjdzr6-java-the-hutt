@@ -1,13 +1,14 @@
 package com.infoshareacademy;
 
+import com.infoshareacademy.entity.food_preferences.FoodPreferences;
+import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.other.Menu;
 
-import com.infoshareacademy.food_preferences.FoodPreferences;
-import com.infoshareacademy.recipe.Recipe;
 import com.infoshareacademy.service.FoodPreferencesService;
 import com.infoshareacademy.service.RecipeService;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {

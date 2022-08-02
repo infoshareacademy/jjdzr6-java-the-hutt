@@ -5,17 +5,15 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.infoshareacademy.food_preferences.AllergenName;
-import com.infoshareacademy.food_preferences.FoodPreferences;
-import com.infoshareacademy.food_preferences.Meat;
-import com.infoshareacademy.recipe.Recipe;
+import com.infoshareacademy.entity.food_preferences.AllergenName;
+import com.infoshareacademy.entity.food_preferences.FoodPreferences;
+import com.infoshareacademy.entity.food_preferences.Meat;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 

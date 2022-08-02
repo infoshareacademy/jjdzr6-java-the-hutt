@@ -1,8 +1,8 @@
-package com.infoshareacademy;
+package com.infoshareacademy.other;
 
-import com.infoshareacademy.food_preferences.FoodPreferences;
-import com.infoshareacademy.fridge.Fridge;
-import com.infoshareacademy.recipe.Recipe;
+import com.infoshareacademy.entity.food_preferences.FoodPreferences;
+import com.infoshareacademy.entity.fridge.Fridge;
+import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.service.FoodPreferencesService;
 import com.infoshareacademy.service.FridgeService;
 import com.infoshareacademy.service.RecipeService;

@@ -1,4 +1,4 @@
-package com.infoshareacademy.recipe;
+package com.infoshareacademy.entity.recipe;
 
 
 import java.util.HashMap;
