@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Recipe</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Fridge Recipe</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<br>
+<br>
+<div class = "container">
+    <div class = "row">
+        <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class = "text-center"> Stwórz nowy przepis </h1>
+            <div class = "card-body">
+                <form th:action="@{/recipes}" th:object = "${recipe}" method="POST">
+                    <div class ="form-group">
+                        <label> Tytuł </label>
+                        <input
+                                type = "text"
+                                name = "name"
+                                th:field = "*{name}"
+                                class = "form-control"
+                                placeholder="Podaj tytuł przepisu."
+                        />
+                    </div>
+
+                    <div class ="form-group">
+                        <label> Opis </label>
+                        <input
+                                type = "text"
+                                name = "description"
+                                th:field = "*{description}"
+                                class = "form-control"
+                                placeholder="Podaj opis przepisu."
+                        />
+                    </div>
+
+                    <div class ="form-group">
+                        <label> Czas przygotowania </label>
+                        <input
+                                type = "text"
+                                name = "preparation_time"
+                                th:field = "*{preparationTime}"
+                                class = "form-control"
+                                placeholder="Podaj czas przygotowania."
+                        />
+                    </div>
+<!--TODO-->
+<!--dodawanie wielu pól na raz z możliwością multiplikacji okienek-->
+<!--                    <div class ="form-group">-->
+<!--                        <label> Składniki </label>-->
+<!--                        <input-->
+<!--                                type = "text"-->
+<!--                                name = "neccessary_products_mapping"-->
+<!--                                th:field = "*{neccesaryProducts}"-->
+<!--                                class = "form-control"-->
+<!--                                placeholder="..."-->
+<!--                        />-->
+<!--                    </div>-->
+
+                    <div class = "box-footer">
+                        <button type="submit" class = "btn btn-primary">
+                            Dodaj
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

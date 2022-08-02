@@ -7,11 +7,14 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 
 @Service
-public class RecipeService{
+public class RecipeService {
 
 //    public void writeJson(List<Recipe> recipe) throws IOException {
 //        Json.writeJson(recipe, "recipe.json");
@@ -25,7 +28,7 @@ public class RecipeService{
 //        });
 //        return recipe;
 //    }
-//
+
 //    // DONE
 //    public void showAllRecipes(List<Recipe> recipe) {
 //        recipe.forEach(oneRecipe -> System.out.println(oneRecipe));
@@ -127,15 +130,16 @@ public class RecipeService{
     //----------------------WEB----------------------
     private RecipeRepository recipeRepository;
 
-//    public RecipeService() {
-//    }
-
     public RecipeService(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
 
     public List<Recipe> getAllRecipe() {
         return recipeRepository.findAll();
+    }
+
+    public Recipe saveRecipe(Recipe recipe) {
+        return recipeRepository.save(recipe);
     }
 
 }

@@ -1,12 +1,13 @@
 package com.infoshareacademy.controller;
 
 
+import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.service.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.transaction.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class RecipeController {
@@ -45,5 +46,17 @@ public class RecipeController {
         return "recipes";
     }
 
+    @GetMapping("recipes/new")
+    public String createRecipeForm(Model model) {
+        Recipe recipe = new Recipe();
+        model.addAttribute("recipe", recipe);
+        return "create_recipe";
+    }
+
+    @PostMapping("recipes")
+    public String saveRecipe(@ModelAttribute("recipe") Recipe recipe) {
+        recipeService.saveRecipe(recipe);
+        return "redirect:/recipes";
+    }
 }
 
