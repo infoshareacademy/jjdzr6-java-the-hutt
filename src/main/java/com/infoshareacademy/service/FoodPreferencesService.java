@@ -8,12 +8,14 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.infoshareacademy.entity.food_preferences.AllergenName;
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.food_preferences.Meat;
+import com.infoshareacademy.entity.recipe.Recipe;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
