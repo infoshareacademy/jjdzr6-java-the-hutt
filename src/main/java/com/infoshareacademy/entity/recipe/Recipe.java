@@ -12,6 +12,10 @@ public class Recipe {
     private int preparationTime;
     private Map<String, Double> neccesaryProducts = new HashMap<>();
 
+    private boolean vegetarian;
+
+    private boolean vegan;
+
     public Map<String, Double> addNecessaryProducts(String name, Double howMany){
         neccesaryProducts.put(name, howMany);
         return neccesaryProducts;
@@ -48,6 +52,22 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
+    public boolean isVegetarian() {
+        return vegetarian;
+    }
+
+    public void setVegetarian(boolean vegetarian) {
+        this.vegetarian = vegetarian;
+    }
+
+    public boolean isVegan() {
+        return vegan;
+    }
+
+    public void setVegan(boolean vegan) {
+        this.vegan = vegan;
+    }
+
     public Recipe() {
     }
 
@@ -72,4 +92,6 @@ public class Recipe {
     public int hashCode() {
         return Objects.hash(name, description, preparationTime, neccesaryProducts);
     }
+
+
 }

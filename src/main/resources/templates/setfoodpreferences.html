@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Allergens</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/foodpreferences}" th:object="${foodpreferences}" method="post">
+What are your allergens:
+    <p>Chocolate<input type="checkbox" th:field="${foodpreferences.chocolate}"/>
+    <p>Dairy<input type="checkbox" th:field="${foodpreferences.dairy}"/>
+    <p>Eggs<input type="checkbox" th:field="${foodpreferences.eggs}"/>
+    <p>Nuts<input type="checkbox" th:field="${foodpreferences.nuts}"/>
+    <p>Shellfish<input type="checkbox" th:field="${foodpreferences.shellfish}"/>
+    <p>Strawberries<input type="checkbox" th:field="${foodpreferences.strawberries}"/>
+    <p>Meat Eater<input type="checkbox" th:field="${foodpreferences.meatEater}"/>
+    <p>Vegan<input type="checkbox" th:field="${foodpreferences.vegan}"/>
+    <p>Vegetarian<input type="checkbox" th:field="${foodpreferences.vegetarian}"/>
+    <p>Other: <input type="text" th:field="*{other}"/></p>
+    <p><input type="submit" value="submit"></p>
+
+</form>
+
+</body>
+</html>

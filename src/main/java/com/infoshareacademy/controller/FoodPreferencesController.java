@@ -1,8 +1,9 @@
 package com.infoshareacademy.controller;
 
-import com.infoshareacademy.entity.food_preferences.AllergenName;
-import com.infoshareacademy.entity.food_preferences.Meat;
+
+import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.service.FoodPreferencesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,71 +11,55 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.IOException;
+
+
 @Controller
 public class FoodPreferencesController {
 
+    @Autowired
     private FoodPreferencesService foodPreferencesService;
 
     public FoodPreferencesController(FoodPreferencesService foodPreferencesService) {
         this.foodPreferencesService = foodPreferencesService;
     }
 
+    @GetMapping("/foodpreferences")
+    public String listFoodPreferences(Model model) {
+        model.addAttribute("getfoodpreferences", foodPreferencesService.getFoodPreferences());
+        return "foodpreferences";
+    }
+
     @GetMapping("/foodpreferences/{id}")
-    public String getAllergenName(Model model, @PathVariable Long id) {
-        model.addAttribute("foodpreferences", foodPreferencesService.getAllergenName(id));
-        return "foodpreferences";
+    public String getStudentsById(@PathVariable Long id, Model model) {
+        model.addAttribute("foodpreferencesbyid", foodPreferencesService.getFoodPreferencesById(id));
+        return "foodpreferencesbyid";
     }
 
-/*    @GetMapping("/foodpreferences/{id}")
-    public String getMeat(Model model, @PathVariable Long id) {
-        model.addAttribute("foodpreferences", foodPreferencesService.getMeat(id));
-        return "foodpreferences";
-    }*/
-
-    @GetMapping("/foodpreferences/edit/{id}")
-    public String editAllergenForm(@PathVariable Long id, Model model) {
-        model.addAttribute("foodpreferences", foodPreferencesService.getAllergenName(id));
-        return "edit_foodpreferences";
+    @GetMapping("/foodpreferences/recipe/{id}")
+    public String getRecipeByAllergens(@PathVariable Long id, Model model) {
+        try {
+            model.addAttribute("recipbeByFoodPreferences", foodPreferencesService.filterRecipeByFoodPreferences(id));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "recipebyfoodpreferences";
     }
 
-/*    @GetMapping("/foodpreferences/edit/{id}")
-    public String editMeatForm(@PathVariable Long id, Model model) {
-        model.addAttribute("foodpreferences", foodPreferencesService.getMeat(id));
-        return "edit_foodpreferences";
-    }*/
-    @PostMapping("/foodpreferences/{id}")
-    public String updateAllergenName(@PathVariable Long id,
-                                     @ModelAttribute("foodpreferences") AllergenName allergenName,
-                                     Model model) {
+    @GetMapping("/foodpreferences/set")
+    public String createAllergensForm(Model model) {
 
-        AllergenName existingAlergens = foodPreferencesService.getAllergenName(id);
-        existingAlergens.setId(allergenName.getId());
-        existingAlergens.setDairy(allergenName.isDairy());
-        existingAlergens.setChocolate(allergenName.isChocolate());
-        existingAlergens.setEggs(allergenName.isEggs());
-        existingAlergens.setNuts(allergenName.isNuts());
-        existingAlergens.setShellfish(allergenName.isShellfish());
-        existingAlergens.setStrawberries(allergenName.isStrawberries());
-        existingAlergens.setOther(allergenName.getOther());
+        FoodPreferences foodPreferences = new FoodPreferences();
+        model.addAttribute("foodpreferences", foodPreferences);
+        return "setfoodpreferences";
 
-        foodPreferencesService.setAllergenPreferences(existingAlergens);
+    }
+
+    @PostMapping("/foodpreferences")
+    public String saveAllergens(@ModelAttribute("foodpreferences") FoodPreferences foodPreferences) {
+        foodPreferencesService.setFoodPreferences(foodPreferences);
         return "redirect:/foodpreferences";
     }
 
-/*    @PostMapping("/foodpreferences/{id}")
-    public String updateMeat(@PathVariable Long id,
-                             @ModelAttribute("foodpreferences") Meat meat,
-                             Model model) {
-
-
-        Meat existingMeat = foodPreferencesService.getMeat(id);
-        existingMeat.setId(meat.getId());
-        existingMeat.setMeatEater(meat.isMeatEater());
-        existingMeat.setVegan(meat.isVegan());
-        existingMeat.setVegetarian(meat.isVegetarian());
-
-        foodPreferencesService.setMeatPreferences(existingMeat);
-        return "redirect:/foodpreferences";
-    }*/
 
 }

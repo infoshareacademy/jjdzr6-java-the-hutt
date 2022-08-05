@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipe</title>
+</head>
+<body>
+<tr th:each="recipe: ${recipbeByFoodPreferences}">
+  Name: <td th:text="${recipe.getName()}"></td> <br>
+  Description: <td th:text="${recipe.getDescription()}"></td><br>
+  Preparation time: <td th:text="${recipe.getPreparationTime()}"></td><br>
+  Neccessary products: <td th:text="${recipe.getNeccesaryProducts()}"></td><br><br>
+
+</tr>
+</body>
+</html>

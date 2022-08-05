@@ -1,60 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Java The Hutt</title>
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Food Preferences</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <!-- Brand -->
-    <a class="navbar-brand" href="#">Food Preferences</a>
-
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/foodpreferences/{id}}">Food Preferences</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class ="container">
-    <div class = "row">
-        <h1> Food Preferences</h1>
-    </div>
-
-    <table class = "table table-striped table-bordered">
-        <thead class = "table-dark">
-        <tr>
-            <th> Id</th>
-            <th> Shellfish</th>
-            <th> Chocolate </th>
-            <th> nuts </th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each = "foodpreference: ${foodpreferences}">
-            <td th:text = "${foodpreferences.id}"></td>
-            <td th:text = "${foodpreferences.shellfish}"></td>
-            <td th:text = "${student.chocolate}"></td>
-            <td th:text = "${student.nuts}"></td>
-
-        </tr>
-        </tbody>
-
-    </table>
-
-</div>
+<tr th:each="allergen: ${getfoodpreferences}">
+    ID: <td th:text="${allergen.id}"></td> <br>
+    CHOCOLATE: <td th:text="${allergen.chocolate}"></td><br>
+    DAIRY: <td th:text="${allergen.dairy}"></td><br>
+    EGGS: <td th:text="${allergen.eggs}"></td><br>
+    NUTS: <td th:text="${allergen.nuts}"></td><br>
+    SHELLFISH: <td th:text="${allergen.shellfish}"></td><br>
+    STRAWBERRIES: <td th:text="${allergen.strawberries}"></td><br>
+    MEAT EATER: <td th:text="${allergen.meatEater}"></td><br><br>
+    VEGAN: <td th:text="${allergen.vegan}"></td><br><br>
+    VEGETARIAN: <td th:text="${allergen.vegetarian}"></td><br><br>
+    OTHER: <td th:text="${allergen.other}"></td><br><br>
+</tr>
 </body>
 </html>
