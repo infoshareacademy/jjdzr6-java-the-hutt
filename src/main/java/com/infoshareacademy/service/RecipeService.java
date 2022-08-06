@@ -142,4 +142,16 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    public Recipe getRecipeById(Long id) {
+        return recipeRepository.findById(id).get();
+    }
+
+    public Recipe updateRecipe(Recipe recipe) {
+        return  recipeRepository.save(recipe);
+    }
+
+    public void deleteRecipeById(Long id) {
+        recipeRepository.deleteById(id);
+    }
+
 }
