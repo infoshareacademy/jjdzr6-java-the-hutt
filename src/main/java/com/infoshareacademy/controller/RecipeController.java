@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -56,6 +57,34 @@ public class RecipeController {
     @PostMapping("recipes")
     public String saveRecipe(@ModelAttribute("recipe") Recipe recipe) {
         recipeService.saveRecipe(recipe);
+        return "redirect:/recipes";
+    }
+
+    @GetMapping("/recipes/edit/{id}")
+    public String editRecipe(@PathVariable Long id, Model model) {
+        model.addAttribute("recipe", recipeService.getRecipeById(id));
+        return "edit_recipe";
+    }
+
+
+    @PostMapping("/recipes/{id}")
+    public String updateRecipe(@PathVariable Long id, @ModelAttribute("recipe") Recipe recipe, Model model) {
+
+        Recipe existingRecipe = recipeService.getRecipeById(id);
+        existingRecipe.setId(id);
+        existingRecipe.setName(recipe.getName());
+        existingRecipe.setDescription(recipe.getDescription());
+        existingRecipe.setPreparationTime(recipe.getPreparationTime());
+        existingRecipe.setNeccesaryProducts(recipe.getNeccesaryProducts());
+
+        recipeService.saveRecipe(existingRecipe);
+
+        return "redirect:/recipes";
+    }
+
+    @GetMapping("/recipes/{id}")
+    public String deleteRecipe(@PathVariable Long id) {
+        recipeService.deleteRecipeById(id);
         return "redirect:/recipes";
     }
 }
