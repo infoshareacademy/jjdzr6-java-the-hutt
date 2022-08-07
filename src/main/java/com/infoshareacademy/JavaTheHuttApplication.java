@@ -30,12 +30,12 @@ public class JavaTheHuttApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 //        Recipe tostyRecipe = new Recipe();
-//        tostyRecipe.addNecessaryProducts("owsianka", 1.0);
+//        tostyRecipe.addNecessaryProducts("jablka", 1.0);
 //        tostyRecipe.addNecessaryProducts("mleko", 1.0);
-//        tostyRecipe.addNecessaryProducts("banan", 2.0);
 //
-//        tostyRecipe.setName("owsianka z bananem");
-//        tostyRecipe.setDescription("pyszna owsianka");
+//
+//        tostyRecipe.setName("jablka z mlekiem");
+//        tostyRecipe.setDescription("jablka");
 //        tostyRecipe.setPreparationTime(10);
 //
 //        System.out.println(tostyRecipe);
