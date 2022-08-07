@@ -1,7 +1,9 @@
 package com.infoshareacademy;
 
 import com.infoshareacademy.entity.fridge.Fridge;
+import com.infoshareacademy.entity.product.Product;
 import com.infoshareacademy.repository.FridgeRepository;
+import com.infoshareacademy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,15 +17,15 @@ public class JavaTheHuttApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	private FridgeRepository fridgeRepository;
+	private ProductRepository productRepository;
 
 	@Override
 	public void run(String... args) throws Exception{
-		Fridge fridge1 = new Fridge("Jablko", 3.0);
-		Fridge fridge2 = new Fridge("Jajko", 10.0);
+		Product product1 = new Product("Jablko", 3.0);
+		Product product2 = new Product("Jajko", 10.0);
 
-		fridgeRepository.save(fridge1);
-		fridgeRepository.save(fridge2);
+		productRepository.save(product1);
+		productRepository.save(product2);
 
 	}
 
