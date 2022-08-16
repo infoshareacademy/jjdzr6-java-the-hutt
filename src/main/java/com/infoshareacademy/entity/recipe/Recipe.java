@@ -1,11 +1,12 @@
 package com.infoshareacademy.entity.recipe;
 
 
+import com.infoshareacademy.entity.product.Product;
+import com.infoshareacademy.entity.product.ProductElement;
+
 import javax.persistence.*;
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "recipes")
@@ -26,34 +27,25 @@ public class Recipe {
     @Column(name = "preparation_time")
     private int preparationTime;
 
-    @ElementCollection
-    @CollectionTable(name = "neccessary_products_mapping",
-            joinColumns = {@JoinColumn(name = "recipe_id", referencedColumnName = "id")})
-    @Column(name = "howMany")
-    @MapKeyColumn(name = "name")
-    private Map<String, Double> neccesaryProducts = new HashMap<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    private List<Product> productList = new ArrayList<>();
 
-    public Map<String, Double> addNecessaryProducts(String name, Double howMany){
-        neccesaryProducts.put(name, howMany);
-        return neccesaryProducts;
-    }
 
     public Recipe() {
     }
 
-    public Recipe(String name, String description, int preparationTime) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.preparationTime = preparationTime;
+    public List<Product> getProductList() {
+        return productList;
     }
-//    public Recipe(String name, String description, int preparationTime, Map<String, Double> neccesaryProducts) {
-//        this.name = name;
-//        this.description = description;
-//        this.preparationTime = preparationTime;
-//        this.neccesaryProducts = neccesaryProducts;
-//    }
 
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    public void addProduct(Product product) {
+        this.productList.add(product);
+    }
 
     public Long getId() {
         return id;
@@ -79,14 +71,6 @@ public class Recipe {
         this.description = description;
     }
 
-    public Map<String, Double> getNeccesaryProducts() {
-        return neccesaryProducts;
-    }
-
-    public void setNeccesaryProducts(Map<String, Double> neccesaryProducts) {
-        this.neccesaryProducts = neccesaryProducts;
-    }
-
     public int getPreparationTime() {
         return preparationTime;
     }
@@ -97,23 +81,12 @@ public class Recipe {
 
     @Override
     public String toString() {
-        return "Przepis na: " +
-                  name +
-                "\n Opis: " + description  +
-                ", Niezbędne produkty: " + neccesaryProducts +
-                ", czas przygotowania: [min] " + preparationTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Recipe recipe = (Recipe) o;
-        return preparationTime == recipe.preparationTime && Objects.equals(name, recipe.name) && Objects.equals(description, recipe.description) && Objects.equals(neccesaryProducts, recipe.neccesaryProducts);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description, preparationTime, neccesaryProducts);
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", preparationTime=" + preparationTime +
+                ", productList=" + productList +
+                '}';
     }
 }
