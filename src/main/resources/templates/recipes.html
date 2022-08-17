@@ -45,7 +45,7 @@
             <td th:text = "${recipe.name}"></td>
             <td th:text = "${recipe.description}"></td>
             <td th:text = "${recipe.preparationTime}"></td>
-            <td th:text = "${recipe.neccesaryProducts}"></td>
+            <td th:text = "${recipe.productList}"></td>
             <td>
                 <a th:href = "@{/recipes/edit/{id}(id=${recipe.id})}"
                    class = "btn btn-primary">Zaktualizuj</a>

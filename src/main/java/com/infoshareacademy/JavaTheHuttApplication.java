@@ -1,7 +1,9 @@
 package com.infoshareacademy;
 
+import com.infoshareacademy.entity.product.Product;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
+import com.infoshareacademy.service.ProductService;
 import com.infoshareacademy.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +17,8 @@ public class JavaTheHuttApplication implements CommandLineRunner {
 
     public static void main(String[] args) throws IOException {
         SpringApplication.run(JavaTheHuttApplication.class, args);
+
+
 
 //		RecipeService recipeService = new RecipeService();
 //		List<Recipe> recipe = new ArrayList<>();
@@ -44,5 +48,10 @@ public class JavaTheHuttApplication implements CommandLineRunner {
 
         RecipeService recipeService = new RecipeService(recipeRepository);
         System.out.println(recipeService.getAllRecipe());
+
+        Product product = new Product("kasza", 1.0);
+        Recipe recipe = new Recipe();
+        recipe.addProduct(product);
+        recipeService.saveRecipe(recipe);
     }
 }

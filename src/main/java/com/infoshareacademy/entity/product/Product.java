@@ -47,4 +47,11 @@ public class Product {
     public void setAmount(Double quantity) {
         this.amount = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "Składniki: " +
+                " nazwa składnika='" + productName + '\'' +
+                ", ilość=" + amount;
+    }
 }

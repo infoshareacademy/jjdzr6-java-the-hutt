@@ -95,7 +95,6 @@ public class RecipeController {
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
-        existingRecipe.setNeccesaryProducts(recipe.getNeccesaryProducts());
 
         recipeService.saveRecipe(existingRecipe);
 
