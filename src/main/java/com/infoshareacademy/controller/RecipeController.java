@@ -1,6 +1,7 @@
 package com.infoshareacademy.controller;
 
 
+import com.infoshareacademy.entity.product.Product;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.service.RecipeService;
 import com.sun.xml.bind.v2.TODO;
@@ -63,19 +64,19 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-    //    TODO
+    //-------------------------------------------
     @PostMapping(value = "recipes/new", params = {"addProduct"})
-    public String addElement(@ModelAttribute("product") ProductDto product) {
-        product.addElement(new ProductElementDto());
-        return "product-form";
+    public String addProduct(@ModelAttribute("recipe") Recipe recipe) {
+        recipe.addProduct(new Product());
+        return "create_recipe";
     }
 
     @PostMapping(value = "recipes/new", params = {"removeProduct"})
-    public String removeElement(@ModelAttribute("product") ProductDto product,
+    public String removeProduct(@ModelAttribute("recipe") Recipe recipe,
                                 HttpServletRequest request) {
-        int index = Integer.parseInt(request.getParameter("removeElement"));
-        product.getElements().remove(index);
-        return "product-form";
+        int index = Integer.parseInt(request.getParameter("removeProduct"));
+        recipe.getProductList().remove(index);
+        return "create_recipe";
     }
     //-------------------------------------------
 
