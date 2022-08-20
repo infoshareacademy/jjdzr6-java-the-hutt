@@ -28,12 +28,14 @@ public class Recipe {
     private int preparationTime;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "Id")
     private List<Product> productList = new ArrayList<>();
 
 
     public Recipe() {
     }
+
+
 
     public List<Product> getProductList() {
         return productList;

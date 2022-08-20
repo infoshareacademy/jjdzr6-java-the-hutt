@@ -19,6 +19,8 @@ public class Product {
     public Product() {
     }
 
+
+
     public Product(String productName, Double amount) {
         this.productName = productName;
         this.amount = amount;

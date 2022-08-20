@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
+import java.util.List;
 
 @SpringBootApplication
 public class JavaTheHuttApplication implements CommandLineRunner {
@@ -46,12 +47,21 @@ public class JavaTheHuttApplication implements CommandLineRunner {
 //
 //        recipeRepository.save(tostyRecipe);
 
-        RecipeService recipeService = new RecipeService(recipeRepository);
-        System.out.println(recipeService.getAllRecipe());
-
-        Product product = new Product("kasza", 1.0);
-        Recipe recipe = new Recipe();
-        recipe.addProduct(product);
-        recipeService.saveRecipe(recipe);
+//        RecipeService recipeService = new RecipeService(recipeRepository);
+//        System.out.println(recipeService.getAllRecipe());
+//
+//        Recipe recipe = new Recipe();
+//        recipe.addProduct(new Product("hej", 2.0));
+//        recipe.addProduct(new Product("ho", 2.0));
+//        recipe.addProduct(new Product("hi", 2.0));
+//
+//
+//        recipe.setId(40L);
+//        recipe.setName("HAHA");
+//        recipe.setDescription("huhuhu");
+//        recipe.setPreparationTime(3);
+//        System.out.println(recipe);
+//
+//        recipeService.saveRecipe(recipe);
     }
 }
