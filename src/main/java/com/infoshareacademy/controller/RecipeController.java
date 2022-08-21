@@ -63,6 +63,12 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
+    @PostMapping(value = "recipes/new", params = {"addProduct"})
+    public String addElement(@ModelAttribute("recipe") Recipe recipe) {
+        recipe.addProduct(new Product());
+        return "create_recipe";
+    }
+
     //-------------------------------------------
     @PostMapping(value = "recipes/new", params = {"addProduct"})
     public String addProduct(@ModelAttribute("recipe") Recipe recipe) {

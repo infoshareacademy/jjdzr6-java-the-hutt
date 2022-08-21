@@ -58,18 +58,26 @@
                                 placeholder="Podaj czas przygotowania."
                         />
                     </div>
-<!--TODO-->
-<!--dodawanie wielu pól na raz z możliwością multiplikacji okienek-->
-<!--                    <div class ="form-group">-->
-<!--                        <label> Składniki </label>-->
-<!--                        <input-->
-<!--                                type = "text"-->
-<!--                                name = "neccessary_products_mapping"-->
-<!--                                th:field = "*{neccesaryProducts}"-->
-<!--                                class = "form-control"-->
-<!--                                placeholder="..."-->
-<!--                        />-->
-<!--                    </div>-->
+
+
+                    <table>
+                        <tr>
+                            <th >Produkt</th>
+                            <th >Ilość</th>
+                            <th>
+                                <button type="submit" name="addElement" > Dodaj produkt </button>
+                            </th>
+                        </tr>
+                        <tr th:each="product_recipe,iterStat : *{recipe}" th:class="${iterStat.odd}? 'grey-row'">
+                            <td th:text="${iterStat.count}"></td>
+                            <td>
+                                <input type="text" th:field="*{recipe[__${iterStat.index}__].name}" />
+                            </td>
+                            <td>
+                                <button type="submit" name="removeElement" th:value="${iterStat.index}" th:text="#{product.element.remove}"></button>
+                            </td>
+                        </tr>
+                    </table>
 
                     <div class = "box-footer">
                         <button type="submit" class = "btn btn-primary">

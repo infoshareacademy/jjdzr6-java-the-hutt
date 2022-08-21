@@ -35,6 +35,9 @@ public class JavaTheHuttApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 //        Recipe tostyRecipe = new Recipe();
+//        Product product = new Product("jajka", 2.0);
+//        tostyRecipe.addProduct(product);
+
 //        tostyRecipe.addNecessaryProducts("jablka", 1.0);
 //        tostyRecipe.addNecessaryProducts("mleko", 1.0);
 //
@@ -42,6 +45,7 @@ public class JavaTheHuttApplication implements CommandLineRunner {
 //        tostyRecipe.setName("jablka z mlekiem");
 //        tostyRecipe.setDescription("jablka");
 //        tostyRecipe.setPreparationTime(10);
+//recipeRepository.save(tostyRecipe);
 //
 //        System.out.println(tostyRecipe);
 //
