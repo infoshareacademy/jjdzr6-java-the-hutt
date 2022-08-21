@@ -31,7 +31,7 @@ public class FoodPreferencesController {
     }
 
     @GetMapping("/foodpreferences/{id}")
-    public String getStudentsById(@PathVariable Long id, Model model) {
+    public String getFoodPreferencesById(@PathVariable Long id, Model model) {
         model.addAttribute("foodpreferencesbyid", foodPreferencesService.getFoodPreferencesById(id));
         return "foodpreferencesbyid";
     }
