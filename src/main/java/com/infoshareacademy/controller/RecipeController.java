@@ -4,7 +4,6 @@ package com.infoshareacademy.controller;
 import com.infoshareacademy.entity.product.Product;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.service.RecipeService;
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,7 +90,7 @@ public class RecipeController {
     public String updateRecipe(@PathVariable Long id, @ModelAttribute("recipe") Recipe recipe, Model model) {
 
         Recipe existingRecipe = recipeService.getRecipeById(id);
-        existingRecipe.setId(id);
+        existingRecipe.setRecipeId(id);
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());

@@ -2,10 +2,8 @@ package com.infoshareacademy.entity.recipe;
 
 
 import com.infoshareacademy.entity.product.Product;
-import com.infoshareacademy.entity.product.ProductElement;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Entity
@@ -14,9 +12,9 @@ import java.util.*;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 //    @Column(name = "id")
-    private Long id;
+    private Long recipeId;
 
     @Column(name = "name")
     private String name;
@@ -27,15 +25,11 @@ public class Recipe {
     @Column(name = "preparation_time")
     private int preparationTime;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "Id")
+    @OneToMany(mappedBy = "recipe",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> productList = new ArrayList<>();
-
 
     public Recipe() {
     }
-
-
 
     public List<Product> getProductList() {
         return productList;
@@ -49,12 +43,12 @@ public class Recipe {
         this.productList.add(product);
     }
 
-    public Long getId() {
-        return id;
+    public Long getRecipeId() {
+        return recipeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRecipeId(Long id) {
+        this.recipeId = id;
     }
 
     public String getName() {
@@ -84,7 +78,7 @@ public class Recipe {
     @Override
     public String toString() {
         return "Recipe{" +
-                "id=" + id +
+                "id=" + recipeId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", preparationTime=" + preparationTime +

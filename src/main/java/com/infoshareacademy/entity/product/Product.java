@@ -1,5 +1,7 @@
 package com.infoshareacademy.entity.product;
 
+import com.infoshareacademy.entity.recipe.Recipe;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,7 +10,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long productId;
 
     @Column(name = "product_name")
     private String productName;
@@ -16,22 +18,24 @@ public class Product {
     @Column(name = "amount")
     private Double amount;
 
+    @ManyToOne
+    @JoinColumn(name = "recipe_id", nullable = false)
+    private Recipe recipe;
+
     public Product() {
     }
-
-
 
     public Product(String productName, Double amount) {
         this.productName = productName;
         this.amount = amount;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProductId(Long id) {
+        this.productId = id;
     }
 
-    public Long getId() {
-        return id;
+    public Long getProductId() {
+        return productId;
     }
 
     public String getProductName() {
