@@ -3,13 +3,13 @@ package com.infoshareacademy.entity.product;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products")
+@Table(name = "my_products")
 public class Product {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long productId;
 
     @Column(name = "product_name")
     private String productName;
@@ -25,12 +25,12 @@ public class Product {
         this.amount = amount;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProductId(Long id) {
+        this.productId = id;
     }
 
-    public Long getId() {
-        return id;
+    public Long getProductId() {
+        return productId;
     }
 
     public String getProductName() {

@@ -21,11 +21,7 @@ public class JavaTheHuttApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception{
-		Product product1 = new Product("Jablko", 3.0);
-		Product product2 = new Product("Jajko", 10.0);
 
-		productRepository.save(product1);
-		productRepository.save(product2);
 
 	}
 
