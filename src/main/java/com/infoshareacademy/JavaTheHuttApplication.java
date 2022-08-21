@@ -20,7 +20,6 @@ public class JavaTheHuttApplication implements CommandLineRunner {
         SpringApplication.run(JavaTheHuttApplication.class, args);
 
 
-
 //		RecipeService recipeService = new RecipeService();
 //		List<Recipe> recipe = new ArrayList<>();
 //		recipe.addAll(recipeService.getJson());
@@ -29,14 +28,13 @@ public class JavaTheHuttApplication implements CommandLineRunner {
 //        System.out.println(recipe);
     }
 
-    @Autowired
-    private RecipeRepository recipeRepository;
 
     @Override
     public void run(String... args) {
-//        Recipe tostyRecipe = new Recipe();
-//        Product product = new Product("jajka", 2.0);
-//        tostyRecipe.addProduct(product);
+
+
+
+
 
 //        tostyRecipe.addNecessaryProducts("jablka", 1.0);
 //        tostyRecipe.addNecessaryProducts("mleko", 1.0);

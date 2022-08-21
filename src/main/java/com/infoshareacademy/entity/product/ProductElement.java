@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product_elements")
 public class ProductElement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long elementId;
 
     @Column(name = "product_name")
     private String productName;
@@ -25,12 +25,12 @@ public class ProductElement {
         this.amount = amount;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setElementId(Long id) {
+        this.elementId = id;
     }
 
-    public Long getId() {
-        return id;
+    public Long getElementId() {
+        return elementId;
     }
 
     public String getProductName() {
@@ -54,18 +54,18 @@ public class ProductElement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductElement productElement = (ProductElement) o;
-        return Objects.equals(id, productElement.id) && Objects.equals(productName, productElement.productName) && Objects.equals(amount, productElement.amount);
+        return Objects.equals(elementId, productElement.elementId) && Objects.equals(productName, productElement.productName) && Objects.equals(amount, productElement.amount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productName, amount);
+        return Objects.hash(elementId, productName, amount);
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "id=" + elementId +
                 ", productName='" + productName + '\'' +
                 ", amount=" + amount +
                 '}';

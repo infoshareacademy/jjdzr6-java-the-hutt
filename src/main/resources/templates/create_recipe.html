@@ -25,7 +25,7 @@
         <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
             <h1 class = "text-center"> Stwórz nowy przepis </h1>
             <div class = "card-body">
-                <form th:action="@{/recipes}" th:object = "${recipe}" method="POST">
+                <form th:action="@{/recipes/new}" th:object = "${recipe}" method="POST">
                     <div class ="form-group">
                         <label> Tytuł </label>
                         <input
@@ -58,23 +58,27 @@
                                 placeholder="Podaj czas przygotowania."
                         />
                     </div>
-
-
                     <table>
                         <tr>
-                            <th >Produkt</th>
                             <th >Ilość</th>
+                            <th >Produkt</th>
                             <th>
-                                <button type="submit" name="addElement" > Dodaj produkt </button>
+                                <button type="submit" name="addProduct" > Dodaj produkt </button>
                             </th>
                         </tr>
-                        <tr th:each="product_recipe,iterStat : *{recipe}" th:class="${iterStat.odd}? 'grey-row'">
+                        <tr th:each="product_recipe,iterStat : *{productList}" th:class="${iterStat.odd}? 'grey-row'">
                             <td th:text="${iterStat.count}"></td>
                             <td>
-                                <input type="text" th:field="*{recipe[__${iterStat.index}__].name}" />
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].amount}" />
                             </td>
                             <td>
-                                <button type="submit" name="removeElement" th:value="${iterStat.index}" th:text="#{product.element.remove}"></button>
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].productName}" />
+                            </td>
+                            <td>
+                                <input type="hidden" th:field="*{productList[__${iterStat.index}__].recipe}" th:value="${product_recipe.getRecipe()}"/>
+                            </td>
+                            <td>
+                                <button type="submit" name="removeElement" th:value="${iterStat.index}">Remove product</button>
                             </td>
                         </tr>
                     </table>

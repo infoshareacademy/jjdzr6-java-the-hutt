@@ -3,7 +3,9 @@ package com.infoshareacademy.controller;
 
 import com.infoshareacademy.entity.product.Product;
 import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.service.ProductService;
 import com.infoshareacademy.service.RecipeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +41,12 @@ public class RecipeController {
 
     //----------------------WEB----------------------
     private RecipeService recipeService;
+    private ProductService productService;
 
-    public RecipeController(RecipeService recipeService) {
+@Autowired
+    public RecipeController(RecipeService recipeService, ProductService productService) {
         this.recipeService = recipeService;
+        this.productService = productService;
     }
 
     @GetMapping("/recipes")
@@ -52,27 +57,20 @@ public class RecipeController {
 
     @GetMapping("recipes/new")
     public String createRecipeForm(Model model) {
-        Recipe recipe = new Recipe();
-        model.addAttribute("recipe", recipe);
+        model.addAttribute("recipe", new Recipe());
         return "create_recipe";
     }
 
-    @PostMapping("recipes")
+    @PostMapping("recipes/new")
     public String saveRecipe(@ModelAttribute("recipe") Recipe recipe) {
         recipeService.saveRecipe(recipe);
         return "redirect:/recipes";
     }
 
-    @PostMapping(value = "recipes/new", params = {"addProduct"})
-    public String addElement(@ModelAttribute("recipe") Recipe recipe) {
-        recipe.addProduct(new Product());
-        return "create_recipe";
-    }
 
-    //-------------------------------------------
     @PostMapping(value = "recipes/new", params = {"addProduct"})
     public String addProduct(@ModelAttribute("recipe") Recipe recipe) {
-        recipe.addProduct(new Product());
+        recipe.addProduct(new Product(recipe));
         return "create_recipe";
     }
 

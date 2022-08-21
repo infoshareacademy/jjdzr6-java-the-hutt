@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long productId;
 
     @Column(name = "product_name")
@@ -18,8 +18,8 @@ public class Product {
     @Column(name = "amount")
     private Double amount;
 
-    @ManyToOne
-    @JoinColumn(name = "recipe_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
     public Product() {
@@ -30,12 +30,24 @@ public class Product {
         this.amount = amount;
     }
 
+    public Product(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
     public void setProductId(Long id) {
         this.productId = id;
     }
 
     public Long getProductId() {
         return productId;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public String getProductName() {

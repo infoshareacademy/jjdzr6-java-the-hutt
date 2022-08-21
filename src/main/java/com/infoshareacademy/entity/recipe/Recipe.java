@@ -12,8 +12,8 @@ import java.util.*;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "recipe_id")
     private Long recipeId;
 
     @Column(name = "name")
@@ -25,11 +25,13 @@ public class Recipe {
     @Column(name = "preparation_time")
     private int preparationTime;
 
-    @OneToMany(mappedBy = "recipe",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> productList = new ArrayList<>();
 
     public Recipe() {
     }
+
+
 
     public List<Product> getProductList() {
         return productList;
