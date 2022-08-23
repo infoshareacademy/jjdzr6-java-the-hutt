@@ -1,5 +1,6 @@
 package com.infoshareacademy.entity.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infoshareacademy.entity.recipe.Recipe;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class Product {
     @Column(name = "amount")
     private Double amount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
@@ -28,10 +29,6 @@ public class Product {
     public Product(String productName, Double amount) {
         this.productName = productName;
         this.amount = amount;
-    }
-
-    public Product(Recipe recipe) {
-        this.recipe = recipe;
     }
 
     public void setProductId(Long id) {
@@ -68,8 +65,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Składniki: " +
-                " nazwa składnika='" + productName + '\'' +
-                ", ilość=" + amount;
+        return "nazwa składnika='" + productName + '\'' +
+                ", ilość=" + amount +"\'";
     }
 }

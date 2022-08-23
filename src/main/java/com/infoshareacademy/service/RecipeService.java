@@ -138,6 +138,7 @@ public class RecipeService {
     }
 
     public Recipe saveRecipe(Recipe recipe) {
+        recipe.getProductList().forEach(x-> x.setRecipe(recipe));
         return recipeRepository.save(recipe);
     }
 

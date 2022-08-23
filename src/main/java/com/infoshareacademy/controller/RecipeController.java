@@ -70,7 +70,7 @@ public class RecipeController {
 
     @PostMapping(value = "recipes/new", params = {"addProduct"})
     public String addProduct(@ModelAttribute("recipe") Recipe recipe) {
-        recipe.addProduct(new Product(recipe));
+        recipe.addProduct(new Product());
         return "create_recipe";
     }
 

@@ -37,12 +37,9 @@ public class Recipe {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
     public void addProduct(Product product) {
         this.productList.add(product);
+        product.setRecipe(this);
     }
 
     public Long getRecipeId() {
