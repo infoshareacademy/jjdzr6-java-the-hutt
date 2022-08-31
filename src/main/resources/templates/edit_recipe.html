@@ -22,10 +22,10 @@
 <br>
 <div class = "container">
     <div class = "row">
-        <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+        <div class ="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
             <h1 class = "text-center"> Edytuj przepis </h1>
             <div class = "card-body">
-                <form th:action="@{/recipes/{id} (id=${recipe.id})}" th:object = "${recipe}" method="POST">
+                <form th:action="@{/recipes/{id} (id=${recipe.id}}" th:object = "${recipe}" method="POST">
                     <div class ="form-group">
                         <label> Tytuł </label>
                         <input
@@ -58,21 +58,33 @@
                                 placeholder="Podaj czas przygotowania."
                         />
                     </div>
-                    <!--TODO-->
-                    <!--dodawanie wielu pól na raz z możliwością multiplikacji okienek-->
-                    <!--                    <div class ="form-group">-->
-                    <!--                        <label> Składniki </label>-->
-                    <!--                        <input-->
-                    <!--                                type = "text"-->
-                    <!--                                name = "neccessary_products_mapping"-->
-                    <!--                                th:field = "*{neccesaryProducts}"-->
-                    <!--                                class = "form-control"-->
-                    <!--                                placeholder="..."-->
-                    <!--                        />-->
-                    <!--                    </div>-->
+                    <label> Niezbędne produkty </label>
+                    <table>
+                        <td>
+                            <button type="submit" name="addProduct" class = "btn btn-outline-primary btn-sm">Dodaj</button>
+                        </td>
+                        <tr>
+                            <th >Lp.</th>
+                            <th >Ilość</th>
+                            <th >Produkt</th>
+                        </tr>
+                        <tr th:each="product,iterStat : *{productList}" th:class="${iterStat.odd}? 'grey-row'">
+                            <td th:text="${iterStat.count}"></td>
+                            <td>
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].amount}" />
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].productName}" />
+                            </td>
+                            <td>
+                                <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
+                            </td>
+                        </tr>
+                    </table>
 
                     <div class = "box-footer">
-                        <button type="submit" class = "btn btn-primary">
+                        </br>
+                        <button type="submit" name="addRecipe" class = "btn btn-primary">
                             Dodaj
                         </button>
                     </div>

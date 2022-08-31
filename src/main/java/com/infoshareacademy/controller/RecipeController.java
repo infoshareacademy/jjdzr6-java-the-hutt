@@ -87,7 +87,6 @@ public class RecipeController {
         return "edit_recipe";
     }
 
-
     @PostMapping("/{id}")
     public String updateRecipe(@PathVariable Long id, @ModelAttribute("recipe") Recipe recipe, Model model) {
 
