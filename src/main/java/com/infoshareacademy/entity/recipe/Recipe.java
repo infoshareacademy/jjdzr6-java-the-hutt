@@ -31,8 +31,6 @@ public class Recipe {
     public Recipe() {
     }
 
-
-
     public List<Product> getProductList() {
         return productList;
     }
