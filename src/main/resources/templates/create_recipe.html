@@ -22,7 +22,7 @@
 <br>
 <div class = "container">
     <div class = "row">
-        <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+        <div class ="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
             <h1 class = "text-center"> Stwórz nowy przepis </h1>
             <div class = "card-body">
                 <form th:action="@{/recipes/new}" th:object = "${recipe}" method="POST">
@@ -58,29 +58,32 @@
                                 placeholder="Podaj czas przygotowania."
                         />
                     </div>
+                    <label> Niezbędne produkty </label>
                     <table>
-                        <th>
-                            <button type="submit" name="addProduct" > Dodaj produkt </button>
-                        </th>
+                        <td>
+                            <button type="submit" name="addProduct" class = "btn btn-outline-primary btn-sm">Dodaj</button>
+                        </td>
                         <tr>
+                            <th >Lp.</th>
                             <th >Ilość</th>
                             <th >Produkt</th>
-
                         </tr>
                         <tr th:each="product,iterStat : *{productList}" th:class="${iterStat.odd}? 'grey-row'">
                             <td th:text="${iterStat.count}"></td>
-
                             <td>
                                 <input type="text" th:field="*{productList[__${iterStat.index}__].amount}" />
                             </td>
                             <td>
                                 <input type="text" th:field="*{productList[__${iterStat.index}__].productName}" />
                             </td>
-
+                               <td>
+                                <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
+                            </td>
                         </tr>
                     </table>
 
                     <div class = "box-footer">
+                        </br>
                         <button type="submit" name="addRecipe" class = "btn btn-primary">
                             Dodaj
                         </button>
