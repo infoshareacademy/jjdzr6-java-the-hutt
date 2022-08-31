@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("recipes")
@@ -41,7 +43,7 @@ public class RecipeController {
     private RecipeService recipeService;
     private ProductService productService;
 
-@Autowired
+    @Autowired
     public RecipeController(RecipeService recipeService, ProductService productService) {
         this.recipeService = recipeService;
         this.productService = productService;
@@ -87,7 +89,7 @@ public class RecipeController {
         return "edit_recipe";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping(value = "/{id}")
     public String updateRecipe(@PathVariable Long id, @ModelAttribute("recipe") Recipe recipe, Model model) {
 
         Recipe existingRecipe = recipeService.getRecipeById(id);
@@ -97,8 +99,21 @@ public class RecipeController {
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
 
         recipeService.saveRecipe(existingRecipe);
-
         return "redirect:/recipes";
+    }
+//TODO: produkty update i remove
+    @PostMapping(value = "/edit/{id}", params = {"addProduct"})
+    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe) {
+        recipe.addProduct(new Product());
+        return "edit_recipe";
+    }
+
+    @PostMapping(value = "/edit/{id}", params = {"removeProduct"})
+    public String removeUpdProduct(@ModelAttribute("recipe") Recipe recipe,
+                                   HttpServletRequest request) {
+        int index = Integer.parseInt(request.getParameter("removeProduct"));
+        recipe.getProductList().remove(index);
+        return "edit_recipe";
     }
 
     @GetMapping("/{id}")

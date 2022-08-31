@@ -72,6 +72,10 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
     @Override
     public String toString() {
         return "Recipe{" +

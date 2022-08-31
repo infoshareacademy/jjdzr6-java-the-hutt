@@ -151,4 +151,7 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
+    //TODO: wyszukiwanie po nazwie przepisu
+    //TODO: wyszukiwanie po czasie
+    //TODO: wyszukiwanie po składniku/kach
 }
