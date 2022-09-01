@@ -55,10 +55,17 @@ public class RecipeController {
         return "recipes";
     }
 
+    @GetMapping("/search")
+    public String searchListRecipes(Model model) {
+        String keyword = "";
+        model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
+        return "search-recipe";
+    }
+
     @GetMapping("/new")
     public String createRecipeForm(Model model) {
         model.addAttribute("recipe", new Recipe());
-        return "create_recipe";
+        return "create-recipe";
     }
 
     @PostMapping("/new")
@@ -71,7 +78,7 @@ public class RecipeController {
     @PostMapping(value = "/new", params = {"addProduct"})
     public String addProduct(@ModelAttribute("recipe") Recipe recipe) {
         recipe.addProduct(new Product());
-        return "create_recipe";
+        return "create-recipe";
     }
 
     @PostMapping(value = "/new", params = {"removeProduct"})
@@ -79,14 +86,14 @@ public class RecipeController {
                                 HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
         recipe.getProductList().remove(index);
-        return "create_recipe";
+        return "create-recipe";
     }
     //-------------------------------------------
 
     @GetMapping("/edit/{id}")
     public String editRecipe(@PathVariable Long id, Model model) {
         model.addAttribute("recipe", recipeService.getRecipeById(id));
-        return "edit_recipe";
+        return "edit-recipe";
     }
 
     @PostMapping(value = "/{id}")
@@ -105,7 +112,7 @@ public class RecipeController {
     @PostMapping(value = "/edit/{id}", params = {"addProduct"})
     public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe) {
         recipe.addProduct(new Product());
-        return "edit_recipe";
+        return "edit-recipe";
     }
 
     @PostMapping(value = "/edit/{id}", params = {"removeProduct"})
@@ -113,7 +120,7 @@ public class RecipeController {
                                    HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
         recipe.getProductList().remove(index);
-        return "edit_recipe";
+        return "edit-recipe";
     }
 
     @GetMapping("/{id}")

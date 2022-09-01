@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-    @Query("SELECT r from Recipe WHERE r.name LIKE %?1%")
+    @Query("SELECT r FROM Recipe r WHERE r.name LIKE %?1%")
     public List<Recipe> findRecipeBy(String keyword);
 }
