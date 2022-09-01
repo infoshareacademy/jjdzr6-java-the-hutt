@@ -6,6 +6,7 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.service.ProductService;
 import com.infoshareacademy.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,9 +57,9 @@ public class RecipeController {
     }
 
     @GetMapping("/search")
-    public String searchRecipeList(Model model) {
-        String keyword = "owsiankaaa";
+    public String searchRecipeList(Model model, @Param("keyword") String keyword) {
         model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
+        model.addAttribute("keyword", keyword);
         return "search-recipe";
     }
 

@@ -13,4 +13,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 //            + "OR r.preparationTime LIKE %?1%"
     )
     public List<Recipe> findRecipeBy(String keyword);
+
 }
