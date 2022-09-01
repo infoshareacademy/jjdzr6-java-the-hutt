@@ -9,6 +9,7 @@ import java.util.List;
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Query("SELECT r FROM Recipe r WHERE " +
+            //TODO: wyszukiwanie po liscie produktow (składniku/kach)
             "CONCAT(r.name, r.description, r.preparationTime)" +
             "LIKE %?1%")
     public List<Recipe> findRecipeBy(String keyword);
