@@ -11,47 +11,48 @@
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" href="#">Fridge - Przepisy</a>
-
+    <a class="navbar-brand" th:href="@{/recipes}">Przepisy</a>
+    <a class="navbar-brand" th:href="@{/recipes/search}">Wyszukiwarka</a>
+    </li>
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
 
-<div class ="container">
-    <div class = "row">
+<div class="container">
+    <div class="row">
         <h1> Przepisy </h1>
     </div>
 
-    <div class = "row">
-        <div class = "col-lg-3">
-            <a th:href = "@{/recipes/new}" class = "btn btn-primary btn-sm mb-3"> Dodaj nowy przepis</a>
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/recipes/new}" class="btn btn-primary btn-sm mb-3"> Dodaj nowy przepis</a>
         </div>
     </div>
-    <table class = "table table-striped table-bordered">
-        <thead class = "table-dark">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
         <tr>
-            <th> Tytuł </th>
-            <th> Opis </th>
-            <th> Czas przygotowania </th>
-            <th> Składniki </th>
-            <th> Actions </th>
+            <th> Tytuł</th>
+            <th> Opis</th>
+            <th> Czas przygotowania</th>
+            <th> Składniki</th>
+            <th> Actions</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each = "recipe: ${recipes}">
-            <td th:text = "${recipe.name}"></td>
-            <td th:text = "${recipe.description}"></td>
-            <td th:text = "${recipe.preparationTime}"></td>
-            <td th:text = "${recipe.productList}"></td>
+        <tr th:each="recipe: ${recipes}">
+            <td th:text="${recipe.name}"></td>
+            <td th:text="${recipe.description}"></td>
+            <td th:text="${recipe.preparationTime}"></td>
+            <td th:text="${recipe.productList}"></td>
             <td>
-                <a th:href = "@{/recipes/edit/{id}(id=${recipe.recipeId})}"
-                   class = "btn btn-primary">Zaktualizuj</a>
+                <a th:href="@{/recipes/edit/{id}(id=${recipe.recipeId})}"
+                   class="btn btn-primary">Zaktualizuj</a>
 
-                <a th:href = "@{/recipes/{id}(id=${recipe.recipeId})}"
-                   class = "btn btn-danger">Usuń</a>
+                <a th:href="@{/recipes/{id}(id=${recipe.recipeId})}"
+                   class="btn btn-danger">Usuń</a>
 
             </td>
         </tr>
