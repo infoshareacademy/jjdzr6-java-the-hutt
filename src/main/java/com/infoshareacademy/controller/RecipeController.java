@@ -56,8 +56,8 @@ public class RecipeController {
     }
 
     @GetMapping("/search")
-    public String searchListRecipes(Model model) {
-        String keyword = "";
+    public String searchRecipeList(Model model) {
+        String keyword = "owsiankaaa";
         model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
         return "search-recipe";
     }
