@@ -137,17 +137,23 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
-    public Recipe saveRecipe(Recipe recipe) {
-        recipe.getProductList().forEach(x-> x.setRecipe(recipe));
-        return recipeRepository.save(recipe);
+    public List<Recipe> getSearchRecipe(String keyword) {
+        if(keyword != null){
+            return recipeRepository.findRecipeBy(keyword);
+        }
+        return recipeRepository.findAll();
     }
-
 
     public Recipe getRecipeById(Long id) {
         return recipeRepository.findById(id).get();
     }
 
-    public void deleteRecipeById(Long id) {
+    public Recipe saveRecipe(Recipe recipe) {
+        recipe.getProductList().forEach(x-> x.setRecipe(recipe));
+        return recipeRepository.save(recipe);
+    }
+
+        public void deleteRecipeById(Long id) {
         recipeRepository.deleteById(id);
     }
 
