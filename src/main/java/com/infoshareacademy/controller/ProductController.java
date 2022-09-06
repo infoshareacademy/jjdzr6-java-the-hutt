@@ -1,6 +1,7 @@
 package com.infoshareacademy.controller;
 
 import com.infoshareacademy.entity.product.Product;
+import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.service.FridgeService;
 import com.infoshareacademy.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ProductController {
 
     @GetMapping("/my_products/new")
     public String newProductForm(Model model){
-        Product product = new Product();
+        Product product = new ProductInFridge();
         model.addAttribute("product", product);
         return "new_product";
     }

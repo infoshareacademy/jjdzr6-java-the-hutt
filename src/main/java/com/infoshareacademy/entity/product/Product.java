@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "my_products")
-public class Product {
+public abstract class Product {
 
 
     @Id
@@ -17,13 +17,15 @@ public class Product {
     @Column(name = "amount")
     private Double amount;
 
-    public Product() {
-    }
-
     public Product(String productName, Double amount) {
         this.productName = productName;
         this.amount = amount;
     }
+
+    public Product(){
+
+    }
+
 
     public void setProductId(Long id) {
         this.productId = id;
