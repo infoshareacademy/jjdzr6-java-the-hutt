@@ -3,6 +3,7 @@ package com.infoshareacademy.controller;
 
 import com.infoshareacademy.entity.product.Product;
 import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.repository.RecipeRepository;
 import com.infoshareacademy.service.ProductService;
 import com.infoshareacademy.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +44,12 @@ public class RecipeController {
     //----------------------WEB----------------------
     private RecipeService recipeService;
     private ProductService productService;
+    private RecipeRepository recipeRepository;
 
-    @Autowired
-    public RecipeController(RecipeService recipeService, ProductService productService) {
+    public RecipeController(RecipeService recipeService, ProductService productService, RecipeRepository recipeRepository) {
         this.recipeService = recipeService;
         this.productService = productService;
+        this.recipeRepository = recipeRepository;
     }
 
     @GetMapping
@@ -105,23 +107,33 @@ public class RecipeController {
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
+        //TODO
+        existingRecipe.addProduct(new Product());
 
         recipeService.saveRecipe(existingRecipe);
         return "redirect:/recipes";
     }
-//TODO: produkty update i remove
-    @PostMapping(value = "/edit/{id}", params = {"addProduct"})
-    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe) {
-        recipe.addProduct(new Product());
-        return "edit-recipe";
+
+    //TODO: produkty update i remove
+    @PostMapping(value = "/edit/{productId}", params = {"addProduct"})
+    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
+        Recipe existingRecipe = recipeService.getRecipeById(id);
+        //TODO
+        existingRecipe.addProduct(new Product());
+//        recipe.addProduct(new Product());
+        return "redirect:/recipes/edit/" + recipe.getRecipeId();
     }
 
-    @PostMapping(value = "/edit/{id}", params = {"removeProduct"})
-    public String removeUpdProduct(@ModelAttribute("recipe") Recipe recipe,
-                                   HttpServletRequest request) {
-        int index = Integer.parseInt(request.getParameter("removeProduct"));
-        recipe.getProductList().remove(index);
-        return "edit-recipe";
+    @GetMapping(value = "/delete/product/{productId}/recipe/{recipeId}")
+    public String removeUpdProduct(@PathVariable Long productId, @PathVariable Long recipeId) {
+        Recipe recipe = recipeRepository.getReferenceById(recipeId);
+
+        recipe.getProductList().stream()
+                .filter(p -> p.getProductId().equals(productId))
+                .findFirst().ifPresent(p -> p.setRecipe(null));
+        recipe.getProductList().removeIf(p -> p.getProductId().equals(productId));
+        recipeRepository.save(recipe);
+        return "redirect:/recipes/edit/" + recipe.getRecipeId();
     }
 
     @GetMapping("/{id}")

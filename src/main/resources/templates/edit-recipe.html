@@ -77,7 +77,7 @@
                                 <input type="text" th:field="*{productList[__${iterStat.index}__].productName}" />
                             </td>
                             <td>
-                                <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
+                                <a type="button" name="removeProduct" th:href="@{'/recipes/delete/product/' + *{productList[__${iterStat.index}__].productId} + '/recipe/' + ${recipe.recipeId}}" class = "btn btn-outline-primary btn-sm">Usun</a>
                             </td>
                         </tr>
                     </table>

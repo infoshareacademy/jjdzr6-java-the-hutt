@@ -14,4 +14,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
             "LIKE %?1%")
     public List<Recipe> findRecipeBy(String keyword);
 
+
 }
