@@ -6,15 +6,12 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
 import com.infoshareacademy.service.ProductService;
 import com.infoshareacademy.service.RecipeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("recipes")
@@ -99,7 +96,7 @@ public class RecipeController {
         return "edit-recipe";
     }
 
-    @PostMapping(value = "/{id}")
+    @PostMapping(value = "/edit/{id}")
     public String updateRecipe(@PathVariable Long id, @ModelAttribute("recipe") Recipe recipe, Model model) {
 
         Recipe existingRecipe = recipeService.getRecipeById(id);
@@ -107,26 +104,21 @@ public class RecipeController {
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
-        //TODO
-//        existingRecipe.addProduct(new Product());
+//TODO
+        existingRecipe.setProductList(recipe.getProductList());
 
         recipeService.saveRecipe(existingRecipe);
         return "redirect:/recipes";
     }
 
     //TODO: produkty update i remove
-//    @PostMapping(value = "/edit/{productId}", params = {"addProduct"})
-//    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
-//        Recipe existingRecipe = recipeService.getRecipeById(id);
-//        //TODO
-//        existingRecipe.addProduct(new Product());
-////        recipe.addProduct(new Product());
-//        return "redirect:/recipes/edit/" + recipe.getRecipeId();
-//    }
-    @PostMapping(value = "/edit/{productId}", params = {"addProduct"})
-    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe) {
+    @PostMapping(value = "/edit/{id}", params = {"addEditProduct"})
+    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
+        recipe = recipeService.getRecipeById(id);
+        //TODO
         recipe.addProduct(new Product());
-        return "edit-recipe" + recipe.getRecipeId();
+ recipeService.saveRecipe(recipe);
+        return "redirect:/recipes/edit/" + recipe.getRecipeId();
     }
 
     @GetMapping(value = "/delete/product/{productId}/recipe/{recipeId}")
