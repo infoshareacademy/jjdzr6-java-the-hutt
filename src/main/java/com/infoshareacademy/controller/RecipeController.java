@@ -108,20 +108,25 @@ public class RecipeController {
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
         //TODO
-        existingRecipe.addProduct(new Product());
+//        existingRecipe.addProduct(new Product());
 
         recipeService.saveRecipe(existingRecipe);
         return "redirect:/recipes";
     }
 
     //TODO: produkty update i remove
+//    @PostMapping(value = "/edit/{productId}", params = {"addProduct"})
+//    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
+//        Recipe existingRecipe = recipeService.getRecipeById(id);
+//        //TODO
+//        existingRecipe.addProduct(new Product());
+////        recipe.addProduct(new Product());
+//        return "redirect:/recipes/edit/" + recipe.getRecipeId();
+//    }
     @PostMapping(value = "/edit/{productId}", params = {"addProduct"})
-    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
-        Recipe existingRecipe = recipeService.getRecipeById(id);
-        //TODO
-        existingRecipe.addProduct(new Product());
-//        recipe.addProduct(new Product());
-        return "redirect:/recipes/edit/" + recipe.getRecipeId();
+    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe) {
+        recipe.addProduct(new Product());
+        return "edit-recipe" + recipe.getRecipeId();
     }
 
     @GetMapping(value = "/delete/product/{productId}/recipe/{recipeId}")
