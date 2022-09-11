@@ -100,7 +100,7 @@ public class RecipeController {
     public String updateRecipe(@PathVariable Long id, @ModelAttribute("recipe") Recipe recipe, Model model) {
 
         Recipe existingRecipe = recipeService.getRecipeById(id);
-        existingRecipe.setRecipeId(id);
+//        existingRecipe.setRecipeId(id);
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
@@ -114,10 +114,10 @@ public class RecipeController {
     //TODO: produkty update i remove
     @PostMapping(value = "/edit/{id}", params = {"addEditProduct"})
     public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
-        recipe = recipeService.getRecipeById(id);
+//        recipe = recipeService.getRecipeById(id);
         //TODO
         recipe.addProduct(new Product());
- recipeService.saveRecipe(recipe);
+        recipeService.saveRecipe(recipe);
         return "redirect:/recipes/edit/" + recipe.getRecipeId();
     }
 
