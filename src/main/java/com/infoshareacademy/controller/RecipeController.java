@@ -40,12 +40,10 @@ public class RecipeController {
 
     //----------------------WEB----------------------
     private RecipeService recipeService;
-    private ProductService productService;
     private RecipeRepository recipeRepository;
 
-    public RecipeController(RecipeService recipeService, ProductService productService, RecipeRepository recipeRepository) {
+    public RecipeController(RecipeService recipeService, RecipeRepository recipeRepository) {
         this.recipeService = recipeService;
-        this.productService = productService;
         this.recipeRepository = recipeRepository;
     }
 
@@ -111,7 +109,7 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-    //TODO: produkty update i remove
+    //TODO: produkty update
     @PostMapping(value = "/edit/{id}", params = {"addEditProduct"})
     public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
         recipe = recipeService.getRecipeById(id);
