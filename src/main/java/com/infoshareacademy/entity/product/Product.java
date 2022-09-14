@@ -24,4 +24,11 @@ public abstract class Product {
         return amount;
     }
 
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
 }

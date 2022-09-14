@@ -15,7 +15,7 @@
 <br>
 <div class="row">
     <div class="col-lg-3">
-        <a th:href="@{/my_products/new}" class="btn btn-primary btn-sm mb-3"> Add Product</a>
+        <a th:href="@{/fridge_products/new}" class="btn btn-primary btn-sm mb-3"> Add Product</a>
     </div>
 </div>
     <table class="table table-striped table-bordered">
@@ -28,12 +28,12 @@
         </thead>
 
         <tbody>
-        <tr th:each="product : ${products}">
+        <tr th:each="product : ${fridge_products}">
             <td th:text="${product.productName}"></td>
             <td th:text="${product.amount}"></td>
             <td>
-                <a th:href="@{/my_products/edit/{id}(id=${product.productId})}" class="btn btn-primary">Update</a>
-                <a th:href="@{/my_products/{id}(id=${product.productId})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/fridge_products/edit/{id}(id=${product_fridge.productInFridgeId})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/fridge_products/{id}(id=${product_fridge.productInFridgeId})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

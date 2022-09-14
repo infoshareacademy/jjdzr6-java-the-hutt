@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <!-- Brand -->
-  <a class="navbar-brand" th:href="@{/my_products}">Homepage</a>
+  <a class="navbar-brand" th:href="@{/fridge_products}">Homepage</a>
 
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -23,7 +23,7 @@
     <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
       <h1>Update Product</h1>
       <div class="card-body">
-        <form th:action="@{/my_products/{id}(id=${product.productId})}" th:object="${product}" method="post">
+        <form th:action="@{/fridge_products/{id}(id=${product_fridge.productInFridgeId})}" th:object="${product_fridge}" method="post">
           <div class="form-group">
             <label> Product Name </label>
             <br>

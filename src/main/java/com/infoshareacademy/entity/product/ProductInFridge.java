@@ -29,4 +29,8 @@ public class ProductInFridge extends Product{
     public Long getProductInFridgeId() {
         return productInFridgeId;
     }
+
+    public void setProductInFridgeId(Long productInFridgeId) {
+        this.productInFridgeId = productInFridgeId;
+    }
 }
