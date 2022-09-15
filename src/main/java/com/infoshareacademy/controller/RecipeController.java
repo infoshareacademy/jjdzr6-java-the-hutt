@@ -9,9 +9,11 @@ import com.infoshareacademy.service.RecipeService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("recipes")
@@ -67,7 +69,10 @@ public class RecipeController {
     }
 
     @PostMapping("/new")
-    public String saveRecipe(@ModelAttribute("recipe") Recipe recipe) {
+    public String saveRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "create-recipe";
+        }
         recipeService.saveRecipe(recipe);
         return "redirect:/recipes";
     }

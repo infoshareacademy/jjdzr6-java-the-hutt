@@ -4,11 +4,14 @@ package com.infoshareacademy.entity.recipe;
 import com.infoshareacademy.entity.product.Product;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
 @Table(name = "recipes")
-
 public class Recipe {
 
     @Id
@@ -16,12 +19,16 @@ public class Recipe {
     @Column(name = "recipe_id")
     private Long recipeId;
 
+    @NotEmpty
     @Column(name = "name")
     private String name;
 
+    @NotEmpty
     @Column(name = "description")
     private String description;
 
+    @Min(1)
+    @Max(120)
     @Column(name = "preparation_time")
     private int preparationTime;
 
