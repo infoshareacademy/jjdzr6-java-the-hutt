@@ -29,7 +29,7 @@
                 <form th:action="@{/recipes/new}" th:object = "${recipe}" method="POST">
                     <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                         <ul>
-                            <li th:each="err : ${#fields.errors('*')}" th:text="${'Niepoprawna zawartość formularza'}"></li>
+                            <li th:text="${'Niepoprawna treść przepisu.'}"></li>
                         </ul>
                     </div>
                     <div class ="form-group">
