@@ -1,21 +1,64 @@
 package com.infoshareacademy.entity.product;
+import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.entity.shopping_list.ShoppingList;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "products")
 public class Product {
 
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long productId;
 
-    public String getName() {
-        return name;
+    @Column(name = "product_name")
+    private String productName;
+
+    @Column(name = "amount")
+    private Double amount;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "shopping_list_id")
+    private ShoppingList shoppingList;
+
+
+
+    public Product() {
     }
 
-    public Product(String name) {
-        this.name = name;
+    public Product(String productName, Double amount) {
+        this.productName = productName;
+        this.amount = amount;
+    }
+
+    public void setProductId(Long id) {
+        this.productId = id;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double quantity) {
+        this.amount = quantity;
     }
 
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                '}';
+        return "nazwa składnika='" + productName + '\'' +
+                ", ilość=" + amount +"\'";
     }
 }

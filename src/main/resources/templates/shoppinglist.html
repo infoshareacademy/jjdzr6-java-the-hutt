@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoping list</title>
+</head>
+<body>
+<tr th:each="shopping: ${getShopping}">
+    ID: <td th:text="${shopping.getProductId()}"></td> <br>
+    NAME: <td th:text="${shopping.getProductName()}"></td><br>
+    AMOUNT: <td th:text="${shopping.getAmount()}"></td><br>
+</tr>
+</body>
+</html>
