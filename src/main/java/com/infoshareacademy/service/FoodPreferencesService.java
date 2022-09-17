@@ -6,9 +6,9 @@ import com.infoshareacademy.repository.FoodPreferencesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class FoodPreferencesService {
@@ -39,35 +39,35 @@ public class FoodPreferencesService {
         foodPreferencesRepository.save(foodPreferences);
     }
 
-    public List<Recipe> filterRecipeByFoodPreferences(Long id) throws IOException {
+    public List<Recipe> filterRecipeByFoodPreferences(Long id){
 
         Optional<FoodPreferences> foodPreferencesRepositoryById = foodPreferencesRepository.findById(id);
 
-        List<Recipe> recipeList = recipeService.getJson();
+        List<Recipe> recipeList = recipeService.getAllRecipe();
 
         if (foodPreferencesRepositoryById.isPresent()) {
             if (foodPreferencesRepositoryById.get().isChocolate()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getProductList().contains("czekolada"))
+                        .filter(s -> !s.containsProduct("czekolada"))
                         .toList();
             }
             if (foodPreferencesRepositoryById.get().isNuts()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getProductList().contains("orzechy"))
+                        .filter(s -> !s.containsProduct("orzechy"))
                         .toList();
             }
             if (foodPreferencesRepositoryById.get().isEggs()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getProductList().contains("jajka"))
+                        .filter(s -> !s.containsProduct("jajka"))
                         .toList();
             }
             if (foodPreferencesRepositoryById.get().isStrawberries()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getProductList().contains("truskawki"))
+                        .filter(s -> !s.containsProduct("truskawki"))
                         .toList();
             }
 
-            if (foodPreferencesRepositoryById.get().isVegetarian()) {
+/*            if (foodPreferencesRepositoryById.get().isVegetarian()) {
                 recipeList = recipeList.stream()
                         .filter(Recipe::isVegetarian)
                         .toList();
@@ -76,21 +76,21 @@ public class FoodPreferencesService {
                 recipeList = recipeList.stream()
                         .filter(Recipe::isVegan)
                         .toList();
-            }
+            }*/
             if (foodPreferencesRepositoryById.get().isDairy()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getProductList().contains("mleko"))
+                        .filter(s -> !s.containsProduct("mleko"))
                         .toList();
             }
-            if (!foodPreferencesRepositoryById.get().getOther().equals("-")) {
+/*            if (!foodPreferencesRepositoryById.get().getOther().equals("-")) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getProductList().contains(foodPreferencesRepositoryById.get().getOther()))
+                        .filter(s -> !s.containsProduct(foodPreferencesRepositoryById.get().getOther()))
                         .toList();
             } else if (!foodPreferencesRepositoryById.get().getOther().equals("brak")) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getProductList().contains(foodPreferencesRepositoryById.get().getOther()))
+                        .filter(s -> !s.containsProduct(foodPreferencesRepositoryById.get().getOther()))
                         .toList();
-            }
+            }*/
         }
         return recipeList;
 

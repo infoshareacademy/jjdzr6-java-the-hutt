@@ -38,11 +38,9 @@ public class FoodPreferencesController {
 
     @GetMapping("/foodpreferences/recipe/{id}")
     public String getRecipeByAllergens(@PathVariable Long id, Model model) {
-        try {
-            model.addAttribute("recipbeByFoodPreferences", foodPreferencesService.filterRecipeByFoodPreferences(id));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+        model.addAttribute("recipeByFoodPreferences", foodPreferencesService.filterRecipeByFoodPreferences(id));
+
         return "recipebyfoodpreferences";
     }
 

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Fridge Recipe</title>
+    <title>Shoping list</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -28,44 +28,32 @@
 
 <div class="container">
     <div class="row">
-        <h1> Przepisy </h1>
+        <h1> Shoping list </h1>
     </div>
 
-    <div class="row">
-        <div class="col-lg-3">
-            <a th:href="@{/recipes/new}" class="btn btn-primary mb-3"> Dodaj nowy przepis</a>
-        </div>
-    </div>
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
         <tr>
-            <th> Tytuł</th>
-            <th> Opis</th>
-            <th> Czas przygotowania</th>
-            <th> Składniki</th>
-            <th> Actions</th>
+
+            <th> Nazwa </th>
+            <th> Ilość</th>
         </tr>
         </thead>
-
         <tbody>
-        <tr th:each="recipe: ${recipes}">
-            <td th:text="${recipe.name}"></td>
-            <td th:text="${recipe.description}"></td>
-            <td th:text="${recipe.preparationTime}"></td>
-            <td th:text="${recipe.productList}"></td>
-            <td>
-                <a th:href="@{/recipes/edit/{id}(id=${recipe.recipeId})}"
-                   class="btn btn-primary">Zaktualizuj</a>
+        <tr th:each="shopping: ${getShopping}">
 
-                <a th:href="@{/recipes/{id}(id=${recipe.recipeId})}"
-                   class="btn btn-danger">Usuń</a>
 
-            </td>
+            <td th:text="${shopping.getProductName()}"></td>
+            <td th:text="${shopping.getAmount()}"></td>
+
         </tr>
         </tbody>
-
+        </thead>
     </table>
 
 </div>
 </body>
 </html>
+
+
+

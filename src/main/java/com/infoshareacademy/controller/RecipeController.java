@@ -1,11 +1,12 @@
 package com.infoshareacademy.controller;
 
 
-import com.infoshareacademy.entity.product.Product;
+import com.infoshareacademy.entity.product.ProductInFridge;
+import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
-import com.infoshareacademy.service.ProductService;
 import com.infoshareacademy.service.RecipeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,32 +19,11 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("recipes")
 public class RecipeController {
-//    //----------------------JSON----------------------
-//    @GetMapping("/recipesJson")
-//    @ResponseBody
-//    public List<Recipe> getAllJsonRecipes(RecipeService recipeService) throws IOException {
-//        return recipeService.getJson();
-//    }
-//
-//    @GetMapping("/recipesJson/{name}/searchbyname")
-//    @ResponseBody
-//    public List<Recipe> findingJsonRecipeByName(@PathVariable String name, RecipeService recipeService) throws IOException {
-//        List<Recipe> recipe = recipeService.getJson();
-//        return recipe.stream().filter(list -> list.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
-////        return recipe.stream().filter(list -> list.getName().equalsIgnoreCase(name)).toList();
-//    }
-//
-//    @GetMapping("/recipesJson/{time}/searchbytime")
-//    @ResponseBody
-//    public List<Recipe> findingJsonRecipeByTime(@PathVariable Integer time, RecipeService recipeService) throws IOException {
-//        List<Recipe> recipe = recipeService.getJson();
-//        return recipe.stream().filter(list -> list.getPreparationTime() <= (time)).collect(Collectors.toList());
-//    }
 
-    //----------------------WEB----------------------
     private RecipeService recipeService;
     private RecipeRepository recipeRepository;
 
+    @Autowired
     public RecipeController(RecipeService recipeService, RecipeRepository recipeRepository) {
         this.recipeService = recipeService;
         this.recipeRepository = recipeRepository;
@@ -80,7 +60,7 @@ public class RecipeController {
 
     @PostMapping(value = "/new", params = {"addProduct"})
     public String addProduct(@ModelAttribute("recipe") Recipe recipe) {
-        recipe.addProduct(new Product());
+        recipe.addProduct(new ProductRecipe());
         return "create-recipe";
     }
 
@@ -119,7 +99,7 @@ public class RecipeController {
     public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
         recipe = recipeService.getRecipeById(id);
         //TODO
-        recipe.addProduct(new Product());
+        recipe.addProduct(new ProductRecipe());
         recipeService.saveRecipe(recipe);
         return "redirect:/recipes/edit/" + recipe.getRecipeId();
     }

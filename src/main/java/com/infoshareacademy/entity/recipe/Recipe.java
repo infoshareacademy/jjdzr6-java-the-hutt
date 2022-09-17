@@ -1,13 +1,13 @@
 package com.infoshareacademy.entity.recipe;
 
 
-import com.infoshareacademy.entity.product.Product;
+import com.infoshareacademy.entity.product.ProductInFridge;
+import com.infoshareacademy.entity.product.ProductRecipe;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -33,7 +33,7 @@ public class Recipe {
     private int preparationTime;
 
     @OneToMany(mappedBy = "recipe",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Product> productList = new ArrayList<>();
+    private List<ProductRecipe> productList = new ArrayList<>();
 
     private boolean vegetarian;
     private boolean vegan;
@@ -41,13 +41,24 @@ public class Recipe {
     public Recipe() {
     }
 
-    public List<Product> getProductList() {
+    public List<ProductRecipe> getProductList() {
         return productList;
     }
 
-    public void addProduct(Product product) {
+    public void addProduct(ProductRecipe product) {
         this.productList.add(product);
         product.setRecipe(this);
+    }
+
+    public  boolean containsProduct(String s){
+        boolean flag = false;
+        for (ProductRecipe product : productList) {
+            if(product.getProductName().contains(s)){
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 
     public Long getRecipeId() {
@@ -82,7 +93,7 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
-    public void setProductList(List<Product> productList) {
+    public void setProductList(List<ProductRecipe> productList) {
         this.productList = productList;
     }
 

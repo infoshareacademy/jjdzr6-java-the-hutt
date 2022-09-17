@@ -1,6 +1,6 @@
 package com.infoshareacademy.service;
 
-import com.infoshareacademy.entity.product.Product;
+import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,15 +17,15 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts(){
+    public List<ProductInFridge> getAllProducts(){
         return productRepository.findAll();
     }
 
-    public Product addProduct(Product product){
+    public ProductInFridge addProduct(ProductInFridge product){
         return productRepository.save(product);
     }
 
-    public Product updateProduct(Product product){
+    public ProductInFridge updateProduct(ProductInFridge product){
         return productRepository.save(product);
     }
 
