@@ -2,7 +2,6 @@ package com.infoshareacademy.service;
 
 
 import com.infoshareacademy.entity.fridge.Fridge;
-import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +21,8 @@ public class FridgeService {
 
     Fridge fridge = new Fridge();
 
-    public List<ProductInFridge> getProductsFromFridge(){
-        return fridgeRepository.findById(0L).get().getProductList();
+    public Fridge getFridge(){
+        return fridgeRepository.findAll().get(0);
     }
 
     public Fridge saveFridge(Fridge fridge){

@@ -26,8 +26,8 @@ public class FridgeController {
 
     @GetMapping("/fridge_products")
     public String allProductsInFridge(Model model){
-        model.addAttribute("products_fridge", fridgeService.getProductsFromFridge());
-        return "products_in_fridge";
+        model.addAttribute("fridge", fridgeService.getFridge());
+        return "productsinfridge";
     }
 
     @GetMapping("/fridge_products/new")

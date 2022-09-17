@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Recipe</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/recipes}">Przepisy</a>
+    <a class="navbar-brand" th:href="@{/recipes/search}">Wyszukiwarka</a>
+    </li>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h1> Przepisy </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/recipes/new}" class="btn btn-primary mb-3"> Dodaj produkt</a>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th> Ilość</th>
+            <th> Nazwa</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="product,iterStat : *{fridge.productList}" th:class="${iterStat.odd}? 'grey-row'">
+            <td th:text="${iterStat.count}"></td>
+            <td th:text th:field="*{product[__${iterStat.index}__].getAmount()}"/>
+            </td>
+            <td th:text th:field="*{product[__${iterStat.index}__].getProductName()}"/>
+            </td>
+
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+</body>
+</html>
