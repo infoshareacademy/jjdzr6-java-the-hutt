@@ -28,6 +28,10 @@ public class Fridge {
         this.productInFridgeList = productList;
     }
 
+    public void addProductToFridge(ProductInFridge productInFridge) {
+        this.productInFridgeList.add(productInFridge);
+        productInFridge.setFridge(this);
+    }
     public Long getFridgeId() {
         return fridgeId;
     }

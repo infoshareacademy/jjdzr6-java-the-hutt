@@ -1,6 +1,7 @@
 package com.infoshareacademy.service;
 
 
+import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +20,27 @@ public class FridgeService {
         this.fridgeRepository = fridgeRepository;
     }
 
+    Fridge fridge = new Fridge();
+
     public List<ProductInFridge> getProductsFromFridge(){
-        return fridgeRepository.findAll();
+        return fridgeRepository.findById(0L).get().getProductList();
     }
 
-    public ProductInFridge addProductToFridge(ProductInFridge productInFridge){
-        return fridgeRepository.save(productInFridge);
+    public Fridge saveFridge(Fridge fridge){
+        fridge.getProductList().forEach(element -> element.setFridge(this.fridge));
+        return fridgeRepository.save(this.fridge);
     }
 
-    public ProductInFridge updateProductInFridge(ProductInFridge productInFridge){
-        return fridgeRepository.save(productInFridge);
+    public Fridge updateFridge(Fridge fridge){
+        fridge.getProductList().forEach(element -> element.setFridge(this.fridge));
+        return fridgeRepository.save(this.fridge);
     }
 
-    public void deleteProductInFridge(Long id){
-        fridgeRepository.deleteById(id);
-    }
+//    public void deleteProductInFridge(Long id){
+//        fridgeRepository.deleteById(id);
+//    }
 
-    public ProductInFridge getProductInFridgeById(Long id){
-        return fridgeRepository.findById(id).get();
+    public Fridge getFridgeById(Long id){
+        return fridgeRepository.findById(0L).get();
     }
 }

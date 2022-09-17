@@ -1,5 +1,6 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.Product;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.service.FridgeService;
@@ -37,34 +38,36 @@ public class FridgeController {
     }
 
     @PostMapping("/fridge_products")
-    public String saveProductInFridge(@ModelAttribute("product_fridge") ProductInFridge productInFridge){
-        fridgeService.addProductToFridge(productInFridge);
+    public String saveProductInFridge(@ModelAttribute("product_fridge") ProductInFridge productInFridge, Fridge fridge){
+        fridge.setFridgeId(fridge.getFridgeId());
+        fridge.addProductToFridge(productInFridge);
+        fridgeService.saveFridge(fridge);
         return "redirect:/fridge_products";
     }
 
-    @GetMapping("/fridge_products/{id}")
-    public String deleteProductInFridge(@PathVariable Long id){
-        fridgeService.deleteProductInFridge(id);
-        return "redirect:/fridge_products";
-    }
+//    @GetMapping("/fridge_products/{id}")
+//    public String deleteProductInFridge(@PathVariable Long id){
+//        fridgeService.deleteProductInFridge(id);
+//        return "redirect:/fridge_products";
+//    }
 
-    @GetMapping("/fridge_products/edit/{id}")
-    public String updateProductInFridgeForm(@PathVariable Long id, Model model){
-        model.addAttribute("product_fridge", fridgeService.getProductInFridgeById(id));
-        return "update_product_in_fridge";
-    }
+//    @GetMapping("/fridge_products/edit/{id}")
+//    public String updateProductInFridgeForm(@PathVariable Long id, Model model){
+//        model.addAttribute("product_fridge", fridgeService.getProductInFridgeById(id));
+//        return "update_product_in_fridge";
+//    }
 
-    @PostMapping("/fridge_products/{id}")
-    public String updateProductInFridge(@PathVariable Long id, @ModelAttribute("product_fridge") ProductInFridge productInFridge, Model model){
-        ProductInFridge existingProduct = fridgeService.getProductInFridgeById(id);
-
-        existingProduct.setProductInFridgeId(id);
-        existingProduct.setProductName(productInFridge.getProductName());
-        existingProduct.setAmount(productInFridge.getAmount());
-
-        fridgeService.updateProductInFridge(existingProduct);
-
-        return "redirect:/fridge_products";
-    }
+//    @PostMapping("/fridge_products/{id}")
+//    public String updateProductInFridge(@PathVariable Long id, @ModelAttribute("product_fridge") ProductInFridge productInFridge, Model model){
+//        ProductInFridge existingProduct = fridgeService.getProductInFridgeById(id);
+//
+//        existingProduct.setProductInFridgeId(id);
+//        existingProduct.setProductName(productInFridge.getProductName());
+//        existingProduct.setAmount(productInFridge.getAmount());
+//
+//        fridgeService.updateProductInFridge(existingProduct);
+//
+//        return "redirect:/fridge_products";
+//    }
 
 }

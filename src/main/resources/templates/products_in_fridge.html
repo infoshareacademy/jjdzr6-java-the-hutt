@@ -28,9 +28,14 @@
         </thead>
 
         <tbody>
-        <tr th:each="product : ${fridge_products}">
-            <td th:text="${product.productName}"></td>
-            <td th:text="${product.amount}"></td>
+        <tr th:each="product,iterStat : *{products_fridge}" th:class="${iterStat.odd}? 'grey-row'">
+            <td th:text="${iterStat.count}"></td>
+            <td>
+                <input type="text" th:field="*{productList[__${iterStat.index}__].amount}" required />
+            </td>
+            <td>
+                <input type="text" th:field="*{productList[__${iterStat.index}__].productName}" required />
+            </td>
             <td>
                 <a th:href="@{/fridge_products/edit/{id}(id=${product_fridge.productInFridgeId})}" class="btn btn-primary">Update</a>
                 <a th:href="@{/fridge_products/{id}(id=${product_fridge.productInFridgeId})}" class="btn btn-danger">Delete</a>

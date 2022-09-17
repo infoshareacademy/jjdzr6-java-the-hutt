@@ -33,4 +33,12 @@ public class ProductInFridge extends Product{
     public void setProductInFridgeId(Long productInFridgeId) {
         this.productInFridgeId = productInFridgeId;
     }
+
+    public Fridge getFridge() {
+        return fridge;
+    }
+
+    public void setFridge(Fridge fridge) {
+        this.fridge = fridge;
+    }
 }
