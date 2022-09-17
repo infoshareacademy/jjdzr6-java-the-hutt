@@ -35,6 +35,9 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> productList = new ArrayList<>();
 
+    private boolean vegetarian;
+    private boolean vegan;
+
     public Recipe() {
     }
 
@@ -81,6 +84,22 @@ public class Recipe {
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public boolean isVegetarian() {
+        return vegetarian;
+    }
+
+    public void setVegetarian(boolean vegetarian) {
+        this.vegetarian = vegetarian;
+    }
+
+    public boolean isVegan() {
+        return vegan;
+    }
+
+    public void setVegan(boolean vegan) {
+        this.vegan = vegan;
     }
 
     @Override

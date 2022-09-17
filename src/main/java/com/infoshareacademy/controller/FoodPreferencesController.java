@@ -36,15 +36,15 @@ public class FoodPreferencesController {
         return "foodpreferencesbyid";
     }
 
-//    @GetMapping("/foodpreferences/recipe/{id}")
-//    public String getRecipeByAllergens(@PathVariable Long id, Model model) {
-//        try {
-//            model.addAttribute("recipbeByFoodPreferences", foodPreferencesService.filterRecipeByFoodPreferences(id));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return "recipebyfoodpreferences";
-//    }
+    @GetMapping("/foodpreferences/recipe/{id}")
+    public String getRecipeByAllergens(@PathVariable Long id, Model model) {
+        try {
+            model.addAttribute("recipbeByFoodPreferences", foodPreferencesService.filterRecipeByFoodPreferences(id));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "recipebyfoodpreferences";
+    }
 
     @GetMapping("/foodpreferences/set")
     public String createAllergensForm(Model model) {

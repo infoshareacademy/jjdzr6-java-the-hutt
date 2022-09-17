@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Food Preferences</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/set}">Ustaw preferencje</a>
+    <a class="navbar-brand" th:href="@{/recipes}">Przepisy</a>
+    <a class="navbar-brand" th:href="@{/recipes/search}">Wyszukiwarka</a>
+
+    </li>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h1> Preferencje żywieniowe </h1>
+    </div>
+
+
+<tr th:each="allergen: ${getfoodpreferences}">
+    ID: <th scope="col" th:text="${allergen.id}"></th> <br>
+    CHOCOLATE: <td th:text="${allergen.chocolate}"></td><br>
+    DAIRY: <td th:text="${allergen.dairy}"></td><br>
+    EGGS: <td th:text="${allergen.eggs}"></td><br>
+    NUTS: <td th:text="${allergen.nuts}"></td><br>
+    SHELLFISH: <td th:text="${allergen.shellfish}"></td><br>
+    STRAWBERRIES: <td th:text="${allergen.strawberries}"></td><br>
+    MEAT EATER: <td th:text="${allergen.meatEater}"></td><br><br>
+    VEGAN: <td th:text="${allergen.vegan}"></td><br><br>
+    VEGETARIAN: <td th:text="${allergen.vegetarian}"></td><br><br>
+    OTHER: <td th:text="${allergen.other}"></td><br><br>
+</tr>
+</div>
+</body>
+</html>

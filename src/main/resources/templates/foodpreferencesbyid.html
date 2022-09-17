@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Allergens</title>
+</head>
+<body>
+ID: <td th:text="${foodpreferencesbyid.get().id}"></td> <br>
+CHOCOLATE: <td th:text="${foodpreferencesbyid.get().chocolate}"></td><br>
+DAIRY: <td th:text="${foodpreferencesbyid.get().dairy}"></td><br>
+EGGS: <td th:text="${foodpreferencesbyid.get().eggs}"></td><br>
+NUTS: <td th:text="${foodpreferencesbyid.get().nuts}"></td><br>
+SHELLFISH: <td th:text="${foodpreferencesbyid.get().shellfish}"></td><br>
+STRAWBERRIES: <td th:text="${foodpreferencesbyid.get().strawberries}"></td><br>
+MEAT EATER: <td th:text="${foodpreferencesbyid.get().meatEater}"></td><br>
+VEGAN: <td th:text="${foodpreferencesbyid.get().vegan}"></td><br>
+VEGETARIAN: <td th:text="${foodpreferencesbyid.get().vegetarian}"></td><br>
+OTHER: <td th:text="${foodpreferencesbyid.get().other}"></td><br>
+
+</body>
+</html>

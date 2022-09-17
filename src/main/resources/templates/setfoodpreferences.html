@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Food Preferences</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/set}">Ustaw preferencje</a>
+    <a class="navbar-brand" th:href="@{/recipes}">Przepisy</a>
+    <a class="navbar-brand" th:href="@{/recipes/search}">Wyszukiwarka</a>
+
+    </li>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+    <div class="row">
+        <h1> Ustaw preferencje żywieniowe </h1>
+    </div>
+<form action="#" th:action="@{/foodpreferences}" th:object="${foodpreferences}" method="post">
+    Lista Twoich alergenów:
+    <p>Czekolada<input type="checkbox" th:field="${foodpreferences.chocolate}"/>
+    <p>Produkty mleczne<input type="checkbox" th:field="${foodpreferences.dairy}"/>
+    <p>Jaja<input type="checkbox" th:field="${foodpreferences.eggs}"/>
+    <p>Orzechy<input type="checkbox" th:field="${foodpreferences.nuts}"/>
+    <p>Skorupiaki<input type="checkbox" th:field="${foodpreferences.shellfish}"/>
+    <p>Truskawki<input type="checkbox" th:field="${foodpreferences.strawberries}"/>
+    <p>Czy jesz mięso?<input type="checkbox" th:field="${foodpreferences.meatEater}"/>
+    <p>Dieta wegańska?<input type="checkbox" th:field="${foodpreferences.vegan}"/>
+    <p>Dieta wegetariańska?<input type="checkbox" th:field="${foodpreferences.vegetarian}"/>
+    <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
+    <p><input class="btn btn-primary" type="submit" value="Dodaj">
+
+</form>
+</div>
+</body>
+</html>
