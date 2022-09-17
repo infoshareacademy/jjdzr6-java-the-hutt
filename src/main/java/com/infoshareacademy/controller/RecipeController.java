@@ -108,7 +108,7 @@ public class RecipeController {
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
 //TODO
-        existingRecipe.setProductList(recipe.getProductList());
+//        existingRecipe.setProductList(recipe.getProductList());
 
         recipeService.saveRecipe(existingRecipe);
         return "redirect:/recipes";
