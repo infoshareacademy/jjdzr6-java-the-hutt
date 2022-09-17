@@ -1,109 +1,100 @@
 package com.infoshareacademy.service;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.infoshareacademy.entity.food_preferences.AllergenName;
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
-import com.infoshareacademy.entity.food_preferences.Meat;
+import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.repository.FoodPreferencesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.List;
+import java.util.Optional;
 
+@Service
 public class FoodPreferencesService {
-    Scanner scanner = new Scanner(System.in);
-    boolean run;
-    public boolean preferencesFlag() {
-        boolean yesPreferences = false;
-        run = false;
 
-        do {
-            try{
-            String answer = scanner.nextLine();
-            if (answer.equalsIgnoreCase("T")) {
-                yesPreferences = true;
-                run = true;
-            } else if (answer.equalsIgnoreCase("N")) {
-                yesPreferences = false;
-                run = true;
-            } else {
-                System.out.println("Błędny format odpowiedzi. Wprowadź odpowiedź ponownie.");
-                }
-            } catch (InputMismatchException exception){
-                System.out.println("Błędny format odpowiedzi. Wprowadź odpowiedź ponownie.");
-            }
-        } while (!run);
-        return yesPreferences;
+    @Autowired
+    private FoodPreferencesRepository foodPreferencesRepository;
+    @Autowired
+    RecipeService recipeService;
+
+    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository) {
+        this.foodPreferencesRepository = foodPreferencesRepository;
     }
 
-    public AllergenName setAllergenPreferences() {
-        AllergenName allergenName = new AllergenName();
+    public FoodPreferencesService() {
 
-
-        System.out.println("Skorupiaki[T/N]: ");
-        allergenName.setShellfish(preferencesFlag());
-        System.out.println("Czekolada[T/N]:");
-        allergenName.setChocolate(preferencesFlag());
-        System.out.println("Orzechy[T/N]:");
-        allergenName.setNuts(preferencesFlag());
-        System.out.println("Jajka[T/N]:");
-        allergenName.setEggs(preferencesFlag());
-        System.out.println("Truskawki[T/N]:");
-        allergenName.setStrawberries(preferencesFlag());
-        System.out.println("Produkty mleczne[T/N]:");
-        allergenName.setDairy(preferencesFlag());
-        System.out.println("Inne alergie (podaj): ");
-        allergenName.setOther(scanner.nextLine());
-
-        System.out.println(allergenName);
-        return allergenName;
     }
 
-    public Meat setMeatPreferences() {
-        Meat meat = new Meat();
-
-        System.out.println("Mięso[T/N]: ");
-        meat.setMeatEater(preferencesFlag());
-        System.out.println("Dieta Wegańska[T/N]: ");
-        meat.setVegan(preferencesFlag());
-        System.out.println("Dieta Wegetariańska[T/N]: ");
-        meat.setVegetarian(preferencesFlag());
-
-        System.out.println(meat);
-        return meat;
+    public List<FoodPreferences> getFoodPreferences() {
+        return foodPreferencesRepository.findAll();
     }
 
-    public void writeFoodPreferencesToJson() throws IOException {
-        Path path = Path.of("src", "resources", "food_preferences.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
+    public Optional<FoodPreferences> getFoodPreferencesById(Long id) {
+        return foodPreferencesRepository.findById(id);
 
-        FoodPreferences foodPreferences = new FoodPreferences();
-        AllergenName allergenName = setAllergenPreferences();
-        foodPreferences.setAllergenName(allergenName);
-        Meat meat = setMeatPreferences();
-        foodPreferences.setMeat(meat);
-
-        String foodPreferencesJson = objectWriter.writeValueAsString(foodPreferences);
-        Files.writeString(path, foodPreferencesJson);
     }
 
-    public FoodPreferences getJson() throws IOException {
-        Path path = Path.of("src","resources","food_preferences.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        File file = new File(path.toString());
-        FoodPreferences foodPreferences = objectMapper.readValue(file, new TypeReference<FoodPreferences>() {
-        });
-        return foodPreferences;
+    public void setFoodPreferences(FoodPreferences foodPreferences) {
+        foodPreferencesRepository.save(foodPreferences);
     }
 
+//    public List<Recipe> filterRecipeByFoodPreferences(Long id) throws IOException {
+//
+//        Optional<FoodPreferences> foodPreferencesRepositoryById = foodPreferencesRepository.findById(id);
+//
+//        List<Recipe> recipeList = recipeService.getJson();
+//
+//        if (foodPreferencesRepositoryById.isPresent()) {
+//            if (foodPreferencesRepositoryById.get().isChocolate()) {
+//                recipeList = recipeList.stream()
+//                        .filter(s -> !s.getNeccesaryProducts().containsKey("czekolada"))
+//                        .toList();
+//            }
+//            if (foodPreferencesRepositoryById.get().isNuts()) {
+//                recipeList = recipeList.stream()
+//                        .filter(s -> !s.getNeccesaryProducts().containsKey("orzechy"))
+//                        .toList();
+//            }
+//            if (foodPreferencesRepositoryById.get().isEggs()) {
+//                recipeList = recipeList.stream()
+//                        .filter(s -> !s.getNeccesaryProducts().containsKey("jajka"))
+//                        .toList();
+//            }
+//            if (foodPreferencesRepositoryById.get().isStrawberries()) {
+//                recipeList = recipeList.stream()
+//                        .filter(s -> !s.getNeccesaryProducts().containsKey("truskawki"))
+//                        .toList();
+//            }
+//
+//            if (foodPreferencesRepositoryById.get().isVegetarian()) {
+//                recipeList = recipeList.stream()
+//                        .filter(Recipe::isVegetarian)
+//                        .toList();
+//            }
+//            if (foodPreferencesRepositoryById.get().isVegan()) {
+//                recipeList = recipeList.stream()
+//                        .filter(Recipe::isVegan)
+//                        .toList();
+//            }
+//            if (foodPreferencesRepositoryById.get().isDairy()) {
+//                recipeList = recipeList.stream()
+//                        .filter(s -> !s.getNeccesaryProducts().containsKey("mleko"))
+//                        .toList();
+//            }
+//            if (!foodPreferencesRepositoryById.get().getOther().equals("-")) {
+//                recipeList = recipeList.stream()
+//                        .filter(s -> !s.getNeccesaryProducts().containsKey(foodPreferencesRepositoryById.get().getOther()))
+//                        .toList();
+//            } else if (!foodPreferencesRepositoryById.get().getOther().equals("brak")) {
+//                recipeList = recipeList.stream()
+//                        .filter(s -> !s.getNeccesaryProducts().containsKey(foodPreferencesRepositoryById.get().getOther()))
+//                        .toList();
+//            }
+//        }
+//        return recipeList;
+//
+//    }
 
 }
+
