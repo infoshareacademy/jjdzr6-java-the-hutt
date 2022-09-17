@@ -77,10 +77,10 @@
                         <tr th:each="product,iterStat : *{productList}" th:class="${iterStat.odd}? 'grey-row'">
                             <td th:text="${iterStat.count}"></td>
                             <td>
-                                <input type="text" th:field="*{productList[__${iterStat.index}__].amount}" required />
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].amount}"  />
                             </td>
                             <td>
-                                <input type="text" th:field="*{productList[__${iterStat.index}__].productName}" required />
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].productName}"  />
                             </td>
                                <td>
                                 <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
