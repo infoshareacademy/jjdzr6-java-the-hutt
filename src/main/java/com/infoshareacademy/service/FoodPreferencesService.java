@@ -13,11 +13,11 @@ import java.util.Optional;
 @Service
 public class FoodPreferencesService {
 
-    @Autowired
+
     private FoodPreferencesRepository foodPreferencesRepository;
     @Autowired
     RecipeService recipeService;
-
+    @Autowired
     public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository) {
         this.foodPreferencesRepository = foodPreferencesRepository;
     }

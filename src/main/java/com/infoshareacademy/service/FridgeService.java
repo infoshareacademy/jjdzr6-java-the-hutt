@@ -41,6 +41,10 @@ public class FridgeService {
 
     }
 
+    public Optional<Fridge> findFridgeById(Long id) {
+        return fridgeRepository.findById(id);
+    }
+
 
     public long getUserId() {
         return userId;
@@ -56,9 +60,8 @@ public class FridgeService {
         Path path = Path.of("src", "resources", "products_in_fridge.json");
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(path.toString());
-        Map<String, Double> fridge = objectMapper.readValue(file, new TypeReference<Map<String, Double>>() {
+        return objectMapper.readValue(file, new TypeReference<>() {
         });
-        return fridge;
 
     }
 }

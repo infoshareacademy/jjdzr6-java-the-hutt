@@ -19,6 +19,10 @@ public class FoodPreferences {
     private boolean isVegan;
     private boolean isVegetarian;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

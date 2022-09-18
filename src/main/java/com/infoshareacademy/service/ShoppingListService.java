@@ -33,7 +33,7 @@ public class ShoppingListService {
         List<Recipe> recipeList = recipeService.getAllRecipe();
         List<ProductInFridge> productsInFridge = fridgeService.getAllProductsFromFridge().getProductsInFridge();
 
-        Map<String, Double> fridgeMap = productsInFridge.stream().distinct().collect(Collectors.toMap(ProductInFridge::getProductName, ProductInFridge::getAmount));
+        Map<String, Double> fridgeMap = productsInFridge.stream().collect(Collectors.toMap(ProductInFridge::getProductName, ProductInFridge::getAmount));
 
         for (String key : fridgeMap.keySet()) {
             if (fridgeMap.get(key) == null) {

@@ -1,7 +1,6 @@
 package com.infoshareacademy.controller;
 
 
-import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
@@ -71,7 +70,7 @@ public class RecipeController {
         recipe.getProductList().remove(index);
         return "create-recipe";
     }
-    //-------------------------------------------
+
 
     @GetMapping("/edit/{id}")
     public String editRecipe(@PathVariable Long id, Model model) {

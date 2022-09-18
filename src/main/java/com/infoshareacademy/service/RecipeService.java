@@ -27,9 +27,8 @@ public class RecipeService {
         Path path = Path.of("src", "resources", "recipe.json");
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(path.toString());
-        List<Recipe> recipe = objectMapper.readValue(file, new TypeReference<List<Recipe>>() {
+        return objectMapper.readValue(file, new TypeReference<>() {
         });
-        return recipe;
     }
 
     private RecipeRepository recipeRepository;

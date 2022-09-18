@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ShoppingListController {
-    private ShoppingListService shoppingListService;
+    private final ShoppingListService shoppingListService;
 
     @Autowired
     public ShoppingListController(ShoppingListService shoppingListService) {

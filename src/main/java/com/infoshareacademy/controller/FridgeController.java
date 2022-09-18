@@ -20,10 +20,8 @@ import javax.validation.Valid;
 @RequestMapping("fridge")
 public class FridgeController {
 
-
     private FridgeService fridgeService;
     private FridgeRepository fridgeRepository;
-
 
     @Autowired
     public FridgeController(FridgeService fridgeService, FridgeRepository fridgeRepository) {
@@ -40,13 +38,11 @@ public class FridgeController {
     @GetMapping("/new")
     public String addProductsToFridgeForm(Model model) {
         Fridge fridge;
-        if (fridgeRepository.existsById(fridgeService.getUserId())) {
-            fridge = new Fridge();
-            fridge.setFridgeId(1L);
+        if (fridgeService.findFridgeById(1L).isPresent()) {
             fridge = fridgeService.getAllProductsFromFridge();
         } else {
             fridge = new Fridge();
-            fridge.setFridgeId(1L);
+            fridge.setFridgeId(fridgeService.getUserId());
         }
         model.addAttribute("fridge", fridge);
         return "addproductstofridge";
@@ -57,10 +53,10 @@ public class FridgeController {
         if (bindingResult.hasErrors()) {
             return "addproductstofridge";
         }
+        fridge.setFridgeId(1L);
         fridgeService.saveFridge(fridge);
         return "redirect:/fridge";
     }
-
 
     @PostMapping(value = "/new", params = {"addProduct"})
     public String addProduct(@ModelAttribute("fridge") Fridge fridge) {
@@ -75,5 +71,4 @@ public class FridgeController {
         fridge.getProductsInFridge().remove(index);
         return "addproductstofridge";
     }
-
 }

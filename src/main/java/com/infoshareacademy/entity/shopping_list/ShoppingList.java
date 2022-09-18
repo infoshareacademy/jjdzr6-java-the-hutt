@@ -1,6 +1,4 @@
 package com.infoshareacademy.entity.shopping_list;
-
-import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.product.ProductShoppingList;
 
 import javax.persistence.*;

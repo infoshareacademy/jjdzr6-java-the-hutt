@@ -2,20 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Allergens</title>
+    <title>Fridge Food Preferences</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
 </head>
 <body>
-ID: <td th:text="${foodpreferencesbyid.get().id}"></td> <br>
-CHOCOLATE: <td th:text="${foodpreferencesbyid.get().chocolate}"></td><br>
-DAIRY: <td th:text="${foodpreferencesbyid.get().dairy}"></td><br>
-EGGS: <td th:text="${foodpreferencesbyid.get().eggs}"></td><br>
-NUTS: <td th:text="${foodpreferencesbyid.get().nuts}"></td><br>
-SHELLFISH: <td th:text="${foodpreferencesbyid.get().shellfish}"></td><br>
-STRAWBERRIES: <td th:text="${foodpreferencesbyid.get().strawberries}"></td><br>
-MEAT EATER: <td th:text="${foodpreferencesbyid.get().meatEater}"></td><br>
-VEGAN: <td th:text="${foodpreferencesbyid.get().vegan}"></td><br>
-VEGETARIAN: <td th:text="${foodpreferencesbyid.get().vegetarian}"></td><br>
-OTHER: <td th:text="${foodpreferencesbyid.get().other}"></td><br>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/foodpreferences/1}">Preferencje żywieniowe</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/set}">Ustaw preferencje</a>
+    <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
+    <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
+    <a class="navbar-brand" th:href="@{/recipes/search}">Wyszukiwarka</a>
+    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
 
+    </li>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h1> Preferencje żywieniowe </h1>
+    </div>
+
+
+    <tr >
+        ID: <th scope="col" th:text="${foodpreferencesbyid.get().id}"></th> <br>
+        CZEKOLADA: <td th:text="${foodpreferencesbyid.get().chocolate}"></td><br>
+        PRODUKTY MLECZNE: <td th:text="${foodpreferencesbyid.get().dairy}"></td><br>
+        JAJA: <td th:text="${foodpreferencesbyid.get().eggs}"></td><br>
+        ORZECHY: <td th:text="${foodpreferencesbyid.get().nuts}"></td><br>
+        SKORUPIAKI: <td th:text="${foodpreferencesbyid.get().shellfish}"></td><br>
+        TRUSKAWKI: <td th:text="${foodpreferencesbyid.get().strawberries}"></td><br>
+        MIĘSO: <td th:text="${foodpreferencesbyid.get().meatEater}"></td><br><br>
+        VEGANIN: <td th:text="${foodpreferencesbyid.get().vegan}"></td><br><br>
+        WEGETARIANIN: <td th:text="${foodpreferencesbyid.get().vegetarian}"></td><br><br>
+        INNE ALERGENY: <td th:text="${foodpreferencesbyid.get().other}"></td><br><br>
+    </tr>
+</div>
 </body>
 </html>

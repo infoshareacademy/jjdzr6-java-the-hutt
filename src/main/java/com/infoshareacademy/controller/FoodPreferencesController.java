@@ -46,8 +46,12 @@ public class FoodPreferencesController {
 
     @GetMapping("/foodpreferences/set")
     public String createAllergensForm(Model model) {
-
-        FoodPreferences foodPreferences = new FoodPreferences();
+        FoodPreferences foodPreferences;
+        if(foodPreferencesService.getFoodPreferencesById(1L).isPresent()){
+             foodPreferences = foodPreferencesService.getFoodPreferencesById(1L).get();
+        } else {
+             foodPreferences = new FoodPreferences();
+        }
         model.addAttribute("foodpreferences", foodPreferences);
         return "setfoodpreferences";
 
@@ -55,6 +59,7 @@ public class FoodPreferencesController {
 
     @PostMapping("/foodpreferences")
     public String saveAllergens(@ModelAttribute("foodpreferences") FoodPreferences foodPreferences) {
+        foodPreferences.setId(1L);
         foodPreferencesService.setFoodPreferences(foodPreferences);
         return "redirect:/foodpreferences";
     }
