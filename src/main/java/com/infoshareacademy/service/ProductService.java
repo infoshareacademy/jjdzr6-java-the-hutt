@@ -1,7 +1,7 @@
 package com.infoshareacademy.service;
 
-import com.infoshareacademy.entity.product.ProductInFridge;
-import com.infoshareacademy.repository.ProductRepository;
+import com.infoshareacademy.entity.product.ProductRecipe;
+import com.infoshareacademy.repository.ProductRecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,26 +10,28 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    private ProductRepository productRepository;
+    private ProductRecipeRepository productRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository){
+    public ProductService(ProductRecipeRepository productRepository){
         this.productRepository = productRepository;
     }
 
-    public List<ProductInFridge> getAllProducts(){
-        return productRepository.findAll();
+    public List<ProductRecipe> getAllProductByRecipeId(final Long recipeId) {
+        return productRepository.findAllProductsByRecipeRecipeId(recipeId);
     }
 
-    public ProductInFridge addProduct(ProductInFridge product){
-        return productRepository.save(product);
+    public ProductRecipe findById(Long productId) throws Exception {
+        return productRepository.findById(productId).orElseThrow(() -> new Exception("Not found Product Recipe for "
+                                                                                         + "ID: " + productId));
     }
 
-    public ProductInFridge updateProduct(ProductInFridge product){
-        return productRepository.save(product);
+    public void deleteProductRecipe(Long productId) throws Exception {
+        ProductRecipe product = findById(productId);
+        productRepository.delete(product);
     }
 
-    public void deleteProduct(Long id){
-        productRepository.deleteById(id);
+    public void saveProductRecipe(ProductRecipe productRecipe){
+        if (productRecipe != null) productRepository.save(productRecipe);
     }
 }
