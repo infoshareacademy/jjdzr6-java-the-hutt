@@ -1,23 +1,19 @@
 package com.infoshareacademy.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infoshareacademy.other.Json;
-import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.other.Json;
+import com.infoshareacademy.repository.RecipeRepository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-
 @Service
 public class RecipeService {
-
-
 
     public void writeJson(List<Recipe> recipe) throws IOException {
         Json.writeJson(recipe, "recipe.json");
@@ -43,7 +39,7 @@ public class RecipeService {
     }
 
     public List<Recipe> getSearchRecipe(String keyword) {
-        if(keyword != null){
+        if (keyword != null) {
             return recipeRepository.findRecipeBy(keyword);
         }
         return recipeRepository.findAll();
@@ -54,11 +50,11 @@ public class RecipeService {
     }
 
     public Recipe saveRecipe(Recipe recipe) {
-        recipe.getProductList().forEach(x-> x.setRecipe(recipe));
+        recipe.getProductList().forEach(x -> x.setRecipe(recipe));
         return recipeRepository.save(recipe);
     }
 
-        public void deleteRecipeById(Long id) {
+    public void deleteRecipeById(Long id) {
         recipeRepository.deleteById(id);
     }
 
