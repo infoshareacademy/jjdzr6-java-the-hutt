@@ -1,31 +1,39 @@
 package com.infoshareacademy.controller;
 
-
-import com.infoshareacademy.entity.product.ProductRecipe;
-import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.repository.RecipeRepository;
-import com.infoshareacademy.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.infoshareacademy.entity.product.ProductRecipe;
+import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.repository.RecipeRepository;
+import com.infoshareacademy.service.ProductService;
+import com.infoshareacademy.service.RecipeService;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("recipes")
+@RequestMapping("/recipes")
 public class RecipeController {
 
-    private RecipeService recipeService;
-    private RecipeRepository recipeRepository;
+    private final RecipeService recipeService;
+    private final RecipeRepository recipeRepository;
+    private final ProductService productService;
 
     @Autowired
-    public RecipeController(RecipeService recipeService, RecipeRepository recipeRepository) {
+    public RecipeController(RecipeService recipeService, RecipeRepository recipeRepository,
+                            final ProductService productService) {
         this.recipeService = recipeService;
         this.recipeRepository = recipeRepository;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -56,66 +64,38 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-
-    @PostMapping(value = "/new", params = {"addProduct"})
-    public String addProduct(@ModelAttribute("recipe") Recipe recipe) {
+    @PostMapping(value = "/new", params = { "addProduct" })
+    public String addProduct(@ModelAttribute Recipe recipe) {
         recipe.addProduct(new ProductRecipe());
         return "create-recipe";
     }
 
-    @PostMapping(value = "/new", params = {"removeProduct"})
-    public String removeProduct(@ModelAttribute("recipe") Recipe recipe,
-                                HttpServletRequest request) {
+    @PostMapping(value = "/new", params = { "removeProduct" })
+    public String removeProduct(@ModelAttribute Recipe recipe, HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
         recipe.getProductList().remove(index);
         return "create-recipe";
     }
 
-
-    @GetMapping("/edit/{id}")
-    public String editRecipe(@PathVariable Long id, Model model) {
-        model.addAttribute("recipe", recipeService.getRecipeById(id));
+    @GetMapping("/{recipeId}")
+    public String editRecipe(@PathVariable Long recipeId, Model model) {
+        model.addAttribute("recipe", recipeService.getRecipeById(recipeId));
         return "edit-recipe";
     }
 
-    @PostMapping(value = "/edit/{id}")
-    public String updateRecipe(@PathVariable Long id, @ModelAttribute("recipe") Recipe recipe, Model model) {
+    @PostMapping(value = "/{recipeId}")
+    public String updateRecipe(@PathVariable Long recipeId, @ModelAttribute Recipe recipe) {
 
-        Recipe existingRecipe = recipeService.getRecipeById(id);
-        existingRecipe.setRecipeId(id);
+        Recipe existingRecipe = recipeService.getRecipeById(recipeId);
+        existingRecipe.setRecipeId(recipeId);
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
-        existingRecipe.setPreparationTime(recipe.getPreparationTime());
-//TODO
-//        existingRecipe.setProductList(recipe.getProductList());
 
         recipeService.saveRecipe(existingRecipe);
         return "redirect:/recipes";
     }
 
-    //TODO: produkty update
-    @PostMapping(value = "/edit/{id}", params = {"addEditProduct"})
-    public String addUpdProduct(@ModelAttribute("recipe") Recipe recipe, @PathVariable Long id) {
-        recipe = recipeService.getRecipeById(id);
-        //TODO
-        recipe.addProduct(new ProductRecipe());
-        recipeService.saveRecipe(recipe);
-        return "redirect:/recipes/edit/" + recipe.getRecipeId();
-    }
-
-    @GetMapping(value = "/delete/product/{productId}/recipe/{recipeId}")
-    public String removeUpdProduct(@PathVariable Long productId, @PathVariable Long recipeId) {
-        Recipe recipe = recipeRepository.getReferenceById(recipeId);
-
-        recipe.getProductList().stream()
-                .filter(p -> p.getProductId().equals(productId))
-                .findFirst().ifPresent(p -> p.setRecipe(null));
-        recipe.getProductList().removeIf(p -> p.getProductId().equals(productId));
-        recipeRepository.save(recipe);
-        return "redirect:/recipes/edit/" + recipe.getRecipeId();
-    }
-
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     public String deleteRecipe(@PathVariable Long id) {
         recipeService.deleteRecipeById(id);
         return "redirect:/recipes";

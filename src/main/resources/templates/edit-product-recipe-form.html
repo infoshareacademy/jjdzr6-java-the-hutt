@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Recipe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/set}">Ustaw preferencje</a>
+    <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
+    <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
+    <a class="navbar-brand" th:href="@{/recipes/search}">Wyszukiwarka</a>
+    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
+            <h1 class="text-center"> Edytuj produkt </h1>
+            <div class="card-body">
+                <form th:action="@{/recipes/{recipeId}/products/{productId}
+                        (recipeId=${productRecipe.recipe.recipeId},
+                        productId=${productRecipe.productId})}"
+                      th:object="${productRecipe}"
+                      method="POST">
+                    <div class="form-group">
+                        <label> Ilość </label>
+                        <input type="number"
+                               name="amount"
+                               th:field="*{amount}"
+                               class="form-control"
+                               placeholder="Podaj ilość produktu."/>
+                    </div>
+
+                    <div class="form-group">
+                        <label> Nazwa produktu </label>
+                        <input type="text"
+                               name="productName"
+                               th:field="*{productName}"
+                               class="form-control"
+                               placeholder="Podaj nazwe produktu."/>
+                    </div>
+                    <div class="hidden">
+                        <input type="hidden"
+                               name="recipe"
+                               th:field="*{recipe}"/>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" name="saveRecipe" class="btn btn-success">
+                            Zapisz
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
