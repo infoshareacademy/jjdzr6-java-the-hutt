@@ -35,14 +35,14 @@ public class FridgeController {
         return "fridge";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/product")
     public String addProductsToFridgeForm(Model model, Fridge fridge) {
         fridgeService.addProductsToFridgeForm(fridge);
         model.addAttribute("fridge", fridge);
         return "addproductstofridge";
     }
 
-    @PostMapping("/new")
+    @PostMapping("/product")
     public String saveFridge(@Valid @ModelAttribute("fridge") Fridge fridge, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "addproductstofridge";
@@ -52,13 +52,13 @@ public class FridgeController {
         return "redirect:/fridge";
     }
 
-    @PostMapping(value = "/new", params = {"addProduct"})
+    @PostMapping(value = "/product", params = {"addProduct"})
     public String addProduct(@ModelAttribute("fridge") Fridge fridge) {
         fridge.addProduct(new ProductInFridge());
         return "addproductstofridge";
     }
 
-    @PostMapping(value = "/new", params = {"removeProduct"})
+    @PostMapping(value = "/product", params = {"removeProduct"})
     public String removeProduct(@ModelAttribute("fridge") Fridge fridge,
                                 HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
