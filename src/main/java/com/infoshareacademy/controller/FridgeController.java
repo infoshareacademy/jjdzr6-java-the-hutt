@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("fridge")
+@RequestMapping("/fridge")
 public class FridgeController {
 
     private FridgeService fridgeService;
