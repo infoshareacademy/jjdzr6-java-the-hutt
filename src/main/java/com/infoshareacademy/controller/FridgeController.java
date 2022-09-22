@@ -20,8 +20,8 @@ import javax.validation.Valid;
 @RequestMapping("/fridge")
 public class FridgeController {
 
-    private FridgeService fridgeService;
-    private FridgeRepository fridgeRepository;
+    private final FridgeService fridgeService;
+    private final FridgeRepository fridgeRepository;
 
     @Autowired
     public FridgeController(FridgeService fridgeService, FridgeRepository fridgeRepository) {
