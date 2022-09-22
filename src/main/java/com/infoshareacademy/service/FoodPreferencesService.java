@@ -18,12 +18,14 @@ public class FoodPreferencesService {
 
     private final RecipeService recipeService;
 
+    private final FridgeService fridgeService;
+
     @Autowired
-    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository, RecipeService recipeService) {
+    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository, RecipeService recipeService, FridgeService fridgeService) {
         this.foodPreferencesRepository = foodPreferencesRepository;
         this.recipeService = recipeService;
+        this.fridgeService = fridgeService;
     }
-
 
     public List<FoodPreferences> getFoodPreferences() {
         return foodPreferencesRepository.findAll();
@@ -35,7 +37,17 @@ public class FoodPreferencesService {
     }
 
     public void setFoodPreferences(FoodPreferences foodPreferences) {
+        foodPreferences.setId(fridgeService.getUserId());
         foodPreferencesRepository.save(foodPreferences);
+    }
+
+    public FoodPreferences checkIfFoodPreferencesIsSet(FoodPreferences foodPreferences) {
+        if (foodPreferencesRepository.findById(fridgeService.getUserId()).isPresent()) {
+            foodPreferences = foodPreferencesRepository.findById(fridgeService.getUserId()).get();
+            return foodPreferences;
+        } else {
+            return new FoodPreferences();
+        }
     }
 
     public List<Recipe> filterRecipeByFoodPreferences(Long id) {
