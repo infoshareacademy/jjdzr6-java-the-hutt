@@ -40,7 +40,7 @@ public class RecipeController {
         return "recipes";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/filtered-prodcts")
     public String searchRecipeList(Model model, @Param("keyword") String keyword) {
         model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
         model.addAttribute("keyword", keyword);
