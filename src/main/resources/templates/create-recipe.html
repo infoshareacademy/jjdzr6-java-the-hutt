@@ -31,7 +31,7 @@
         <div class ="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
             <h1 class = "text-center"> Stwórz nowy przepis </h1>
             <div class = "card-body">
-                <form th:action="@{/recipes/new}" th:object = "${recipe}" method="POST">
+                <form th:action="@{/recipes/recipe}" th:object = "${recipe}" method="POST">
                     <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                         <ul>
                             <li th:text="${'Niepoprawna treść przepisu.'}"></li>
