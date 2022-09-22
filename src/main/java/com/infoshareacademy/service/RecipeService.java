@@ -2,20 +2,14 @@ package com.infoshareacademy.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.other.Json;
 import com.infoshareacademy.repository.RecipeRepository;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 
 @Service
 public class RecipeService {
 
-    private RecipeRepository recipeRepository;
+    private final RecipeRepository recipeRepository;
 
     @Autowired
     public RecipeService(RecipeRepository recipeRepository) {
@@ -49,6 +43,7 @@ public class RecipeService {
         existingRecipe.setRecipeId(recipeId);
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
+        existingRecipe.setPreparationTime(recipe.getPreparationTime());
         recipeRepository.save(existingRecipe);
     }
 
