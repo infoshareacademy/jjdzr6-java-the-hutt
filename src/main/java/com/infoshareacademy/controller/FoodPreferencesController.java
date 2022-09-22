@@ -44,7 +44,7 @@ public class FoodPreferencesController {
         return "recipebyfoodpreferences";
     }
 
-    @GetMapping("/foodpreferences/set")
+    @GetMapping("/foodpreferences/user-foodpreferences")
     public String createAllergensForm(Model model) {
         FoodPreferences foodPreferences;
         if(foodPreferencesService.getFoodPreferencesById(1L).isPresent()){
