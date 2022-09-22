@@ -5,7 +5,7 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products")
+@Table(name = "products_recipe")
 public class ProductRecipe extends Product {
 
     @Id

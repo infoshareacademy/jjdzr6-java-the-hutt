@@ -7,7 +7,7 @@ import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products")
+@Table(name = "products_shopping_list")
 public class ProductShoppingList extends Product {
 
     @Id

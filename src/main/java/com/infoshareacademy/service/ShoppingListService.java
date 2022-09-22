@@ -71,7 +71,8 @@ public class ShoppingListService {
 
         }
 
-        return shoppingList.stream().distinct().toList();
+        List<ProductShoppingList> productShoppingLists = shoppingList.stream().distinct().toList();
+        return productShoppingLists;
 
 
     }
