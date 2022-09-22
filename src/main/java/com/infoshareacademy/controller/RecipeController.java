@@ -40,20 +40,20 @@ public class RecipeController {
         return "recipes";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/filtered-prodcts")
     public String searchRecipeList(Model model, @Param("keyword") String keyword) {
         model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
         model.addAttribute("keyword", keyword);
         return "search-recipe";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/recipe")
     public String createRecipeForm(Model model) {
         model.addAttribute("recipe", new Recipe());
         return "create-recipe";
     }
 
-    @PostMapping("/new")
+    @PostMapping("/recipe")
     public String saveRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "create-recipe";
@@ -62,13 +62,13 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-    @PostMapping(value = "/new", params = {"addProduct"})
+    @PostMapping(value = "/recipe", params = {"addProduct"})
     public String addProduct(@ModelAttribute Recipe recipe) {
         recipe.addProduct(new ProductRecipe());
         return "create-recipe";
     }
 
-    @PostMapping(value = "/new", params = {"removeProduct"})
+    @PostMapping(value = "/recipe", params = {"removeProduct"})
     public String removeProduct(@ModelAttribute Recipe recipe, HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
         recipe.getProductList().remove(index);
