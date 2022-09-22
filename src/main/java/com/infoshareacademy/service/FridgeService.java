@@ -27,7 +27,7 @@ public class FridgeService {
 
 
     public Fridge saveFridge(Fridge fridge) {
-        fridge.setFridgeId(userId);
+        fridge.setFridgeId(getUserId());
         fridge.getProductsInFridge().forEach(x -> x.setFridge(fridge));
         return fridgeRepository.save(fridge);
     }
@@ -39,6 +39,16 @@ public class FridgeService {
             return new Fridge();
         }
 
+    }
+
+    public Fridge addProductsToFridgeForm(Fridge fridge) {
+        if (fridgeRepository.findById(getUserId()).isPresent()) {
+            return fridge = fridgeRepository.findById(getUserId()).get();
+        } else {
+            fridge = new Fridge();
+            fridge.setFridgeId(getUserId());
+            return fridge;
+        }
     }
 
     public Optional<Fridge> findFridgeById(Long id) {

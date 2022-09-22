@@ -36,14 +36,8 @@ public class FridgeController {
     }
 
     @GetMapping("/new")
-    public String addProductsToFridgeForm(Model model) {
-        Fridge fridge;
-        if (fridgeService.findFridgeById(1L).isPresent()) {
-            fridge = fridgeService.getAllProductsFromFridge();
-        } else {
-            fridge = new Fridge();
-            fridge.setFridgeId(fridgeService.getUserId());
-        }
+    public String addProductsToFridgeForm(Model model, Fridge fridge) {
+        fridgeService.addProductsToFridgeForm(fridge);
         model.addAttribute("fridge", fridge);
         return "addproductstofridge";
     }
@@ -53,7 +47,7 @@ public class FridgeController {
         if (bindingResult.hasErrors()) {
             return "addproductstofridge";
         }
-        fridge.setFridgeId(1L);
+        fridge.setFridgeId(fridgeService.getUserId());
         fridgeService.saveFridge(fridge);
         return "redirect:/fridge";
     }

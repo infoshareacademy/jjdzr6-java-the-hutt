@@ -16,6 +16,7 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
 import com.infoshareacademy.service.ProductService;
 import com.infoshareacademy.service.RecipeService;
+
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -64,13 +65,13 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-    @PostMapping(value = "/new", params = { "addProduct" })
+    @PostMapping(value = "/new", params = {"addProduct"})
     public String addProduct(@ModelAttribute Recipe recipe) {
         recipe.addProduct(new ProductRecipe());
         return "create-recipe";
     }
 
-    @PostMapping(value = "/new", params = { "removeProduct" })
+    @PostMapping(value = "/new", params = {"removeProduct"})
     public String removeProduct(@ModelAttribute Recipe recipe, HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
         recipe.getProductList().remove(index);
@@ -85,13 +86,7 @@ public class RecipeController {
 
     @PostMapping(value = "/{recipeId}")
     public String updateRecipe(@PathVariable Long recipeId, @ModelAttribute Recipe recipe) {
-
-        Recipe existingRecipe = recipeService.getRecipeById(recipeId);
-        existingRecipe.setRecipeId(recipeId);
-        existingRecipe.setName(recipe.getName());
-        existingRecipe.setDescription(recipe.getDescription());
-
-        recipeService.saveRecipe(existingRecipe);
+        recipeService.updateRecipe(recipeId, recipe);
         return "redirect:/recipes";
     }
 

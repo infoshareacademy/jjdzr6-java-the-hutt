@@ -54,6 +54,16 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+
+    public void updateRecipe(Long recipeId, Recipe recipe){
+
+        Recipe existingRecipe = recipeRepository.findById(recipeId).get();
+        existingRecipe.setRecipeId(recipeId);
+        existingRecipe.setName(recipe.getName());
+        existingRecipe.setDescription(recipe.getDescription());
+        recipeRepository.save(existingRecipe);
+    }
+
     public void deleteRecipeById(Long id) {
         recipeRepository.deleteById(id);
     }

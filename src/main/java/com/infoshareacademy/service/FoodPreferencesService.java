@@ -14,17 +14,16 @@ import java.util.Optional;
 public class FoodPreferencesService {
 
 
-    private FoodPreferencesRepository foodPreferencesRepository;
+    private final FoodPreferencesRepository foodPreferencesRepository;
+
+    private final RecipeService recipeService;
+
     @Autowired
-    RecipeService recipeService;
-    @Autowired
-    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository) {
+    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository, RecipeService recipeService) {
         this.foodPreferencesRepository = foodPreferencesRepository;
+        this.recipeService = recipeService;
     }
 
-    public FoodPreferencesService() {
-
-    }
 
     public List<FoodPreferences> getFoodPreferences() {
         return foodPreferencesRepository.findAll();
@@ -39,10 +38,9 @@ public class FoodPreferencesService {
         foodPreferencesRepository.save(foodPreferences);
     }
 
-    public List<Recipe> filterRecipeByFoodPreferences(Long id){
+    public List<Recipe> filterRecipeByFoodPreferences(Long id) {
 
         Optional<FoodPreferences> foodPreferencesRepositoryById = foodPreferencesRepository.findById(id);
-
         List<Recipe> recipeList = recipeService.getAllRecipe();
 
         if (foodPreferencesRepositoryById.isPresent()) {

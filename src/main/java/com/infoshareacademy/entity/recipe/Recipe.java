@@ -54,7 +54,6 @@ public class Recipe {
         for (ProductRecipe product : productList) {
             if (product.getProductName().contains(s)) {
                 flag = true;
-                break;
             }
         }
         return flag;
