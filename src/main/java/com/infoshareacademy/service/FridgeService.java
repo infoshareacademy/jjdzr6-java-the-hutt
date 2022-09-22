@@ -59,19 +59,4 @@ public class FridgeService {
     public long getUserId() {
         return userId;
     }
-
-    public void writeJson(Map<String, Double> fridge) throws IOException {
-
-        Json.writeJson(fridge, "products_in_fridge.json");
-
-    }
-
-    public Map<String, Double> getJson() throws IOException {
-        Path path = Path.of("src", "resources", "products_in_fridge.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File(path.toString());
-        return objectMapper.readValue(file, new TypeReference<>() {
-        });
-
-    }
 }

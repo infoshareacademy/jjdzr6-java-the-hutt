@@ -15,18 +15,6 @@ import java.util.List;
 @Service
 public class RecipeService {
 
-    public void writeJson(List<Recipe> recipe) throws IOException {
-        Json.writeJson(recipe, "recipe.json");
-    }
-
-    public List<Recipe> getJson() throws IOException {
-        Path path = Path.of("src", "resources", "recipe.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File(path.toString());
-        return objectMapper.readValue(file, new TypeReference<>() {
-        });
-    }
-
     private RecipeRepository recipeRepository;
 
     @Autowired
