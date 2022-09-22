@@ -17,8 +17,7 @@ import java.io.IOException;
 @Controller
 public class FoodPreferencesController {
 
-    @Autowired
-    private FoodPreferencesService foodPreferencesService;
+    private final FoodPreferencesService foodPreferencesService;
 
     public FoodPreferencesController(FoodPreferencesService foodPreferencesService) {
         this.foodPreferencesService = foodPreferencesService;
@@ -47,10 +46,10 @@ public class FoodPreferencesController {
     @GetMapping("/foodpreferences/user-foodpreferences")
     public String createAllergensForm(Model model) {
         FoodPreferences foodPreferences;
-        if(foodPreferencesService.getFoodPreferencesById(1L).isPresent()){
-             foodPreferences = foodPreferencesService.getFoodPreferencesById(1L).get();
+        if (foodPreferencesService.getFoodPreferencesById(1L).isPresent()) {
+            foodPreferences = foodPreferencesService.getFoodPreferencesById(1L).get();
         } else {
-             foodPreferences = new FoodPreferences();
+            foodPreferences = new FoodPreferences();
         }
         model.addAttribute("foodpreferences", foodPreferences);
         return "setfoodpreferences";
