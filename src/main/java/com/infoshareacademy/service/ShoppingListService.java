@@ -1,84 +1,101 @@
 package com.infoshareacademy.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infoshareacademy.entity.product.ProductInFridge;
+import com.infoshareacademy.entity.product.ProductRecipe;
+import com.infoshareacademy.entity.product.ProductShoppingList;
 import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.other.Json;
-import com.infoshareacademy.entity.shopping_list.ShoppingList;
+import com.infoshareacademy.repository.ShoppingListRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
+@Service
 public class ShoppingListService {
 
-    public  void writeJson(Map<String,Double> shoppingList) throws IOException {
-        Json.writeJson(shoppingList,"shopping_list.json");
+    private final ShoppingListRepository shoppingListRepository;
+    @Autowired
+    private FridgeService fridgeService;
+    @Autowired
+    private RecipeService recipeService;
+
+
+    @Autowired
+    public ShoppingListService(ShoppingListRepository shoppingListRepository) {
+        this.shoppingListRepository = shoppingListRepository;
     }
 
-    public void getJson() throws IOException  {
-        Path path = Path.of("src", "main", "resources", "shopping_list.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String file = Files.readString(path);
-        TypeReference<HashMap<String , Double>> typeReference = new TypeReference<>() {
-        };
-        Map<String, Double> map = objectMapper.readValue(file, typeReference);
-        for(String key : map.keySet()){
-            System.out.println(key + " = " + map.get(key));
+
+    public List<ProductShoppingList> createShoppingList() {
+
+
+        List<Recipe> recipeList = recipeService.getAllRecipe();
+        List<ProductInFridge> productsInFridge = fridgeService.getAllProductsFromFridge().getProductsInFridge();
+
+        Map<String, Double> fridgeMap = productsInFridge.stream().collect(Collectors.toMap(ProductInFridge::getProductName, ProductInFridge::getAmount));
+
+        for (String key : fridgeMap.keySet()) {
+            if (fridgeMap.get(key) == null) {
+                fridgeMap.putIfAbsent(key, fridgeMap.get(key));
+            } else {
+                Double value = fridgeMap.get(key) + fridgeMap.get(key);
+                fridgeMap.put(key, value);
+            }
         }
-    }
-
-    public void createShoppingList() throws IOException {
-
-        RecipeService recipeService = new RecipeService();
-        List<Recipe> recipeList = recipeService.getJson();
-
-        FridgeService fridgeService = new FridgeService();
-        Map<String, Double> fridgeMap = fridgeService.getJson();
 
         Map<String, Double> recipeMap = new HashMap<>();
-        Map<String, Double> shoppingList = null;
+        List<ProductShoppingList> shoppingList = new ArrayList<>();
         for (Recipe recipe : recipeList) {
-            Map<String, Double> recipeOne = recipe.getNeccesaryProducts();
+            Map<String, Double> recipeOne = recipe.getProductList().stream().collect(Collectors.toMap(ProductRecipe::getProductName, ProductRecipe::getAmount));
 
             for (String key : recipeOne.keySet()) {
-                if(recipeMap.get(key) == null){
+                if (recipeMap.get(key) == null) {
                     recipeMap.putIfAbsent(key, recipeOne.get(key));
                 } else {
-                Double value = recipeMap.get(key)+recipeOne.get(key);
-                recipeMap.put(key, value);
-            }}
-            shoppingList = hashMapDifference(fridgeMap, recipeMap);
+                    Double value = recipeMap.get(key) + recipeOne.get(key);
+                    recipeMap.put(key, value);
+                }
+            }
+            Map<String, Double> map = hashMapDifference(fridgeMap, recipeMap);
+
+
+            for (String key : map.keySet()) {
+                ProductShoppingList product = new ProductShoppingList();
+                product.setProductName(key);
+                product.setAmount(map.get(key));
+                shoppingList.add(product);
+
+            }
+
+
         }
-        System.out.println(shoppingList);
-        writeJson(shoppingList);
+
+        List<ProductShoppingList> productShoppingLists = shoppingList.stream().distinct().toList();
+        return productShoppingLists;
+
 
     }
 
-    public Map hashMapDifference(Map<String, Double> a, Map<String, Double> b) {
+    public Map<String, Double> hashMapDifference(Map<String, Double> a, Map<String, Double> b) {
         Iterator<String> bKeyIterator = b.keySet().iterator();
         String key;
         Double value;
-        HashMap difference = new HashMap();
+        Map<String, Double> difference = new HashMap<>();
 
         while (bKeyIterator.hasNext()) {
             key = bKeyIterator.next();
-                if(a.get(key) == null){
-                    value = b.get(key);
-                } else {
-                    value = b.get(key) - a.get(key);
-                }
-                if(value > 0){
-                    difference.put(key, value);
-                } 
+            if (a.get(key) == null) {
+                value = b.get(key);
+            } else {
+                value = b.get(key) - a.get(key);
+            }
+            if (value > 0) {
+                difference.put(key, value);
+            }
         }
         return difference;
     }
-
 
 
 }

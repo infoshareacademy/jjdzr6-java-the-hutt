@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Recipe</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/foodpreferences/1}">Preferencje żywieniowe</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
+    <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
+    <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
+    <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
+    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<br>
+<br>
+<div class = "container">
+    <div class = "row">
+        <div class ="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
+            <h1 class = "text-center"> Stwórz nowy przepis </h1>
+            <div class = "card-body">
+                <form th:action="@{/recipes/recipe}" th:object = "${recipe}" method="POST">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                        <ul>
+                            <li th:text="${'Niepoprawna treść przepisu.'}"></li>
+                        </ul>
+                    </div>
+                    <div class ="form-group">
+                        <label> Tytuł </label>
+                        <input
+                                type = "text"
+                                name = "name"
+                                th:field = "*{name}"
+                                class = "form-control"
+                                placeholder="Podaj tytuł przepisu."
+                        />
+                    </div>
+
+                    <div class ="form-group">
+                        <label> Opis </label>
+                        <input
+                                type = "text"
+                                name = "description"
+                                th:field = "*{description}"
+                                class = "form-control"
+                                placeholder="Podaj opis przepisu."
+                        />
+                    </div>
+
+                    <div class ="form-group">
+                        <label> Czas przygotowania </label>
+                        <input
+                                type = "text"
+                                name = "preparation_time"
+                                th:field = "*{preparationTime}"
+                                class = "form-control"
+                                placeholder="Podaj czas przygotowania."
+                        />
+                    </div>
+                    <label> Niezbędne produkty </label>
+                    <table>
+                        <td>
+                            <button type="submit" name="addProduct" class = "btn btn-outline-primary btn-sm">Dodaj</button>
+                        </td>
+                        <tr>
+                            <th >Lp.</th>
+                            <th >Ilość</th>
+                            <th >Produkt</th>
+                        </tr>
+                        <tr th:each="product,iterStat : *{productList}" th:class="${iterStat.odd}? 'grey-row'">
+                            <td th:text="${iterStat.count}"></td>
+                            <td>
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].amount}"  />
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].productName}"  />
+                            </td>
+                               <td>
+                                <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class = "box-footer">
+                        </br>
+                        <button type="submit" name="addRecipe" class = "btn btn-primary">
+                            Dodaj
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

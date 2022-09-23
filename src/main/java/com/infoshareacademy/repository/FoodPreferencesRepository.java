@@ -1,4 +1,9 @@
 package com.infoshareacademy.repository;
 
-public class FoodPreferencesRepository {
+import com.infoshareacademy.entity.food_preferences.FoodPreferences;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface FoodPreferencesRepository extends JpaRepository<FoodPreferences, Long> {
 }

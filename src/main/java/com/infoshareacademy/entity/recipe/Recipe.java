@@ -1,27 +1,76 @@
 package com.infoshareacademy.entity.recipe;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import com.infoshareacademy.entity.product.ProductRecipe;
 
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import java.util.*;
+
+@Entity
+@Table(name = "recipes")
 public class Recipe {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "recipe_id")
+    private Long recipeId;
+
+    @NotEmpty
+    @Column(name = "name")
     private String name;
+
+    @NotEmpty
+    @Column(name = "description")
     private String description;
+
+    @Min(1)
+    @Max(120)
+    @Column(name = "preparation_time")
     private int preparationTime;
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductRecipe> productList = new ArrayList<>();
+
     private boolean vegetarian;
     private boolean vegan;
-    private Map<String, Double> neccesaryProducts = new HashMap<>();
 
-    public Map<String, Double> addNecessaryProducts(String name, Double howMany){
-        neccesaryProducts.put(name, howMany);
-        return neccesaryProducts;
+    public Recipe() {
+    }
+
+    public List<ProductRecipe> getProductList() {
+        return productList;
+    }
+
+    public void addProduct(ProductRecipe product) {
+        this.productList.add(product);
+        product.setRecipe(this);
+    }
+
+    public boolean containsProduct(String s) {
+        boolean flag = false;
+        for (ProductRecipe product : productList) {
+            if (product.getProductName().contains(s)) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
+    public Long getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(Long id) {
+        this.recipeId = id;
     }
 
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -34,14 +83,6 @@ public class Recipe {
         this.description = description;
     }
 
-    public Map<String, Double> getNeccesaryProducts() {
-        return neccesaryProducts;
-    }
-
-    public void setNeccesaryProducts(Map<String, Double> neccesaryProducts) {
-        this.neccesaryProducts = neccesaryProducts;
-    }
-
     public int getPreparationTime() {
         return preparationTime;
     }
@@ -50,29 +91,8 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
-    public Recipe() {
-    }
-
-    @Override
-    public String toString() {
-        return "Przepis na: " +
-                  name +
-                "\n Opis: " + description  +
-                ", Niezbędne produkty: " + neccesaryProducts +
-                ", czas przygotowania: [min] " + preparationTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Recipe recipe = (Recipe) o;
-        return preparationTime == recipe.preparationTime && Objects.equals(name, recipe.name) && Objects.equals(description, recipe.description) && Objects.equals(neccesaryProducts, recipe.neccesaryProducts);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description, preparationTime, neccesaryProducts);
+    public void setProductList(List<ProductRecipe> productList) {
+        this.productList = productList;
     }
 
     public boolean isVegetarian() {
@@ -89,5 +109,16 @@ public class Recipe {
 
     public void setVegan(boolean vegan) {
         this.vegan = vegan;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + recipeId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", preparationTime=" + preparationTime +
+                ", productList=" + productList +
+                '}';
     }
 }

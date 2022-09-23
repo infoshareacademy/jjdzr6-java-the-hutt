@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Food Preferences</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/foodpreferences/1}">Preferencje żywieniowe</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
+    <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
+    <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
+    <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
+    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+
+    </li>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h1> Preferencje żywieniowe </h1>
+    </div>
+
+
+<tr th:each="allergen: ${getfoodpreferences}">
+    ID: <th scope="col" th:text="${allergen.id}"></th> <br>
+    CZEKOLADA: <td th:text="${allergen.chocolate}"></td><br>
+    PRODUKTY MLECZNE: <td th:text="${allergen.dairy}"></td><br>
+    JAJA: <td th:text="${allergen.eggs}"></td><br>
+    ORZECHY: <td th:text="${allergen.nuts}"></td><br>
+    SKORUPIAKI: <td th:text="${allergen.shellfish}"></td><br>
+    TRUSKAWKI: <td th:text="${allergen.strawberries}"></td><br>
+    MIĘSO: <td th:text="${allergen.meatEater}"></td><br><br>
+    VEGANIN: <td th:text="${allergen.vegan}"></td><br><br>
+    WEGETARIANIN: <td th:text="${allergen.vegetarian}"></td><br><br>
+    INNE ALERGENY: <td th:text="${allergen.other}"></td><br><br>
+</tr>
+</div>
+</body>
+</html>

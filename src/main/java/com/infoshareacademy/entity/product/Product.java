@@ -1,21 +1,34 @@
 package com.infoshareacademy.entity.product;
 
-public class Product {
+public abstract class Product {
 
-    private String name;
 
-    public String getName() {
-        return name;
+    private String productName;
+
+    private Double amount;
+
+    public Product(String productName, Double amount) {
+        this.productName = productName;
+        this.amount = amount;
     }
 
-    public Product(String name) {
-        this.name = name;
+    public Product() {
+
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                '}';
+    public String getProductName() {
+        return productName;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 }

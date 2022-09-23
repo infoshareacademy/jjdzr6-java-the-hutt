@@ -1,33 +1,47 @@
 package com.infoshareacademy.entity.fridge;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import com.infoshareacademy.entity.product.ProductInFridge;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "Fridge")
 public class Fridge {
 
-private Map <String, Double> productsInFridge = new HashMap<>();
+    @Id
+    @Column(name = "fridge_id")
+    private Long fridgeId = 1L;
 
-    public Map<String, Double> addFridgeProduct(String name, Double howMany){
-        productsInFridge.put(name, howMany);
+    @OneToMany(mappedBy = "fridge",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductInFridge> productsInFridge = new ArrayList<>();
+
+    public void addProduct(ProductInFridge product) {
+        this.productsInFridge.add(product);
+        this.setFridgeId(1L);
+        product.setFridge(this);
+    }
+
+    public Long getFridgeId() {
+        return fridgeId;
+    }
+
+    public void setFridgeId(Long fridgeId) {
+        this.fridgeId = fridgeId;
+    }
+
+    public List<ProductInFridge> getProductsInFridge() {
         return productsInFridge;
+    }
+
+    public void setProductsInFridge(List<ProductInFridge> productsInFridge) {
+        this.productsInFridge = productsInFridge;
     }
 
     public Fridge() {
     }
 
-    public Map<String, Double> getProductsInFridge() {
-        return productsInFridge;
-    }
 
-    public void setProductsInFridge(Map<String, Double> productsInFridge) {
-        this.productsInFridge = productsInFridge;
-    }
-
-    @Override
-    public String toString() {
-        return "Fridge{" +
-                "productsInFridge=" + productsInFridge +
-                '}';
-    }
 }

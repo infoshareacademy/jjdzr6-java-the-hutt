@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/jjdzr6-java-the-hutt.iml" filepath="$PROJECT_DIR$/.idea/jjdzr6-java-the-hutt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-the-hutt.iml" filepath="$PROJECT_DIR$/java-the-hutt.iml" />
     </modules>
   </component>
 </project>
