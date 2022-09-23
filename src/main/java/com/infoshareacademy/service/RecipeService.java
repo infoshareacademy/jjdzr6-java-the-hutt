@@ -1,10 +1,14 @@
 package com.infoshareacademy.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
+
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -37,7 +41,7 @@ public class RecipeService {
     }
 
 
-    public void updateRecipe(Long recipeId, Recipe recipe){
+    public void updateRecipe(Long recipeId, Recipe recipe) {
 
         Recipe existingRecipe = recipeRepository.findById(recipeId).get();
         existingRecipe.setRecipeId(recipeId);
@@ -49,6 +53,12 @@ public class RecipeService {
 
     public void deleteRecipeById(Long id) {
         recipeRepository.deleteById(id);
+    }
+
+    public List<Recipe> sortByPreparationTimeDesc() {
+        return recipeRepository.findAll().stream()
+                .sorted(Comparator.comparing(Recipe::getPreparationTime))
+                .collect(Collectors.toList());
     }
 
 }

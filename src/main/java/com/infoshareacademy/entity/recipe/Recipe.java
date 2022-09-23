@@ -31,7 +31,7 @@ public class Recipe {
     @Column(name = "preparation_time")
     private int preparationTime;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductRecipe> productList = new ArrayList<>();
 
     private boolean vegetarian;
