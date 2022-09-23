@@ -55,10 +55,13 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
-    public List<Recipe> sortByPreparationTimeDesc() {
+    public List<Recipe> sortByPreparationTimeAsc() {
         return recipeRepository.findAll().stream()
                 .sorted(Comparator.comparing(Recipe::getPreparationTime))
                 .collect(Collectors.toList());
     }
 
+    public List<Recipe> sortByPreparationTimeDesc() {
+        return recipeRepository.findAll(Sort.by(Sort.Direction.DESC, "preparationTime"));
+    }
 }
