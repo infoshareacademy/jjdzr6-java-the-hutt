@@ -9,10 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Comparator;
 import java.util.List;
-
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,7 +59,8 @@ class RecipeServiceTest {
         recipeService.getAllRecipe();
 
     }
-//TODO Fix empty list
+
+    //TODO Fix empty list
     @Test
     void sortByPreparationTimeAsc() {
         //given
@@ -82,6 +81,18 @@ class RecipeServiceTest {
 
     @Test
     void sortByPreparationTimeDesc() {
-        System.out.println(recipeService.sortByPreparationTimeDesc());
+        //given
+        Recipe testRecipe = new Recipe();
+        testRecipe.setPreparationTime(10);
+        //when
+        List<Recipe> recipesAsc = recipeService.sortByPreparationTimeDesc();
+        //then
+        //then
+        Assertions.assertThat(recipesAsc)
+                .hasSize(3)
+                .isSorted();
+        assertEquals(testRecipe.getPreparationTime(), recipeService.getAllRecipe().get(0).getPreparationTime());
+
+//        System.out.println(recipeService.sortByPreparationTimeDesc());
     }
 }
