@@ -9,13 +9,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import java.util.Comparator;
 import java.util.List;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
+//@SpringBootTest
 class RecipeServiceTest {
-
+//    @Autowired
+//    RecipeRepository recipeRepository;
+//    @Autowired
+//    RecipeService recipeService;
     RecipeRepository recipeRepository = mock(RecipeRepository.class);
     RecipeService recipeService = new RecipeService(recipeRepository);
 
@@ -67,9 +74,9 @@ class RecipeServiceTest {
         Recipe testRecipe = new Recipe();
         testRecipe.setPreparationTime(1);
         //when
-        List<Recipe> recipesAsc = recipeService.sortByPreparationTimeAsc();
+        List<Recipe> recipesDesc = recipeService.sortByPreparationTimeAsc();
         //then
-        Assertions.assertThat(recipesAsc)
+        Assertions.assertThat(recipesDesc)
                 .hasSize(3)
                 .isSortedAccordingTo(Comparator.comparing(Recipe::getPreparationTime));
         assertEquals(testRecipe.getPreparationTime(), recipeService.getAllRecipe().get(0).getPreparationTime());
@@ -87,7 +94,6 @@ class RecipeServiceTest {
         //when
         List<Recipe> recipesAsc = recipeService.sortByPreparationTimeDesc();
         //then
-        //then
         Assertions.assertThat(recipesAsc)
                 .hasSize(3)
                 .isSorted();
@@ -95,4 +101,37 @@ class RecipeServiceTest {
 
 //        System.out.println(recipeService.sortByPreparationTimeDesc());
     }
+
+    @Test
+    void sortByNameAsc() {
+        //given
+        Recipe testRecipe = new Recipe();
+        testRecipe.setName("Jajecznica");
+        //when
+        List<Recipe> recipesAsc = recipeService.sortByNameAsc();
+        //then
+        Assertions.assertThat(recipesAsc)
+                .hasSize(3)
+                .isSorted();
+        assertEquals(testRecipe.getName(), recipeService.getAllRecipe().get(0).getName());
+//        System.out.println(recipeService.sortByNameAsc());
+    }
+
+    @Test
+    void sortByNameDesc() {
+        //given
+        Recipe testRecipe = new Recipe();
+        testRecipe.setName("Tosty");
+        //when
+        List<Recipe> recipesDesc = recipeService.sortByNameDesc();
+        //then
+        Assertions.assertThat(recipesDesc)
+                .hasSize(3)
+                .isSorted();
+        assertEquals(testRecipe.getName(), recipeService.getAllRecipe().get(0).getName());
+
+//        System.out.println(recipeService.sortByNameDesc());
+    }
+
+
 }
