@@ -34,8 +34,8 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductRecipe> productList = new ArrayList<>();
 
-    private boolean vegetarian;
-    private boolean vegan;
+    @OneToOne(mappedBy = "recipe",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private RecipeAllegrens recipeAllegrens;
 
     public Recipe() {
     }
@@ -91,25 +91,6 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
-    public void setProductList(List<ProductRecipe> productList) {
-        this.productList = productList;
-    }
-
-    public boolean isVegetarian() {
-        return vegetarian;
-    }
-
-    public void setVegetarian(boolean vegetarian) {
-        this.vegetarian = vegetarian;
-    }
-
-    public boolean isVegan() {
-        return vegan;
-    }
-
-    public void setVegan(boolean vegan) {
-        this.vegan = vegan;
-    }
 
     @Override
     public String toString() {
