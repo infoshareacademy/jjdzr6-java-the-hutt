@@ -3,21 +3,17 @@ package com.infoshareacademy.service;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
+import org.assertj.core.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class RecipeServiceTest {
@@ -38,6 +34,7 @@ class RecipeServiceTest {
         recipe1.addProduct(product1b);
         System.out.println(recipe1);
         recipeService.saveRecipe(recipe1);
+        recipeService.getAllRecipe();
 
         Recipe recipe2 = new Recipe();
         recipe2.setRecipeId(2L);
@@ -47,6 +44,7 @@ class RecipeServiceTest {
         ProductRecipe product2a = new ProductRecipe("kakao", 1.0);
         recipe2.addProduct(product2a);
         recipeService.saveRecipe(recipe2);
+        recipeService.getAllRecipe();
 
         Recipe recipe3 = new Recipe();
         recipe3.setRecipeId(3L);
@@ -60,14 +58,26 @@ class RecipeServiceTest {
         recipe3.addProduct(product3b);
         recipe3.addProduct(product3c);
         recipeService.saveRecipe(recipe3);
+        recipeService.getAllRecipe();
 
     }
 //TODO Fix empty list
     @Test
     void sortByPreparationTimeAsc() {
+        //given
+        Recipe testRecipe = new Recipe();
+        testRecipe.setPreparationTime(1);
+        //when
+        List<Recipe> recipesAsc = recipeService.sortByPreparationTimeAsc();
+        //then
+        Assertions.assertThat(recipesAsc)
+                .hasSize(3)
+                .isSortedAccordingTo(Comparator.comparing(Recipe::getPreparationTime));
+        assertEquals(testRecipe.getPreparationTime(), recipeService.getAllRecipe().get(0).getPreparationTime());
+
 //        recipeService.getAllRecipe();
 //        Mockito.verify(recipeRepository, Mockito.times(1)).findAll();
-        System.out.println(recipeService.sortByPreparationTimeAsc());
+//        System.out.println(recipeService.sortByPreparationTimeAsc());
     }
 
     @Test
