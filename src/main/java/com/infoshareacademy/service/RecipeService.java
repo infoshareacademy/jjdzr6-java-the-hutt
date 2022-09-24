@@ -64,4 +64,14 @@ public class RecipeService {
     public List<Recipe> sortByPreparationTimeDesc() {
         return recipeRepository.findAll(Sort.by(Sort.Direction.DESC, "preparationTime"));
     }
+
+    public List<Recipe> sortByNameAsc() {
+        return recipeRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+    }
+
+    public List<Recipe> sortByNameDesc() {
+        return recipeRepository.findAll().stream()
+                .sorted((name1, name2) -> name2.getName().compareToIgnoreCase(name1.getName()))
+                .collect(Collectors.toList());
+    }
 }
