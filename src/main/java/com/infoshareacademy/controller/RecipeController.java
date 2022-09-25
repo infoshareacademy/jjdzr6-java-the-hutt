@@ -92,4 +92,10 @@ public class RecipeController {
         recipeService.deleteRecipeById(id);
         return "redirect:/recipes";
     }
+
+    @GetMapping("recipe-asc")
+    public String sortByNameAsc(Model model){
+        model.addAttribute("recipeAsc", recipeService.sortByNameAsc());
+        return "search-recipe";
+    }
 }
