@@ -42,13 +42,13 @@
             <button type="submit" class="btn btn-primary">Szukaj</button>
             <button type="button" class="btn btn-outline-primary" onclick="clearFilter()">Wyczyść</button>
         </form>
-        <form th:action="@{/recipes/recipe-asc}">
-            <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Wyszukaj..."
-                   required/>
-            </br>
-            <button type="submit" class="btn btn-primary">Szukaj</button>
-            <button type="button" class="btn btn-outline-primary" onclick="clearFilter()">Wyczyść</button>
-        </form>
+<!--        <form th:action="@{/recipes/recipe-asc}">-->
+<!--            <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Wyszukaj..."-->
+<!--                   required/>-->
+<!--            </br>-->
+<!--            <button type="submit" class="btn btn-primary">Szukaj</button>-->
+<!--            <button type="button" class="btn btn-outline-primary" onclick="clearFilter()">Wyczyść</button>-->
+<!--        </form>-->
     </div>
     <div>&nbsp;</div>
 
@@ -56,9 +56,9 @@
         <thead class="table-dark">
         <tr>
             <th> Tytuł
-<!--                <form th:action="@{/recipes/recipe-asc}">-->
-<!--                    <button type="submit" th:value="${recipeAsc}" class="bi bi-sort-alpha-up"></button>-->
-<!--                </form>-->
+                <form th:action="@{/recipes/recipe-asc}">
+                  <button type="submit" th:value="${recipeAsc}" class="bi bi-sort-alpha-up"></button>
+                </form>
             </th>
             <th> Opis</th>
             <th> Czas przygotowania</th>
