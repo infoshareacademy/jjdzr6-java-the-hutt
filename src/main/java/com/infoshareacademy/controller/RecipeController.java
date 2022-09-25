@@ -44,6 +44,7 @@ public class RecipeController {
     public String searchRecipeList(Model model, @Param("keyword") String keyword) {
         model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
         model.addAttribute("keyword", keyword);
+        model.addAttribute("recipeAsc", recipeService.sortByNameAsc());
         return "search-recipe";
     }
 
@@ -96,6 +97,12 @@ public class RecipeController {
     @GetMapping("recipe-asc")
     public String sortByNameAsc(Model model){
         model.addAttribute("recipeAsc", recipeService.sortByNameAsc());
-        return "search-recipe";
+        return "recipe-asc";
+    }
+
+    @GetMapping("recipe-desc")
+    public String sortByNameDesc(Model model){
+        model.addAttribute("recipeDesc", recipeService.sortByNameDesc());
+        return "recipe-desc";
     }
 }
