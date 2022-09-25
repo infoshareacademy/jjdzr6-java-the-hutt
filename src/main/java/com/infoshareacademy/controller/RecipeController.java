@@ -111,4 +111,10 @@ public class RecipeController {
         model.addAttribute("recipePreparationTimeAsc", recipeService.sortByPreparationTimeAsc());
         return "recipe-time-asc";
     }
+
+    @GetMapping("recipe-time-desc")
+    public String sortByPreparationTimeDesc(Model model){
+        model.addAttribute("recipePreparationTimeDesc", recipeService.sortByPreparationTimeDesc());
+        return "recipe-time-desc";
+    }
 }

@@ -53,7 +53,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="recipe: ${recipeAsc}">
+        <tr th:each="recipe: ${recipePreparationTimeDesc}">
             <td th:text="${recipe.name}"></td>
             <td th:text="${recipe.description}"></td>
             <td th:text="${recipe.preparationTime}"></td>
