@@ -69,6 +69,15 @@
                                 placeholder="Podaj czas przygotowania."
                         />
                     </div>
+
+                    <label> Rodzaj posiłku</label>
+                    <br>
+                    <select name="meal">
+                        <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
+                                th:value="${meal}" th:text="${meal}"></option>
+                    </select>
+                    <br>
+
                     <label> Niezbędne produkty </label>
                     <table>
                         <td>

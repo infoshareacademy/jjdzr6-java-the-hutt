@@ -31,6 +31,10 @@ public class Recipe {
     @Column(name = "preparation_time")
     private int preparationTime;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Meal meal;
+
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductRecipe> productList = new ArrayList<>();
 
@@ -57,6 +61,14 @@ public class Recipe {
             }
         }
         return flag;
+    }
+
+    public Meal getMeal() {
+        return meal;
+    }
+
+    public void setMeal(Meal meal) {
+        this.meal = meal;
     }
 
     public Long getRecipeId() {
