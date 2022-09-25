@@ -67,7 +67,6 @@ class RecipeServiceTest {
 
     }
 
-    //TODO Fix empty list
     @Test
     void sortByPreparationTimeAsc() {
         //given
@@ -80,10 +79,6 @@ class RecipeServiceTest {
                 .hasSize(3)
                 .isSortedAccordingTo(Comparator.comparing(Recipe::getPreparationTime));
         assertEquals(testRecipe.getPreparationTime(), recipeService.getAllRecipe().get(0).getPreparationTime());
-
-//        recipeService.getAllRecipe();
-//        Mockito.verify(recipeRepository, Mockito.times(1)).findAll();
-//        System.out.println(recipeService.sortByPreparationTimeAsc());
     }
 
     @Test
@@ -98,8 +93,6 @@ class RecipeServiceTest {
                 .hasSize(3)
                 .isSorted();
         assertEquals(testRecipe.getPreparationTime(), recipeService.getAllRecipe().get(0).getPreparationTime());
-
-//        System.out.println(recipeService.sortByPreparationTimeDesc());
     }
 
     @Test
@@ -114,7 +107,6 @@ class RecipeServiceTest {
                 .hasSize(3)
                 .isSorted();
         assertEquals(testRecipe.getName(), recipeService.getAllRecipe().get(0).getName());
-//        System.out.println(recipeService.sortByNameAsc());
     }
 
     @Test
@@ -129,8 +121,6 @@ class RecipeServiceTest {
                 .hasSize(3)
                 .isSorted();
         assertEquals(testRecipe.getName(), recipeService.getAllRecipe().get(0).getName());
-
-//        System.out.println(recipeService.sortByNameDesc());
     }
 
 
