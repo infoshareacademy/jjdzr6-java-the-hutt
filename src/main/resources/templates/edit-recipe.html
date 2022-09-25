@@ -66,7 +66,13 @@
                             </button>
                         </a>
                     </div>
-
+                    <div class="pull-right">
+                        <a th:href="@{/recipes/{recipeId}/allergens (recipeId=${recipe.recipeId})}">
+                            <button type="button" name="editRecipeAllergens" class="btn btn-warning float-right">
+                                Edytuj alergeny
+                            </button>
+                        </a>
+                    </div>
                     <div class="pull-left">
                         <button type="submit" name="addRecipe" class="btn btn-success float-left">
                             Zapisz

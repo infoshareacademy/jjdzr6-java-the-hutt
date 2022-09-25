@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Fridge Recipe</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
+  <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
+  <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
+  <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
+  <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
+  <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
+  <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
+      <h1 class="text-center"> Edytuj Alergeny </h1>
+      <div class="card-body">
+        <form th:action="@{/recipes/{recipeId}/allergens/(recipeId=${allergens.recipe.recipeId})}"
+              th:object="${allergens}"
+              method="POST">
+
+
+          Lista Twoich alergenów:
+          <p>Czekolada<input type="checkbox" th:field="${allergens.chocolate}"/>
+          <p>Produkty mleczne<input type="checkbox" th:field="${allergens.dairy}"/>
+          <p>Jaja<input type="checkbox" th:field="${allergens.eggs}"/>
+          <p>Orzechy<input type="checkbox" th:field="${allergens.nuts}"/>
+          <p>Skorupiaki<input type="checkbox" th:field="${allergens.shellfish}"/>
+          <p>Truskawki<input type="checkbox" th:field="${allergens.strawberries}"/>
+          <p>Czy jesz mięso?<input type="checkbox" th:field="${allergens.meatEater}"/>
+          <p>Dieta wegańska?<input type="checkbox" th:field="${allergens.vegan}"/>
+          <p>Dieta wegetariańska?<input type="checkbox" th:field="${allergens.vegetarian}"/>
+          <p>Inne alergeny: <input type="text" th:field="${allergens.other}"/>
+
+
+          <div class="box-footer">
+            <button type="submit" name="saveRecipeAllergens" class="btn btn-success">
+              Zapisz
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

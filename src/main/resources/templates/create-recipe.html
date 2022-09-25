@@ -93,6 +93,18 @@
                         </tr>
                     </table>
 
+                    Lista Twoich alergenów:
+                    <p>Czekolada<input type="checkbox" th:field="${recipe.recipeAllegrens.chocolate}"/>
+                    <p>Produkty mleczne<input type="checkbox" th:field="${recipe.recipeAllegrens.dairy}"/>
+                    <p>Jaja<input type="checkbox" th:field="${recipe.recipeAllegrens.eggs}"/>
+                    <p>Orzechy<input type="checkbox" th:field="${recipe.recipeAllegrens.nuts}"/>
+                    <p>Skorupiaki<input type="checkbox" th:field="${recipe.recipeAllegrens.shellfish}"/>
+                    <p>Truskawki<input type="checkbox" th:field="${recipe.recipeAllegrens.strawberries}"/>
+                    <p>Czy jesz mięso?<input type="checkbox" th:field="${recipe.recipeAllegrens.meatEater}"/>
+                    <p>Dieta wegańska?<input type="checkbox" th:field="${recipe.recipeAllegrens.vegan}"/>
+                    <p>Dieta wegetariańska?<input type="checkbox" th:field="${recipe.recipeAllegrens.vegetarian}"/>
+                    <p>Inne alergeny: <input type="text" th:field="${recipe.recipeAllegrens.other}"/>
+
                     <div class = "box-footer">
                         </br>
                         <button type="submit" name="addRecipe" class = "btn btn-primary">

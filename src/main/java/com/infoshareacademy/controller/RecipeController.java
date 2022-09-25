@@ -1,5 +1,6 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.repository.RecipeRepository;
-import com.infoshareacademy.service.ProductService;
 import com.infoshareacademy.service.RecipeService;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -23,15 +23,10 @@ import javax.validation.Valid;
 public class RecipeController {
 
     private final RecipeService recipeService;
-    private final RecipeRepository recipeRepository;
-    private final ProductService productService;
 
     @Autowired
-    public RecipeController(RecipeService recipeService, RecipeRepository recipeRepository,
-                            final ProductService productService) {
+    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
-        this.recipeRepository = recipeRepository;
-        this.productService = productService;
     }
 
     @GetMapping
@@ -85,6 +80,19 @@ public class RecipeController {
     public String updateRecipe(@PathVariable Long recipeId, @ModelAttribute Recipe recipe) {
         recipeService.updateRecipe(recipeId, recipe);
         return "redirect:/recipes";
+    }
+
+    @GetMapping("/{recipeId}/allergens")
+    public String editAllergensRecipe(@PathVariable Long recipeId, Model model) {
+        RecipeAllegrens recipeAllegrens = recipeService.getRecipeById(recipeId).getRecipeAllegrens();
+        model.addAttribute("allergens", recipeAllegrens);
+        return "edit-recipe-allergens";
+    }
+
+    @PostMapping("/{recipeId}/allergens")
+    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllegrens allegrens) {
+        recipeService.saveRecipeAllergens(recipeId, allegrens);
+        return "redirect:/recipes/" + recipeId;
     }
 
     @GetMapping("/recipe/{id}")

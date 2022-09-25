@@ -34,7 +34,7 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductRecipe> productList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "recipe",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RecipeAllegrens recipeAllegrens;
 
     public Recipe() {
@@ -91,6 +91,13 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
+    public RecipeAllegrens getRecipeAllegrens() {
+        return recipeAllegrens;
+    }
+
+    public void setRecipeAllegrens(RecipeAllegrens recipeAllegrens) {
+        this.recipeAllegrens = recipeAllegrens;
+    }
 
     @Override
     public String toString() {
