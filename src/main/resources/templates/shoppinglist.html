@@ -37,15 +37,14 @@
 
             <th> Nazwa </th>
             <th> Ilość</th>
+            <th> Jednostka miary</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="shopping: ${getShopping}">
-
-
             <td th:text="${shopping.getProductName()}"></td>
             <td th:text="${shopping.getAmount()}"></td>
-
+            <td th:text="${shopping.getUnit()}"></td>
         </tr>
         </tbody>
         </thead>

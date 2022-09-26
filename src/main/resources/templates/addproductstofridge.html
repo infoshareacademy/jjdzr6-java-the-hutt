@@ -55,6 +55,12 @@
                                 <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].productName}"  />
                             </td>
                             <td>
+                                <select name="unit" th:field="*{productsInFridge[__${iterStat.index}__].unit}"  />
+                                <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
+                                        th:value="${unit}" th:text="${unit}"></option>
+                                </select>
+                            </td>
+                            <td>
                                 <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
                             </td>
                         </tr>

@@ -76,18 +76,26 @@
                         </td>
                         <tr>
                             <th >Lp.</th>
-                            <th >Ilość</th>
                             <th >Produkt</th>
+                            <th >Ilość</th>
+                            <th >Jednostka miary</th>
                         </tr>
                         <tr th:each="product,iterStat : *{productList}" th:class="${iterStat.odd}? 'grey-row'">
                             <td th:text="${iterStat.count}"></td>
+
+                            <td>
+                                <input type="text" th:field="*{productList[__${iterStat.index}__].productName}"  />
+                            </td>
                             <td>
                                 <input type="text" th:field="*{productList[__${iterStat.index}__].amount}"  />
                             </td>
                             <td>
-                                <input type="text" th:field="*{productList[__${iterStat.index}__].productName}"  />
+                                <select name="unit" th:field="*{productList[__${iterStat.index}__].unit}"  />
+                                <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
+                                        th:value="${unit}" th:text="${unit}"></option>
+                            </select>
                             </td>
-                               <td>
+                            <td>
                                 <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
                             </td>
                         </tr>
