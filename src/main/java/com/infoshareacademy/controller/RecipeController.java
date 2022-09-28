@@ -84,8 +84,7 @@ public class RecipeController {
 
     @GetMapping("/{recipeId}/allergens")
     public String editAllergensRecipe(@PathVariable Long recipeId, Model model) {
-        RecipeAllegrens recipeAllegrens = recipeService.getRecipeById(recipeId).getRecipeAllegrens();
-        model.addAttribute("allergens", recipeAllegrens);
+        model.addAttribute("allergens", recipeService.getRecipeById(recipeId).getRecipeAllegrens());
         return "edit-recipe-allergens";
     }
 
