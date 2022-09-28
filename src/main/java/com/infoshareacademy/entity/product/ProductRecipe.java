@@ -34,6 +34,12 @@ public class ProductRecipe extends Product {
         this.amount = amount;
     }
 
+    public ProductRecipe(String productName, Double amount, ProductUnit unit) {
+        this.productName = productName;
+        this.amount = amount;
+        this.unit = unit;
+    }
+
     public void setProductId(Long id) {
         this.productId = id;
     }
