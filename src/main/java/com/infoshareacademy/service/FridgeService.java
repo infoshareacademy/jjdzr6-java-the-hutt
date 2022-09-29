@@ -1,17 +1,9 @@
 package com.infoshareacademy.service;
 
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infoshareacademy.other.Json;
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 
 @Service

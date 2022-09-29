@@ -40,6 +40,14 @@ public class Recipe {
     public Recipe() {
     }
 
+    public Recipe(String name, String description, int preparationTime, List<ProductRecipe> productList, RecipeAllegrens recipeAllegrens) {
+        this.name = name;
+        this.description = description;
+        this.preparationTime = preparationTime;
+        this.productList = productList;
+        this.recipeAllegrens = recipeAllegrens;
+    }
+
     public List<ProductRecipe> getProductList() {
         return productList;
     }
@@ -91,6 +99,9 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
+    public RecipeAllegrens getRecipeAllegrens() {
+        return recipeAllegrens;
+    }
 
     @Override
     public String toString() {

@@ -8,11 +8,11 @@ public class RecipeAllegrens {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean shellfish;
     private boolean chocolate;
     private boolean nuts;
     private boolean eggs;
     private boolean strawberries;
+    private boolean shellfish;
     private boolean dairy;
     private String other;
     private boolean meatEater;
@@ -24,6 +24,19 @@ public class RecipeAllegrens {
     private Recipe recipe;
 
     public RecipeAllegrens() {
+    }
+
+    public RecipeAllegrens(boolean chocolate, boolean nuts, boolean eggs, boolean strawberries, boolean shellfish, boolean dairy, String other, boolean meatEater, boolean vegan, boolean vegetarian) {
+        this.chocolate = chocolate;
+        this.nuts = nuts;
+        this.eggs = eggs;
+        this.strawberries = strawberries;
+        this.shellfish = shellfish;
+        this.dairy = dairy;
+        this.other = other;
+        this.meatEater = meatEater;
+        Vegan = vegan;
+        Vegetarian = vegetarian;
     }
 
     public Long getId() {
