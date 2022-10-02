@@ -20,10 +20,15 @@ public class RecipeAllegrens {
     private boolean Vegetarian;
 
     @JoinColumn(name = "recipe_id")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Recipe recipe;
 
     public RecipeAllegrens() {
+    }
+
+
+    public RecipeAllegrens(Recipe recipe) {
+        setRecipe(recipe);
     }
 
     public Long getId() {
@@ -72,5 +77,39 @@ public class RecipeAllegrens {
 
     public Recipe getRecipe() {
         return recipe;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
+    @Override
+    public String toString() {
+        return "RecipeAllegrens{" +
+                "id=" + id +
+                ", shellfish=" + shellfish +
+                ", chocolate=" + chocolate +
+                ", nuts=" + nuts +
+                ", eggs=" + eggs +
+                ", strawberries=" + strawberries +
+                ", dairy=" + dairy +
+                ", other='" + other + '\'' +
+                ", meatEater=" + meatEater +
+                ", Vegan=" + Vegan +
+                ", Vegetarian=" + Vegetarian +
+                ", recipe=" + recipe +
+                '}';
     }
 }
