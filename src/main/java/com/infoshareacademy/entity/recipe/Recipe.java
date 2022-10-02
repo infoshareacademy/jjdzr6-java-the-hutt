@@ -44,6 +44,13 @@ public class Recipe {
     public Recipe() {
     }
 
+    public Recipe(String name, String description, int preparationTime, List<ProductRecipe> productList) {
+        this.name = name;
+        this.description = description;
+        this.preparationTime = preparationTime;
+        this.productList = productList;
+    }
+
     public List<ProductRecipe> getProductList() {
         return productList;
     }

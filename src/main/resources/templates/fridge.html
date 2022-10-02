@@ -40,14 +40,15 @@
     <tr>
       <th> Nazwa</th>
       <th> Ilość</th>
+      <th> Jednostka miary</th>
     </tr>
     </thead>
-
     <tbody>
 
     <tr th:each="product: ${productsinfridge.getProductsInFridge()}">
       <td th:text="${product.productName}"></td>
       <td th:text="${product.amount}"></td>
+      <td th:text="${product.unit}"></td>
     </tr>
 
     <!--    <tr>
