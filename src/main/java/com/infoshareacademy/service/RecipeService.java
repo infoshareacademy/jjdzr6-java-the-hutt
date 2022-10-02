@@ -43,7 +43,8 @@ public class RecipeService {
         Recipe recipe = new Recipe();
         if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
         RecipeAllegrens existingAllergens = new RecipeAllegrens();
-        if (allergensRepository.findById(recipe.getRecipeAllegrens().getId()).isPresent()) existingAllergens = allergensRepository.findById(recipe.getRecipeAllegrens().getId()).get();
+        if (allergensRepository.findById(recipe.getRecipeAllegrens().getId()).isPresent()){
+            existingAllergens = allergensRepository.findById(recipe.getRecipeAllegrens().getId()).get();
         existingAllergens.setRecipe(recipe);
         existingAllergens.setChocolate(allergens.isChocolate());
         existingAllergens.setDairy(allergens.isDairy());
@@ -57,6 +58,7 @@ public class RecipeService {
         existingAllergens.setVegetarian(allergens.isVegetarian());
         allergensRepository.save(existingAllergens);
 
+    }
     }
 
     public Recipe saveRecipe(Recipe recipe) {
@@ -75,6 +77,7 @@ public class RecipeService {
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
         existingRecipe.setRecipeAllegrens(recipe.getRecipeAllegrens());
+        existingRecipe.setMeal(recipe.getMeal());
         recipeRepository.save(existingRecipe);
     }
 

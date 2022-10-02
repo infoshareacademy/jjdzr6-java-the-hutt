@@ -35,56 +35,88 @@ public class RecipeAllegrens {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public boolean isShellfish() {
         return shellfish;
+    }
+
+    public void setShellfish(boolean shellfish) {
+        this.shellfish = shellfish;
     }
 
     public boolean isChocolate() {
         return chocolate;
     }
 
+    public void setChocolate(boolean chocolate) {
+        this.chocolate = chocolate;
+    }
+
     public boolean isNuts() {
         return nuts;
+    }
+
+    public void setNuts(boolean nuts) {
+        this.nuts = nuts;
     }
 
     public boolean isEggs() {
         return eggs;
     }
 
+    public void setEggs(boolean eggs) {
+        this.eggs = eggs;
+    }
+
     public boolean isStrawberries() {
         return strawberries;
+    }
+
+    public void setStrawberries(boolean strawberries) {
+        this.strawberries = strawberries;
     }
 
     public boolean isDairy() {
         return dairy;
     }
 
+    public void setDairy(boolean dairy) {
+        this.dairy = dairy;
+    }
+
     public String getOther() {
         return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
     }
 
     public boolean isMeatEater() {
         return meatEater;
     }
 
+    public void setMeatEater(boolean meatEater) {
+        this.meatEater = meatEater;
+    }
+
     public boolean isVegan() {
         return Vegan;
+    }
+
+    public void setVegan(boolean vegan) {
+        Vegan = vegan;
     }
 
     public boolean isVegetarian() {
         return Vegetarian;
     }
 
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setVegetarian(boolean vegetarian) {
+        Vegetarian = vegetarian;
     }
 
     public Recipe getRecipe() {

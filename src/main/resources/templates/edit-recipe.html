@@ -58,6 +58,14 @@
                                class="form-control"
                                placeholder="Podaj czas przygotowania."/>
                     </div>
+
+                    <label> Rodzaj posiłku</label>
+                    <br>
+                    <select name="meal">
+                        <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
+                                th:value="${meal}" th:text="${meal}"></option>
+                    </select>
+                    <br>
                     <div class="pull-right">
                         <a th:href="@{/recipes/{recipeId}/products(recipeId=${recipe.recipeId})}">
                             <button type="button" name="editRecipe" class="btn btn-warning float-right">

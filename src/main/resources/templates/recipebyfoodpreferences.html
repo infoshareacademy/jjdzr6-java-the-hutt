@@ -14,10 +14,12 @@
     <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
     <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
     <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
 
+    </li>
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -26,62 +28,46 @@
 
 <div class="container">
     <div class="row">
-        </br></br>
         <h1> Przepisy </h1>
-        </br>
     </div>
 
-    <div>&nbsp;</div>
-    <div>
-        <form th:action="@{/recipes/filtered-prodcts}">
-            <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Wyszukaj..."
-                   required/>
-            </br>
-            <button type="submit" class="btn btn-primary">Szukaj</button>
-            <button type="button" class="btn btn-outline-primary" onclick="clearFilter()">Wyczyść</button>
-        </form>
-<!--        <form th:action="@{/recipes/recipe-asc}">-->
-<!--            <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Wyszukaj..."-->
-<!--                   required/>-->
-<!--            </br>-->
-<!--            <button type="submit" class="btn btn-primary">Szukaj</button>-->
-<!--            <button type="button" class="btn btn-outline-primary" onclick="clearFilter()">Wyczyść</button>-->
-<!--        </form>-->
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/recipes/recipe}" class="btn btn-primary mb-3"> Dodaj nowy przepis</a>
+        </div>
     </div>
-    <div>&nbsp;</div>
-
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
         <tr>
-            <th> Tytuł
-                <form th:action="@{/recipes/recipe-asc}">
-                  <button type="submit" th:value="${recipeAsc}" class="bi bi-sort-alpha-up"></button>
-                </form>
-            </th>
+            <th> Tytuł</th>
             <th> Opis</th>
             <th> Czas przygotowania</th>
             <th> Składniki</th>
             <th> Rodzaj posiłku</th>
+            <th> Actions</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="recipe: ${recipes}">
+        <tr th:each="recipe: ${recipeByFoodPreferences}">
             <td th:text="${recipe.name}"></td>
             <td th:text="${recipe.description}"></td>
             <td th:text="${recipe.preparationTime}"></td>
             <td th:text="${recipe.productList}"></td>
             <td th:text="${recipe.meal}"></td>
+            <td>
+                <a th:href="@{/recipes/edit/{id}(id=${recipe.recipeId})}"
+                   class="btn btn-primary">Zaktualizuj</a>
+
+                <a th:href="@{/recipes/{id}(id=${recipe.recipeId})}"
+                   class="btn btn-danger">Usuń</a>
+
+            </td>
         </tr>
         </tbody>
 
     </table>
 
 </div>
-<script type="text/javascript">
-    function clearFilter() {
-        window.location = '/recipes/filtered-prodcts';
-    }
-</script>
 </body>
 </html>
