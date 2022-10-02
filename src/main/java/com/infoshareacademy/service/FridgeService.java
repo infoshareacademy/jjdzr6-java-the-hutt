@@ -1,24 +1,17 @@
 package com.infoshareacademy.service;
 
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infoshareacademy.other.Json;
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 
 @Service
 public class FridgeService {
 
-    private long userId = 1;
-    private FridgeRepository fridgeRepository;
+    private final long userId = 1;
+    private final FridgeRepository fridgeRepository;
 
     @Autowired
     public FridgeService(FridgeRepository fridgeRepository) {
@@ -38,10 +31,10 @@ public class FridgeService {
         } else {
             return new Fridge();
         }
-
     }
 
-    public Fridge addProductsToFridgeForm(Fridge fridge) {
+    public Fridge addProductsToFridgeForm() {
+        Fridge fridge;
         if (fridgeRepository.findById(getUserId()).isPresent()) {
             return fridge = fridgeRepository.findById(getUserId()).get();
         } else {
