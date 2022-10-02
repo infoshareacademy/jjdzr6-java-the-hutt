@@ -14,7 +14,6 @@
     <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
     <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
-    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
     <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
@@ -32,8 +31,11 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-3">
-            <a th:href="@{/recipes/recipe}" class="btn btn-success mb-3"> Dodaj nowy przepis</a>
+        <div class="col-lg-2">
+            <a th:href="@{/recipes/recipe}" class="btn btn-success mb-2"> Dodaj nowy przepis</a>
+            </div>
+        <div>
+            <a th:href="@{/foodpreferences/recipe/}" class="btn btn-success mb-2"> Filtruj po alergenach</a>
         </div>
     </div>
     <table class="table table-striped table-bordered">
