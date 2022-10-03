@@ -9,8 +9,8 @@ import java.util.*;
 @Service
 public class FridgeService {
 
-    private long userId = 1;
-    private FridgeRepository fridgeRepository;
+    private final long userId = 1;
+    private final FridgeRepository fridgeRepository;
 
     @Autowired
     public FridgeService(FridgeRepository fridgeRepository) {
@@ -30,10 +30,10 @@ public class FridgeService {
         } else {
             return new Fridge();
         }
-
     }
 
-    public Fridge addProductsToFridgeForm(Fridge fridge) {
+    public Fridge addProductsToFridgeForm() {
+        Fridge fridge;
         if (fridgeRepository.findById(getUserId()).isPresent()) {
             return fridge = fridgeRepository.findById(getUserId()).get();
         } else {

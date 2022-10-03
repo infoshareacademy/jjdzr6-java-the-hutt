@@ -12,7 +12,6 @@
     <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
     <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
-    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
     <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
@@ -35,6 +34,16 @@
                         productId=${productRecipe.productId})}"
                       th:object="${productRecipe}"
                       method="POST">
+
+                    <div class="form-group">
+                        <label> Nazwa produktu </label>
+                        <input type="text"
+                               name="productName"
+                               th:field="*{productName}"
+                               class="form-control"
+                               placeholder="Podaj nazwe produktu."/>
+                    </div>
+
                     <div class="form-group">
                         <label> Ilość </label>
                         <input type="number"
@@ -45,13 +54,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label> Nazwa produktu </label>
-                        <input type="text"
-                               name="productName"
-                               th:field="*{productName}"
-                               class="form-control"
-                               placeholder="Podaj nazwe produktu."/>
+                        <label> Jednostka miary </label>
+                        <select name="unit" th:field="*{unit}">
+                            <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
+                                    th:value="${unit}" th:text="${unit}"></option>
+                        </select>
                     </div>
+
                     <div class="hidden">
                         <input type="hidden"
                                name="recipe"

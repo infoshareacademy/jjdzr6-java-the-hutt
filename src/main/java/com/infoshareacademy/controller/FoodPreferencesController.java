@@ -3,6 +3,7 @@ package com.infoshareacademy.controller;
 
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.service.FoodPreferencesService;
+import com.infoshareacademy.service.FridgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +17,12 @@ public class FoodPreferencesController {
 
     private final FoodPreferencesService foodPreferencesService;
 
-    public FoodPreferencesController(FoodPreferencesService foodPreferencesService) {
+    private final FridgeService fridgeService;
+
+    @Autowired
+    public FoodPreferencesController(FoodPreferencesService foodPreferencesService, FridgeService fridgeService) {
         this.foodPreferencesService = foodPreferencesService;
+        this.fridgeService = fridgeService;
     }
 
     @GetMapping("/foodpreferences")
@@ -32,18 +37,15 @@ public class FoodPreferencesController {
         return "foodpreferencesbyid";
     }
 
-    @GetMapping("/foodpreferences/recipe/{id}")
-    public String getRecipeByAllergens(@PathVariable Long id, Model model) {
-
-        model.addAttribute("recipeByFoodPreferences", foodPreferencesService.filterRecipeByFoodPreferences(id));
-
-        return "recipebyfoodpreferences";
+    @GetMapping("/foodpreferences/recipe/")
+    public String getRecipeByAllergens(Model model) {
+        model.addAttribute("recipes", foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getUserId()));
+        return "recipes";
     }
 
     @GetMapping("/foodpreferences/user-foodpreferences")
     public String createAllergensForm(Model model, FoodPreferences foodPreferences) {
-        foodPreferences = foodPreferencesService.checkIfFoodPreferencesIsSet(foodPreferences);
-        model.addAttribute("foodpreferences", foodPreferences);
+        model.addAttribute("foodpreferences", foodPreferencesService.checkIfFoodPreferencesIsSet(foodPreferences));
         return "setfoodpreferences";
 
     }

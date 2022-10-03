@@ -14,7 +14,6 @@
     <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
     <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
-    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
     <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
@@ -59,6 +58,14 @@
                                class="form-control"
                                placeholder="Podaj czas przygotowania."/>
                     </div>
+
+                    <label> Rodzaj posiłku</label>
+                    <br>
+                    <select name="meal">
+                        <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
+                                th:value="${meal}" th:text="${meal}"></option>
+                    </select>
+                    <br>
                     <div class="pull-right">
                         <a th:href="@{/recipes/{recipeId}/products(recipeId=${recipe.recipeId})}">
                             <button type="button" name="editRecipe" class="btn btn-warning float-right">
@@ -66,7 +73,13 @@
                             </button>
                         </a>
                     </div>
-
+                    <div class="pull-right">
+                        <a th:href="@{/recipes/{recipeId}/allergens (recipeId=${recipe.recipeId})}">
+                            <button type="button" name="editRecipeAllergens" class="btn btn-warning float-right">
+                                Edytuj alergeny
+                            </button>
+                        </a>
+                    </div>
                     <div class="pull-left">
                         <button type="submit" name="addRecipe" class="btn btn-success float-left">
                             Zapisz

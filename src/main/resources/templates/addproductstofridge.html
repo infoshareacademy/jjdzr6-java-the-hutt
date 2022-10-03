@@ -14,7 +14,6 @@
     <a class="navbar-brand" th:href="@{/foodpreferences/1}">Preferencje żywieniowe</a>
     <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
-    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
     <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
@@ -53,6 +52,12 @@
                             </td>
                             <td>
                                 <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].productName}"  />
+                            </td>
+                            <td>
+                                <select name="unit" th:field="*{productsInFridge[__${iterStat.index}__].unit}"  />
+                                <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
+                                        th:value="${unit}" th:text="${unit}"></option>
+                                </select>
                             </td>
                             <td>
                                 <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>

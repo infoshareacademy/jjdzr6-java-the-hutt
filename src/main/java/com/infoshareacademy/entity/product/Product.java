@@ -7,9 +7,12 @@ public abstract class Product {
 
     private Double amount;
 
-    public Product(String productName, Double amount) {
+    private ProductUnit unit;
+
+    public Product(String productName, Double amount, ProductUnit unit) {
         this.productName = productName;
         this.amount = amount;
+        this.unit = unit;
     }
 
     public Product() {

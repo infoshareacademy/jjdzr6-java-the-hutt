@@ -37,7 +37,7 @@ public class FridgeController {
 
     @GetMapping("/product")
     public String addProductsToFridgeForm(Model model, Fridge fridge) {
-        fridgeService.addProductsToFridgeForm(fridge);
+        fridgeService.addProductsToFridgeForm();
         model.addAttribute("fridge", fridge);
         return "addproductstofridge";
     }

@@ -43,6 +43,7 @@
             <th> Opis</th>
             <th> Czas przygotowania</th>
             <th> Składniki</th>
+            <th> Rodzaj posiłku</th>
             <th> Actions</th>
         </tr>
         </thead>
@@ -53,8 +54,9 @@
             <td th:text="${recipe.description}"></td>
             <td th:text="${recipe.preparationTime}"></td>
             <td th:text="${recipe.productList}"></td>
+            <td th:text="${recipe.meal}"></td>
             <td>
-                <a th:href="@{/recipes/edit/{id}(id=${recipe.recipeId})}"
+                <a th:href="@{/recipes/{id}(id=${recipe.recipeId})}"
                    class="btn btn-primary">Zaktualizuj</a>
 
                 <a th:href="@{/recipes/{id}(id=${recipe.recipeId})}"

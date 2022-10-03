@@ -22,7 +22,6 @@
     <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
     <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
-    <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
     <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
@@ -48,6 +47,7 @@
                         <tr>
                             <th>Lp.</th>
                             <th>Ilość</th>
+                            <th>J.M.</th>
                             <th>Nazwa</th>
                             <th>Opcje</th>
                         </tr>
@@ -56,7 +56,9 @@
                         <tr th:each="productRecipe, iterStat : ${productList}" th:class="${iterStat.odd}? 'grey-row'">
                             <td th:text="${iterStat.count}"></td>
                             <td th:text="${productRecipe.amount}"></td>
+                            <td th:text="${productRecipe.unit}"></td>
                             <td th:text="${productRecipe.productName}"></td>
+
                             <td>
                                 <a th:href="@{/recipes/{recipeId}/{productId}(
                                    recipeId=${productRecipe.recipe.recipeId}, productId=${productRecipe.productId})}"

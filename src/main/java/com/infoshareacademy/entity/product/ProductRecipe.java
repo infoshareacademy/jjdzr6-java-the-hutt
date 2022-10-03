@@ -18,6 +18,10 @@ public class ProductRecipe extends Product {
     @Column(name = "amount")
     private Double amount;
 
+    @Column(name = "unit")
+    @Enumerated(EnumType.STRING)
+    private ProductUnit unit;
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
@@ -28,6 +32,12 @@ public class ProductRecipe extends Product {
     public ProductRecipe(String productName, Double amount) {
         this.productName = productName;
         this.amount = amount;
+    }
+
+    public ProductRecipe(String productName, Double amount, ProductUnit unit) {
+        this.productName = productName;
+        this.amount = amount;
+        this.unit = unit;
     }
 
     public void setProductId(Long id) {
@@ -62,9 +72,20 @@ public class ProductRecipe extends Product {
         this.amount = quantity;
     }
 
+    public ProductUnit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(ProductUnit unit) {
+        this.unit = unit;
+    }
+
     @Override
     public String toString() {
-        return "nazwa składnika='" + productName + '\'' +
-                ", ilość=" + amount + "\'";
+        return "ProductRecipe{" +
+                "productName='" + productName + '\'' +
+                ", amount=" + amount +
+                ", unit=" + unit +
+                '}';
     }
 }
