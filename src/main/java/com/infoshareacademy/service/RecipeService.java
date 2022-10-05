@@ -30,7 +30,7 @@ public class RecipeService {
     }
 
     public Page<Recipe> getAllRecipeWithPagination() {
-        Pageable pageable = PageRequest.of(0,5);
+        Pageable pageable = PageRequest.of(0,1);
         return recipeRepository.findAll(pageable);
     }
 

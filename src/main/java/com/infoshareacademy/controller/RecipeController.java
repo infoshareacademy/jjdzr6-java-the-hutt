@@ -2,6 +2,7 @@ package com.infoshareacademy.controller;
 
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +31,14 @@ public class RecipeController {
     }
 
     @GetMapping
-    public String listRecipes(Model model) {
-        model.addAttribute("recipes", recipeService.getAllRecipe());
+    public String listRecipesWithPagination(Model model) {
+        Page<Recipe> page = recipeService.getAllRecipeWithPagination();
+        long totalRecipes = page.getTotalElements();
+        int totalPages = page.getTotalPages();
+
+        model.addAttribute("totalRecipes", totalRecipes);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("recipes", page);
         return "recipes";
     }
 
