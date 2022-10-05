@@ -32,10 +32,16 @@ public class RecipeController {
 
     @GetMapping
     public String listRecipesWithPagination(Model model) {
-        Page<Recipe> page = recipeService.getAllRecipeWithPagination();
+        return listOfPage(model,1);
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public String listOfPage(Model model, @PathVariable("pageNumber") int currentPage){
+        Page<Recipe> page = recipeService.getAllRecipeWithPagination(currentPage);
         long totalRecipes = page.getTotalElements();
         int totalPages = page.getTotalPages();
 
+        model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalRecipes", totalRecipes);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("recipes", page);

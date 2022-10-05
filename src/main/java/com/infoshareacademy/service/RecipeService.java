@@ -29,8 +29,9 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
-    public Page<Recipe> getAllRecipeWithPagination() {
-        Pageable pageable = PageRequest.of(0,1);
+    public Page<Recipe> getAllRecipeWithPagination(int pageNumber) {
+        //TODO: Pageable pageable = PageRequest.of(pageNumber - 1, TU WSTAWIC ILE CHCEMY MIEC PRZEPISOW NA STRONĘ);
+        Pageable pageable = PageRequest.of(pageNumber - 1,1);
         return recipeRepository.findAll(pageable);
     }
 
