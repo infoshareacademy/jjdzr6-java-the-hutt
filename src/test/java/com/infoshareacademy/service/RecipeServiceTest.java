@@ -3,6 +3,8 @@ package com.infoshareacademy.service;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.product.ProductUnit;
 import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.entity.recipe.RecipeAllegrens;
+import com.infoshareacademy.repository.RecipeAllergensRepository;
 import com.infoshareacademy.repository.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +31,8 @@ class RecipeServiceTest {
     private final Recipe thirdRecipe = new Recipe("third", "third recipe", 45, Arrays.asList(firstProduct, secondProduct, thirdProduct));
 
     RecipeRepository recipeRepositoryMock = mock(RecipeRepository.class);
-    private RecipeService recipeService = new RecipeService(recipeRepositoryMock);
+    RecipeAllergensRepository allergensRepositoryMock = mock(RecipeAllergensRepository.class);
+    private RecipeService recipeService = new RecipeService(recipeRepositoryMock, allergensRepositoryMock);
 
 
     @Test
@@ -49,6 +52,7 @@ class RecipeServiceTest {
     void saveRecipe() {
         //given
         Recipe fourthRecipe = new Recipe("fourth", "fourth recipe", 60, Arrays.asList(new ProductRecipe("fourth", 4.0, ProductUnit.LITR)));
+        fourthRecipe.setRecipeAllegrens(new RecipeAllegrens());
         //when
         when(recipeRepositoryMock.save(any(Recipe.class))).thenReturn(fourthRecipe);
         Recipe recipe = recipeService.saveRecipe(fourthRecipe);
