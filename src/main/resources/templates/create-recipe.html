@@ -73,7 +73,7 @@
                     <br>
                     <select name="meal">
                         <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
-                                th:value="${meal}" th:text="${meal}"></option>
+                                th:value="${meal}" th:text="${meal.value}"></option>
                     </select>
                     <br>
 

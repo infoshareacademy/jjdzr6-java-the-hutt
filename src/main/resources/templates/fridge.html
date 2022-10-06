@@ -48,7 +48,7 @@
     <tr th:each="product: ${productsinfridge.getProductsInFridge()}">
       <td th:text="${product.productName}"></td>
       <td th:text="${product.amount}"></td>
-      <td th:text="${product.unit}"></td>
+      <td th:text="${product.unit.value}"></td>
     </tr>
 
     <!--    <tr>
