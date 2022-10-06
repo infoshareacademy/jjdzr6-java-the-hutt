@@ -3,8 +3,11 @@ package com.infoshareacademy.entity.product;
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "products_in_fridge")
@@ -24,6 +27,11 @@ public class ProductInFridge extends Product {
     @Enumerated(EnumType.STRING)
     private ProductUnit unit;
 
+    @Column(name = "expiration_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Future
+    private LocalDate expirationDate;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "fridge_id")
     private Fridge fridge;
@@ -31,9 +39,10 @@ public class ProductInFridge extends Product {
     public ProductInFridge() {
     }
 
-    public ProductInFridge(String productName, Double amount) {
+    public ProductInFridge(String productName, Double amount, LocalDate expirationDate) {
         this.productName = productName;
         this.amount = amount;
+        this.expirationDate = expirationDate;
     }
 
     public Fridge getFridge() {
@@ -74,6 +83,14 @@ public class ProductInFridge extends Product {
 
     public void setUnit(ProductUnit unit) {
         this.unit = unit;
+    }
+
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     @Override

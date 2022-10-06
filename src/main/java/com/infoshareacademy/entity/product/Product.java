@@ -2,7 +2,6 @@ package com.infoshareacademy.entity.product;
 
 public abstract class Product {
 
-
     private String productName;
 
     private Double amount;
