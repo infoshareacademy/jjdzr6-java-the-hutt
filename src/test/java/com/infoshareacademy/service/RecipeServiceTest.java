@@ -6,7 +6,6 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
 import com.infoshareacademy.repository.RecipeRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

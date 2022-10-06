@@ -1,8 +1,6 @@
 package com.infoshareacademy.entity.fridge;
 
-
 import com.infoshareacademy.entity.product.ProductInFridge;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,7 @@
 package com.infoshareacademy.entity.product;
 
 import com.infoshareacademy.entity.fridge.Fridge;
-import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import java.time.LocalDate;
