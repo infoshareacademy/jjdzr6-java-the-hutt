@@ -82,10 +82,7 @@ public class ProductRecipe extends Product {
 
     @Override
     public String toString() {
-        return "ProductRecipe{" +
-                "productName='" + productName + '\'' +
-                ", amount=" + amount +
-                ", unit=" + unit +
-                '}';
+        return productName + ' ' +
+                " - " + amount + " " + unit;
     }
 }
