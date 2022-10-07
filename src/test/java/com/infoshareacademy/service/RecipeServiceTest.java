@@ -46,8 +46,9 @@ class RecipeServiceTest {
 
     RecipeRepository recipeRepositoryMock = mock(RecipeRepository.class);
 
-    RecipeAllergensRepository allergensRepository = mock(RecipeAllergensRepository.class);
-    private final RecipeService recipeService = new RecipeService(recipeRepositoryMock, allergensRepository);
+    RecipeAllergensRepository allergensRepositoryMock = mock(RecipeAllergensRepository.class);
+    private RecipeService recipeService = new RecipeService(recipeRepositoryMock, allergensRepositoryMock);
+
 
 
     @Test
@@ -67,9 +68,9 @@ class RecipeServiceTest {
     @Test
     void saveRecipe() {
         //given
-        List<Recipe> listOfRecipes = createListOfRecipes();
-        Recipe fourthRecipe = new Recipe("fourth", "fourth recipe", 60, List.of(new ProductRecipe("fourth", 4.0, ProductUnit.LITR)));
-        fourthRecipe.setRecipeAllegrens(listOfRecipes.get(0).getRecipeAllegrens());
+
+        Recipe fourthRecipe = new Recipe("fourth", "fourth recipe", 60, Arrays.asList(new ProductRecipe("fourth", 4.0, ProductUnit.LITR)));
+        fourthRecipe.setRecipeAllegrens(new RecipeAllegrens());
         //when
         when(recipeRepositoryMock.save(any(Recipe.class))).thenReturn(fourthRecipe);
         Recipe recipe = recipeService.saveRecipe(fourthRecipe);
