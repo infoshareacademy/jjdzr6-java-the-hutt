@@ -4,7 +4,6 @@ import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
