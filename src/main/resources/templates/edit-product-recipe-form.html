@@ -57,7 +57,7 @@
                         <label> Jednostka miary </label>
                         <select name="unit" th:field="*{unit}">
                             <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
-                                    th:value="${unit}" th:text="${unit}"></option>
+                                    th:value="${unit}" th:text="${unit.value}"></option>
                         </select>
                     </div>
 

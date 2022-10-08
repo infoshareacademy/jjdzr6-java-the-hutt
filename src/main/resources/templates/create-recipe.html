@@ -73,7 +73,7 @@
                     <br>
                     <select name="meal">
                         <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
-                                th:value="${meal}" th:text="${meal}"></option>
+                                th:value="${meal}" th:text="${meal.value}"></option>
                     </select>
                     <br>
 
@@ -100,7 +100,7 @@
                             <td>
                                 <select name="unit" th:field="*{productList[__${iterStat.index}__].unit}"  />
                                 <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
-                                        th:value="${unit}" th:text="${unit}"></option>
+                                        th:value="${unit}" th:text="${unit.value}"></option>
                             </select>
                             </td>
                             <td>

@@ -40,10 +40,10 @@
         <div class="dropdown">
             <form th:action="@{/recipes}">
                 <select name="meal">
-                    <option th:hidden="${meal}" th:value="${meal}" th:text="${meal}"></option>
+                    <option th:hidden="${meal}" th:value="${meal}" th:text="${meal.value}"></option>
                     <option
                             th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
-                            th:text="${meal}"
+                            th:text="${meal.value}"
                             th:value="${meal}">
                     </option>
                 </select>
@@ -69,7 +69,7 @@
             <td th:text="${recipe.description}"></td>
             <td th:text="${recipe.preparationTime}"></td>
             <td th:text="${recipe.productList}"></td>
-            <td th:text="${recipe.meal}"></td>
+            <td th:text="${recipe.meal.value}"></td>
             <td>
                 <a th:href="@{/recipes/{recipeId}(recipeId=${recipe.recipeId})}"
                    class="btn btn-primary">Edytuj przepis</a>
