@@ -1,5 +1,6 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,26 +40,63 @@ public class RecipeService {
         return recipe;
     }
 
+    public List<Recipe> getRecipesByMeal(Meal meal) {
+        if (meal != null) {
+            List<Recipe> recipeList = recipeRepository.findAll();
+
+            switch (meal) {
+
+                case BREAKFAST:
+                    recipeList = recipeList.stream()
+                            .filter(recipe -> recipe.getMeal().equals(Meal.BREAKFAST))
+                            .toList();
+                    break;
+                case LUNCH:
+                    recipeList = recipeList.stream()
+                            .filter(recipe -> recipe.getMeal().equals(Meal.LUNCH))
+                            .toList();
+                    break;
+                case SUPPER:
+                    recipeList = recipeList.stream()
+                            .filter(recipe -> recipe.getMeal().equals(Meal.SUPPER))
+                            .toList();
+                    break;
+                case DINNER:
+                    recipeList = recipeList.stream()
+                            .filter(recipe -> recipe.getMeal().equals(Meal.DINNER))
+                            .toList();
+                    break;
+                case ALL:
+                    recipeList = recipeRepository.findAll();
+                    break;
+            }
+
+            return recipeList;
+        } else return recipeRepository.findAll();
+
+
+    }
+
     public void saveRecipeAllergens(Long id, RecipeAllegrens allergens) {
         Recipe recipe = new Recipe();
         if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
         RecipeAllegrens existingAllergens = new RecipeAllegrens();
-        if (allergensRepository.findById(recipe.getRecipeAllegrens().getId()).isPresent()){
+        if (allergensRepository.findById(recipe.getRecipeAllegrens().getId()).isPresent()) {
             existingAllergens = allergensRepository.findById(recipe.getRecipeAllegrens().getId()).get();
-        existingAllergens.setRecipe(recipe);
-        existingAllergens.setChocolate(allergens.isChocolate());
-        existingAllergens.setDairy(allergens.isDairy());
-        existingAllergens.setEggs(allergens.isEggs());
-        existingAllergens.setMeatEater(allergens.isMeatEater());
-        existingAllergens.setNuts(allergens.isNuts());
-        existingAllergens.setOther(allergens.getOther());
-        existingAllergens.setShellfish(allergens.isShellfish());
-        existingAllergens.setStrawberries(allergens.isStrawberries());
-        existingAllergens.setVegan(allergens.isVegan());
-        existingAllergens.setVegetarian(allergens.isVegetarian());
-        allergensRepository.save(existingAllergens);
+            existingAllergens.setRecipe(recipe);
+            existingAllergens.setChocolate(allergens.isChocolate());
+            existingAllergens.setDairy(allergens.isDairy());
+            existingAllergens.setEggs(allergens.isEggs());
+            existingAllergens.setMeatEater(allergens.isMeatEater());
+            existingAllergens.setNuts(allergens.isNuts());
+            existingAllergens.setOther(allergens.getOther());
+            existingAllergens.setShellfish(allergens.isShellfish());
+            existingAllergens.setStrawberries(allergens.isStrawberries());
+            existingAllergens.setVegan(allergens.isVegan());
+            existingAllergens.setVegetarian(allergens.isVegetarian());
+            allergensRepository.save(existingAllergens);
 
-    }
+        }
     }
 
     public Recipe saveRecipe(Recipe recipe) {
