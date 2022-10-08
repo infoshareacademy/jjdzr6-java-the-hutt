@@ -33,7 +33,6 @@ public class FoodPreferencesService {
 
     public Optional<FoodPreferences> getFoodPreferencesById(Long id) {
         return foodPreferencesRepository.findById(id);
-
     }
 
     public void setFoodPreferences(FoodPreferences foodPreferences) {
@@ -52,55 +51,66 @@ public class FoodPreferencesService {
 
     public List<Recipe> filterRecipeByFoodPreferences(Long id) {
 
-        Optional<FoodPreferences> foodPreferencesRepositoryById = foodPreferencesRepository.findById(id);
+        Optional<FoodPreferences> foodPreferencesRepositoryById = getFoodPreferencesById(id);
         List<Recipe> recipeList = recipeService.getAllRecipe();
 
         if (foodPreferencesRepositoryById.isPresent()) {
             if (foodPreferencesRepositoryById.get().isChocolate()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.containsProduct("czekolada"))
+                        .filter(s -> !s.getRecipeAllegrens().isChocolate())
                         .toList();
             }
             if (foodPreferencesRepositoryById.get().isNuts()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.containsProduct("orzechy"))
+                        .filter(s -> !s.getRecipeAllegrens().isNuts())
                         .toList();
             }
             if (foodPreferencesRepositoryById.get().isEggs()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.containsProduct("jajka"))
+                        .filter(s -> !s.getRecipeAllegrens().isEggs())
                         .toList();
             }
             if (foodPreferencesRepositoryById.get().isStrawberries()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.containsProduct("truskawki"))
+                        .filter(s -> !s.getRecipeAllegrens().isStrawberries())
+                        .toList();
+            }
+            if (foodPreferencesRepositoryById.get().isShellfish()) {
+                recipeList = recipeList.stream()
+                        .filter(s -> !s.getRecipeAllegrens().isShellfish())
                         .toList();
             }
 
-/*            if (foodPreferencesRepositoryById.get().isVegetarian()) {
-                recipeList = recipeList.stream()
-                        .filter(Recipe::isVegetarian)
-                        .toList();
-            }
-            if (foodPreferencesRepositoryById.get().isVegan()) {
-                recipeList = recipeList.stream()
-                        .filter(Recipe::isVegan)
-                        .toList();
-            }*/
             if (foodPreferencesRepositoryById.get().isDairy()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.containsProduct("mleko"))
+                        .filter(s -> !s.getRecipeAllegrens().isDairy())
                         .toList();
             }
-/*            if (!foodPreferencesRepositoryById.get().getOther().equals("-")) {
+
+            if (!foodPreferencesRepositoryById.get().getOther().equals("-")) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.containsProduct(foodPreferencesRepositoryById.get().getOther()))
+                        .filter(s -> !s.getRecipeAllegrens().getOther().equals("-"))
                         .toList();
             } else if (!foodPreferencesRepositoryById.get().getOther().equals("brak")) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.containsProduct(foodPreferencesRepositoryById.get().getOther()))
+                        .filter(s -> !s.getRecipeAllegrens().getOther().equals("brak"))
                         .toList();
-            }*/
+            }
+            if (foodPreferencesRepositoryById.get().isMeatEater()) {
+                recipeList = recipeList.stream()
+                        .filter(s -> s.getRecipeAllegrens().isMeatEater())
+                        .toList();
+            } else if (foodPreferencesRepositoryById.get().isVegetarian()) {
+                recipeList = recipeList.stream()
+                        .filter(s -> s.getRecipeAllegrens().isVegetarian())
+                        .toList();
+
+            } else if (foodPreferencesRepositoryById.get().isVegan()) {
+                recipeList = recipeList.stream()
+                        .filter(s -> s.getRecipeAllegrens().isVegan())
+                        .toList();
+            }
+
         }
         return recipeList;
 

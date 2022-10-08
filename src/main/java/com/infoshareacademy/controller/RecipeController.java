@@ -1,5 +1,6 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -30,11 +31,11 @@ public class RecipeController {
     }
 
     @GetMapping
-    public String listRecipes(Model model) {
-        model.addAttribute("recipes", recipeService.getAllRecipe());
+    public String getAllRecipeButCanFilterByMealType(Model model, @Param("meal") Meal meal) {
+        model.addAttribute("meal", meal);
+        model.addAttribute("recipes", recipeService.getRecipesByMeal(meal));
         return "recipes";
     }
-
     @GetMapping("/filtered-prodcts")
     public String searchRecipeList(Model model, @Param("keyword") String keyword) {
         model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
