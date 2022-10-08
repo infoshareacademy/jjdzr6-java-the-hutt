@@ -128,4 +128,7 @@ public class Recipe {
                 ", productList=" + productList +
                 '}';
     }
+
+    public void setRecipeAllegrens(RecipeAllegrens recipeAllegrens) {
+    }
 }

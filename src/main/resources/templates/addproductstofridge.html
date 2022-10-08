@@ -56,7 +56,7 @@
                             <td>
                                 <select name="unit" th:field="*{productsInFridge[__${iterStat.index}__].unit}"  />
                                 <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
-                                        th:value="${unit}" th:text="${unit}"></option>
+                                        th:value="${unit}" th:text="${unit.value}"></option>
                                 </select>
                             </td>
                             <td>
