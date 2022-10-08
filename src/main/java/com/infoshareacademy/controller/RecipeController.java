@@ -1,5 +1,6 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,7 +37,7 @@ public class RecipeController {
     }
 
     @GetMapping("/page/{pageNumber}")
-    public String listOfPage(Model model, @PathVariable("pageNumber") int currentPage){
+    public String listOfPage(Model model, @PathVariable("pageNumber") int currentPage) {
         Page<Recipe> page = recipeService.getAllRecipeWithPagination(currentPage);
         long totalRecipes = page.getTotalElements();
         int totalPages = page.getTotalPages();
@@ -48,6 +49,12 @@ public class RecipeController {
         return "recipes";
     }
 
+    public String getAllRecipeButCanFilterByMealType(Model model, @Param("meal") Meal meal) {
+        model.addAttribute("meal", meal);
+        model.addAttribute("recipes", recipeService.getRecipesByMeal(meal));
+        return "recipes";
+    }
+    
     @GetMapping("/filtered-prodcts")
     public String searchRecipeList(Model model, @Param("keyword") String keyword) {
         model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));

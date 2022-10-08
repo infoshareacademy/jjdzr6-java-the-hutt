@@ -44,11 +44,14 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(String name, String description, int preparationTime, List<ProductRecipe> productList) {
+
+    public Recipe(String name, String description, int preparationTime, List<ProductRecipe> productList, RecipeAllegrens recipeAllegrens) {
         this.name = name;
         this.description = description;
         this.preparationTime = preparationTime;
         this.productList = productList;
+        this.recipeAllegrens = recipeAllegrens;
+
     }
 
     public List<ProductRecipe> getProductList() {
@@ -114,9 +117,6 @@ public class Recipe {
         return recipeAllegrens;
     }
 
-    public void setRecipeAllegrens(RecipeAllegrens recipeAllegrens) {
-        this.recipeAllegrens = recipeAllegrens;
-    }
 
     @Override
     public String toString() {
