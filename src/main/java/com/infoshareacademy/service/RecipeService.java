@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
-
 import java.util.List;
 
 @Service

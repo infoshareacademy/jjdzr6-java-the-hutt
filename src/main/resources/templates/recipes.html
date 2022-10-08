@@ -43,7 +43,7 @@
                     <option th:hidden="${meal}" th:value="${meal}" th:text="${meal}"></option>
                     <option
                             th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
-                            th:text="${meal}"
+                            th:text="${meal.value}"
                             th:value="${meal}">
                     </option>
                 </select>
@@ -63,7 +63,6 @@
                 <th> Opcje</th>
             </tr>
             </thead>
-
             <tbody>
             <tr th:each="recipe: ${recipes}">
                 <td th:text="${recipe.name}"></td>
@@ -75,9 +74,9 @@
                     <a th:href="@{/recipes/{recipeId}(recipeId=${recipe.recipeId})}"
                        class="btn btn-primary">Edytuj przepis</a>
 
+
                     <a th:href="@{/recipes/recipe/{id}(id=${recipe.recipeId})}"
                        class="btn btn-danger">Usuń przepis</a>
-
                 </td>
             </tr>
             </tbody>

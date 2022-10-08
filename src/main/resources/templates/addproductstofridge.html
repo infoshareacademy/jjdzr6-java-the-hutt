@@ -48,16 +48,19 @@
                         <tr th:each="product ,iterStat : *{productsInFridge}" th:class="${iterStat.odd}? 'grey-row'">
                             <td th:text="${iterStat.count}"></td>
                             <td>
-                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].amount}"  />
+                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].amount}" required />
                             </td>
                             <td>
-                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].productName}"  />
+                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].productName}" required />
                             </td>
                             <td>
                                 <select name="unit" th:field="*{productsInFridge[__${iterStat.index}__].unit}"  />
                                 <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
-                                        th:value="${unit}" th:text="${unit}"></option>
+                                        th:value="${unit}" th:text="${unit.value}"></option>
                                 </select>
+                            </td>
+                            <td>
+                                <input type="date" th:field="*{productsInFridge[__${iterStat.index}__].expirationDate}" />
                             </td>
                             <td>
                                 <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
