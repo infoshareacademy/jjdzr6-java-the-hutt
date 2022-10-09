@@ -40,12 +40,11 @@
         <div class="dropdown">
             <form th:action="@{/recipes}">
                 <select name="meal">
-<!--                    FixMe wyglad tlumaczenia-->
-<!--                    <option th:hidden="${meal}" th:value="${meal}" th:text="${meal}"></option>-->
                     <option
                             th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
                             th:text="${meal.value}"
-                            th:value="${meal}">
+                            th:value="${meal}"
+                            th:selected="${meal == selectedMeal}">
                     </option>
                 </select>
                 <button type="submit" class="btn btn-primary">Szukaj</button>

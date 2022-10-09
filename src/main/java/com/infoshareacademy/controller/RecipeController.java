@@ -36,7 +36,7 @@ public class RecipeController {
 
     @GetMapping
     public String getAllRecipeButCanFilterByMealType(Model model, @Param("meal") Meal meal, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
-        model.addAttribute("meal", meal);
+        model.addAttribute("selectedMeal", meal);
         model.addAttribute("recipes", recipeService.getRecipesByCanFilterByMeal(meal, pageable));
         return "recipes";
     }
