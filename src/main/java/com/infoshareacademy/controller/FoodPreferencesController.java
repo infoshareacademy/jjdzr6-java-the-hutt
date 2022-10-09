@@ -5,6 +5,9 @@ import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.service.FoodPreferencesService;
 import com.infoshareacademy.service.FridgeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +41,8 @@ public class FoodPreferencesController {
     }
 
     @GetMapping("/foodpreferences/recipe/")
-    public String getRecipeByAllergens(Model model) {
-        model.addAttribute("recipes", foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getUserId()));
+    public String getRecipeByAllergens(Model model, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
+        model.addAttribute("recipes", foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getUserId(), pageable));
         return "recipes";
     }
 

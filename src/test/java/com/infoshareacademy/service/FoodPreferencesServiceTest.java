@@ -9,6 +9,8 @@ import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
 import com.infoshareacademy.repository.RecipeRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,14 +53,14 @@ class FoodPreferencesServiceTest {
         return Arrays.asList(firstRecipe, secondRecipe, thirdRecipe);
     }
         @Test
-        void testIfReturnFilteredRecipeByFoodPreferences () {
+        void testIfReturnFilteredRecipeByFoodPreferences (Pageable pageable) {
             //given
             List<Recipe> recipesToTest = createRecipesToTest();
             when(recipeService.getAllRecipe()).thenReturn(recipesToTest);
             when(foodPreferencesService.getFoodPreferencesById(any())).thenReturn(foodPreferencesOprional);
 
             //when
-            List<Recipe> recipes = foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getUserId());
+            Page<Recipe> recipes = foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getUserId(), pageable);
 
             //then
             assertThat(recipes).hasSize(2)
