@@ -40,7 +40,8 @@
         <div class="dropdown">
             <form th:action="@{/recipes}">
                 <select name="meal">
-                    <option th:hidden="${meal}" th:value="${meal}" th:text="${meal}"></option>
+<!--                    FixMe wyglad tlumaczenia-->
+<!--                    <option th:hidden="${meal}" th:value="${meal}" th:text="${meal}"></option>-->
                     <option
                             th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
                             th:text="${meal.value}"
@@ -83,7 +84,7 @@
     </table>
     <div class="row">
         <div class="col-sm-6">
-            <div sd:pagination-summary="">info</div>
+            <div sd:pagination-summary="Ilość">info</div>
         </div>
         <div class="col-sm-6">
             <nav class="pull-right">
