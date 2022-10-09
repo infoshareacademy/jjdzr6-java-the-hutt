@@ -42,10 +42,10 @@ public class RecipeController {
     }
 
     @GetMapping("/filtered-prodcts")
-    public String searchRecipeList(Model model, @Param("keyword") String keyword) {
-        model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
+    public String searchRecipeList(Model model, @Param("keyword") String keyword, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
+        model.addAttribute("recipes", recipeService.getSearchRecipe(keyword, pageable));
         model.addAttribute("keyword", keyword);
-        return "search-recipe";
+        return "recipes";
     }
 
     @GetMapping("/recipe")

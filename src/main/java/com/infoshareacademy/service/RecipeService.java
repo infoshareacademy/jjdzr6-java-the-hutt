@@ -29,11 +29,11 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
-    public List<Recipe> getSearchRecipe(String keyword) {
+    public Page<Recipe> getSearchRecipe(String keyword, Pageable pageable) {
         if (keyword != null) {
-            return recipeRepository.findRecipeBy(keyword);
+            return new PageImpl<>(recipeRepository.findRecipeBy(keyword));
         }
-        return recipeRepository.findAll();
+        return recipeRepository.findAll(pageable);
     }
 
     public Recipe getRecipeById(Long id) {
