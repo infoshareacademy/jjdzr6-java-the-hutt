@@ -4,6 +4,9 @@ import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.FoodPreferencesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,7 +52,7 @@ public class FoodPreferencesService {
         }
     }
 
-    public List<Recipe> filterRecipeByFoodPreferences(Long id) {
+    public Page<Recipe> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
 
         Optional<FoodPreferences> foodPreferencesRepositoryById = getFoodPreferencesById(id);
         List<Recipe> recipeList = recipeService.getAllRecipe();
@@ -112,7 +115,7 @@ public class FoodPreferencesService {
             }
 
         }
-        return recipeList;
+        return new PageImpl<>(recipeList);
 
     }
 

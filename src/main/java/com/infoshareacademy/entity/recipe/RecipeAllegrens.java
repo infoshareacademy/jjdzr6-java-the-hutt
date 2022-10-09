@@ -26,7 +26,6 @@ public class RecipeAllegrens {
     public RecipeAllegrens() {
     }
 
-
     public RecipeAllegrens(boolean chocolate, boolean nuts, boolean eggs, boolean strawberries, boolean shellfish, boolean dairy, String other, boolean meatEater, boolean vegan, boolean vegetarian) {
         this.chocolate = chocolate;
         this.nuts = nuts;

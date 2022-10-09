@@ -42,8 +42,16 @@ public class Recipe {
     private RecipeAllegrens recipeAllegrens;
 
     public Recipe() {
+        this.recipeAllegrens = new RecipeAllegrens();
     }
 
+
+    public Recipe(String name, String description, int preparationTime, List<ProductRecipe> productList) {
+        this.name = name;
+        this.description = description;
+        this.preparationTime = preparationTime;
+        this.productList = productList;
+    }
 
     public Recipe(String name, String description, int preparationTime, List<ProductRecipe> productList, RecipeAllegrens recipeAllegrens) {
         this.name = name;
@@ -51,7 +59,6 @@ public class Recipe {
         this.preparationTime = preparationTime;
         this.productList = productList;
         this.recipeAllegrens = recipeAllegrens;
-
     }
 
     public List<ProductRecipe> getProductList() {

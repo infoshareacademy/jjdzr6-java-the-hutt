@@ -3,7 +3,11 @@ package com.infoshareacademy.controller;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,16 +35,17 @@ public class RecipeController {
     }
 
     @GetMapping
-    public String getAllRecipeButCanFilterByMealType(Model model, @Param("meal") Meal meal) {
-        model.addAttribute("meal", meal);
-        model.addAttribute("recipes", recipeService.getRecipesByMeal(meal));
+    public String getAllRecipeButCanFilterByMealType(Model model, @Param("meal") Meal meal, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
+        model.addAttribute("selectedMeal", meal);
+        model.addAttribute("recipes", recipeService.getRecipesByCanFilterByMeal(meal, pageable));
         return "recipes";
     }
+
     @GetMapping("/filtered-prodcts")
-    public String searchRecipeList(Model model, @Param("keyword") String keyword) {
-        model.addAttribute("recipes", recipeService.getSearchRecipe(keyword));
+    public String searchRecipeList(Model model, @Param("keyword") String keyword, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
+        model.addAttribute("recipes", recipeService.getSearchRecipe(keyword, pageable));
         model.addAttribute("keyword", keyword);
-        return "search-recipe";
+        return "recipes";
     }
 
     @GetMapping("/recipe")
