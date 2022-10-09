@@ -40,7 +40,8 @@
         <div class="dropdown">
             <form th:action="@{/recipes}">
                 <select name="meal">
-                    <option th:hidden="${meal}" th:value="${meal}" th:text="${meal}"></option>
+<!--                    FixMe poprawianie wygladu w dodawaniu tlumaczenia ENUMów-->
+<!--                    <option th:hidden="${meal}" th:value="${meal}" th:text="${meal}"></option>-->
                     <option
                             th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
                             th:text="${meal.value}"
