@@ -4,6 +4,9 @@ import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
@@ -39,7 +42,7 @@ public class RecipeService {
         return recipe;
     }
 
-    public List<Recipe> getRecipesByMeal(Meal meal) {
+    public Page<Recipe> getRecipesByCanFilterByMeal(Meal meal, Pageable pageable) {
         if (meal != null) {
             List<Recipe> recipeList = recipeRepository.findAll();
 
@@ -70,10 +73,8 @@ public class RecipeService {
                     break;
             }
 
-            return recipeList;
-        } else return recipeRepository.findAll();
-
-
+            return new PageImpl<>(recipeList);
+        } else return recipeRepository.findAll(pageable);
     }
 
     public void saveRecipeAllergens(Long id, RecipeAllegrens allergens) {
