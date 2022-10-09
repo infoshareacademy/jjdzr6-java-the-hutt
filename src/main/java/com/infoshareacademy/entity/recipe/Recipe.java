@@ -42,6 +42,7 @@ public class Recipe {
     private RecipeAllegrens recipeAllegrens;
 
     public Recipe() {
+        this.recipeAllegrens = new RecipeAllegrens();
     }
 
 
