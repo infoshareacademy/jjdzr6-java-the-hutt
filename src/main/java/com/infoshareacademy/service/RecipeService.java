@@ -123,4 +123,8 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
+    public void deleteAllRecipes(){
+        recipeRepository.deleteAll();
+    }
+
 }
