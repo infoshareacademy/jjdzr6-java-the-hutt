@@ -13,7 +13,7 @@ public class Fridge {
     @Column(name = "fridge_id")
     private Long fridgeId = 1L;
 
-    @OneToMany(mappedBy = "fridge",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fridge",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductInFridge> productsInFridge = new ArrayList<>();
 
     public void addProduct(ProductInFridge product) {

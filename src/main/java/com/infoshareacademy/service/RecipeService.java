@@ -1,5 +1,7 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.entity.product.ProductInFridge;
+import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
@@ -10,7 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.RecipeRepository;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RecipeService {
@@ -19,10 +25,15 @@ public class RecipeService {
 
     private final RecipeAllergensRepository allergensRepository;
 
+    private final FridgeService fridgeService;
+
+
+
     @Autowired
-    public RecipeService(RecipeRepository recipeRepository, RecipeAllergensRepository allergensRepository) {
+    public RecipeService(RecipeRepository recipeRepository, RecipeAllergensRepository allergensRepository, FridgeService fridgeService) {
         this.recipeRepository = recipeRepository;
         this.allergensRepository = allergensRepository;
+        this.fridgeService = fridgeService;
     }
 
     public List<Recipe> getAllRecipe() {
@@ -125,6 +136,33 @@ public class RecipeService {
 
     public void deleteAllRecipes(){
         recipeRepository.deleteAll();
+    }
+
+    public List<Recipe> getRecipeByProductsInFridge() {
+        List<Recipe> myRecipes = getAllRecipe();
+        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = new HashMap<Recipe, List<ProductRecipe>>();
+        List<ProductInFridge> productInFridgeList = fridgeService.getAllProductsFromFridge().getProductsInFridge();
+        List<Recipe> filteredRecipies = new ArrayList<>();
+
+
+        for (int i = 0; i < (myRecipes.size()); i++) {
+            mapRecipesProducts.put(myRecipes.get(i), myRecipes.get(i).getProductList());
+        }
+
+        for(Map.Entry<Recipe, List<ProductRecipe>> entry : mapRecipesProducts.entrySet()){
+            List<ProductRecipe> tempList = entry.getValue();
+            int matchcount = tempList.size();
+            for(int i =0; i<tempList.size();i++){
+                for(int j=0;j<productInFridgeList.size();j++){
+                    if(productInFridgeList.get(j).getProductName().equalsIgnoreCase(tempList.get(i).getProductName()) && productInFridgeList.get(j).getAmount() >= tempList.get(i).getAmount()){
+                        matchcount--;
+                    }
+                }
+            }
+            if(matchcount == 0){filteredRecipies.add(entry.getKey());}
+        }
+
+        return filteredRecipies;
     }
 
 }
