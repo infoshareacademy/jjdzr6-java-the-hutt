@@ -29,7 +29,7 @@ public class ProductInFridge extends Product {
     @Future
     private LocalDate expirationDate;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "fridge_id")
     private Fridge fridge;
 

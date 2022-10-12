@@ -111,4 +111,10 @@ public class RecipeController {
         recipeService.deleteAllRecipes();
         return "redirect:/recipes";
     }
+
+    @GetMapping("/recipes-todo")
+    public String recipesByProductsInFridge(){
+        recipeService.getRecipeByProductsInFridge();
+        return "recipes";
+    }
 }

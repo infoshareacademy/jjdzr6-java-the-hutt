@@ -35,11 +35,11 @@ public class JavaTheHuttApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        List<Recipe> allRecipe = recipeService.getRecipeByProductsInFridge();
-
-        for(int i=0;i<allRecipe.size();i++){
-            System.out.println(allRecipe.get(i).toString());
-        }
+//        List<Recipe> allRecipe = recipeService.getRecipeByProductsInFridge();
+//
+//        for(int i=0;i<allRecipe.size();i++){
+//            System.out.println(allRecipe.get(i).toString());
+//        }
 
 
     }

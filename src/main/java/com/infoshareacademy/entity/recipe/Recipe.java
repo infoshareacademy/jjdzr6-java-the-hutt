@@ -35,10 +35,10 @@ public class Recipe {
     @Enumerated(EnumType.STRING)
     private Meal meal;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductRecipe> productList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RecipeAllegrens recipeAllegrens;
 
     public Recipe() {
