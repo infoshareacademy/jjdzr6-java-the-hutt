@@ -9,7 +9,7 @@ import java.util.*;
 @Service
 public class FridgeService {
 
-    private final long userId = 1;
+    private static final long DEFAULT_FRIDGE_ID = 1;
     private final FridgeRepository fridgeRepository;
 
     @Autowired
@@ -19,14 +19,14 @@ public class FridgeService {
 
 
     public Fridge saveFridge(Fridge fridge) {
-        fridge.setFridgeId(getUserId());
+        fridge.setFridgeId(getDEFAULT_FRIDGE_ID());
         fridge.getProductsInFridge().forEach(x -> x.setFridge(fridge));
         return fridgeRepository.save(fridge);
     }
 
     public Fridge getAllProductsFromFridge() {
-        if (fridgeRepository.findById(userId).isPresent()) {
-            return fridgeRepository.findById(userId).get();
+        if (fridgeRepository.findById(DEFAULT_FRIDGE_ID).isPresent()) {
+            return fridgeRepository.findById(DEFAULT_FRIDGE_ID).get();
         } else {
             return new Fridge();
         }
@@ -34,11 +34,11 @@ public class FridgeService {
 
     public Fridge addProductsToFridgeForm() {
         Fridge fridge;
-        if (fridgeRepository.findById(getUserId()).isPresent()) {
-            return fridge = fridgeRepository.findById(getUserId()).get();
+        if (fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).isPresent()) {
+            return fridge = fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).get();
         } else {
             fridge = new Fridge();
-            fridge.setFridgeId(getUserId());
+            fridge.setFridgeId(getDEFAULT_FRIDGE_ID());
             return fridge;
         }
     }
@@ -48,7 +48,7 @@ public class FridgeService {
     }
 
 
-    public long getUserId() {
-        return userId;
+    public long getDEFAULT_FRIDGE_ID() {
+        return DEFAULT_FRIDGE_ID;
     }
 }
