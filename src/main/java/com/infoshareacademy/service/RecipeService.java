@@ -138,9 +138,11 @@ public class RecipeService {
         recipeRepository.deleteAll();
     }
 
-    public List<Recipe> getRecipeByProductsInFridge() {
+    public Page<Recipe> getRecipeByProductsInFridge(Pageable pageable) {
+
+        //TODO: zmienić wczytywanie przepisów po ID
         List<Recipe> myRecipes = getAllRecipe();
-        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = new HashMap<Recipe, List<ProductRecipe>>();
+        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = new HashMap<>();
         List<ProductInFridge> productInFridgeList = fridgeService.getAllProductsFromFridge().getProductsInFridge();
         List<Recipe> filteredRecipies = new ArrayList<>();
 
@@ -162,7 +164,7 @@ public class RecipeService {
             if(matchcount == 0){filteredRecipies.add(entry.getKey());}
         }
 
-        return filteredRecipies;
+        return new PageImpl<>(filteredRecipies);
     }
 
 }

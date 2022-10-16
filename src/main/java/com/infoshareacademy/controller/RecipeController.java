@@ -113,8 +113,9 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes-todo")
-    public String recipesByProductsInFridge(){
-        recipeService.getRecipeByProductsInFridge();
+    public String recipesByProductsInFridge(@SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable, Model model){
+        model.addAttribute("recipes",recipeService.getRecipeByProductsInFridge(pageable));
+
         return "recipes";
     }
 }
