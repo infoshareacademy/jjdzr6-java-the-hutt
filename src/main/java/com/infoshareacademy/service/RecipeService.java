@@ -3,20 +3,21 @@ package com.infoshareacademy.service;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Meal;
+import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
+import com.infoshareacademy.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.repository.RecipeRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -26,7 +27,6 @@ public class RecipeService {
     private final RecipeAllergensRepository allergensRepository;
 
     private final FridgeService fridgeService;
-
 
 
     @Autowired
@@ -134,34 +134,44 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
-    public void deleteAllRecipes(){
+    public void deleteAllRecipes() {
         recipeRepository.deleteAll();
     }
 
     public Page<Recipe> getRecipeByProductsInFridge(Pageable pageable) {
 
         //TODO: zmienić wczytywanie przepisów po ID
-        List<Recipe> myRecipes = getAllRecipe();
-        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = new HashMap<>();
-        List<ProductInFridge> productInFridgeList = fridgeService.getAllProductsFromFridge().getProductsInFridge();
+        List<Recipe> myRecipes = getAllRecipe().stream()
+                .peek(recipe -> recipe.getProductList()
+                        .forEach(productRecipe -> productRecipe
+                                .setProductName(productRecipe.getProductName().toLowerCase()))).toList();
+
+        Map<String, ProductInFridge> productsInFridge = fridgeService.getAllProductsFromFridge()
+                .getProductsInFridge()
+                .stream()
+                .peek(productInFridge -> productInFridge
+                        .setProductName(productInFridge.getProductName().toLowerCase()))
+                .collect(Collectors.toMap(ProductInFridge::getProductName, Function.identity()));
         List<Recipe> filteredRecipies = new ArrayList<>();
 
 
-        for (int i = 0; i < (myRecipes.size()); i++) {
-            mapRecipesProducts.put(myRecipes.get(i), myRecipes.get(i).getProductList());
-        }
+        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = myRecipes.stream()
+                .collect(Collectors.toMap(Function.identity(), Recipe::getProductList));
 
-        for(Map.Entry<Recipe, List<ProductRecipe>> entry : mapRecipesProducts.entrySet()){
-            List<ProductRecipe> tempList = entry.getValue();
-            int matchcount = tempList.size();
-            for(int i =0; i<tempList.size();i++){
-                for(int j=0;j<productInFridgeList.size();j++){
-                    if(productInFridgeList.get(j).getProductName().equalsIgnoreCase(tempList.get(i).getProductName()) && productInFridgeList.get(j).getAmount() >= tempList.get(i).getAmount()){
-                        matchcount--;
-                    }
+        for (Map.Entry<Recipe, List<ProductRecipe>> entry : mapRecipesProducts.entrySet()) {
+            List<ProductRecipe> tempRecipeList = entry.getValue();
+            int matchScore = tempRecipeList.size();
+            for (ProductRecipe productRecipe : tempRecipeList) {
+                ProductInFridge productInFridge = productsInFridge.get(productRecipe.getProductName());
+
+                if (productInFridge != null
+                        && productInFridge.getAmount() >= productRecipe.getAmount()) {
+                    matchScore--;
                 }
             }
-            if(matchcount == 0){filteredRecipies.add(entry.getKey());}
+            if (matchScore == 0) {
+                filteredRecipies.add(entry.getKey());
+            }
         }
 
         return new PageImpl<>(filteredRecipies);
