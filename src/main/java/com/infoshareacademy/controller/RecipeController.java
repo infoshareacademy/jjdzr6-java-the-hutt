@@ -4,7 +4,6 @@ import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.service.RecipeService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 

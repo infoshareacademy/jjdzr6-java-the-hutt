@@ -1,9 +1,6 @@
 package com.infoshareacademy.entity.product;
 
-import com.infoshareacademy.entity.fridge.Fridge;
-import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
-
 import javax.persistence.*;
 
 @Entity
@@ -24,7 +21,7 @@ public class ProductShoppingList extends Product {
     @Enumerated(EnumType.STRING)
     private ProductUnit unit;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "shopping_list_id")
     private ShoppingList shoppingList;
 

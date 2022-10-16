@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -64,7 +63,8 @@ public class FridgeController {
     }
 
     @GetMapping("/product/{fridgeId}/{productId}")
-    public String deleteProductFromFridge(@PathVariable Long productId, @PathVariable Long fridgeId) throws Exception {
+    public String deleteProductFromFridge(@PathVariable Long productId,
+                                          Long fridgeId) throws Exception {
         fridgeService.deleteProductFromFridge(productId);
         return "redirect:/fridge";
     }

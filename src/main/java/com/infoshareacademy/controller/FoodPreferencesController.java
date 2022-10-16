@@ -1,6 +1,5 @@
 package com.infoshareacademy.controller;
 
-
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.service.FoodPreferencesService;
 import com.infoshareacademy.service.FridgeService;

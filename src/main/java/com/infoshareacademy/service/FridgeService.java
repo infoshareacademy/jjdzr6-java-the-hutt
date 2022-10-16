@@ -6,8 +6,6 @@ import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.*;
 
 @Service
@@ -63,7 +61,6 @@ public class FridgeService {
     }
 
     public void deleteProductFromFridge(Long productId) throws Exception{
-        System.out.println(fridgeRepository.findById(productId));
         productInFridgeRepository.deleteById(productId);
     }
 }
