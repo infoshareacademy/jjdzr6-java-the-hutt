@@ -106,7 +106,7 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-    @GetMapping("/deleteAll")
+    @GetMapping("/delete-all-recipes")
     public String deleteAllRecipes(){
         recipeService.deleteAllRecipes();
         return "redirect:/recipes";
