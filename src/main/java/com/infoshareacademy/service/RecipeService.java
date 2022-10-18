@@ -19,10 +19,13 @@ public class RecipeService {
 
     private final RecipeAllergensRepository allergensRepository;
 
+    private final FridgeService fridgeService;
+
     @Autowired
-    public RecipeService(RecipeRepository recipeRepository, RecipeAllergensRepository allergensRepository) {
+    public RecipeService(RecipeRepository recipeRepository, RecipeAllergensRepository allergensRepository, FridgeService fridgeService) {
         this.recipeRepository = recipeRepository;
         this.allergensRepository = allergensRepository;
+        this.fridgeService = fridgeService;
     }
 
     public List<Recipe> getAllRecipe() {
@@ -79,6 +82,7 @@ public class RecipeService {
 
     public void saveRecipeAllergens(Long id, RecipeAllegrens allergens) {
         Recipe recipe = new Recipe();
+        recipe.setUserId(fridgeService.getUserId());
         if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
         RecipeAllegrens existingAllergens = new RecipeAllegrens();
         if (allergensRepository.findById(recipe.getRecipeAllegrens().getId()).isPresent()) {
@@ -102,6 +106,7 @@ public class RecipeService {
     public Recipe saveRecipe(Recipe recipe) {
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
         recipe.getRecipeAllegrens().setRecipe(recipe);
+        recipe.setUserId(fridgeService.getUserId());
         return recipeRepository.save(recipe);
     }
 
@@ -109,6 +114,7 @@ public class RecipeService {
     public void updateRecipe(Long recipeId, Recipe recipe) {
 
         Recipe existingRecipe = new Recipe();
+        existingRecipe.setUserId(fridgeService.getUserId());
         if (recipeRepository.findById(recipeId).isPresent()) existingRecipe = recipeRepository.findById(recipeId).get();
         existingRecipe.setRecipeId(recipeId);
         existingRecipe.setName(recipe.getName());

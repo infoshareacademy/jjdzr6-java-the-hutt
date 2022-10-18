@@ -33,30 +33,8 @@
         <a th:href="@{/shoppinglist/new}" class="btn btn-success mb-2"> Stwórz listę</a>
     </div>
 
-        <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th> Nazwa </th>
-            <th> Akcje </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="shopping: ${getShopping}">
-            <td th:text="${shopping.getName()}"></td>
-            <td>
-                <a th:href="@{/shoppinglist/{shoppingListId}(shoppingListId=${shopping.id})}"
-                   class="btn btn-primary">Wyświetl listę zakupów</a>
 
-                <a th:href="@{/shoppinglist/list/{shoppingListId}(shoppingListId=${shopping.id})}"
-                   class="btn btn-danger">Usuń listę zakupów.</a>
-
-            </td>
-        </tr>
-        </tbody>
-        </thead>
-    </table>
-
-<!--    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered">
         <thead class="table-dark">
         <tr>
             <th> Nazwa </th>
@@ -65,14 +43,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="shopping: ${getShopping}">
+        <tr th:each="shopping: ${shoppinglist.getShoppingProductList()}">
             <td th:text="${shopping.getProductName()}"></td>
             <td th:text="${shopping.getAmount()}"></td>
             <td th:text="${shopping.unit.value}"></td>
         </tr>
         </tbody>
         </thead>
-    </table>-->
+    </table>
 
 </div>
 </body>

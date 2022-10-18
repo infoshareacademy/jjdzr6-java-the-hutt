@@ -2,6 +2,7 @@ package com.infoshareacademy.entity.recipe;
 
 
 import com.infoshareacademy.entity.product.ProductRecipe;
+import com.infoshareacademy.entity.shopping_list.ShoppingList;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -38,9 +39,13 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductRecipe> productList = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "shoppingListRecipe")
+    private List<ShoppingList> shoppingList = new ArrayList<>();
+
     @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RecipeAllegrens recipeAllegrens;
 
+    private Long userId;
     public Recipe() {
         this.recipeAllegrens = new RecipeAllegrens();
     }
@@ -70,6 +75,14 @@ public class Recipe {
         product.setRecipe(this);
     }
 
+    public List<ShoppingList> getShoppingList() {
+        return shoppingList;
+    }
+
+    public void setShoppingList(List<ShoppingList> shoppingList) {
+        this.shoppingList = shoppingList;
+    }
+
     public boolean containsProduct(String s) {
         boolean flag = false;
         for (ProductRecipe product : productList) {
@@ -78,6 +91,14 @@ public class Recipe {
             }
         }
         return flag;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Meal getMeal() {

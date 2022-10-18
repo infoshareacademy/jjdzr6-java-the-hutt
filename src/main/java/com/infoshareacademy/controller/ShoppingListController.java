@@ -1,10 +1,17 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import com.infoshareacademy.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -18,7 +25,34 @@ public class ShoppingListController {
 
     @GetMapping("/shoppinglist")
     public String shoppingList(Model model) {
-        model.addAttribute("getShopping", shoppingListService.createShoppingList());
+        model.addAttribute("getShopping", shoppingListService.findAllShoppingLists());
         return "shoppinglist";
+    }
+    @GetMapping("/shoppinglist/new")
+    public String createShoppingListForm(Model model) {
+        model.addAttribute("shoppinglist", new ShoppingList());
+        return "create-shoppinglist";
+    }
+
+    @PostMapping("/shoppinglist/new")
+    public String saveShoppingList(@Valid @ModelAttribute("shoppinglist") ShoppingList shoppingList, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "create-shoppinglist";
+        }
+        shoppingListService.saveShoppingList(shoppingList);
+        return "redirect:/shoppinglist";
+    }
+
+    @GetMapping("/shoppinglist/{shoppingListId}")
+    public String viewShoppingList(@PathVariable Long shoppingListId, Model model) {
+        model.addAttribute("shoppinglist", shoppingListService.viewShoppingList(shoppingListId));
+        return "oneshoppinglist";
+    }
+
+
+    @GetMapping("/shoppinglist/list/{shoppingListId}")
+    public String deleteRecipe(@PathVariable Long shoppingListId) {
+        shoppingListService.deleteShoppingListById(shoppingListId);
+        return "redirect:/shoppinglist";
     }
 }

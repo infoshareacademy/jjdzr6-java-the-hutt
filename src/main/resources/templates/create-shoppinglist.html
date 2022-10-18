@@ -32,47 +32,29 @@
     <div class="col-lg-2">
         <a th:href="@{/shoppinglist/new}" class="btn btn-success mb-2"> Stwórz listę</a>
     </div>
-
-        <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th> Nazwa </th>
-            <th> Akcje </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="shopping: ${getShopping}">
-            <td th:text="${shopping.getName()}"></td>
-            <td>
-                <a th:href="@{/shoppinglist/{shoppingListId}(shoppingListId=${shopping.id})}"
-                   class="btn btn-primary">Wyświetl listę zakupów</a>
-
-                <a th:href="@{/shoppinglist/list/{shoppingListId}(shoppingListId=${shopping.id})}"
-                   class="btn btn-danger">Usuń listę zakupów.</a>
-
-            </td>
-        </tr>
-        </tbody>
-        </thead>
-    </table>
-
-<!--    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th> Nazwa </th>
-            <th> Ilość</th>
-            <th> Jednostka miary</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="shopping: ${getShopping}">
-            <td th:text="${shopping.getProductName()}"></td>
-            <td th:text="${shopping.getAmount()}"></td>
-            <td th:text="${shopping.unit.value}"></td>
-        </tr>
-        </tbody>
-        </thead>
-    </table>-->
+    <form th:action="@{/shoppinglist/new}" th:object = "${shoppinglist}" method="POST">
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            <ul>
+                <li th:text="${'Niepoprawna treść.'}"></li>
+            </ul>
+        </div>
+        <div class ="form-group">
+            <label> Nazwa </label>
+            <input
+                    type = "text"
+                    name = "name"
+                    th:field = "*{name}"
+                    class = "form-control"
+                    placeholder="Podaj nazwę listy."
+            />
+        </div>
+        <div class = "box-footer">
+            </br>
+            <button type="submit" class = "btn btn-primary">
+                Dodaj
+            </button>
+        </div>
+    </form>
 
 </div>
 </body>

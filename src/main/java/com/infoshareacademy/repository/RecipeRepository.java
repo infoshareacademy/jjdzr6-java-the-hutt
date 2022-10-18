@@ -15,4 +15,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
             "LEFT JOIN FETCH r.productList p " +
             "WHERE " + "CONCAT(r.name, r.description,r.preparationTime, p.productName)" + "LIKE %?1%")
     List<Recipe> findRecipeBy(String keyword);
+
+    List<Recipe> findByUserId(Long id);
+
 }

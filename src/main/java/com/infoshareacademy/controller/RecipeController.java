@@ -2,9 +2,9 @@ package com.infoshareacademy.controller;
 
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
+import com.infoshareacademy.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
@@ -29,14 +29,18 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
+    private final ShoppingListService shoppingListService;
+
     @Autowired
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, ShoppingListService shoppingListService) {
         this.recipeService = recipeService;
+        this.shoppingListService = shoppingListService;
     }
 
     @GetMapping
     public String getAllRecipeButCanFilterByMealType(Model model, @Param("meal") Meal meal, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
         model.addAttribute("selectedMeal", meal);
+        model.addAttribute("shoppingList", shoppingListService.findAllShoppingLists());
         model.addAttribute("recipes", recipeService.getRecipesByCanFilterByMeal(meal, pageable));
         return "recipes";
     }
@@ -105,4 +109,12 @@ public class RecipeController {
         recipeService.deleteRecipeById(id);
         return "redirect:/recipes";
     }
+
+    @GetMapping("/{recipeId}/shoppinglist/{shoppingListId}")
+    public String addRecipeToShoppingList(@PathVariable Long recipeId, @PathVariable Long shoppingListId) {
+        shoppingListService.addRecipeToShoppingList(recipeService.getRecipeById(recipeId),shoppingListId);
+        return "redirect:/recipes";
+    }
+
+
 }
