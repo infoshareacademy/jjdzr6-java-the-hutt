@@ -30,15 +30,15 @@
     </div>
 <form action="#" th:action="@{/foodpreferences}" th:object="${foodpreferences}" method="post">
     Lista Twoich alergenów:
-    <p>Czekolada<input type="checkbox" th:field="${foodpreferences.chocolate}"/>
-    <p>Produkty mleczne<input type="checkbox" th:field="${foodpreferences.dairy}"/>
-    <p>Jaja<input type="checkbox" th:field="${foodpreferences.eggs}"/>
-    <p>Orzechy<input type="checkbox" th:field="${foodpreferences.nuts}"/>
-    <p>Skorupiaki<input type="checkbox" th:field="${foodpreferences.shellfish}"/>
-    <p>Truskawki<input type="checkbox" th:field="${foodpreferences.strawberries}"/>
-    <p>Czy jesz mięso?<input type="checkbox" th:field="${foodpreferences.meatEater}"/>
-    <p>Dieta wegańska?<input type="checkbox" th:field="${foodpreferences.vegan}"/>
-    <p>Dieta wegetariańska?<input type="checkbox" th:field="${foodpreferences.vegetarian}"/>
+    <p>Czekolada<input type="checkbox" th:field="*{chocolate}"/>
+    <p>Produkty mleczne<input type="checkbox" th:field="*{dairy}"/>
+    <p>Jaja<input type="checkbox" th:field="*{eggs}"/>
+    <p>Orzechy<input type="checkbox" th:field="*{nuts}"/>
+    <p>Skorupiaki<input type="checkbox" th:field="*{shellfish}"/>
+    <p>Truskawki<input type="checkbox" th:field="*{strawberries}"/>
+    <p>Czy jesz mięso?<input type="checkbox" th:field="*{meatEater}"/>
+    <p>Dieta wegańska?<input type="checkbox" th:field="*{vegan}"/>
+    <p>Dieta wegetariańska?<input type="checkbox" th:field="*{vegetarian}"/>
     <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
     <p><input class="btn btn-primary" type="submit" value="Dodaj">
 

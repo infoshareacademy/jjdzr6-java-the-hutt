@@ -39,6 +39,46 @@ public class FoodPreferences {
         this.isVegetarian = isVegetarian;
     }
 
+    public void setShellfish(boolean shellfish) {
+        this.shellfish = shellfish;
+    }
+
+    public void setChocolate(boolean chocolate) {
+        this.chocolate = chocolate;
+    }
+
+    public void setNuts(boolean nuts) {
+        this.nuts = nuts;
+    }
+
+    public void setEggs(boolean eggs) {
+        this.eggs = eggs;
+    }
+
+    public void setStrawberries(boolean strawberries) {
+        this.strawberries = strawberries;
+    }
+
+    public void setDairy(boolean dairy) {
+        this.dairy = dairy;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
+    }
+
+    public void setMeatEater(boolean meatEater) {
+        this.meatEater = meatEater;
+    }
+
+    public void setVegan(boolean vegan) {
+        isVegan = vegan;
+    }
+
+    public void setVegetarian(boolean vegetarian) {
+        isVegetarian = vegetarian;
+    }
+
     public Long getId() {
         return id;
     }
