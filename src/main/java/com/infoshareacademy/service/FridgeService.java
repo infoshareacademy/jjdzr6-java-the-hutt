@@ -1,9 +1,13 @@
 package com.infoshareacademy.service;
 
 import com.infoshareacademy.entity.fridge.Fridge;
+import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
+import com.infoshareacademy.repository.ProductInFridgeRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Service
@@ -11,12 +15,13 @@ public class FridgeService {
 
     private static final long DEFAULT_FRIDGE_ID = 1;
     private final FridgeRepository fridgeRepository;
+    private final ProductInFridgeRepository productInFridgeRepository;
 
     @Autowired
-    public FridgeService(FridgeRepository fridgeRepository) {
+    public FridgeService(FridgeRepository fridgeRepository, ProductInFridgeRepository productInFridgeRepository) {
         this.fridgeRepository = fridgeRepository;
+        this.productInFridgeRepository = productInFridgeRepository;
     }
-
 
     public Fridge saveFridge(Fridge fridge) {
         fridge.setFridgeId(getDEFAULT_FRIDGE_ID());
@@ -47,8 +52,14 @@ public class FridgeService {
         return fridgeRepository.findById(id);
     }
 
-
     public long getDEFAULT_FRIDGE_ID() {
         return DEFAULT_FRIDGE_ID;
+    }
+
+    public void deleteProductFromFridge(Long productId) throws NotFoundException {
+        if (productInFridgeRepository.findById(productId).isPresent()) {
+            productInFridgeRepository.deleteById(productId);
+        } else throw new NotFoundException("Not found Product in Fridge for"
+                + "ID: " + productId);
     }
 }

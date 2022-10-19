@@ -1,8 +1,6 @@
 package com.infoshareacademy.entity.recipe;
 
-
 import com.infoshareacademy.entity.product.ProductRecipe;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

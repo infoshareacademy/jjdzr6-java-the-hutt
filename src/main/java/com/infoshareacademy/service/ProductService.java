@@ -1,11 +1,9 @@
 package com.infoshareacademy.service;
 
 import com.infoshareacademy.entity.product.ProductRecipe;
-import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.ProductRecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

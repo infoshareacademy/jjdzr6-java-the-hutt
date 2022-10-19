@@ -1,7 +1,6 @@
 package com.infoshareacademy.entity.product;
 
 import com.infoshareacademy.entity.recipe.Recipe;
-
 import javax.persistence.*;
 
 @Entity

@@ -1,6 +1,6 @@
 package com.infoshareacademy.entity.shopping_list;
-import com.infoshareacademy.entity.product.ProductShoppingList;
 
+import com.infoshareacademy.entity.product.ProductShoppingList;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
