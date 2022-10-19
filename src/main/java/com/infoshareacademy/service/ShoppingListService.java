@@ -9,7 +9,6 @@ import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import com.infoshareacademy.repository.ShoppingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 

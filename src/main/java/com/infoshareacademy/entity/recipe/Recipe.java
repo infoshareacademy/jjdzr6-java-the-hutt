@@ -1,9 +1,8 @@
 package com.infoshareacademy.entity.recipe;
 
-
 import com.infoshareacademy.entity.product.ProductRecipe;
-import com.infoshareacademy.entity.shopping_list.ShoppingList;
 
+import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
