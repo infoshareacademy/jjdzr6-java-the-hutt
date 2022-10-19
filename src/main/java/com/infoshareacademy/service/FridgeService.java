@@ -4,8 +4,10 @@ import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Service
@@ -54,13 +56,10 @@ public class FridgeService {
         return userId;
     }
 
-    public ProductInFridge findProductInFridgeById(Long productId) throws Exception {
-        return productInFridgeRepository.findById(productId)
-                .orElseThrow(() -> new Exception("Not found Product in Fridge for"
-                        + "ID: " + productId));
-    }
-
-    public void deleteProductFromFridge(Long productId) throws Exception{
-        productInFridgeRepository.deleteById(productId);
+    public void deleteProductFromFridge(Long productId) throws NotFoundException {
+        if (productInFridgeRepository.findById(productId).isPresent()) {
+            productInFridgeRepository.deleteById(productId);
+        } else throw new NotFoundException("Not found Product in Fridge for"
+                + "ID: " + productId);
     }
 }
