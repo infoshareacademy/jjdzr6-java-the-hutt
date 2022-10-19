@@ -62,4 +62,18 @@ public class FridgeService {
         } else throw new NotFoundException("Not found Product in Fridge for"
                 + "ID: " + productId);
     }
+
+    public ProductInFridge editProductFromFridge(Long productId, ProductInFridge productInFridge) {
+        ProductInFridge existingProduct = new ProductInFridge();
+        if (productInFridgeRepository.findById(productId).isPresent())
+            existingProduct = productInFridgeRepository.findById(productId).get();
+
+        existingProduct.setProductId(productInFridge.getProductId());
+        existingProduct.setProductName(productInFridge.getProductName());
+        existingProduct.setAmount(productInFridge.getAmount());
+        existingProduct.setUnit(productInFridge.getUnit());
+        existingProduct.setExpirationDate(productInFridge.getExpirationDate());
+        productInFridgeRepository.save(existingProduct);
+        return existingProduct;
+    }
 }

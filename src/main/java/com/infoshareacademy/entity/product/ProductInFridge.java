@@ -36,9 +36,10 @@ public class ProductInFridge extends Product {
     public ProductInFridge() {
     }
 
-    public ProductInFridge(String productName, Double amount, LocalDate expirationDate) {
+    public ProductInFridge(String productName, Double amount, ProductUnit unit, LocalDate expirationDate) {
         this.productName = productName;
         this.amount = amount;
+        this.unit = unit;
         this.expirationDate = expirationDate;
     }
 
@@ -93,9 +94,11 @@ public class ProductInFridge extends Product {
     @Override
     public String toString() {
         return "ProductInFridge{" +
-                "productName='" + productName + '\'' +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
                 ", amount=" + amount +
                 ", unit=" + unit +
+                ", expirationDate=" + expirationDate +
                 '}';
     }
 }
