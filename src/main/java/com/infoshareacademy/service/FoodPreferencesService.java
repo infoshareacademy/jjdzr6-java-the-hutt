@@ -3,6 +3,7 @@ package com.infoshareacademy.service;
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.FoodPreferencesRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,13 +39,13 @@ public class FoodPreferencesService {
     }
 
     public void setFoodPreferences(FoodPreferences foodPreferences) {
-        foodPreferences.setId(fridgeService.getUserId());
+        foodPreferences.setId(fridgeService.getDEFAULT_FRIDGE_ID());
         foodPreferencesRepository.save(foodPreferences);
     }
 
     public FoodPreferences checkIfFoodPreferencesIsSet(FoodPreferences foodPreferences) {
-        if (foodPreferencesRepository.findById(fridgeService.getUserId()).isPresent()) {
-            foodPreferences = foodPreferencesRepository.findById(fridgeService.getUserId()).get();
+        if (foodPreferencesRepository.findById(fridgeService.getDEFAULT_FRIDGE_ID()).isPresent()) {
+            foodPreferences = foodPreferencesRepository.findById(fridgeService.getDEFAULT_FRIDGE_ID()).get();
             return foodPreferences;
         } else {
             return new FoodPreferences();
@@ -57,57 +58,59 @@ public class FoodPreferencesService {
         List<Recipe> recipeList = recipeService.getAllRecipe();
 
         if (foodPreferencesRepositoryById.isPresent()) {
-            if (foodPreferencesRepositoryById.get().isChocolate()) {
+            FoodPreferences foodPreferences = foodPreferencesRepositoryById.get();
+            if (foodPreferences.isChocolate()) {
                 recipeList = recipeList.stream()
                         .filter(s -> !s.getRecipeAllegrens().isChocolate())
                         .toList();
             }
-            if (foodPreferencesRepositoryById.get().isNuts()) {
+            if (foodPreferences.isNuts()) {
                 recipeList = recipeList.stream()
                         .filter(s -> !s.getRecipeAllegrens().isNuts())
                         .toList();
             }
-            if (foodPreferencesRepositoryById.get().isEggs()) {
+            if (foodPreferences.isEggs()) {
                 recipeList = recipeList.stream()
                         .filter(s -> !s.getRecipeAllegrens().isEggs())
                         .toList();
             }
-            if (foodPreferencesRepositoryById.get().isStrawberries()) {
+            if (foodPreferences.isStrawberries()) {
                 recipeList = recipeList.stream()
                         .filter(s -> !s.getRecipeAllegrens().isStrawberries())
                         .toList();
             }
-            if (foodPreferencesRepositoryById.get().isShellfish()) {
+            if (foodPreferences.isShellfish()) {
                 recipeList = recipeList.stream()
                         .filter(s -> !s.getRecipeAllegrens().isShellfish())
                         .toList();
             }
 
-            if (foodPreferencesRepositoryById.get().isDairy()) {
+            if (foodPreferences.isDairy()) {
                 recipeList = recipeList.stream()
                         .filter(s -> !s.getRecipeAllegrens().isDairy())
                         .toList();
             }
 
-            if (!foodPreferencesRepositoryById.get().getOther().equals("-")) {
+
+            if (isNotEqual("-", foodPreferences.getOther())) {
                 recipeList = recipeList.stream()
                         .filter(s -> !s.getRecipeAllegrens().getOther().equals("-"))
                         .toList();
-            } else if (!foodPreferencesRepositoryById.get().getOther().equals("brak")) {
+            } else if (isNotEqual("brak", foodPreferences.getOther())) {
                 recipeList = recipeList.stream()
                         .filter(s -> !s.getRecipeAllegrens().getOther().equals("brak"))
                         .toList();
             }
-            if (foodPreferencesRepositoryById.get().isMeatEater()) {
+            if (foodPreferences.isMeatEater()) {
                 recipeList = recipeList.stream()
                         .filter(s -> s.getRecipeAllegrens().isMeatEater())
                         .toList();
-            } else if (foodPreferencesRepositoryById.get().isVegetarian()) {
+            } else if (foodPreferences.isVegetarian()) {
                 recipeList = recipeList.stream()
                         .filter(s -> s.getRecipeAllegrens().isVegetarian())
                         .toList();
 
-            } else if (foodPreferencesRepositoryById.get().isVegan()) {
+            } else if (foodPreferences.isVegan()) {
                 recipeList = recipeList.stream()
                         .filter(s -> s.getRecipeAllegrens().isVegan())
                         .toList();
@@ -118,5 +121,8 @@ public class FoodPreferencesService {
 
     }
 
+    private static boolean isNotEqual(String string1, String string2) {
+        return !StringUtils.equalsIgnoreCase(string1, string2);
+    }
 }
 

@@ -58,7 +58,7 @@ class FoodPreferencesServiceTest {
             when(foodPreferencesService.getFoodPreferencesById(any())).thenReturn(foodPreferencesOptional);
 
             //when
-            Page<Recipe> recipes = foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getUserId(), pageable);
+            Page<Recipe> recipes = foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getDEFAULT_FRIDGE_ID(), pageable);
 
             //then
             assertThat(recipes).hasSize(2)
