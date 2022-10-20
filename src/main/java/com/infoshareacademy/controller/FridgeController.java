@@ -62,10 +62,23 @@ public class FridgeController {
         return "addproductstofridge";
     }
 
-    @GetMapping("/product/{fridgeId}/{productId}")
+    @GetMapping("/{fridgeId}/{productId}")
     public String deleteProductFromFridge(@PathVariable Long productId,
                                           Long fridgeId) throws Exception {
         fridgeService.deleteProductFromFridge(productId);
+        return "redirect:/fridge";
+    }
+
+    @GetMapping("/product/{fridgeId}/{productId}")
+    public String editProductFromFridge(@PathVariable Long productId, @PathVariable Long fridgeId, Model model){
+        model.addAttribute("productInFridge", fridgeService.findFridgeById(productId));
+        return "editproductsinfridge";
+    }
+
+    @PostMapping("/product/{fridgeId}/{productId}")
+    public String editProductFromFridge(@PathVariable Long productId, @PathVariable Long fridgeId, @ModelAttribute("productInFridge") ProductInFridge productInFridge){
+//        fridge.setFridgeId(fridgeService.getDEFAULT_FRIDGE_ID());
+        fridgeService.saveProductFromFridge(productInFridge);
         return "redirect:/fridge";
     }
 }

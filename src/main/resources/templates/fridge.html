@@ -53,7 +53,10 @@
       <td th:text="${product.unit.value}"></td>
       <td th:text="${product.expirationDate}"></td>
       <td>
-        <a th:href="@{/fridge/product/{fridgeId}/{productId}(
+                <a th:href="@{/fridge/product/{fridgeId}/{productId}(
+        fridgeId=${product.fridge.fridgeId},productId=${product.productId})}"
+                   class="btn btn-primary">Edytuj</a>
+        <a th:href="@{/fridge/{fridgeId}/{productId}(
         fridgeId=${product.fridge.fridgeId},productId=${product.productId})}"
            type="button" class="btn btn-danger">Usuń
         <input name="_method" type="hidden" value="DELETE"/></a>
