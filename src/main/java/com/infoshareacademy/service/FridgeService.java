@@ -57,11 +57,15 @@ public class FridgeService {
         return DEFAULT_FRIDGE_ID;
     }
 
+    public ProductInFridge findProductInFridgeById(Long productId) throws NotFoundException {
+        return productInFridgeRepository.findById(productId).orElseThrow(
+                () -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId)));
+    }
+
     public void deleteProductFromFridge(Long productId) throws NotFoundException {
         if (productInFridgeRepository.findById(productId).isPresent()) {
             productInFridgeRepository.deleteById(productId);
-        } else throw new NotFoundException("Not found Product in Fridge for"
-                + "ID: " + productId);
+        } else throw new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId));
     }
 
     public ProductInFridge editProductFromFridge(Long productId, ProductInFridge productInFridge) {

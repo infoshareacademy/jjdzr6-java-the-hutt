@@ -4,6 +4,7 @@ import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.service.FridgeService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,9 +71,9 @@ public class FridgeController {
     }
 
     @GetMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(@PathVariable Long productId, @PathVariable Long fridgeId, Model model){
-        model.addAttribute("productInFridge", fridgeService.findFridgeById(productId));
-        return "editproductsinfridge";
+    public String editProductFromFridge(@PathVariable Long productId, Model model) throws NotFoundException {
+        model.addAttribute("productInFridge", fridgeService.findProductInFridgeById(productId));
+        return "edit-products-in-fridge";
     }
 
     @PostMapping("/product/{fridgeId}/{productId}")
