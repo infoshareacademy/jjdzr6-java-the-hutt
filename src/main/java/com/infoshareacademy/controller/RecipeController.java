@@ -103,4 +103,10 @@ public class RecipeController {
         recipeService.deleteRecipeById(id);
         return "redirect:/recipes";
     }
+
+    @GetMapping("/delete-all-recipes")
+    public String deleteAllRecipes(){
+        recipeService.deleteAllRecipes();
+        return "redirect:/recipes";
+    }
 }
