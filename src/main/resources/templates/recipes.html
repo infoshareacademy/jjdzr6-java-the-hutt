@@ -9,21 +9,7 @@
           crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <!-- Brand -->
-    <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
-    <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
-    <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
-    <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
-    <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
-    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
-
-    </li>
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</nav>
+<div th:insert="~{fragments/prev :: prev}"></div>
 
 <div class="container">
     <div class="row">
@@ -106,6 +92,7 @@
         </div>
     </div>
 </div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 <script type="text/javascript">
     function clearFilter() {
         window.location = '/recipes/filtered-prodcts';
