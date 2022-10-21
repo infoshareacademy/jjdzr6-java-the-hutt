@@ -63,23 +63,23 @@ public class FridgeController {
         return "addproductstofridge";
     }
 
-    @GetMapping("/{fridgeId}/{productId}")
-    public String deleteProductFromFridge(@PathVariable Long productId,
-                                          Long fridgeId) throws Exception {
-        fridgeService.deleteProductFromFridge(productId);
-        return "redirect:/fridge";
-    }
+//    @GetMapping("/{fridgeId}/{productId}")
+//    public String deleteProductFromFridge(@PathVariable Long productId,
+//                                          Long fridgeId) throws Exception {
+//        fridgeService.deleteProductFromFridge(productId);
+//        return "redirect:/fridge";
+//    }
 
-    @GetMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(@PathVariable Long productId, Model model) throws NotFoundException {
-        model.addAttribute("productInFridge", fridgeService.findProductInFridgeById(productId));
-        return "edit-products-in-fridge";
-    }
+//    @GetMapping("/product/{fridgeId}/{productId}")
+//    public String editProductFromFridge(@PathVariable Long productId, Model model) throws NotFoundException {
+//        model.addAttribute("productInFridge", fridgeService.findProductInFridgeById(productId));
+//        return "edit-products-in-fridge";
+//    }
 
-    @PostMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(@PathVariable Long productId, @ModelAttribute("productInFridge") ProductInFridge productInFridge){
-        System.out.println(productInFridge);
-        fridgeService.editProductFromFridge(productId, productInFridge);
-        return "redirect:/fridge";
-    }
+//    @PostMapping("/product/{fridgeId}/{productId}")
+//    public String editProductFromFridge(@PathVariable Long productId, @ModelAttribute("productInFridge") ProductInFridge productInFridge){
+//        System.out.println(productInFridge);
+//        fridgeService.editProductFromFridge(productId, productInFridge);
+//        return "redirect:/fridge";
+//    }
 }

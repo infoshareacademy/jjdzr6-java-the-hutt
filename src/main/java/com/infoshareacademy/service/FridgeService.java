@@ -56,33 +56,33 @@ public class FridgeService {
         return DEFAULT_FRIDGE_ID;
     }
 
-    public ProductInFridge findProductInFridgeById(Long productId) throws NotFoundException {
-        return productInFridgeRepository.findById(productId).orElseThrow(
-                () -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId)));
-    }
+//    public ProductInFridge findProductInFridgeById(Long productId) throws NotFoundException {
+//        return productInFridgeRepository.findById(productId).orElseThrow(
+//                () -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId)));
+//    }
 
-    public void saveProductFromFridge(ProductInFridge productInFridge) {
-        if (productInFridge != null) productInFridgeRepository.save(productInFridge);
-    }
+//    public void saveProductFromFridge(ProductInFridge productInFridge) {
+//        if (productInFridge != null) productInFridgeRepository.save(productInFridge);
+//    }
 
-    public void deleteProductFromFridge(Long productId) throws NotFoundException {
-        if (productInFridgeRepository.findById(productId).isPresent()) {
-            productInFridgeRepository.deleteById(productId);
-        } else throw new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId));
-    }
-
-    public ProductInFridge editProductFromFridge(Long productId, ProductInFridge productInFridge) {
-        ProductInFridge existingProduct = new ProductInFridge();
-        if (productInFridgeRepository.findById(productId).isPresent())
-            existingProduct = productInFridgeRepository.findById(productId).get();
-
-        existingProduct.setFridge(addProductsToFridgeForm());
-        existingProduct.setProductId(productInFridge.getProductId());
-        existingProduct.setProductName(productInFridge.getProductName());
-        existingProduct.setAmount(productInFridge.getAmount());
-        existingProduct.setUnit(productInFridge.getUnit());
-        existingProduct.setExpirationDate(productInFridge.getExpirationDate());
-        productInFridgeRepository.save(existingProduct);
-        return existingProduct;
-    }
+//    public void deleteProductFromFridge(Long productId) throws NotFoundException {
+//        if (productInFridgeRepository.findById(productId).isPresent()) {
+//            productInFridgeRepository.deleteById(productId);
+//        } else throw new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId));
+//    }
+//
+//    public ProductInFridge editProductFromFridge(Long productId, ProductInFridge productInFridge) {
+//        ProductInFridge existingProduct = new ProductInFridge();
+//        if (productInFridgeRepository.findById(productId).isPresent())
+//            existingProduct = productInFridgeRepository.findById(productId).get();
+//
+//        existingProduct.setFridge(addProductsToFridgeForm());
+//        existingProduct.setProductId(productInFridge.getProductId());
+//        existingProduct.setProductName(productInFridge.getProductName());
+//        existingProduct.setAmount(productInFridge.getAmount());
+//        existingProduct.setUnit(productInFridge.getUnit());
+//        existingProduct.setExpirationDate(productInFridge.getExpirationDate());
+//        productInFridgeRepository.save(existingProduct);
+//        return existingProduct;
+//    }
 }
