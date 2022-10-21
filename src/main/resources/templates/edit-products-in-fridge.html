@@ -38,6 +38,7 @@
                         <label> Nazwa produktu </label>
                         <input type="text"
                                name="productName"
+                               onchange="setTwoNumberDecimal"
                                th:field="*{productName}"
                                class="form-control"
                                placeholder="Podaj nazwe produktu."/>
@@ -68,9 +69,8 @@
                                class="form-control"/>
                     </div>
 
-
                     <div class="box-footer">
-                        <button type="submit" name="saveRecipe" class="btn btn-success">
+                        <button type="submit" name="productInFridge" class="btn btn-success">
                             Zapisz
                         </button>
                     </div>

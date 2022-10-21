@@ -99,6 +99,7 @@ public class ProductInFridge extends Product {
                 ", amount=" + amount +
                 ", unit=" + unit +
                 ", expirationDate=" + expirationDate +
+                ", fridge=" + fridge +
                 '}';
     }
 }

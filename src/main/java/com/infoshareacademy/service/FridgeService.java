@@ -2,7 +2,6 @@ package com.infoshareacademy.service;
 
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
-import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
 import javassist.NotFoundException;
@@ -62,6 +61,10 @@ public class FridgeService {
                 () -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId)));
     }
 
+    public void saveProductFromFridge(ProductInFridge productInFridge) {
+        if (productInFridge != null) productInFridgeRepository.save(productInFridge);
+    }
+
     public void deleteProductFromFridge(Long productId) throws NotFoundException {
         if (productInFridgeRepository.findById(productId).isPresent()) {
             productInFridgeRepository.deleteById(productId);
@@ -73,6 +76,7 @@ public class FridgeService {
         if (productInFridgeRepository.findById(productId).isPresent())
             existingProduct = productInFridgeRepository.findById(productId).get();
 
+        existingProduct.setFridge(addProductsToFridgeForm());
         existingProduct.setProductId(productInFridge.getProductId());
         existingProduct.setProductName(productInFridge.getProductName());
         existingProduct.setAmount(productInFridge.getAmount());
@@ -80,9 +84,5 @@ public class FridgeService {
         existingProduct.setExpirationDate(productInFridge.getExpirationDate());
         productInFridgeRepository.save(existingProduct);
         return existingProduct;
-    }
-
-    public void saveProductFromFridge(ProductInFridge productInFridge) {
-        if (productInFridge != null) productInFridgeRepository.save(productInFridge);
     }
 }

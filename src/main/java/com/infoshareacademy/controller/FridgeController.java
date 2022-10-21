@@ -77,9 +77,9 @@ public class FridgeController {
     }
 
     @PostMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(@PathVariable Long productId, @PathVariable Long fridgeId, @ModelAttribute("productInFridge") ProductInFridge productInFridge){
-//        fridge.setFridgeId(fridgeService.getDEFAULT_FRIDGE_ID());
-        fridgeService.saveProductFromFridge(productInFridge);
+    public String editProductFromFridge(@PathVariable Long productId, @ModelAttribute("productInFridge") ProductInFridge productInFridge){
+        System.out.println(productInFridge);
+        fridgeService.editProductFromFridge(productId, productInFridge);
         return "redirect:/fridge";
     }
 }
