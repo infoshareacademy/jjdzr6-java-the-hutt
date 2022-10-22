@@ -1,16 +1,23 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.entity.product.ProductInFridge;
+import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Meal;
+import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
+import com.infoshareacademy.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.repository.RecipeRepository;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -19,10 +26,14 @@ public class RecipeService {
 
     private final RecipeAllergensRepository allergensRepository;
 
+    private final FridgeService fridgeService;
+
+
     @Autowired
-    public RecipeService(RecipeRepository recipeRepository, RecipeAllergensRepository allergensRepository) {
+    public RecipeService(RecipeRepository recipeRepository, RecipeAllergensRepository allergensRepository, FridgeService fridgeService) {
         this.recipeRepository = recipeRepository;
         this.allergensRepository = allergensRepository;
+        this.fridgeService = fridgeService;
     }
 
     public List<Recipe> getAllRecipe() {
@@ -123,8 +134,52 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
-    public void deleteAllRecipes(){
+    public void deleteAllRecipes() {
         recipeRepository.deleteAll();
+    }
+
+    public List<Recipe> getRecipesWithProductsToLowerCase() {
+        List<Recipe> recipes = getAllRecipe().stream()
+                .peek(recipe -> recipe.getProductList()
+                        .forEach(productRecipe -> productRecipe
+                                .setProductName(productRecipe.getProductName().toLowerCase()))).toList();
+        return recipes;
+    }
+
+    public Map<Recipe, List<ProductRecipe>> mapRecipeProducts(){
+        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = getRecipesWithProductsToLowerCase().stream()
+                .collect(Collectors.toMap(Function.identity(), Recipe::getProductList));
+        return mapRecipesProducts;
+    }
+
+    public Page<Recipe> getRecipeByProductsInFridge(Pageable pageable) {
+
+        //TODO: zmienić wczytywanie przepisów po ID
+        List<Recipe> myRecipes = getRecipesWithProductsToLowerCase();
+
+        Map<String, ProductInFridge> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
+        List<Recipe> filteredRecipies = new ArrayList<>();
+
+
+        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = mapRecipeProducts();
+
+        for (Map.Entry<Recipe, List<ProductRecipe>> entry : mapRecipesProducts.entrySet()) {
+            List<ProductRecipe> tempRecipeList = entry.getValue();
+            int matchScore = tempRecipeList.size();
+            for (ProductRecipe productRecipe : tempRecipeList) {
+                ProductInFridge productInFridge = productsInFridge.get(productRecipe.getProductName());
+
+                if (productInFridge != null
+                        && productInFridge.getAmount() >= productRecipe.getAmount()) {
+                    matchScore--;
+                }
+            }
+            if (matchScore == 0) {
+                filteredRecipies.add(entry.getKey());
+            }
+        }
+
+        return new PageImpl<>(filteredRecipies);
     }
 
 }

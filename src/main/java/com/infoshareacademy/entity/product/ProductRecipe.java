@@ -2,6 +2,7 @@ package com.infoshareacademy.entity.product;
 
 import com.infoshareacademy.entity.recipe.Recipe;
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "products_recipe")
@@ -86,5 +87,18 @@ public class ProductRecipe extends Product {
                 ", amount=" + amount +
                 ", unit=" + unit +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductRecipe that = (ProductRecipe) o;
+        return Objects.equals(productId, that.productId) && Objects.equals(productName, that.productName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId, productName);
     }
 }

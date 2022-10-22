@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class FridgeService {
@@ -46,6 +48,16 @@ public class FridgeService {
             fridge.setFridgeId(getDEFAULT_FRIDGE_ID());
             return fridge;
         }
+    }
+
+    public Map<String, ProductInFridge> mapProductsInFridgeWithNameAsKey(){
+        Map<String, ProductInFridge> productsInFridge = getAllProductsFromFridge()
+                .getProductsInFridge()
+                .stream()
+                .peek(productInFridge -> productInFridge
+                        .setProductName(productInFridge.getProductName().toLowerCase()))
+                .collect(Collectors.toMap(ProductInFridge::getProductName, Function.identity()));
+        return productsInFridge;
     }
 
     public Optional<Fridge> findFridgeById(Long id) {
