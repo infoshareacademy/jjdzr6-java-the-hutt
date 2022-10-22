@@ -138,25 +138,30 @@ public class RecipeService {
         recipeRepository.deleteAll();
     }
 
-    public Page<Recipe> getRecipeByProductsInFridge(Pageable pageable) {
-
-        //TODO: zmienić wczytywanie przepisów po ID
-        List<Recipe> myRecipes = getAllRecipe().stream()
+    public List<Recipe> getRecipesWithProductsToLowerCase() {
+        List<Recipe> recipes = getAllRecipe().stream()
                 .peek(recipe -> recipe.getProductList()
                         .forEach(productRecipe -> productRecipe
                                 .setProductName(productRecipe.getProductName().toLowerCase()))).toList();
+        return recipes;
+    }
 
-        Map<String, ProductInFridge> productsInFridge = fridgeService.getAllProductsFromFridge()
-                .getProductsInFridge()
-                .stream()
-                .peek(productInFridge -> productInFridge
-                        .setProductName(productInFridge.getProductName().toLowerCase()))
-                .collect(Collectors.toMap(ProductInFridge::getProductName, Function.identity()));
+    public Map<Recipe, List<ProductRecipe>> mapRecipeProducts(){
+        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = getRecipesWithProductsToLowerCase().stream()
+                .collect(Collectors.toMap(Function.identity(), Recipe::getProductList));
+        return mapRecipesProducts;
+    }
+
+    public Page<Recipe> getRecipeByProductsInFridge(Pageable pageable) {
+
+        //TODO: zmienić wczytywanie przepisów po ID
+        List<Recipe> myRecipes = getRecipesWithProductsToLowerCase();
+
+        Map<String, ProductInFridge> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
         List<Recipe> filteredRecipies = new ArrayList<>();
 
 
-        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = myRecipes.stream()
-                .collect(Collectors.toMap(Function.identity(), Recipe::getProductList));
+        Map<Recipe, List<ProductRecipe>> mapRecipesProducts = mapRecipeProducts();
 
         for (Map.Entry<Recipe, List<ProductRecipe>> entry : mapRecipesProducts.entrySet()) {
             List<ProductRecipe> tempRecipeList = entry.getValue();
