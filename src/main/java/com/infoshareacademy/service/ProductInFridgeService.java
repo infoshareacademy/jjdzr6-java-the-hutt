@@ -38,7 +38,6 @@ public class ProductInFridgeService {
         existingProduct.setAmount(productInFridge.getAmount());
         existingProduct.setUnit(productInFridge.getUnit());
         existingProduct.setExpirationDate(productInFridge.getExpirationDate());
-//        existingProduct.setFridge(productInFridge.getFridge());
         productInFridgeRepository.save(existingProduct);
         return existingProduct;
     }
