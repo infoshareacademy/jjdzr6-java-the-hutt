@@ -46,6 +46,16 @@ public class FridgeService {
         }
     }
 
+    public Map<String, ProductInFridge> mapProductsInFridgeWithNameAsKey(){
+        Map<String, ProductInFridge> productsInFridge = getAllProductsFromFridge()
+                .getProductsInFridge()
+                .stream()
+                .peek(productInFridge -> productInFridge
+                        .setProductName(productInFridge.getProductName().toLowerCase()))
+                .collect(Collectors.toMap(ProductInFridge::getProductName, Function.identity()));
+        return productsInFridge;
+    }
+
     public Optional<Fridge> findFridgeById(Long id) {
         return fridgeRepository.findById(id);
     }
