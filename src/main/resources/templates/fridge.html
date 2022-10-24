@@ -1,73 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Fridge</title>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Fridge</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
 </head>
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <!-- Brand -->
-  <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
-  <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
-  <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
-  <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
-  <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
-  <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
+    <a class="navbar-brand" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
+    <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
+    <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
+    <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
+    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
 
-  </li>
-  <!-- Toggler/collapsibe Button -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    </li>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 </nav>
 
 <div class="container">
-  <div class="row">
-    <h1> Zawartość lodówki </h1>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-3">
-      <a th:href="@{/fridge/product}" class="btn btn-primary mb-3"> Dodaj Produkty</a>
+    <div class="row">
+        <h1> Zawartość lodówki </h1>
     </div>
-  </div>
-  <table class="table table-striped table-bordered">
-    <thead class="table-dark">
-    <tr>
-      <th> Nazwa</th>
-      <th> Ilość</th>
-      <th> Jednostka miary</th>
-      <th> Data ważności</th>
-      <th> Opcje</th>
-    </tr>
-    </thead>
 
-    <tbody>
-    <tr th:each="product: ${productsinfridge.getProductsInFridge()}">
-      <td th:text="${product.productName}"></td>
-      <td th:text="${product.amount}"></td>
-      <td th:text="${product.unit.value}"></td>
-      <td th:text="${product.expirationDate}"></td>
-      <td>
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/fridge/product}" class="btn btn-primary mb-3"> Dodaj Produkty</a>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th> Nazwa</th>
+            <th> Ilość</th>
+            <th> Jednostka miary</th>
+            <th> Data ważności</th>
+            <th> Opcje</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="product: ${productsinfridge.getProductsInFridge()}">
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.amount}"></td>
+            <td th:text="${product.unit.value}"></td>
+            <td th:text="${product.expirationDate}"></td>
+            <td>
                 <a th:href="@{/fridge/product/{fridgeId}/{productId}(
         fridgeId=${product.fridge.fridgeId},productId=${product.productId})}"
                    class="btn btn-primary">Edytuj</a>
-        <a th:href="@{/fridge/{fridgeId}/{productId}(
+                <a th:href="@{/fridge/{fridgeId}/{productId}(
         fridgeId=${product.fridge.fridgeId},productId=${product.productId})}"
-           type="button" class="btn btn-danger">Usuń
-        <input name="_method" type="hidden" value="DELETE"/></a>
-      </td>
-    </tr>
-
-
-    </tbody>
-
-  </table>
-
+                   type="button" class="btn btn-danger">Usuń
+                    <input name="_method" type="hidden" value="DELETE"/></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
