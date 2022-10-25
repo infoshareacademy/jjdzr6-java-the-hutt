@@ -4,10 +4,7 @@ import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
-import com.infoshareacademy.repository.FoodPreferencesRepository;
-import com.infoshareacademy.repository.FridgeRepository;
-import com.infoshareacademy.repository.RecipeAllergensRepository;
-import com.infoshareacademy.repository.RecipeRepository;
+import com.infoshareacademy.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,12 +26,13 @@ class FoodPreferencesServiceTest {
     private final RecipeService recipeService = new RecipeService(recipeRepositoryMock, recipeAllergensRepositoryMock);
 
     private final FridgeRepository fridgeRepositoryMock = mock(FridgeRepository.class);
+    private final ProductInFridgeRepository productInFridgeRepository = mock(ProductInFridgeRepository.class);
 
-    private final FridgeService fridgeService = new FridgeService(fridgeRepositoryMock);
+    private final FridgeService fridgeService = new FridgeService(fridgeRepositoryMock, productInFridgeRepository);
     private final FoodPreferencesRepository preferencesRepositoryMock = mock(FoodPreferencesRepository.class);
 
     private final FoodPreferencesService foodPreferencesService = new FoodPreferencesService(preferencesRepositoryMock, recipeService, fridgeService);
-    private final Optional<FoodPreferences> foodPreferencesOprional = Optional.of(new FoodPreferences(false, false, false, true, false, false, "-", true, false, false));
+    private final Optional<FoodPreferences> foodPreferencesOptional = Optional.of(new FoodPreferences(false, false, false, true, false, false, "-", true, false, false));
 
 
     private List<Recipe> createRecipesToTest() {
@@ -57,10 +55,10 @@ class FoodPreferencesServiceTest {
             //given
             List<Recipe> recipesToTest = createRecipesToTest();
             when(recipeService.getAllRecipe()).thenReturn(recipesToTest);
-            when(foodPreferencesService.getFoodPreferencesById(any())).thenReturn(foodPreferencesOprional);
+            when(foodPreferencesService.getFoodPreferencesById(any())).thenReturn(foodPreferencesOptional);
 
             //when
-            Page<Recipe> recipes = foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getUserId(), pageable);
+            Page<Recipe> recipes = foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getDEFAULT_FRIDGE_ID(), pageable);
 
             //then
             assertThat(recipes).hasSize(2)

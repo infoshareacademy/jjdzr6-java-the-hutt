@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -47,7 +43,7 @@ public class FridgeController {
         if (bindingResult.hasErrors()) {
             return "addproductstofridge";
         }
-        fridge.setFridgeId(fridgeService.getUserId());
+        fridge.setFridgeId(fridgeService.getDEFAULT_FRIDGE_ID());
         fridgeService.saveFridge(fridge);
         return "redirect:/fridge";
     }
@@ -64,5 +60,12 @@ public class FridgeController {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
         fridge.getProductsInFridge().remove(index);
         return "addproductstofridge";
+    }
+
+    @GetMapping("/product/{fridgeId}/{productId}")
+    public String deleteProductFromFridge(@PathVariable Long productId,
+                                          Long fridgeId) throws Exception {
+        fridgeService.deleteProductFromFridge(productId);
+        return "redirect:/fridge";
     }
 }

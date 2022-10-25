@@ -42,28 +42,25 @@
       <th> Ilość</th>
       <th> Jednostka miary</th>
       <th> Data ważności</th>
+      <th> Opcje</th>
     </tr>
     </thead>
-    <tbody>
 
+    <tbody>
     <tr th:each="product: ${productsinfridge.getProductsInFridge()}">
       <td th:text="${product.productName}"></td>
       <td th:text="${product.amount}"></td>
       <td th:text="${product.unit.value}"></td>
       <td th:text="${product.expirationDate}"></td>
+      <td>
+        <a th:href="@{/fridge/product/{fridgeId}/{productId}(
+        fridgeId=${product.fridge.fridgeId},productId=${product.productId})}"
+           type="button" class="btn btn-danger">Usuń
+        <input name="_method" type="hidden" value="DELETE"/></a>
+      </td>
     </tr>
 
-    <!--    <tr>
-      <th >Lp.</th>
-      <th >Ilość</th>
-      <th >Produkt</th>
-    </tr>
-    <tr th:each="product,iterStat : *{productsinfridge.getProductsInFridge()}" th:class="${iterStat.odd}? 'grey-row'">
-      <td th:text="${iterStat.count}"></td>
-      <td th="text" th:field="*{product[__${iterStat.index}__].amount}"></td>
 
-      <td th="text" th:field="*{product[__${iterStat.index}__].productName}"></td>
-    </tr>-->
     </tbody>
 
   </table>
