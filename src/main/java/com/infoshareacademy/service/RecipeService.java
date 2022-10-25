@@ -86,7 +86,7 @@ public class RecipeService {
 
     public void saveRecipeAllergens(Long id, RecipeAllegrens allergens) {
         Recipe recipe = new Recipe();
-        recipe.setUserId(fridgeService.getUserId());
+        recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
         RecipeAllegrens existingAllergens = new RecipeAllegrens();
         if (allergensRepository.findById(recipe.getRecipeAllegrens().getId()).isPresent()) {
@@ -111,7 +111,7 @@ public class RecipeService {
     public Recipe saveRecipe(Recipe recipe) {
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
         recipe.getRecipeAllegrens().setRecipe(recipe);
-        recipe.setUserId(fridgeService.getUserId());
+        recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         LOGGER.info("Zapisano przepis: " + recipe.getName());
         return recipeRepository.save(recipe);
 
@@ -122,7 +122,7 @@ public class RecipeService {
     public void updateRecipe(Long recipeId, Recipe recipe) {
 
         Recipe existingRecipe = new Recipe();
-        existingRecipe.setUserId(fridgeService.getUserId());
+        existingRecipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         if (recipeRepository.findById(recipeId).isPresent()) existingRecipe = recipeRepository.findById(recipeId).get();
         existingRecipe.setRecipeId(recipeId);
         existingRecipe.setName(recipe.getName());

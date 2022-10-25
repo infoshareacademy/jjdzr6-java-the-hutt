@@ -31,12 +31,12 @@ public class ShoppingListService {
     }
 
     public List<ShoppingList> findAllShoppingLists() {
-        return shoppingListRepository.findByUserId(fridgeService.getUserId());
+        return shoppingListRepository.findByUserId(fridgeService.getDEFAULT_FRIDGE_ID());
     }
 
     public void saveShoppingList(ShoppingList shoppingList) {
         shoppingList.getShoppingProductList().forEach(x -> x.setShoppingList(shoppingList));
-        shoppingList.setUserId(fridgeService.getUserId());
+        shoppingList.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         shoppingListRepository.save(shoppingList);
         LOGGER.info("Zapisano listę zakupów: " + shoppingList.getName());
 
