@@ -23,36 +23,37 @@ public class ShoppingListController {
         this.shoppingListService = shoppingListService;
     }
 
-    @GetMapping("/shoppinglist")
+    @GetMapping("/shopping-lists")
     public String shoppingList(Model model) {
         model.addAttribute("getShopping", shoppingListService.findAllShoppingLists());
         return "shoppinglist";
     }
-    @GetMapping("/shoppinglist/new")
+
+    @GetMapping("/shopping-lists/shopping-list")
     public String createShoppingListForm(Model model) {
         model.addAttribute("shoppinglist", new ShoppingList());
-        return "create-shoppinglist";
+        return "create-shopping-list";
     }
 
-    @PostMapping("/shoppinglist/new")
+    @PostMapping("/shopping-lists/shopping-list")
     public String saveShoppingList(@Valid @ModelAttribute("shoppinglist") ShoppingList shoppingList, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "create-shoppinglist";
+            return "create-shopping-list";
         }
         shoppingListService.saveShoppingList(shoppingList);
-        return "redirect:/shoppinglist";
+        return "redirect:/shopping-lists";
     }
 
-    @GetMapping("/shoppinglist/{shoppingListId}")
+    @GetMapping("/shopping-lists/{shoppingListId}")
     public String viewShoppingList(@PathVariable Long shoppingListId, Model model) {
         model.addAttribute("shoppinglist", shoppingListService.viewShoppingList(shoppingListId));
-        return "oneshoppinglist";
+        return "details-shopping-list";
     }
 
 
-    @GetMapping("/shoppinglist/list/{shoppingListId}")
+    @GetMapping("/shopping-lists/list/{shoppingListId}")
     public String deleteRecipe(@PathVariable Long shoppingListId) {
         shoppingListService.deleteShoppingListById(shoppingListId);
-        return "redirect:/shoppinglist";
+        return "redirect:/shopping-lists";
     }
 }

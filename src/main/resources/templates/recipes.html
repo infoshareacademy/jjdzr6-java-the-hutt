@@ -17,7 +17,7 @@
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
-    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+    <a class="navbar-brand" th:href="@{/shopping-lists}">Lista zakupów</a>
 
     </li>
     <!-- Toggler/collapsibe Button -->
@@ -87,7 +87,7 @@
                 <a th:href="@{/recipes/{recipeId}(recipeId=${recipe.recipeId})}"
                    class="btn btn-primary">Edytuj przepis</a>
 
-                <a th:href="@{/recipes/recipe/{id}(id=${recipe.recipeId})}"
+                <a onclick="deleteRecipeFromShoppingList()" th:href="@{/recipes/recipe/{id}(id=${recipe.recipeId})}"
                    class="btn btn-danger">Usuń przepis</a>
 
                 <div class="dropdown mb-3">
@@ -96,7 +96,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li th:each="list : ${shoppingList}">
-                            <a th:href="@{/recipes/{recipeId}/shoppinglist/{shoppingListId}(recipeId= ${recipe.recipeId}, shoppingListId=${list.id})}"><span th:text="${list.name}" th:value="${list.name}"></span></a>
+                            <a onclick="addRecipeToShoppingList()" th:href="@{/recipes/{recipeId}/shoppinglist/{shoppingListId}(recipeId= ${recipe.recipeId}, shoppingListId=${list.id})}"><span th:text="${list.name}" th:value="${list.name}"></span></a>
                         </li>
                     </ul>
                 </div>
@@ -123,6 +123,16 @@
     function clearFilter() {
         window.location = '/recipes/filtered-prodcts';
     }
+</script>
+<script>
+    function addRecipeToShoppingList(){
+        alert("Dodano przepis do listy zakupów!");
+    };
+</script>
+<script>
+    function deleteRecipeFromShoppingList(){
+        alert("Usunięto przepis!");
+    };
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>

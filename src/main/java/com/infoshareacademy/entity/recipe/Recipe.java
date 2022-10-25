@@ -39,10 +39,10 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductRecipe> productList = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "shoppingListRecipe")
+    @ManyToMany(mappedBy = "shoppingListRecipe", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     private List<ShoppingList> shoppingList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL)
     private RecipeAllegrens recipeAllegrens;
 
     private Long userId;

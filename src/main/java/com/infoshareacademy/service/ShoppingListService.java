@@ -7,6 +7,8 @@ import com.infoshareacademy.entity.product.ProductUnit;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import com.infoshareacademy.repository.ShoppingListRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class ShoppingListService {
 
     private final ShoppingListRepository shoppingListRepository;
     private final FridgeService fridgeService;
+
+    private static Logger LOGGER = LogManager.getLogger(ShoppingListService.class.getName());
 
 
     @Autowired
@@ -35,10 +39,14 @@ public class ShoppingListService {
         shoppingList.getShoppingProductList().forEach(x -> x.setShoppingList(shoppingList));
         shoppingList.setUserId(fridgeService.getUserId());
         shoppingListRepository.save(shoppingList);
+        LOGGER.info("Zapisano listę zakupów: " + shoppingList.getName());
+
     }
 
     public void deleteShoppingListById(Long shoppingListId) {
+        LOGGER.info("Usunięto listę zakupów: " + shoppingListRepository.findById(shoppingListId).get().getName());
         shoppingListRepository.deleteShoppingListById(shoppingListId);
+
     }
 
     public ShoppingList getShoppingList(Long id) {
@@ -63,6 +71,7 @@ public class ShoppingListService {
             shoppingListRecipe.add(recipe);
         }
         saveShoppingList(shoppingList);
+        LOGGER.info("Dodano przepis " + recipe.getName() + " do listy zakupów: " + shoppingList.getName());
     }
 
     public void addProductsFromRecipesToShoppingList(Long id) {
@@ -75,6 +84,7 @@ public class ShoppingListService {
             list.setShoppingList(shoppingList);
         }
         shoppingListRepository.save(shoppingList);
+        LOGGER.info("Dodane produkty z przepisu do listy zakupów: " + shoppingList.getName());
 
     }
 
@@ -86,7 +96,6 @@ public class ShoppingListService {
 
         List<ProductInFridge> productsInFridge = fridgeService.getAllProductsFromFridge().getProductsInFridge();
         Map<String, Double> fridgeOne = productsInFridge.stream().collect(Collectors.toMap(ProductInFridge::getProductName, ProductInFridge::getAmount));
-
         Map<String, Double> fridgeMap = new HashMap<>();
         for (String key : fridgeOne.keySet()) {
             if (fridgeMap.get(key) == null) {
@@ -100,6 +109,23 @@ public class ShoppingListService {
         Map<String, Double> recipeMap = new HashMap<>();
         Map<String, ProductUnit> unitsMap = new HashMap<>();
         List<ProductShoppingList> shoppingList = new ArrayList<>();
+        convertToMapAndCompareProducts(recipeList, recipeMap, unitsMap);
+        Map<String, Double> map = hashMapDifference(fridgeMap, recipeMap);
+        addProductsToShoppingList(unitsMap, shoppingList, map);
+        return shoppingList;
+    }
+
+    private static void addProductsToShoppingList(Map<String, ProductUnit> unitsMap, List<ProductShoppingList> shoppingList, Map<String, Double> map) {
+        for (String key : map.keySet()) {
+            ProductShoppingList product = new ProductShoppingList();
+            product.setProductName(key);
+            product.setAmount(map.get(key));
+            product.setUnit(unitsMap.get(key));
+            shoppingList.add(product);
+        }
+    }
+
+    private static Map<String, Double> convertToMapAndCompareProducts(List<Recipe> recipeList, Map<String, Double> recipeMap, Map<String, ProductUnit> unitsMap) {
         for (Recipe recipe : recipeList) {
             Map<String, Double> recipeOne = recipe.getProductList().stream().collect(Collectors.toMap(ProductRecipe::getProductName, ProductRecipe::getAmount));
             Map<String, ProductUnit> recipeUnits = recipe.getProductList().stream().collect(Collectors.toMap(ProductRecipe::getProductName, ProductRecipe::getUnit));
@@ -113,15 +139,7 @@ public class ShoppingListService {
                 }
             }
         }
-        Map<String, Double> map = hashMapDifference(fridgeMap, recipeMap);
-        for (String key : map.keySet()) {
-            ProductShoppingList product = new ProductShoppingList();
-            product.setProductName(key);
-            product.setAmount(map.get(key));
-            product.setUnit(unitsMap.get(key));
-            shoppingList.add(product);
-        }
-        return shoppingList;
+        return recipeMap;
     }
 
 

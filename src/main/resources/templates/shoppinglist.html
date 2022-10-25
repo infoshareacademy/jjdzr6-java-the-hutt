@@ -16,10 +16,10 @@
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
-    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+    <a class="navbar-brand" th:href="@{/shopping-lists}">Lista zakupów</a>
 
     </li>
-    <!-- Toggler/collapsibe Button -->
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,7 +30,7 @@
         <h1> Shoping list </h1>
     </div>
     <div class="col-lg-2">
-        <a th:href="@{/shoppinglist/new}" class="btn btn-success mb-2"> Stwórz listę</a>
+        <a th:href="@{/shopping-lists/shopping-list}" class="btn btn-success mb-2"> Stwórz listę</a>
     </div>
 
         <table class="table table-striped table-bordered">
@@ -44,10 +44,10 @@
         <tr th:each="shopping: ${getShopping}">
             <td th:text="${shopping.getName()}"></td>
             <td>
-                <a th:href="@{/shoppinglist/{shoppingListId}(shoppingListId=${shopping.id})}"
+                <a th:href="@{/shopping-lists/{shoppingListId}(shoppingListId=${shopping.id})}"
                    class="btn btn-primary">Wyświetl listę zakupów</a>
 
-                <a th:href="@{/shoppinglist/list/{shoppingListId}(shoppingListId=${shopping.id})}"
+                <a th:href="@{/shopping-lists/list/{shoppingListId}(shoppingListId=${shopping.id})}" onclick="deletedList()"
                    class="btn btn-danger">Usuń listę zakupów.</a>
 
             </td>
@@ -56,25 +56,12 @@
         </thead>
     </table>
 
-<!--    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th> Nazwa </th>
-            <th> Ilość</th>
-            <th> Jednostka miary</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="shopping: ${getShopping}">
-            <td th:text="${shopping.getProductName()}"></td>
-            <td th:text="${shopping.getAmount()}"></td>
-            <td th:text="${shopping.unit.value}"></td>
-        </tr>
-        </tbody>
-        </thead>
-    </table>-->
-
 </div>
+<script>
+function deletedList(){
+        alert("Usunięto listę zakupów!");
+    };
+</script>
 </body>
 </html>
 

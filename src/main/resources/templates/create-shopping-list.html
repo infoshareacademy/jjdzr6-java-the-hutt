@@ -7,6 +7,9 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -16,7 +19,7 @@
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
-    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+    <a class="navbar-brand" th:href="@{/shopping-lists}">Lista zakupów</a>
 
     </li>
     <!-- Toggler/collapsibe Button -->
@@ -29,10 +32,11 @@
     <div class="row">
         <h1> Shoping list </h1>
     </div>
+
     <div class="col-lg-2">
-        <a th:href="@{/shoppinglist/new}" class="btn btn-success mb-2"> Stwórz listę</a>
+        <a th:href="@{/shopping-lists/shopping-list}" class="btn btn-success mb-2"> Stwórz listę</a>
     </div>
-    <form th:action="@{/shoppinglist/new}" th:object = "${shoppinglist}" method="POST">
+    <form th:action="@{/shopping-lists/shopping-list}" th:object = "${shoppinglist}" method="POST">
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <ul>
                 <li th:text="${'Niepoprawna treść.'}"></li>
@@ -50,13 +54,18 @@
         </div>
         <div class = "box-footer">
             </br>
-            <button type="submit" class = "btn btn-primary">
+            <button id="createdList" type="submit" class = "btn btn-primary">
                 Dodaj
             </button>
         </div>
     </form>
 
 </div>
+<script>
+    $("#createdList").click(function() {
+        alert("Utworzono listę zakupów!");
+    });
+</script>
 </body>
 </html>
 

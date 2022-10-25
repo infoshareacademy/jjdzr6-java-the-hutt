@@ -3,6 +3,8 @@ package com.infoshareacademy.service;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,6 +22,8 @@ public class RecipeService {
     private final RecipeAllergensRepository allergensRepository;
 
     private final FridgeService fridgeService;
+
+    private static Logger LOGGER = LogManager.getLogger(RecipeService.class.getName());
 
     @Autowired
     public RecipeService(RecipeRepository recipeRepository, RecipeAllergensRepository allergensRepository, FridgeService fridgeService) {
@@ -99,6 +103,7 @@ public class RecipeService {
             existingAllergens.setVegan(allergens.isVegan());
             existingAllergens.setVegetarian(allergens.isVegetarian());
             allergensRepository.save(existingAllergens);
+            LOGGER.info("Zapisano preferencje żywieniowe!");
 
         }
     }
@@ -107,7 +112,10 @@ public class RecipeService {
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
         recipe.getRecipeAllegrens().setRecipe(recipe);
         recipe.setUserId(fridgeService.getUserId());
+        LOGGER.info("Zapisano przepis: " + recipe.getName());
         return recipeRepository.save(recipe);
+
+
     }
 
 
@@ -123,10 +131,11 @@ public class RecipeService {
         existingRecipe.setRecipeAllegrens(recipe.getRecipeAllegrens());
         existingRecipe.setMeal(recipe.getMeal());
         recipeRepository.save(existingRecipe);
+        LOGGER.info("Zaktualizowano przepis: " + recipe.getName());
     }
 
     public void deleteRecipeById(Long id) {
-        recipeRepository.deleteById(id);
+        recipeRepository.deleteRecipeByRecipeId(id);
     }
 
 }
