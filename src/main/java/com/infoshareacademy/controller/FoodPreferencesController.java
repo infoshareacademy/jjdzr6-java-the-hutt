@@ -1,6 +1,6 @@
 package com.infoshareacademy.controller;
 
-import com.infoshareacademy.entity.food_preferences.FoodPreferences;
+import com.infoshareacademy.DTO.FoodPreferencesDto;
 import com.infoshareacademy.service.FoodPreferencesService;
 import com.infoshareacademy.service.FridgeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Controller
 public class FoodPreferencesController {
@@ -46,15 +48,15 @@ public class FoodPreferencesController {
     }
 
     @GetMapping("/foodpreferences/user-foodpreferences")
-    public String createAllergensForm(Model model, FoodPreferences foodPreferences) {
-        model.addAttribute("foodpreferences", foodPreferencesService.checkIfFoodPreferencesIsSet(foodPreferences));
+    public String createAllergensForm(Model model, Optional<FoodPreferencesDto> foodPreferencesDto) {
+        model.addAttribute("foodpreferences", foodPreferencesService.checkIfFoodPreferencesIsSet(foodPreferencesDto));
         return "setfoodpreferences";
 
     }
 
     @PostMapping("/foodpreferences")
-    public String saveAllergens(@ModelAttribute("foodpreferences") FoodPreferences foodPreferences) {
-        foodPreferencesService.setFoodPreferences(foodPreferences);
+    public String saveAllergens(@ModelAttribute("foodpreferences") FoodPreferencesDto foodPreferencesDto) {
+        foodPreferencesService.setFoodPreferences(foodPreferencesDto);
         return "redirect:/foodpreferences";
     }
 
