@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "products_in_fridge")
@@ -36,9 +37,10 @@ public class ProductInFridge extends Product {
     public ProductInFridge() {
     }
 
-    public ProductInFridge(String productName, Double amount, LocalDate expirationDate) {
+    public ProductInFridge(String productName, Double amount, ProductUnit unit, LocalDate expirationDate) {
         this.productName = productName;
         this.amount = amount;
+        this.unit = unit;
         this.expirationDate = expirationDate;
     }
 
@@ -93,9 +95,25 @@ public class ProductInFridge extends Product {
     @Override
     public String toString() {
         return "ProductInFridge{" +
-                "productName='" + productName + '\'' +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
                 ", amount=" + amount +
                 ", unit=" + unit +
+                ", expirationDate=" + expirationDate +
+                ", fridge=" + fridge +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductInFridge that = (ProductInFridge) o;
+        return Objects.equals(productId, that.productId) && Objects.equals(productName, that.productName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId, productName);
     }
 }

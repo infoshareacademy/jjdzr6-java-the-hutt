@@ -115,5 +115,16 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
+    @GetMapping("/delete-all-recipes")
+    public String deleteAllRecipes(){
+        recipeService.deleteAllRecipes();
+        return "redirect:/recipes";
+    }
 
+    @GetMapping("/recipes-todo")
+    public String recipesByProductsInFridge(@SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable, Model model){
+        model.addAttribute("recipes",recipeService.getRecipeByProductsInFridge(pageable));
+
+        return "recipes";
+    }
 }

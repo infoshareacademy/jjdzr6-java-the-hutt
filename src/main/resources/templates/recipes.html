@@ -25,6 +25,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
+<div th:insert="~{fragments/prev :: prev}"></div>
 
 <div class="container">
     <div class="row">
@@ -44,12 +45,19 @@
     <div>&nbsp;</div>
 
     <div class="row">
+        <div>
+            <a th:href="@{/recipes/deleteAll}" class="btn btn-danger">Usuń Przepisy</a>
+        </div>
         <div class="col-lg-2">
             <a th:href="@{/recipes/recipe}" class="btn btn-success mb-2"> Dodaj nowy przepis</a>
         </div>
         <div>
+            <a th:href="@{/recipes/recipes-todo}" class="btn btn-success mb-2"> Filtruj po produktach w lodówce</a>
+        </div>
+        <div>
             <a th:href="@{/foodpreferences/recipe/}" class="btn btn-success mb-2"> Filtruj po alergenach</a>
         </div>
+
         <div class="dropdown">
             <form th:action="@{/recipes}">
                 <select name="meal">
@@ -120,6 +128,7 @@
         </div>
     </div>
 </div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 <script type="text/javascript">
     function clearFilter() {
         window.location = '/recipes/filtered-prodcts';

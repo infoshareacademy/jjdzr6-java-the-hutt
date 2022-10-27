@@ -23,6 +23,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
+<div th:insert="~{fragments/prev :: prev}"></div>
 
 <div class="container">
     <div class="row">
@@ -71,6 +72,7 @@
     </table>
 
 </div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 <script type="text/javascript">
     function clearFilter() {
         window.location = '/recipes/filtered-prodcts';
