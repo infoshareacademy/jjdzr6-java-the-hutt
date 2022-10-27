@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Fridge</title>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Fridge</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
 </head>
 <body>
+
 <div th:insert="~{fragments/prev :: prev}"></div>
 
 <div class="container">
-  <div class="row">
-    <h1> Zawartość lodówki </h1>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-3">
-      <a th:href="@{/fridge/product}" class="btn btn-primary mb-3"> Dodaj Produkty</a>
+    <div class="row">
+        <h1> Zawartość lodówki </h1>
     </div>
-  </div>
-  <table class="table table-striped table-bordered">
-    <thead class="table-dark">
-    <tr>
-      <th> Nazwa</th>
-      <th> Ilość</th>
-      <th> Jednostka miary</th>
-      <th> Data ważności</th>
-      <th> Opcje</th>
-    </tr>
-    </thead>
 
-    <tbody>
-    <tr th:each="product: ${productsinfridge.getProductsInFridge()}">
-      <td th:text="${product.productName}"></td>
-      <td th:text="${product.amount}"></td>
-      <td th:text="${product.unit.value}"></td>
-      <td th:text="${product.expirationDate}"></td>
-      <td>
-        <a th:href="@{/fridge/product/{fridgeId}/{productId}(
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/fridge/product}" class="btn btn-primary mb-3"> Dodaj Produkty</a>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th> Nazwa</th>
+            <th> Ilość</th>
+            <th> Jednostka miary</th>
+            <th> Data ważności</th>
+            <th> Opcje</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="product: ${productsinfridge.getProductsInFridge()}">
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.amount}"></td>
+            <td th:text="${product.unit.value}"></td>
+            <td th:text="${product.expirationDate}"></td>
+            <td>
+                <a th:href="@{/fridge/product/{fridgeId}/{productId}(
         fridgeId=${product.fridge.fridgeId},productId=${product.productId})}"
-           type="button" class="btn btn-danger">Usuń
-        <input name="_method" type="hidden" value="DELETE"/></a>
-      </td>
-    </tr>
-
-
-    </tbody>
-
-  </table>
-
+                   class="btn btn-primary">Edytuj</a>
+                <a th:href="@{/fridge/{fridgeId}/{productId}(
+        fridgeId=${product.fridge.fridgeId},productId=${product.productId})}"
+                   type="button" class="btn btn-danger">Usuń
+                    <input name="_method" type="hidden" value="DELETE"/></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 </body>

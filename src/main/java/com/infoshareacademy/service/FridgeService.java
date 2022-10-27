@@ -4,11 +4,11 @@ import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -66,12 +66,5 @@ public class FridgeService {
 
     public long getDEFAULT_FRIDGE_ID() {
         return DEFAULT_FRIDGE_ID;
-    }
-
-    public void deleteProductFromFridge(Long productId) throws NotFoundException {
-        if (productInFridgeRepository.findById(productId).isPresent()) {
-            productInFridgeRepository.deleteById(productId);
-        } else throw new NotFoundException("Not found Product in Fridge for"
-                + "ID: " + productId);
     }
 }
