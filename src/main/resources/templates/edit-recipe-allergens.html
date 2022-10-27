@@ -15,7 +15,7 @@
   <a class="navbar-brand" th:href="@{/foodpreferences/recipe/1}">Przepisy (allergeny)</a>
   <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
   <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
-  <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
+  <a class="navbar-brand" th:href="@{/shopping-lists}">Lista zakupów</a>
 
 
   <!-- Toggler/collapsibe Button -->
@@ -23,6 +23,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 </nav>
+<div th:insert="~{fragments/prev :: prev}"></div>
 <br>
 <br>
 <div class="container">
@@ -59,5 +60,6 @@
     </div>
   </div>
 </div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

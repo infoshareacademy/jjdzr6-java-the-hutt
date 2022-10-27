@@ -20,8 +20,6 @@ public class ProductService {
         this.recipeService = recipeService;
     }
 
-
-
     public List<ProductRecipe> getAllProductByRecipeId(final Long recipeId) {
 
         if (productRepository.findAllProductsByRecipeRecipeId(recipeId).stream().findFirst().isPresent()) {

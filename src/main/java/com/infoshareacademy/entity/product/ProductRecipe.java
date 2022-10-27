@@ -82,12 +82,10 @@ public class ProductRecipe extends Product {
 
     @Override
     public String toString() {
-        return "ProductRecipe{" +
-                "productName='" + productName + '\'' +
-                ", amount=" + amount +
-                ", unit=" + unit +
-                '}';
-    }
+
+        return  productName + '\'' +
+                ", ilość:" + amount + " " + unit.getValue();    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -101,4 +99,5 @@ public class ProductRecipe extends Product {
     public int hashCode() {
         return Objects.hash(productId, productName);
     }
+
 }

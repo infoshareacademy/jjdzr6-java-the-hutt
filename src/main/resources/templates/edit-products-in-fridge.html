@@ -14,15 +14,13 @@
     <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
     <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
     <a class="navbar-brand" th:href="@{/recipes/filtered-prodcts}">Wyszukiwarka</a>
-    <a class="navbar-brand" th:href="@{/shopping-lists}">Lista zakupów</a>
-
+    <a class="navbar-brand" th:href="@{/shoppinglist}">Lista zakupów</a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
-<div th:insert="~{fragments/prev :: prev}"></div>
 <br>
 <br>
 <div class="container">
@@ -30,16 +28,17 @@
         <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
             <h1 class="text-center"> Edytuj produkt </h1>
             <div class="card-body">
-                <form th:action="@{/recipes/{recipeId}/products/{productId}
-                        (recipeId=${productRecipe.recipe.recipeId},
-                        productId=${productRecipe.productId})}"
-                      th:object="${productRecipe}"
+                <form th:action="@{/fridge/product/{fridgeId}/{productId}
+                        (fridgeId=${productInFridge.fridge.fridgeId},
+                        productId=${productInFridge.productId})}"
+                      th:object="${productInFridge}"
                       method="POST">
 
                     <div class="form-group">
                         <label> Nazwa produktu </label>
                         <input type="text"
                                name="productName"
+                               onchange="setTwoNumberDecimal"
                                th:field="*{productName}"
                                class="form-control"
                                placeholder="Podaj nazwe produktu."/>
@@ -62,14 +61,16 @@
                         </select>
                     </div>
 
-                    <div class="hidden">
-                        <input type="hidden"
-                               name="recipe"
-                               th:field="*{recipe}"/>
+                    <div class="form-group">
+                        <label> Data ważności </label>
+                        <input type="date"
+                               name="expirationDate"
+                               th:field="*{expirationDate}"
+                               class="form-control"/>
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" name="saveRecipe" class="btn btn-success">
+                        <button type="submit" name="productInFridge" class="btn btn-success">
                             Zapisz
                         </button>
                     </div>
@@ -79,6 +80,5 @@
         </div>
     </div>
 </div>
-<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

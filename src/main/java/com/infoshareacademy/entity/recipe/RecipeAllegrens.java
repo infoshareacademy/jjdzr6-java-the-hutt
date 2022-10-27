@@ -20,7 +20,7 @@ public class RecipeAllegrens {
     private boolean Vegetarian;
 
     @JoinColumn(name = "recipe_id")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY, orphanRemoval = true)
     private Recipe recipe;
 
     public RecipeAllegrens() {
