@@ -6,6 +6,8 @@ import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.infoshareacademy.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,7 @@ public class RecipeService {
 
     private final FridgeService fridgeService;
 
+    private static Logger LOGGER = LogManager.getLogger(RecipeService.class.getName());
 
     @Autowired
     public RecipeService(RecipeRepository recipeRepository, RecipeAllergensRepository allergensRepository, FridgeService fridgeService) {
@@ -90,6 +93,7 @@ public class RecipeService {
 
     public void saveRecipeAllergens(Long id, RecipeAllegrens allergens) {
         Recipe recipe = new Recipe();
+        recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
         RecipeAllegrens existingAllergens = new RecipeAllegrens();
         if (allergensRepository.findById(recipe.getRecipeAllegrens().getId()).isPresent()) {
@@ -106,6 +110,7 @@ public class RecipeService {
             existingAllergens.setVegan(allergens.isVegan());
             existingAllergens.setVegetarian(allergens.isVegetarian());
             allergensRepository.save(existingAllergens);
+            LOGGER.info("Zapisano preferencje żywieniowe!");
 
         }
     }
@@ -113,13 +118,18 @@ public class RecipeService {
     public Recipe saveRecipe(Recipe recipe) {
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
         recipe.getRecipeAllegrens().setRecipe(recipe);
+        recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
+        LOGGER.info("Zapisano przepis: " + recipe.getName());
         return recipeRepository.save(recipe);
+
+
     }
 
 
     public void updateRecipe(Long recipeId, Recipe recipe) {
 
         Recipe existingRecipe = new Recipe();
+        existingRecipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         if (recipeRepository.findById(recipeId).isPresent()) existingRecipe = recipeRepository.findById(recipeId).get();
         existingRecipe.setRecipeId(recipeId);
         existingRecipe.setName(recipe.getName());
@@ -128,10 +138,11 @@ public class RecipeService {
         existingRecipe.setRecipeAllegrens(recipe.getRecipeAllegrens());
         existingRecipe.setMeal(recipe.getMeal());
         recipeRepository.save(existingRecipe);
+        LOGGER.info("Zaktualizowano przepis: " + recipe.getName());
     }
 
     public void deleteRecipeById(Long id) {
-        recipeRepository.deleteById(id);
+        recipeRepository.deleteRecipeByRecipeId(id);
     }
 
     public void deleteAllRecipes() {
