@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -14,8 +15,8 @@ import java.util.*;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "recipe_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recipe_id", unique = true, updatable = true)
     private Long recipeId;
 
     @NotEmpty

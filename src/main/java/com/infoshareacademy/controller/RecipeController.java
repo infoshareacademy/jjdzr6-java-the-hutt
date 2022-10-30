@@ -59,9 +59,9 @@ public class RecipeController {
 
     @PostMapping("/recipe")
     public String saveRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "create-recipe";
-        }
+//        if (bindingResult.hasErrors()) {
+//            return "create-recipe";
+//        }
         recipeService.saveRecipe(recipe);
         return "redirect:/recipes";
     }
@@ -98,8 +98,8 @@ public class RecipeController {
     }
 
     @PostMapping("/{recipeId}/allergens")
-    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllegrens allegrens) {
-        recipeService.saveRecipeAllergens(recipeId, allegrens);
+    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllegrens allergens) {
+        recipeService.saveRecipeAllergens(recipeId, allergens);
         return "redirect:/recipes/" + recipeId;
     }
 
