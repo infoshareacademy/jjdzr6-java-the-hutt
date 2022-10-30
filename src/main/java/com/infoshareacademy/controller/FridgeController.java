@@ -1,5 +1,6 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.service.FridgeService;
@@ -26,12 +27,12 @@ public class FridgeController {
     }
 
     @PostMapping("/product")
-    public String saveFridge(@Valid @ModelAttribute("fridge") Fridge fridge, BindingResult bindingResult) {
+    public String saveFridge(@Valid @ModelAttribute("fridge") FridgeDto fridgeDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "addproductstofridge";
         }
-        fridge.setFridgeId(fridgeService.getDEFAULT_FRIDGE_ID());
-        fridgeService.saveFridge(fridge);
+        fridgeDto.setFridgeId(fridgeService.getDEFAULT_FRIDGE_ID());
+        fridgeService.saveFridge(fridgeDto);
         return "redirect:/fridge";
     }
 }

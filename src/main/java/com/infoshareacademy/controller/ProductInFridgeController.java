@@ -1,5 +1,6 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.service.FridgeService;
@@ -65,9 +66,9 @@ public class ProductInFridgeController {
     }
 
     @PostMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(@PathVariable Long productId, @ModelAttribute("productInFridge") ProductInFridge productInFridge){
-        System.out.println(productInFridge);
-        productInFridgeService.editProductFromFridge(productId, productInFridge);
+    public String editProductFromFridge(@PathVariable Long productId, @ModelAttribute("productInFridge") ProductInFridgeDto productInFridgeDto){
+        System.out.println(productInFridgeDto);
+        productInFridgeService.editProductFromFridge(productId, productInFridgeDto);
         return "redirect:/fridge";
     }
 }

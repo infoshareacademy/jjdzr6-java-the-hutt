@@ -1,5 +1,7 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.DTO.FridgeDto;
+import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Meal;
@@ -168,7 +170,7 @@ public class RecipeService {
         //TODO: zmienić wczytywanie przepisów po ID
         List<Recipe> myRecipes = getRecipesWithProductsToLowerCase();
 
-        Map<String, ProductInFridge> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
+        Map<String, FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
         List<Recipe> filteredRecipies = new ArrayList<>();
 
 
@@ -178,7 +180,7 @@ public class RecipeService {
             List<ProductRecipe> tempRecipeList = entry.getValue();
             int matchScore = tempRecipeList.size();
             for (ProductRecipe productRecipe : tempRecipeList) {
-                ProductInFridge productInFridge = productsInFridge.get(productRecipe.getProductName());
+                FridgeDto.ProductInFridgeDto productInFridge = productsInFridge.get(productRecipe.getProductName());
 
                 if (productInFridge != null
                         && productInFridge.getAmount() >= productRecipe.getAmount()) {
