@@ -9,7 +9,7 @@ import java.util.Objects;
 public class ProductRecipe extends Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
     @Column(name = "product_name")
