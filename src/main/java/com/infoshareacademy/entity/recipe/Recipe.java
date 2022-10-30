@@ -42,28 +42,13 @@ public class Recipe {
     @ManyToMany(mappedBy = "shoppingListRecipe", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     private List<ShoppingList> shoppingList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "recipe", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     private RecipeAllegrens recipeAllegrens;
 
     private Long userId;
-    public Recipe() {
-        this.recipeAllegrens = new RecipeAllegrens();
-    }
 
+    public Recipe(){
 
-    public Recipe(String name, String description, int preparationTime, List<ProductRecipe> productList) {
-        this.name = name;
-        this.description = description;
-        this.preparationTime = preparationTime;
-        this.productList = productList;
-    }
-
-    public Recipe(String name, String description, int preparationTime, List<ProductRecipe> productList, RecipeAllegrens recipeAllegrens) {
-        this.name = name;
-        this.description = description;
-        this.preparationTime = preparationTime;
-        this.productList = productList;
-        this.recipeAllegrens = recipeAllegrens;
     }
 
     public List<ProductRecipe> getProductList() {
@@ -158,5 +143,6 @@ public class Recipe {
     }
 
     public void setRecipeAllegrens(RecipeAllegrens recipeAllegrens) {
+        this.recipeAllegrens = recipeAllegrens;
     }
 }

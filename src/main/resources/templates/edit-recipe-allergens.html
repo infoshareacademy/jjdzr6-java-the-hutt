@@ -17,20 +17,20 @@
       <div class="card-body">
         <form th:action="@{/recipes/{recipeId}/allergens/(recipeId=${allergens.recipe.recipeId})}"
               th:object="${allergens}"
-              method="POST">
+              method="post">
 
 
           Lista Twoich alergenów:
-          <p>Czekolada<input type="checkbox" th:field="${allergens.chocolate}"/>
-          <p>Produkty mleczne<input type="checkbox" th:field="${allergens.dairy}"/>
-          <p>Jaja<input type="checkbox" th:field="${allergens.eggs}"/>
-          <p>Orzechy<input type="checkbox" th:field="${allergens.nuts}"/>
-          <p>Skorupiaki<input type="checkbox" th:field="${allergens.shellfish}"/>
-          <p>Truskawki<input type="checkbox" th:field="${allergens.strawberries}"/>
-          <p>Czy jesz mięso?<input type="checkbox" th:field="${allergens.meatEater}"/>
-          <p>Dieta wegańska?<input type="checkbox" th:field="${allergens.vegan}"/>
-          <p>Dieta wegetariańska?<input type="checkbox" th:field="${allergens.vegetarian}"/>
-          <p>Inne alergeny: <input type="text" th:field="${allergens.other}"/>
+          <p>Czekolada<input type="checkbox" th:field="*{chocolate}"/>
+          <p>Produkty mleczne<input type="checkbox" th:field="*{dairy}"/>
+          <p>Jaja<input type="checkbox" th:field="*{eggs}"/>
+          <p>Orzechy<input type="checkbox" th:field="*{nuts}"/>
+          <p>Skorupiaki<input type="checkbox" th:field="*{shellfish}"/>
+          <p>Truskawki<input type="checkbox" th:field="*{strawberries}"/>
+          <p>Czy jesz mięso?<input type="checkbox" th:field="*{meatEater}"/>
+          <p>Dieta wegańska?<input type="checkbox" th:field="*{vegan}"/>
+          <p>Dieta wegetariańska?<input type="checkbox" th:field="*{vegetarian}"/>
+          <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
 
 
           <div class="box-footer">

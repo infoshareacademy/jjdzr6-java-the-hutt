@@ -59,9 +59,9 @@ public class RecipeController {
 
     @PostMapping("/recipe")
     public String saveRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "create-recipe";
-//        }
+        if (bindingResult.hasErrors()) {
+            return "create-recipe";
+        }
         recipeService.saveRecipe(recipe);
         return "redirect:/recipes";
     }
