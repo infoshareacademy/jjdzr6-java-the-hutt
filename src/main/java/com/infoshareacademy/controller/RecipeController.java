@@ -98,8 +98,8 @@ public class RecipeController {
     }
 
     @PostMapping("/{recipeId}/allergens")
-    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllegrens allegrens) {
-        recipeService.saveRecipeAllergens(recipeId, allegrens);
+    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllegrens allergens) {
+        recipeService.saveRecipeAllergens(recipeId, allergens);
         return "redirect:/recipes/" + recipeId;
     }
 
