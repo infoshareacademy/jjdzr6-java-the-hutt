@@ -2,6 +2,7 @@ package com.infoshareacademy.entity.product;
 
 import com.infoshareacademy.entity.fridge.Fridge;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import java.time.LocalDate;

@@ -1,7 +1,6 @@
 package com.infoshareacademy.service;
 
 import com.infoshareacademy.DTO.ProductInFridgeDto;
-import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
@@ -23,9 +22,11 @@ public class ProductInFridgeService {
         this.modelMapper = modelMapper;
     }
 
-    public ProductInFridge findProductInFridgeById(Long productId) throws NotFoundException {
-        return productInFridgeRepository.findById(productId).orElseThrow(
-                () -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId)));
+    public ProductInFridgeDto findProductInFridgeById(Long productId) throws NotFoundException {
+        return productInFridgeRepository.findById(productId)
+                .map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class))
+                .orElseThrow(
+                        () -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId)));
     }
 
     public void deleteProductFromFridge(Long productId) throws NotFoundException {
@@ -49,7 +50,6 @@ public class ProductInFridgeService {
         modelMapper.map(productInFridgeRepository.save(existingProduct), ProductInFridgeDto.class);
         return existingProduct;
     }
-
 
 
 }
