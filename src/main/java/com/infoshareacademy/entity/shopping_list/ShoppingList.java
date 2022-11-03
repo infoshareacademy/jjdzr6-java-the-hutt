@@ -11,7 +11,7 @@ import java.util.List;
 public class ShoppingList {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shopping_list_id")
     private Long id;
 
