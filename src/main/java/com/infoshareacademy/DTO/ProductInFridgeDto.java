@@ -22,6 +22,9 @@ public class ProductInFridgeDto implements Serializable {
     private LocalDate expirationDate;
     private FridgeDto fridgeDto;
 
+    public void setFridgeDto(com.infoshareacademy.DTO.FridgeDto fridgeDto) {
+    }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor

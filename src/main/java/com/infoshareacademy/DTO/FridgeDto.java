@@ -1,6 +1,5 @@
 package com.infoshareacademy.DTO;
 
-import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,9 +15,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FridgeDto implements Serializable {
-    private Long fridgeId;
+    private Long fridgeDtoId;
     private List<ProductInFridgeDto> productsInFridgeDto;
 
+    public void addProductDto(FridgeDto.ProductInFridgeDto product) {
+        this.productsInFridgeDto.add(product);
+        this.setFridgeDtoId(1L);
+        product.setFridgeDto(this);
+    }
+    
 
     @Data
     @AllArgsConstructor

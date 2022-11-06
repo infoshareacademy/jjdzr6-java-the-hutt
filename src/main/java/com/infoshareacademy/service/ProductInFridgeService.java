@@ -1,6 +1,7 @@
 package com.infoshareacademy.service;
 
 import com.infoshareacademy.DTO.ProductInFridgeDto;
+import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
@@ -35,21 +36,20 @@ public class ProductInFridgeService {
         } else throw new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId));
     }
 
-    public Optional<ProductInFridgeDto> editProductFromFridge(Long productId, ProductInFridgeDto productInFridgeDto) {
-        Optional<ProductInFridgeDto> existingProduct = Optional.of(new ProductInFridgeDto());
-        if (productInFridgeRepository.findById(productId).isPresent())
-            existingProduct = productInFridgeRepository.findById(productId)
-                    .map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class));
+    public void editProductFromFridge(Long productId, ProductInFridgeDto productInFridgeDto) throws NotFoundException {
+        Optional<ProductInFridge> productInFridge = Optional.ofNullable(productInFridgeRepository.findById(productId).orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));
 
-        existingProduct.get().setFridgeDto(fridgeService.addProductsToFridgeForm());
-        existingProduct.get().setProductId(productInFridgeDto.getProductId());
-        existingProduct.get().setProductName(productInFridgeDto.getProductName());
-        existingProduct.get().setAmount(productInFridgeDto.getAmount());
-        existingProduct.get().setUnit(productInFridgeDto.getUnit());
-        existingProduct.get().setExpirationDate(productInFridgeDto.getExpirationDate());
-        modelMapper.map(productInFridgeRepository.save(existingProduct), ProductInFridgeDto.class);
-        return existingProduct;
+        Optional<ProductInFridgeDto> productDto = productInFridge
+                .map(product -> modelMapper.map(product, ProductInFridgeDto.class));
+
+        productDto.get().setFridgeDto(fridgeService.addProductsToFridgeForm().get());
+        productDto.get().setProductId(productInFridgeDto.getProductId());
+        productDto.get().setProductName(productInFridgeDto.getProductName());
+        productDto.get().setAmount(productInFridgeDto.getAmount());
+        productDto.get().setUnit(productInFridgeDto.getUnit());
+        productDto.get().setExpirationDate(productInFridgeDto.getExpirationDate());
+
+        productInFridgeRepository.save(modelMapper.map(productDto, ProductInFridge.class));
+
     }
-
-
 }

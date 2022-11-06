@@ -31,7 +31,7 @@ public class FridgeController {
         if (bindingResult.hasErrors()) {
             return "addproductstofridge";
         }
-        fridgeDto.setFridgeId(fridgeService.getDEFAULT_FRIDGE_ID());
+        fridgeDto.setFridgeDtoId(fridgeService.getDEFAULT_FRIDGE_ID());
         fridgeService.saveFridge(fridgeDto);
         return "redirect:/fridge";
     }

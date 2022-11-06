@@ -1,8 +1,8 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.fridge.Fridge;
-import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.service.FridgeService;
 import com.infoshareacademy.service.ProductInFridgeService;
 import javassist.NotFoundException;
@@ -27,7 +27,7 @@ public class ProductInFridgeController {
 
     @GetMapping
     public String productsInFridge(Model model) {
-        model.addAttribute("productsinfridge", fridgeService.getAllProductsFromFridge());
+        model.addAttribute("productsinfridge", fridgeService.getProductsInFridge());
         return "fridge";
     }
 
@@ -39,8 +39,8 @@ public class ProductInFridgeController {
     }
 
     @PostMapping(value = "/product", params = {"addProduct"})
-    public String addProduct(@ModelAttribute("fridge") Fridge fridge) {
-        fridge.addProduct(new ProductInFridge());
+    public String addProduct(@ModelAttribute("fridge") FridgeDto fridgeDto) {
+        fridgeDto.addProductDto(new FridgeDto.ProductInFridgeDto());
         return "addproductstofridge";
     }
 
@@ -66,7 +66,7 @@ public class ProductInFridgeController {
     }
 
     @PostMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(@PathVariable Long productId, @ModelAttribute("productInFridge") ProductInFridgeDto productInFridgeDto){
+    public String editProductFromFridge(@PathVariable Long productId, @ModelAttribute("productInFridge") ProductInFridgeDto productInFridgeDto) throws NotFoundException {
         System.out.println(productInFridgeDto);
         productInFridgeService.editProductFromFridge(productId, productInFridgeDto);
         return "redirect:/fridge";

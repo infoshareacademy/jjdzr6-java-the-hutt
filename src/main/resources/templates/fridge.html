@@ -34,7 +34,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="product: ${productsinfridge.getProductsInFridge()}">
+        <tr th:each="product: ${productsinfridge}">
             <td th:text="${product.productName}"></td>
             <td th:text="${product.amount}"></td>
             <td th:text="${product.unit.value}"></td>
