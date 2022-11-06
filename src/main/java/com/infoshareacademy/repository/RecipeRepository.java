@@ -18,9 +18,9 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
             "WHERE " + "CONCAT(r.name, r.description,r.preparationTime, p.productName)" + "LIKE %?1%")
     List<Recipe> findRecipeBy(String keyword);
 
+
     @Modifying
-    @Transactional
-    void deleteRecipeByRecipeId(Long id);
+    void deleteByRecipeId(Long id);
 
 
 }
