@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -141,8 +142,9 @@ public class RecipeService {
         LOGGER.info("Zaktualizowano przepis: " + recipe.getName());
     }
 
+    @Transactional
     public void deleteRecipeById(Long id) {
-        recipeRepository.deleteRecipeByRecipeId(id);
+        recipeRepository.deleteByRecipeId(id);
     }
 
     public void deleteAllRecipes() {

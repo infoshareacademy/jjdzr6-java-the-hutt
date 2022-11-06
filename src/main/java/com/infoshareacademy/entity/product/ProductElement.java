@@ -8,7 +8,7 @@ import java.util.Objects;
 public class ProductElement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long elementId;
 
     @Column(name = "product_name")

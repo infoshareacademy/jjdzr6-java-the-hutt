@@ -42,7 +42,7 @@ public class Recipe {
     @ManyToMany(mappedBy = "shoppingListRecipe", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     private List<ShoppingList> shoppingList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "recipe", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RecipeAllegrens recipeAllegrens;
 
     private Long userId;
