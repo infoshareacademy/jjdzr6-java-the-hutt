@@ -17,10 +17,9 @@ import java.util.stream.Collectors;
 @Service
 public class FridgeService {
 
-    private static final long DEFAULT_FRIDGE_ID = 1;
+    private static final Long DEFAULT_FRIDGE_ID = 1L;
     private final FridgeRepository fridgeRepository;
     private final ProductInFridgeRepository productInFridgeRepository;
-
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -30,15 +29,16 @@ public class FridgeService {
         this.modelMapper = modelMapper;
     }
 
-    public FridgeDto saveFridge(FridgeDto fridgeDto) {
-        fridgeDto.setFridgeDtoId(getDEFAULT_FRIDGE_ID());
-        fridgeDto.getProductsInFridgeDto().forEach(x -> x.setFridgeDto(fridgeDto));
-
-        return modelMapper.map(fridgeRepository.save(modelMapper.map(fridgeDto, Fridge.class)), FridgeDto.class);
+    public void saveFridge(FridgeDto fridgeDto) {
+        Fridge fridge = modelMapper.map(fridgeDto, Fridge.class);
+        fridge.getProductsInFridge().forEach(x -> x.setFridge(fridge));
+        fridge.setFridgeId(getDEFAULT_FRIDGE_ID());
+        fridgeRepository.save(fridge);
     }
 
     public FridgeDto getFridge() {
-        if (fridgeRepository.findById(DEFAULT_FRIDGE_ID).isPresent()) {
+        boolean flag = fridgeRepository.findById(DEFAULT_FRIDGE_ID).isPresent();
+        if (flag) {
             return fridgeRepository.findById(DEFAULT_FRIDGE_ID).map((fridge -> modelMapper.map(fridge, FridgeDto.class))).get();
         } else {
             return new FridgeDto();
@@ -47,15 +47,17 @@ public class FridgeService {
 
     public List<FridgeDto.ProductInFridgeDto> getProductsInFridge(){
         return getFridge().getProductsInFridgeDto();
+
     }
 
-    public Optional<FridgeDto> addProductsToFridgeForm() {
-        Optional<FridgeDto> fridgeDto;
-        if (fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).isPresent()) {
-            return fridgeDto = fridgeRepository.findById(DEFAULT_FRIDGE_ID).map((fridge -> modelMapper.map(fridge, FridgeDto.class)));
+    public FridgeDto addProductsToFridgeForm() {
+        FridgeDto fridgeDto;
+        if(fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).isPresent()) {
+            fridgeDto = fridgeRepository.findById(DEFAULT_FRIDGE_ID).map((fridge -> modelMapper.map(fridge, FridgeDto.class))).get();
+            return fridgeDto;
         } else {
-            fridgeDto = Optional.of(new FridgeDto());
-            fridgeDto.get().setFridgeDtoId(getDEFAULT_FRIDGE_ID());
+            fridgeDto = new FridgeDto();
+            fridgeDto.setFridgeDtoId(getDEFAULT_FRIDGE_ID());
             return fridgeDto;
         }
     }

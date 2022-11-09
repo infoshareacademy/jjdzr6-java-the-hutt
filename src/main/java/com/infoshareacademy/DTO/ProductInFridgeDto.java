@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Future;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Optional;
 
 
 @Data
@@ -22,7 +23,7 @@ public class ProductInFridgeDto implements Serializable {
     private LocalDate expirationDate;
     private FridgeDto fridgeDto;
 
-    public void setFridgeDto(com.infoshareacademy.DTO.FridgeDto fridgeDto) {
+    public void setFridgeDto(Optional<com.infoshareacademy.DTO.FridgeDto> addProductsToFridgeForm) {
     }
 
     @Data

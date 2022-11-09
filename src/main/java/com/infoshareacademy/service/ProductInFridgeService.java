@@ -24,10 +24,11 @@ public class ProductInFridgeService {
     }
 
     public ProductInFridgeDto findProductInFridgeById(Long productId) throws NotFoundException {
-        return productInFridgeRepository.findById(productId)
+        Optional<ProductInFridgeDto> productInFridgeDto = Optional.ofNullable(productInFridgeRepository.findById(productId)
                 .map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class))
-                .orElseThrow(
-                        () -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId)));
+                .orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));;
+        return productInFridgeDto.get();
+
     }
 
     public void deleteProductFromFridge(Long productId) throws NotFoundException {
@@ -42,7 +43,7 @@ public class ProductInFridgeService {
         Optional<ProductInFridgeDto> productDto = productInFridge
                 .map(product -> modelMapper.map(product, ProductInFridgeDto.class));
 
-        productDto.get().setFridgeDto(fridgeService.addProductsToFridgeForm().get());
+        productDto.get().setFridgeDto(Optional.ofNullable(fridgeService.addProductsToFridgeForm()));
         productDto.get().setProductId(productInFridgeDto.getProductId());
         productDto.get().setProductName(productInFridgeDto.getProductName());
         productDto.get().setAmount(productInFridgeDto.getAmount());

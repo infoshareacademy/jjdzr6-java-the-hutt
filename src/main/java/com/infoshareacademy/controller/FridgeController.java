@@ -27,11 +27,10 @@ public class FridgeController {
     }
 
     @PostMapping("/product")
-    public String saveFridge(@Valid @ModelAttribute("fridge") FridgeDto fridgeDto, BindingResult bindingResult) {
+    public String saveFridge(@Valid @ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "addproductstofridge";
         }
-        fridgeDto.setFridgeDtoId(fridgeService.getDEFAULT_FRIDGE_ID());
         fridgeService.saveFridge(fridgeDto);
         return "redirect:/fridge";
     }

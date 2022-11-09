@@ -32,14 +32,14 @@ public class ProductInFridgeController {
     }
 
     @GetMapping("/product")
-    public String addProductsToFridgeForm(Model model, Fridge fridge) {
+    public String addProductsToFridgeForm(Model model, FridgeDto fridgeDto) {
         fridgeService.addProductsToFridgeForm();
-        model.addAttribute("fridge", fridge);
+        model.addAttribute("fridgeDtoForm", fridgeDto);
         return "addproductstofridge";
     }
 
     @PostMapping(value = "/product", params = {"addProduct"})
-    public String addProduct(@ModelAttribute("fridge") FridgeDto fridgeDto) {
+    public String addProduct(@ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto) {
         fridgeDto.addProductDto(new FridgeDto.ProductInFridgeDto());
         return "addproductstofridge";
     }
@@ -53,8 +53,7 @@ public class ProductInFridgeController {
     }
 
     @GetMapping("/{fridgeId}/{productId}")
-    public String deleteProductFromFridge(@PathVariable Long productId,
-                                          Long fridgeId) throws Exception {
+    public String deleteProductFromFridge(@PathVariable Long productId) throws Exception {
         productInFridgeService.deleteProductFromFridge(productId);
         return "redirect:/fridge";
     }

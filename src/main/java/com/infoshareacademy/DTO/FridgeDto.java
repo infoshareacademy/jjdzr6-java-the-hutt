@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Future;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,14 +17,17 @@ import java.util.List;
 @NoArgsConstructor
 public class FridgeDto implements Serializable {
     private Long fridgeDtoId;
-    private List<ProductInFridgeDto> productsInFridgeDto;
+    private List<FridgeDto.ProductInFridgeDto> productsInFridgeDto;
 
     public void addProductDto(FridgeDto.ProductInFridgeDto product) {
+        if(productsInFridgeDto == null){
+            this.productsInFridgeDto = new ArrayList<>();
+        }
         this.productsInFridgeDto.add(product);
         this.setFridgeDtoId(1L);
         product.setFridgeDto(this);
     }
-    
+
 
     @Data
     @AllArgsConstructor
