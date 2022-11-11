@@ -27,7 +27,8 @@ public class ProductInFridgeController {
 
     @GetMapping
     public String productsInFridge(Model model) {
-        model.addAttribute("productsinfridge", fridgeService.getProductsInFridge());
+        model.addAttribute("fridgeProducts", fridgeService.getProductsInFridge());
+        model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
         return "fridge";
     }
 

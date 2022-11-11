@@ -1,7 +1,9 @@
 package com.infoshareacademy.service;
 
 import com.infoshareacademy.DTO.FridgeDto;
+import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.fridge.Fridge;
+import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
 import org.modelmapper.ModelMapper;
@@ -13,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FridgeService {
@@ -45,8 +48,11 @@ public class FridgeService {
         }
     }
 
-    public List<FridgeDto.ProductInFridgeDto> getProductsInFridge(){
-        return getFridge().getProductsInFridgeDto();
+    public List<ProductInFridgeDto> getProductsInFridge(){
+        List<ProductInFridge> productsInFridge = fridgeRepository.findById(1L).get().getProductsInFridge();
+        List<ProductInFridgeDto> collect = productsInFridge
+                .stream().map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class)).collect(Collectors.toList());
+        return collect;
 
     }
 
