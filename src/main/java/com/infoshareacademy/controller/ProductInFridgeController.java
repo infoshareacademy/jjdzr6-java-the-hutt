@@ -6,16 +6,22 @@ import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.service.FridgeService;
 import com.infoshareacademy.service.ProductInFridgeService;
 import javassist.NotFoundException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/fridge")
 public class ProductInFridgeController {
 
+    Logger logger = LoggerFactory.getLogger(ProductInFridgeController.class);
     private final ProductInFridgeService productInFridgeService;
     private final FridgeService fridgeService;
 
@@ -62,13 +68,24 @@ public class ProductInFridgeController {
     @GetMapping("/product/{fridgeId}/{productId}")
     public String editProductFromFridge(@PathVariable Long productId, Model model) throws NotFoundException {
         model.addAttribute("productInFridge", productInFridgeService.findProductInFridgeById(productId));
+        model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
         return "edit-products-in-fridge";
     }
 
     @PostMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(@PathVariable Long productId, @ModelAttribute("productInFridge") ProductInFridgeDto productInFridgeDto) throws NotFoundException {
-        System.out.println(productInFridgeDto);
+    public String editProductFromFridge(Model model, @PathVariable Long productId,
+                                        @ModelAttribute("productInFridge") ProductInFridgeDto productInFridgeDto) throws NotFoundException {
+        logger.info(productInFridgeDto.toString());
+        model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
         productInFridgeService.editProductFromFridge(productId, productInFridgeDto);
+        return "redirect:/fridge";
+    }
+    @PostMapping("/product")
+    public String saveFridge(@Valid @ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "addproductstofridge";
+        }
+        fridgeService.saveFridge(fridgeDto);
         return "redirect:/fridge";
     }
 }

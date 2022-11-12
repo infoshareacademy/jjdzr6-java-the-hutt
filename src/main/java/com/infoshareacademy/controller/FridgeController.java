@@ -26,12 +26,5 @@ public class FridgeController {
         this.fridgeRepository = fridgeRepository;
     }
 
-    @PostMapping("/product")
-    public String saveFridge(@Valid @ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "addproductstofridge";
-        }
-        fridgeService.saveFridge(fridgeDto);
-        return "redirect:/fridge";
-    }
+
 }

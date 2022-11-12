@@ -15,7 +15,7 @@
             <h1 class="text-center"> Edytuj produkt </h1>
             <div class="card-body">
                 <form th:action="@{/fridge/product/{fridgeId}/{productId}
-                        (fridgeId=${productInFridge.fridge.fridgeId},
+                        (fridgeId=${fridgeId},
                         productId=${productInFridge.productId})}"
                       th:object="${productInFridge}"
                       method="POST">
