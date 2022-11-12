@@ -32,8 +32,8 @@ public class ProductInFridge extends Product {
     @Future
     private LocalDate expirationDate;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "fridge_id")
     private Fridge fridge;
 

@@ -59,7 +59,9 @@ public class FridgeService {
     public FridgeDto addProductsToFridgeForm() {
         FridgeDto fridgeDto;
         if(fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).isPresent()) {
-            fridgeDto = fridgeRepository.findById(DEFAULT_FRIDGE_ID).map((fridge -> modelMapper.map(fridge, FridgeDto.class))).get();
+            fridgeDto = fridgeRepository
+                    .findById(DEFAULT_FRIDGE_ID)
+                    .map((fridge -> modelMapper.map(fridge, FridgeDto.class))).get();
             return fridgeDto;
         } else {
             fridgeDto = new FridgeDto();

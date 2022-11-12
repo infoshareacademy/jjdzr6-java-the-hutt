@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
-public class JavaTheHuttApplication implements CommandLineRunner {
+public class JavaTheHuttApplication{
 
 
 
@@ -26,36 +26,4 @@ public class JavaTheHuttApplication implements CommandLineRunner {
 
     }
 
-    @Autowired
-    FridgeService fridgeService;
-    @Autowired
-    FridgeRepository fridgeRepository;
-    @Autowired
-    ProductInFridgeService productInFridgeService;
-    @Autowired
-    ProductInFridgeRepository productInFridgeRepository;
-
-    @Override
-    public void run(String... args) throws Exception {
-
-        Fridge fridge = new Fridge();
-        fridge.setFridgeId(1L);
-        ProductInFridge productInFridge = new ProductInFridge();
-        productInFridge.setProductName("ff");
-        productInFridge.setAmount(1.0);
-        productInFridge.setProductId(1L);
-        productInFridge.setUnit(ProductUnit.GRAM);
-        productInFridge.setExpirationDate(LocalDate.now().plusDays(1));
-        List<ProductInFridge> productInFridgeList = List.of(productInFridge);
-
-        fridge.setProductsInFridge(productInFridgeList);
-        productInFridge.setFridge(fridge);
-
-        fridgeRepository.save(fridge);
-        productInFridgeRepository.save(productInFridge);
-
-
-
-
-    }
 }

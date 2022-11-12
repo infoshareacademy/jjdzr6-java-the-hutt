@@ -74,7 +74,7 @@ public class ProductInFridgeController {
 
     @PostMapping("/product/{fridgeId}/{productId}")
     public String editProductFromFridge(Model model, @PathVariable Long productId,
-                                        @ModelAttribute("productInFridge") ProductInFridgeDto productInFridgeDto) throws NotFoundException {
+                                        @ModelAttribute("productInFridge") FridgeDto.ProductInFridgeDto productInFridgeDto) throws NotFoundException {
         logger.info(productInFridgeDto.toString());
         model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
         productInFridgeService.editProductFromFridge(productId, productInFridgeDto);

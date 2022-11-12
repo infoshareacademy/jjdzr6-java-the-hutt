@@ -4,6 +4,7 @@ import com.infoshareacademy.entity.product.ProductUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
 import java.io.Serializable;
@@ -38,6 +39,7 @@ public class FridgeDto implements Serializable {
         private Double amount;
         private ProductUnit unit;
         @Future
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate expirationDate;
         private FridgeDto fridgeDto;
     }

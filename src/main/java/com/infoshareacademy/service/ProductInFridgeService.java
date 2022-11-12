@@ -1,24 +1,29 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.product.ProductInFridge;
+import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
 public class ProductInFridgeService {
 
     private final ProductInFridgeRepository productInFridgeRepository;
+    private final FridgeRepository fridgeRepository;
     private final FridgeService fridgeService;
 
     private final ModelMapper modelMapper;
 
-    public ProductInFridgeService(ProductInFridgeRepository productInFridgeRepository, FridgeService fridgeService, ModelMapper modelMapper) {
+    public ProductInFridgeService(ProductInFridgeRepository productInFridgeRepository, FridgeRepository fridgeRepository, FridgeService fridgeService, ModelMapper modelMapper) {
         this.productInFridgeRepository = productInFridgeRepository;
+        this.fridgeRepository = fridgeRepository;
         this.fridgeService = fridgeService;
         this.modelMapper = modelMapper;
     }
@@ -37,20 +42,24 @@ public class ProductInFridgeService {
         } else throw new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId));
     }
 
-    public void editProductFromFridge(Long productId, ProductInFridgeDto productInFridgeDto) throws NotFoundException {
-        Optional<ProductInFridge> productInFridge = Optional.ofNullable(productInFridgeRepository.findById(productId).orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));
+    public void editProductFromFridge(Long productId, FridgeDto.ProductInFridgeDto productInFridgeDto) throws NotFoundException {
+        Optional<ProductInFridge> productInFridge = Optional.ofNullable(productInFridgeRepository
+                .findById(productId)
+                .orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));
 
         Optional<ProductInFridgeDto> productDto = productInFridge
                 .map(product -> modelMapper.map(product, ProductInFridgeDto.class));
 
-        productDto.get().setFridgeDto(Optional.ofNullable(fridgeService.addProductsToFridgeForm()));
+        ProductInFridgeDto.FridgeDto fridgeDto = modelMapper.map(fridgeRepository
+                .findById(fridgeService.getDEFAULT_FRIDGE_ID()).get(), ProductInFridgeDto.FridgeDto.class);
+        productDto.get().setFridgeDto(fridgeDto);
         productDto.get().setProductId(productInFridgeDto.getProductId());
         productDto.get().setProductName(productInFridgeDto.getProductName());
         productDto.get().setAmount(productInFridgeDto.getAmount());
         productDto.get().setUnit(productInFridgeDto.getUnit());
-        productDto.get().setExpirationDate(productInFridgeDto.getExpirationDate());
+        productDto.get().setExpirationDate(LocalDate.parse(productInFridgeDto.getExpirationDate().toString()));
 
-        productInFridgeRepository.save(modelMapper.map(productDto, ProductInFridge.class));
-
+        ProductInFridge product = modelMapper.map(productDto, ProductInFridge.class);
+        productInFridgeRepository.save(product);
     }
 }
