@@ -1,5 +1,6 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.product.ProductShoppingList;
@@ -9,6 +10,7 @@ import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import com.infoshareacademy.repository.ShoppingListRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -19,15 +21,16 @@ public class ShoppingListService {
 
     private final ShoppingListRepository shoppingListRepository;
     private final FridgeService fridgeService;
-
+    private final ModelMapper modelMapper;
     private static Logger LOGGER = LogManager.getLogger(ShoppingListService.class.getName());
 
 
     @Autowired
-    public ShoppingListService(ShoppingListRepository shoppingListRepository, FridgeService fridgeService) {
+    public ShoppingListService(ShoppingListRepository shoppingListRepository, FridgeService fridgeService, ModelMapper modelMapper) {
         this.shoppingListRepository = shoppingListRepository;
         this.fridgeService = fridgeService;
 
+        this.modelMapper = modelMapper;
     }
 
     public List<ShoppingList> findAllShoppingLists() {
@@ -61,11 +64,12 @@ public class ShoppingListService {
         return shoppingList;
     }
 
-    public void addRecipeToShoppingList(Recipe recipe, Long id) {
+    public void addRecipeToShoppingList(RecipeDto recipeDto, Long id) {
 
         ShoppingList shoppingList = getShoppingList(id);
         List<Recipe> shoppingListRecipe = shoppingList.getShoppingListRecipe();
 
+        Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         if (!shoppingListRecipe.contains(recipe)) {
             shoppingListRecipe.add(recipe);
         }

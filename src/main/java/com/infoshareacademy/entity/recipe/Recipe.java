@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -58,6 +57,10 @@ public class Recipe {
     public void addProduct(ProductRecipe product) {
         this.productList.add(product);
         product.setRecipe(this);
+    }
+
+    public void setProductList(List<ProductRecipe> productList) {
+        this.productList = productList;
     }
 
     public List<ShoppingList> getShoppingList() {

@@ -1,6 +1,7 @@
 package com.infoshareacademy.service;
 
 import com.infoshareacademy.DTO.FoodPreferencesDto;
+import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.FoodPreferencesRepository;
@@ -60,10 +61,10 @@ public class FoodPreferencesService {
         }
     }
 
-    public Page<Recipe> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
+    public Page<RecipeDto> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
 
         Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
-        List<Recipe> recipeList = recipeService.getAllRecipe();
+        List<RecipeDto> recipeList = recipeService.getAllRecipe();
 
         if (foodPreferencesRepositoryDtoById.isPresent()) {
             FoodPreferencesDto foodPreferencesDto = foodPreferencesRepositoryDtoById.get();

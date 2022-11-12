@@ -1,5 +1,7 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.DTO.ProductRecipeDto;
+import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +26,15 @@ public class ProductController {
 
     @GetMapping("/{recipeId}/products")
     public String editProductRecipeList(@PathVariable Long recipeId, Model model) {
-        List<ProductRecipe> productRecipeList = productService.getAllProductByRecipeId(recipeId);
+        List<ProductRecipeDto> productRecipeList = productService.getAllProductByRecipeId(recipeId);
         model.addAttribute("productList", productRecipeList);
         model.addAttribute("productRecipe", productRecipeList.stream().findFirst().get());
         return "edit-product-recipe";
     }
 
     @PostMapping("/{recipeId}/products")
-    public String saveProductRecipe(@PathVariable Long recipeId, @ModelAttribute ProductRecipe productRecipe) {
-        productService.saveProductRecipe(productRecipe);
+    public String saveProductRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeDto.ProductRecipeDto productRecipe, @ModelAttribute("recipe") RecipeDto recipe) {
+        productService.saveProductRecipe(productRecipe, recipe);
         return "redirect:/recipes/" + recipeId + "/products";
     }
 
@@ -43,8 +45,8 @@ public class ProductController {
     }
 
     @PostMapping("/{recipeId}/products/{productId}")
-    public String editProductRecipeForm(@PathVariable Long recipeId, @ModelAttribute ProductRecipe productRecipe) {
-        productService.saveProductRecipe(productRecipe);
+    public String editProductRecipeForm(@PathVariable Long recipeId, @ModelAttribute RecipeDto.ProductRecipeDto productRecipe,@ModelAttribute("recipe") RecipeDto recipe) {
+        productService.saveProductRecipe(productRecipe, recipe);
         return "redirect:/recipes/" + recipeId + "/products";
     }
 

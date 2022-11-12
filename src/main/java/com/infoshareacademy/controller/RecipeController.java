@@ -1,5 +1,7 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.DTO.RecipeAllegrensDto;
+import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.service.ShoppingListService;
@@ -20,7 +22,6 @@ import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.service.RecipeService;
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @Controller
@@ -54,12 +55,12 @@ public class RecipeController {
 
     @GetMapping("/recipe")
     public String createRecipeForm(Model model) {
-        model.addAttribute("recipe", new Recipe());
+        model.addAttribute("recipe", new RecipeDto());
         return "create-recipe";
     }
 
     @PostMapping("/recipe")
-    public String saveRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult) {
+    public String saveRecipe(@Valid @ModelAttribute("recipe") RecipeDto recipe, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "create-recipe";
         }
@@ -68,13 +69,13 @@ public class RecipeController {
     }
 
     @PostMapping(value = "/recipe", params = {"addProduct"})
-    public String addProduct(@ModelAttribute Recipe recipe) {
-        recipe.addProduct(new ProductRecipe());
+    public String addProduct(@ModelAttribute("recipe")  RecipeDto recipe) {
+        recipe.addProduct(new RecipeDto.ProductRecipeDto());
         return "create-recipe";
     }
 
     @PostMapping(value = "/recipe", params = {"removeProduct"})
-    public String removeProduct(@ModelAttribute Recipe recipe, HttpServletRequest request) {
+    public String removeProduct(@ModelAttribute("recipe")  RecipeDto recipe, HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
         recipe.getProductList().remove(index);
         return "create-recipe";
@@ -87,7 +88,7 @@ public class RecipeController {
     }
 
     @PostMapping(value = "/{recipeId}")
-    public String updateRecipe(@PathVariable Long recipeId, @ModelAttribute Recipe recipe) {
+    public String updateRecipe(@PathVariable Long recipeId, @ModelAttribute("recipe") RecipeDto recipe) {
         recipeService.updateRecipe(recipeId, recipe);
         return "redirect:/recipes";
     }
@@ -95,11 +96,12 @@ public class RecipeController {
     @GetMapping("/{recipeId}/allergens")
     public String editAllergensRecipe(@PathVariable Long recipeId, Model model) {
         model.addAttribute("allergens", recipeService.getRecipeById(recipeId).getRecipeAllegrens());
+        model.addAttribute("recipeId", recipeId);
         return "edit-recipe-allergens";
     }
 
     @PostMapping("/{recipeId}/allergens")
-    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllegrens allergens) {
+    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllegrensDto allergens) {
         recipeService.saveRecipeAllergens(recipeId, allergens);
         return "redirect:/recipes/" + recipeId;
     }

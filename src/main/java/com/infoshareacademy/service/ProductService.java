@@ -1,7 +1,11 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.DTO.ProductRecipeDto;
+import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.product.ProductRecipe;
+import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.ProductRecipeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -14,36 +18,43 @@ public class ProductService {
 
     private final RecipeService recipeService;
 
+    private final ModelMapper modelMapper;
+
     @Autowired
-    public ProductService(ProductRecipeRepository productRepository, RecipeService recipeService) {
+    public ProductService(ProductRecipeRepository productRepository, RecipeService recipeService, ModelMapper modelMapper) {
         this.productRepository = productRepository;
         this.recipeService = recipeService;
+        this.modelMapper = modelMapper;
     }
 
-    public List<ProductRecipe> getAllProductByRecipeId(final Long recipeId) {
+    public List<ProductRecipeDto> getAllProductByRecipeId(final Long recipeId) {
 
         if (productRepository.findAllProductsByRecipeRecipeId(recipeId).stream().findFirst().isPresent()) {
-            return productRepository.findAllProductsByRecipeRecipeId(recipeId);
+            return productRepository.findAllProductsByRecipeRecipeId(recipeId).stream().map(productRecipe -> modelMapper.map(productRecipe, ProductRecipeDto.class)).toList();
         } else {
-            List<ProductRecipe> products = new ArrayList<>();
-            ProductRecipe product = new ProductRecipe(" ", 0.0);
-            product.setRecipe(recipeService.getRecipeById(recipeId));
+            List<ProductRecipeDto> products = new ArrayList<>();
+            ProductRecipeDto product = new ProductRecipeDto(" ", 0.0);
+            product.setRecipe(modelMapper.map(recipeService.getRecipeById(recipeId), ProductRecipeDto.RecipeDto.class));
             products.add(product);
             return products;
         }
     }
 
-    public ProductRecipe findById(Long productId) throws Exception {
-        return productRepository.findById(productId).orElseThrow(() -> new Exception("Not found Product Recipe for "
+    public ProductRecipeDto findById(Long productId) throws Exception {
+        return productRepository.findById(productId).map(productRecipe -> modelMapper.map(productRecipe, ProductRecipeDto.class)).orElseThrow(() -> new Exception("Not found Product Recipe for "
                 + "ID: " + productId));
     }
 
     public void deleteProductRecipe(Long productId) throws Exception {
-        ProductRecipe product = findById(productId);
-        productRepository.delete(product);
+        ProductRecipeDto product = findById(productId);
+        productRepository.delete(modelMapper.map(product, ProductRecipe.class));
     }
 
-    public void saveProductRecipe(ProductRecipe productRecipe) {
-        if (productRecipe != null) productRepository.save(productRecipe);
+    public void saveProductRecipe(RecipeDto.ProductRecipeDto productRecipeDto, RecipeDto recipe) {
+        if (productRecipeDto != null) {
+            productRecipeDto.setRecipeDto(recipe);
+            ProductRecipe productRecipe = modelMapper.map(productRecipeDto, ProductRecipe.class);
+          productRepository.save(productRecipe);
+        }
     }
 }
