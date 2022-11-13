@@ -17,12 +17,12 @@
         <div class ="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
             <h1 class = "text-center"> Dodaj produkty </h1>
             <div class = "card-body">
-                <form th:action="@{/fridge/product}" th:object = "${fridge}" method="POST">
-                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                        <ul>
-                            <li th:text="${'Niepoprawna treść.'}"></li>
-                        </ul>
-                    </div>
+                <form th:action="@{/fridge/product}" th:object = "${fridgeDtoForm}" method="POST">
+<!--                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">-->
+<!--                        <ul>-->
+<!--                            <li th:text="${'Niepoprawna treść.'}"></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
                     <table>
                         <td>
                             <button type="submit" name="addProduct" class = "btn btn-outline-primary btn-sm">Dodaj</button>
@@ -32,22 +32,22 @@
                             <th >Ilość</th>
                             <th >Produkt</th>
                         </tr>
-                        <tr th:each="product ,iterStat : *{productsInFridge}" th:class="${iterStat.odd}? 'grey-row'">
+                        <tr th:each="product ,iterStat : *{productsInFridgeDto}" th:class="${iterStat.odd}? 'grey-row'">
                             <td th:text="${iterStat.count}"></td>
                             <td>
-                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].amount}" required />
+                                <input type="text" th:field="*{productsInFridgeDto[__${iterStat.index}__].amount}" required />
                             </td>
                             <td>
-                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].productName}" required />
+                                <input type="text" th:field="*{productsInFridgeDto[__${iterStat.index}__].productName}" required />
                             </td>
                             <td>
-                                <select name="unit" th:field="*{productsInFridge[__${iterStat.index}__].unit}"  />
+                                <select name="unit" th:field="*{productsInFridgeDto[__${iterStat.index}__].unit}"  />
                                 <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
                                         th:value="${unit}" th:text="${unit.value}"></option>
                                 </select>
                             </td>
                             <td>
-                                <input type="date" th:field="*{productsInFridge[__${iterStat.index}__].expirationDate}" />
+                                <input type="date" th:field="*{productsInFridgeDto[__${iterStat.index}__].expirationDate}" />
                             </td>
                             <td>
                                 <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
