@@ -3,6 +3,8 @@ package com.infoshareacademy.entity.recipe;
 import com.infoshareacademy.entity.product.ProductRecipe;
 
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -38,7 +40,8 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductRecipe> productList = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "shoppingListRecipe", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "shoppingListRecipe", cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<ShoppingList> shoppingList = new ArrayList<>();
 
     @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

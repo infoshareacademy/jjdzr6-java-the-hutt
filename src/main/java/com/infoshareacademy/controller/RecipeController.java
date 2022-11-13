@@ -114,7 +114,7 @@ public class RecipeController {
 
     @GetMapping("/{recipeId}/shoppinglist/{shoppingListId}")
     public String addRecipeToShoppingList(@PathVariable Long recipeId, @PathVariable Long shoppingListId) {
-        shoppingListService.addRecipeToShoppingList(recipeService.getRecipeById(recipeId),shoppingListId);
+        shoppingListService.addRecipeToShoppingList(recipeId,shoppingListId);
         return "redirect:/recipes";
     }
 

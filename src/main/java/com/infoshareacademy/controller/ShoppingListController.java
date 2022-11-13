@@ -1,5 +1,6 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.DTO.ShoppingListDto;
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import com.infoshareacademy.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,12 @@ public class ShoppingListController {
 
     @GetMapping("/shopping-lists/shopping-list")
     public String createShoppingListForm(Model model) {
-        model.addAttribute("shoppinglist", new ShoppingList());
+        model.addAttribute("shoppinglist", new ShoppingListDto());
         return "create-shopping-list";
     }
 
     @PostMapping("/shopping-lists/shopping-list")
-    public String saveShoppingList(@Valid @ModelAttribute("shoppinglist") ShoppingList shoppingList, BindingResult bindingResult) {
+    public String saveShoppingList(@Valid @ModelAttribute("shoppingList") ShoppingListDto shoppingList, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "create-shopping-list";
         }
