@@ -1,7 +1,10 @@
 package com.infoshareacademy.service;
 
+
 import com.infoshareacademy.DTO.RecipeAllergensDto;
 import com.infoshareacademy.DTO.RecipeDto;
+import com.infoshareacademy.DTO.FridgeDto;
+import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
@@ -148,13 +151,17 @@ public class RecipeService {
     public Page<RecipeDto> getRecipeByProductsInFridge(Pageable pageable) {
 
         //TODO: zmienić wczytywanie przepisów po ID
-        Map<String, ProductInFridge> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
-        List<RecipeDto> filteredRecipies = new ArrayList<>();
-        Map<RecipeDto, List<RecipeDto.ProductRecipeDto>> mapRecipesProducts = mapRecipeProducts();
+
+        List<Recipe> myRecipes = getRecipesWithProductsToLowerCase();
+
+        Map<String, FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
+        List<Recipe> filteredRecipies = new ArrayList<>();
+
 
         for (Map.Entry<RecipeDto, List<RecipeDto.ProductRecipeDto>> entry : mapRecipesProducts.entrySet()) {
             List<RecipeDto.ProductRecipeDto> tempRecipeList = entry.getValue();
             int matchScore = tempRecipeList.size();
+
             for (RecipeDto.ProductRecipeDto productRecipe : tempRecipeList) {
                 ProductInFridge productInFridge = productsInFridge.get(productRecipe.getProductName());
 

@@ -1,7 +1,9 @@
 package com.infoshareacademy.entity.product;
 
 import com.infoshareacademy.entity.fridge.Fridge;
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import java.time.LocalDate;
@@ -30,7 +32,8 @@ public class ProductInFridge extends Product {
     @Future
     private LocalDate expirationDate;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "fridge_id")
     private Fridge fridge;
 

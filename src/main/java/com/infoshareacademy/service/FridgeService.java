@@ -1,67 +1,87 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.DTO.FridgeDto;
+import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FridgeService {
 
-    private static final long DEFAULT_FRIDGE_ID = 1;
+    private static final Long DEFAULT_FRIDGE_ID = 1L;
     private final FridgeRepository fridgeRepository;
     private final ProductInFridgeRepository productInFridgeRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public FridgeService(FridgeRepository fridgeRepository, ProductInFridgeRepository productInFridgeRepository) {
+    public FridgeService(FridgeRepository fridgeRepository, ProductInFridgeRepository productInFridgeRepository,ModelMapper modelMapper) {
         this.fridgeRepository = fridgeRepository;
         this.productInFridgeRepository = productInFridgeRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public Fridge saveFridge(Fridge fridge) {
-        fridge.setFridgeId(getDEFAULT_FRIDGE_ID());
+    public void saveFridge(FridgeDto fridgeDto) {
+        Fridge fridge = modelMapper.map(fridgeDto, Fridge.class);
         fridge.getProductsInFridge().forEach(x -> x.setFridge(fridge));
-        return fridgeRepository.save(fridge);
+        fridge.setFridgeId(getDEFAULT_FRIDGE_ID());
+        fridgeRepository.save(fridge);
     }
 
-    public Fridge getAllProductsFromFridge() {
-        if (fridgeRepository.findById(DEFAULT_FRIDGE_ID).isPresent()) {
-            return fridgeRepository.findById(DEFAULT_FRIDGE_ID).get();
+    public FridgeDto getFridge() {
+        boolean flag = fridgeRepository.findById(DEFAULT_FRIDGE_ID).isPresent();
+        if (flag) {
+            return fridgeRepository.findById(DEFAULT_FRIDGE_ID).map((fridge -> modelMapper.map(fridge, FridgeDto.class))).get();
         } else {
-            return new Fridge();
+            return new FridgeDto();
         }
     }
 
-    public Fridge addProductsToFridgeForm() {
-        Fridge fridge;
-        if (fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).isPresent()) {
-            return fridge = fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).get();
+    public List<ProductInFridgeDto> getProductsInFridge(){
+        List<ProductInFridge> productsInFridge = fridgeRepository.findById(1L).get().getProductsInFridge();
+        List<ProductInFridgeDto> collect = productsInFridge
+                .stream().map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class)).collect(Collectors.toList());
+        return collect;
+
+    }
+
+    public FridgeDto addProductsToFridgeForm() {
+        FridgeDto fridgeDto;
+        if(fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).isPresent()) {
+            fridgeDto = fridgeRepository
+                    .findById(DEFAULT_FRIDGE_ID)
+                    .map((fridge -> modelMapper.map(fridge, FridgeDto.class))).get();
+            return fridgeDto;
         } else {
-            fridge = new Fridge();
-            fridge.setFridgeId(getDEFAULT_FRIDGE_ID());
-            return fridge;
+            fridgeDto = new FridgeDto();
+            fridgeDto.setFridgeDtoId(getDEFAULT_FRIDGE_ID());
+            return fridgeDto;
         }
     }
 
-    public Map<String, ProductInFridge> mapProductsInFridgeWithNameAsKey(){
-        Map<String, ProductInFridge> productsInFridge = getAllProductsFromFridge()
-                .getProductsInFridge()
+    public Map<String, FridgeDto.ProductInFridgeDto> mapProductsInFridgeWithNameAsKey(){
+        Map<String, FridgeDto.ProductInFridgeDto> productsInFridgeDto = getFridge()
+                .getProductsInFridgeDto()
                 .stream()
-                .peek(productInFridge -> productInFridge
-                        .setProductName(productInFridge.getProductName().toLowerCase()))
-                .collect(Collectors.toMap(ProductInFridge::getProductName, Function.identity()));
-        return productsInFridge;
+                .peek(productInFridgeDto -> productInFridgeDto
+                        .setProductName(productInFridgeDto.getProductName().toLowerCase()))
+                .collect(Collectors.toMap(FridgeDto.ProductInFridgeDto::getProductName, Function.identity()));
+        return productsInFridgeDto;
     }
 
-    public Optional<Fridge> findFridgeById(Long id) {
-        return fridgeRepository.findById(id);
+    public Optional<FridgeDto> findFridgeById(Long id) {
+        return fridgeRepository.findById(id).map(fridge -> modelMapper.map(fridge, FridgeDto.class));
     }
 
     public long getDEFAULT_FRIDGE_ID() {

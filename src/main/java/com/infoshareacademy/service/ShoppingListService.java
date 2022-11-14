@@ -1,8 +1,11 @@
 package com.infoshareacademy.service;
 
+
 import com.infoshareacademy.DTO.ProductShoppingListDto;
 import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.DTO.ShoppingListDto;
+import com.infoshareacademy.DTO.FridgeDto;
+import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.product.ProductShoppingList;
@@ -120,8 +123,9 @@ public class ShoppingListService {
 
     public List<ShoppingListDto.ProductShoppingListDto> compareListOfRecipeAndProductsFromFridge(List<ShoppingListDto.RecipeDto> recipeListDto) {
 
-        List<ProductInFridge> productsInFridge = fridgeService.getAllProductsFromFridge().getProductsInFridge();
-        Map<String, Double> fridgeOne = productsInFridge.stream().collect(Collectors.toMap(ProductInFridge::getProductName, ProductInFridge::getAmount));
+
+        List<FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.getFridge().getProductsInFridgeDto();
+        Map<String, Double> fridgeOne = productsInFridge.stream().collect(Collectors.toMap(FridgeDto.ProductInFridgeDto::getProductName, FridgeDto.ProductInFridgeDto::getAmount));
         Map<String, Double> fridgeMap = new HashMap<>();
         for (String key : fridgeOne.keySet()) {
             if (fridgeMap.get(key) == null) {
