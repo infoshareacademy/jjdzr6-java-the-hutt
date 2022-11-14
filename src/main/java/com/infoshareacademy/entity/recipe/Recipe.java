@@ -45,7 +45,7 @@ public class Recipe {
     private List<ShoppingList> shoppingList = new ArrayList<>();
 
     @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private RecipeAllegrens recipeAllegrens;
+    private RecipeAllergens recipeAllergens;
 
     private Long userId;
 
@@ -132,8 +132,8 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
-    public RecipeAllegrens getRecipeAllegrens() {
-        return recipeAllegrens;
+    public RecipeAllergens getRecipeAllergens() {
+        return recipeAllergens;
     }
 
 
@@ -148,7 +148,7 @@ public class Recipe {
                 '}';
     }
 
-    public void setRecipeAllegrens(RecipeAllegrens recipeAllegrens) {
-        this.recipeAllegrens = recipeAllegrens;
+    public void setRecipeAllergens(RecipeAllergens recipeAllergens) {
+        this.recipeAllergens = recipeAllergens;
     }
 }

@@ -1,10 +1,9 @@
 package com.infoshareacademy.DTO;
 
-import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.product.ProductUnit;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.entity.recipe.RecipeAllegrens;
+import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +33,7 @@ public class RecipeDto implements Serializable {
     private Meal meal;
     private List<ProductRecipeDto> productList;
     private List<ShoppingListDto> shoppingList;
-    private RecipeAllegrensDto recipeAllegrens;
+    private RecipeAllergensDto recipeAllergens;
     private Long userId;
 
     public void addProduct(ProductRecipeDto product) {
@@ -75,12 +74,12 @@ public class RecipeDto implements Serializable {
     }
 
     /**
-     * A DTO for the {@link RecipeAllegrens} entity
+     * A DTO for the {@link RecipeAllergens} entity
      */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class RecipeAllegrensDto implements Serializable {
+    public static class RecipeAllergensDto implements Serializable {
         private Long id;
         private boolean chocolate;
         private boolean nuts;
@@ -90,8 +89,8 @@ public class RecipeDto implements Serializable {
         private boolean dairy;
         private String other;
         private boolean meatEater;
-        private boolean Vegan;
-        private boolean Vegetarian;
+        private boolean isVegan;
+        private boolean isVegetarian;
         private RecipeDto recipeDto;
     }
 }

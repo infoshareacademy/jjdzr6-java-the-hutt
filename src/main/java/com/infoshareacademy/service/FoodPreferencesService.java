@@ -4,7 +4,9 @@ import com.infoshareacademy.DTO.FoodPreferencesDto;
 import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import com.infoshareacademy.repository.FoodPreferencesRepository;
+import com.infoshareacademy.repository.RecipeRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +28,17 @@ public class FoodPreferencesService {
 
     private final RecipeService recipeService;
 
+    private final RecipeRepository recipeRepository;
+
     private final FridgeService fridgeService;
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository, RecipeService recipeService, FridgeService fridgeService, ModelMapper modelMapper) {
+    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository, RecipeService recipeService, RecipeRepository recipeRepository, FridgeService fridgeService, ModelMapper modelMapper) {
         this.foodPreferencesRepository = foodPreferencesRepository;
         this.recipeService = recipeService;
+        this.recipeRepository = recipeRepository;
         this.fridgeService = fridgeService;
         this.modelMapper = modelMapper;
     }
@@ -61,72 +66,73 @@ public class FoodPreferencesService {
         }
     }
 
-    public Page<RecipeDto> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
+    // TODO: przerobic na query
+    public Page<Recipe> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
 
         Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
-        List<RecipeDto> recipeList = recipeService.getAllRecipe();
+        List<Recipe> recipeList = recipeRepository.findAll();
+
+        Page<Recipe> recipePage = recipeRepository.findAll(pageable);
 
         if (foodPreferencesRepositoryDtoById.isPresent()) {
             FoodPreferencesDto foodPreferencesDto = foodPreferencesRepositoryDtoById.get();
             if (foodPreferencesDto.isChocolate()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getRecipeAllegrens().isChocolate())
+                        .filter(s -> !s.getRecipeAllergens().isChocolate())
                         .toList();
             }
             if (foodPreferencesDto.isNuts()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getRecipeAllegrens().isNuts())
+                        .filter(s -> !s.getRecipeAllergens().isNuts())
                         .toList();
             }
             if (foodPreferencesDto.isEggs()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getRecipeAllegrens().isEggs())
+                        .filter(s -> !s.getRecipeAllergens().isEggs())
                         .toList();
             }
             if (foodPreferencesDto.isStrawberries()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getRecipeAllegrens().isStrawberries())
+                        .filter(s -> !s.getRecipeAllergens().isStrawberries())
                         .toList();
             }
             if (foodPreferencesDto.isShellfish()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getRecipeAllegrens().isShellfish())
+                        .filter(s -> !s.getRecipeAllergens().isShellfish())
                         .toList();
             }
 
             if (foodPreferencesDto.isDairy()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getRecipeAllegrens().isDairy())
+                        .filter(s -> !s.getRecipeAllergens().isDairy())
                         .toList();
             }
-
-
             if (isNotEqual("-", foodPreferencesDto.getOther())) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getRecipeAllegrens().getOther().equals("-"))
+                        .filter(s -> !s.getRecipeAllergens().getOther().equals("-"))
                         .toList();
             } else if (isNotEqual("brak", foodPreferencesDto.getOther())) {
                 recipeList = recipeList.stream()
-                        .filter(s -> !s.getRecipeAllegrens().getOther().equals("brak"))
+                        .filter(s -> !s.getRecipeAllergens().getOther().equals("brak"))
                         .toList();
             }
             if (foodPreferencesDto.isMeatEater()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> s.getRecipeAllegrens().isMeatEater())
+                        .filter(s -> s.getRecipeAllergens().isMeatEater())
                         .toList();
             } else if (foodPreferencesDto.isVegetarian()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> s.getRecipeAllegrens().isVegetarian())
+                        .filter(s -> s.getRecipeAllergens().isVegetarian())
                         .toList();
 
             } else if (foodPreferencesDto.isVegan()) {
                 recipeList = recipeList.stream()
-                        .filter(s -> s.getRecipeAllegrens().isVegan())
+                        .filter(s -> s.getRecipeAllergens().isVegan())
                         .toList();
             }
-
+        recipePage = new PageImpl<>(recipeList);
         }
-        return new PageImpl<>(recipeList);
+        return recipePage;
 
     }
 

@@ -1,12 +1,11 @@
 package com.infoshareacademy.service;
 
-import com.infoshareacademy.DTO.RecipeAllegrensDto;
+import com.infoshareacademy.DTO.RecipeAllergensDto;
 import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.product.ProductInFridge;
-import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.entity.recipe.RecipeAllegrens;
+import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,15 +45,16 @@ public class RecipeService {
         this.modelMapper = modelMapper;
     }
 
+
     public List<RecipeDto> getAllRecipe() {
         return recipeRepository.findAll().stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList();
     }
 
     public Page<RecipeDto> getSearchRecipe(String keyword, Pageable pageable) {
         if (keyword != null) {
-            return new PageImpl<>(recipeRepository.findRecipeBy(keyword).stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList());
+            return new PageImpl<>(recipeRepository.findRecipeBy(keyword).stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).collect(Collectors.toList()));
         }
-        return new PageImpl<>(recipeRepository.findAll(pageable).stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList());
+        return new PageImpl<>(recipeRepository.findAll(pageable).stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).collect(Collectors.toList()));
     }
 
     public RecipeDto getRecipeById(Long id) {
@@ -64,50 +64,23 @@ public class RecipeService {
         return recipe;
     }
 
+    @Transactional
     public Page<RecipeDto> getRecipesByCanFilterByMeal(Meal meal, Pageable pageable) {
-        if (meal != null) {
-            List<RecipeDto> recipeList = recipeRepository.findAll().stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList();
-
-            switch (meal) {
-
-                case BREAKFAST:
-                    recipeList = recipeList.stream()
-                            .filter(recipe -> recipe.getMeal().equals(Meal.BREAKFAST))
-                            .toList();
-                    break;
-                case LUNCH:
-                    recipeList = recipeList.stream()
-                            .filter(recipe -> recipe.getMeal().equals(Meal.LUNCH))
-                            .toList();
-                    break;
-                case SUPPER:
-                    recipeList = recipeList.stream()
-                            .filter(recipe -> recipe.getMeal().equals(Meal.SUPPER))
-                            .toList();
-                    break;
-                case DINNER:
-                    recipeList = recipeList.stream()
-                            .filter(recipe -> recipe.getMeal().equals(Meal.DINNER))
-                            .toList();
-                    break;
-                case ALL:
-                    recipeList = recipeRepository.findAll().stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList();
-                    ;
-                    break;
-            }
-
-            return new PageImpl<>(recipeList);
-        } else
-            return new PageImpl<>(recipeRepository.findAll(pageable).stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList());
+        Page<Recipe> pageRecipes = recipeRepository.findAll(pageable);
+        if (meal != null && meal != Meal.ALL) {
+            pageRecipes = recipeRepository.findRecipeByMeal(meal, pageable);
+        }
+        Page<RecipeDto> recipeDtos = pageRecipes.map(recipe -> modelMapper.map(recipe, RecipeDto.class));
+        return recipeDtos;
     }
 
-    public void saveRecipeAllergens(Long id, RecipeAllegrensDto allergens) {
+    public void saveRecipeAllergens(Long id, RecipeAllergensDto allergens) {
         Recipe recipe = new Recipe();
         recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
-        RecipeAllegrens existingAllergens;
-        if (allergensRepository.findById(recipe.getRecipeAllegrens().getId()).isPresent()) {
-            existingAllergens = allergensRepository.findById(recipe.getRecipeAllegrens().getId()).get();
+        RecipeAllergens existingAllergens;
+        if (allergensRepository.findById(recipe.getRecipeAllergens().getId()).isPresent()) {
+            existingAllergens = allergensRepository.findById(recipe.getRecipeAllergens().getId()).get();
             existingAllergens.setRecipe(recipe);
             existingAllergens.setChocolate(allergens.isChocolate());
             existingAllergens.setDairy(allergens.isDairy());
@@ -128,7 +101,7 @@ public class RecipeService {
     public void saveRecipe(RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
-        recipe.getRecipeAllegrens().setRecipe(recipe);
+        recipe.getRecipeAllergens().setRecipe(recipe);
         recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         LOGGER.info("Zapisano przepis: " + recipe.getName());
         recipeRepository.save(recipe);
@@ -175,12 +148,8 @@ public class RecipeService {
     public Page<RecipeDto> getRecipeByProductsInFridge(Pageable pageable) {
 
         //TODO: zmienić wczytywanie przepisów po ID
-        List<RecipeDto> myRecipes = getRecipesWithProductsToLowerCase();
-
         Map<String, ProductInFridge> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
         List<RecipeDto> filteredRecipies = new ArrayList<>();
-
-
         Map<RecipeDto, List<RecipeDto.ProductRecipeDto>> mapRecipesProducts = mapRecipeProducts();
 
         for (Map.Entry<RecipeDto, List<RecipeDto.ProductRecipeDto>> entry : mapRecipesProducts.entrySet()) {
@@ -198,7 +167,6 @@ public class RecipeService {
                 filteredRecipies.add(entry.getKey());
             }
         }
-
         return new PageImpl<>(filteredRecipies);
     }
 

@@ -2,7 +2,7 @@ package com.infoshareacademy.DTO;
 
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.entity.recipe.RecipeAllegrens;
+import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,12 +13,12 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 /**
- * A DTO for the {@link RecipeAllegrens} entity
+ * A DTO for the {@link RecipeAllergens} entity
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeAllegrensDto implements Serializable {
+public class RecipeAllergensDto implements Serializable {
     private  Long id;
     private  boolean chocolate;
     private  boolean nuts;
@@ -28,8 +28,8 @@ public class RecipeAllegrensDto implements Serializable {
     private  boolean dairy;
     private  String other;
     private  boolean meatEater;
-    private  boolean Vegan;
-    private  boolean Vegetarian;
+    private  boolean isVegan;
+    private  boolean isVegetarian;
     private  RecipeDto recipe;
 
     /**

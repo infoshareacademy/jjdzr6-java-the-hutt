@@ -1,6 +1,10 @@
 package com.infoshareacademy.repository;
 
+import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.entity.recipe.RecipeAllergens;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +24,9 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Modifying
     void deleteByRecipeId(Long id);
+
+    @Query("SELECT DISTINCT r FROM Recipe r WHERE r.meal = ?1")
+    Page<Recipe> findRecipeByMeal(Meal meal, Pageable pageable);
 
 
 }

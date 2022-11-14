@@ -3,7 +3,7 @@ package com.infoshareacademy.entity.recipe;
 import javax.persistence.*;
 
 @Entity
-public class RecipeAllegrens {
+public class RecipeAllergens {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,17 +16,17 @@ public class RecipeAllegrens {
     private boolean dairy;
     private String other;
     private boolean meatEater;
-    private boolean Vegan;
-    private boolean Vegetarian;
+    private boolean isVegan;
+    private boolean isVegetarian;
 
     @JoinColumn(name = "recipe_id")
     @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY, orphanRemoval = true)
     private Recipe recipe;
 
-    public RecipeAllegrens() {
+    public RecipeAllergens() {
     }
 
-    public RecipeAllegrens(boolean chocolate, boolean nuts, boolean eggs, boolean strawberries, boolean shellfish, boolean dairy, String other, boolean meatEater, boolean vegan, boolean vegetarian) {
+    public RecipeAllergens(boolean chocolate, boolean nuts, boolean eggs, boolean strawberries, boolean shellfish, boolean dairy, String other, boolean meatEater, boolean isVegan, boolean isVegetarian) {
         this.chocolate = chocolate;
         this.nuts = nuts;
         this.eggs = eggs;
@@ -35,8 +35,8 @@ public class RecipeAllegrens {
         this.dairy = dairy;
         this.other = other;
         this.meatEater = meatEater;
-        Vegan = vegan;
-        Vegetarian = vegetarian;
+        this.isVegan = isVegan;
+        this.isVegetarian = isVegetarian;
     }
 
     public Long getId() {
@@ -112,19 +112,19 @@ public class RecipeAllegrens {
     }
 
     public boolean isVegan() {
-        return Vegan;
+        return isVegan;
     }
 
     public void setVegan(boolean vegan) {
-        Vegan = vegan;
+        isVegan = vegan;
     }
 
     public boolean isVegetarian() {
-        return Vegetarian;
+        return isVegetarian;
     }
 
     public void setVegetarian(boolean vegetarian) {
-        Vegetarian = vegetarian;
+        isVegetarian = vegetarian;
     }
 
     public Recipe getRecipe() {
@@ -147,8 +147,8 @@ public class RecipeAllegrens {
                 ", dairy=" + dairy +
                 ", other='" + other + '\'' +
                 ", meatEater=" + meatEater +
-                ", Vegan=" + Vegan +
-                ", Vegetarian=" + Vegetarian +
+                ", Vegan=" + isVegan +
+                ", Vegetarian=" + isVegetarian +
                 ", recipe=" + recipe +
                 '}';
     }

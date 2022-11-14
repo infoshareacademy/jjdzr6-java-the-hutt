@@ -1,9 +1,8 @@
 package com.infoshareacademy.controller;
 
-import com.infoshareacademy.DTO.RecipeAllegrensDto;
+import com.infoshareacademy.DTO.RecipeAllergensDto;
 import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.recipe.Meal;
-import com.infoshareacademy.entity.recipe.RecipeAllegrens;
 import com.infoshareacademy.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.infoshareacademy.entity.product.ProductRecipe;
-import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.service.RecipeService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -29,7 +26,6 @@ import javax.validation.Valid;
 public class RecipeController {
 
     private final RecipeService recipeService;
-
     private final ShoppingListService shoppingListService;
 
     @Autowired
@@ -46,7 +42,7 @@ public class RecipeController {
         return "recipes";
     }
 
-    @GetMapping("/filtered-prodcts")
+    @GetMapping("/filtered-products")
     public String searchRecipeList(Model model, @Param("keyword") String keyword, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
         model.addAttribute("recipes", recipeService.getSearchRecipe(keyword, pageable));
         model.addAttribute("keyword", keyword);
@@ -95,13 +91,13 @@ public class RecipeController {
 
     @GetMapping("/{recipeId}/allergens")
     public String editAllergensRecipe(@PathVariable Long recipeId, Model model) {
-        model.addAttribute("allergens", recipeService.getRecipeById(recipeId).getRecipeAllegrens());
+        model.addAttribute("allergens", recipeService.getRecipeById(recipeId).getRecipeAllergens());
         model.addAttribute("recipeId", recipeId);
         return "edit-recipe-allergens";
     }
 
     @PostMapping("/{recipeId}/allergens")
-    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllegrensDto allergens) {
+    public String saveAllergensRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeAllergensDto allergens) {
         recipeService.saveRecipeAllergens(recipeId, allergens);
         return "redirect:/recipes/" + recipeId;
     }
