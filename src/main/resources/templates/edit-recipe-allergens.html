@@ -15,7 +15,7 @@
     <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
       <h1 class="text-center"> Edytuj Alergeny </h1>
       <div class="card-body">
-        <form th:action="@{/recipes/{recipeId}/allergens/(recipeId=${allergens.recipe.recipeId})}"
+        <form th:action="@{/recipes/{recipeId}/allergens/(recipeId=${recipeId})}"
               th:object="${allergens}"
               method="post">
 

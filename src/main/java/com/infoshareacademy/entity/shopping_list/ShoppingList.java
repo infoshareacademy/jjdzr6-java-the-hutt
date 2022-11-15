@@ -2,7 +2,8 @@ package com.infoshareacademy.entity.shopping_list;
 
 import com.infoshareacademy.entity.product.ProductShoppingList;
 import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.entity.product.ProductShoppingList;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,11 @@ public class ShoppingList {
     private Long id;
 
     private String name;
-    @OneToMany(mappedBy = "shoppingList", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductShoppingList> shoppingProductList = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinTable(name = "shopping_recipe_list",
             joinColumns = @JoinColumn(name = "shooping_list_id"),
             inverseJoinColumns = @JoinColumn(name = "recipe_id"))
@@ -41,6 +43,22 @@ public class ShoppingList {
         this.shoppingProductList = shoppingProductList;
     }
 
+    public void addRecipe(Recipe recipe) {
+        this.shoppingListRecipe.add(recipe);
+        recipe.getShoppingList().add(this);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
+    public void removeRecipe(Recipe recipe) {
+        this.shoppingListRecipe.remove(recipe);
+        recipe.getShoppingList().remove(this);
+    }
+
     public String getName() {
         return name;
     }
@@ -51,6 +69,10 @@ public class ShoppingList {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     public List<Recipe> getShoppingListRecipe() {

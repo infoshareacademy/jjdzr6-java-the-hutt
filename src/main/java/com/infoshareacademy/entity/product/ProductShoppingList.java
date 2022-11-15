@@ -28,6 +28,8 @@ public class ProductShoppingList extends Product {
     public ProductShoppingList() {
     }
 
+
+
     public ProductShoppingList(String productName, Double amount) {
         this.productName = productName;
         this.amount = amount;

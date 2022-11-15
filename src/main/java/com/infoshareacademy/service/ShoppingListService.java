@@ -1,5 +1,9 @@
 package com.infoshareacademy.service;
 
+
+import com.infoshareacademy.DTO.ProductShoppingListDto;
+import com.infoshareacademy.DTO.RecipeDto;
+import com.infoshareacademy.DTO.ShoppingListDto;
 import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.product.ProductInFridge;
@@ -11,10 +15,15 @@ import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import com.infoshareacademy.repository.ShoppingListRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.collection.spi.PersistentCollection;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ShoppingListService {
@@ -22,22 +31,34 @@ public class ShoppingListService {
     private final ShoppingListRepository shoppingListRepository;
     private final FridgeService fridgeService;
 
+    private final RecipeService recipeService;
+    private final ModelMapper modelMapper;
     private static Logger LOGGER = LogManager.getLogger(ShoppingListService.class.getName());
 
 
+
+
     @Autowired
-    public ShoppingListService(ShoppingListRepository shoppingListRepository, FridgeService fridgeService) {
+    public ShoppingListService(ShoppingListRepository shoppingListRepository, FridgeService fridgeService, RecipeService recipeService, ModelMapper modelMapper) {
         this.shoppingListRepository = shoppingListRepository;
         this.fridgeService = fridgeService;
-
+        this.recipeService = recipeService;
+        this.modelMapper = modelMapper;
     }
 
-    public List<ShoppingList> findAllShoppingLists() {
-        return shoppingListRepository.findByUserId(fridgeService.getDEFAULT_FRIDGE_ID());
+
+
+    public List<ShoppingListDto> findAllShoppingLists() {
+        return shoppingListRepository.findByUserId(fridgeService.getDEFAULT_FRIDGE_ID()).stream().map(shoppingList -> modelMapper.
+                map(shoppingList, ShoppingListDto.class)).toList();
     }
 
-    public void saveShoppingList(ShoppingList shoppingList) {
-        shoppingList.getShoppingProductList().forEach(x -> x.setShoppingList(shoppingList));
+    @Transactional
+    public void saveShoppingList(ShoppingListDto shoppingListDto) {
+        ShoppingList shoppingList = modelMapper.map(shoppingListDto, ShoppingList.class);
+        if (shoppingList.getShoppingProductList() != null) {
+            shoppingList.getShoppingProductList().forEach(x -> x.setShoppingList(shoppingList));
+        }
         shoppingList.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
         shoppingListRepository.save(shoppingList);
         LOGGER.info("Zapisano listę zakupów: " + shoppingList.getName());
@@ -50,35 +71,42 @@ public class ShoppingListService {
 
     }
 
-    public ShoppingList getShoppingList(Long id) {
-        ShoppingList shoppingList = new ShoppingList();
-        if (shoppingListRepository.findById(id).isPresent()) shoppingList = shoppingListRepository.findById(id).get();
-        return shoppingList;
+    public ShoppingListDto getShoppingList(Long id) {
+        ShoppingList shoppingList;
+        if (shoppingListRepository.findById(id).isPresent()) {
+            shoppingList = shoppingListRepository.findById(id).get();
+        } else {
+            shoppingList = new ShoppingList();
+        }
+        return modelMapper.map(shoppingList, ShoppingListDto.class);
     }
 
-    public ShoppingList viewShoppingList(Long id) {
+    public ShoppingListDto viewShoppingList(Long id) {
         ShoppingList shoppingList = new ShoppingList();
         addProductsFromRecipesToShoppingList(id);
         if (shoppingListRepository.findById(id).isPresent()) shoppingList = shoppingListRepository.findById(id).get();
-        return shoppingList;
+        return modelMapper.map(shoppingList, ShoppingListDto.class);
     }
 
-    public void addRecipeToShoppingList(Recipe recipe, Long id) {
-
-        ShoppingList shoppingList = getShoppingList(id);
+    @Transactional
+    public void addRecipeToShoppingList(Long recipeId, Long id) {
+        Recipe recipe = modelMapper.map(recipeService.getRecipeById(recipeId), Recipe.class);
+        ShoppingListDto shoppingListDto = getShoppingList(id);
+        ShoppingList shoppingList = modelMapper.map(shoppingListDto, ShoppingList.class);
         List<Recipe> shoppingListRecipe = shoppingList.getShoppingListRecipe();
-
         if (!shoppingListRecipe.contains(recipe)) {
-            shoppingListRecipe.add(recipe);
+            shoppingList.addRecipe(recipe);
         }
-        saveShoppingList(shoppingList);
+        shoppingListRepository.save(modelMapper.map(shoppingList, ShoppingList.class));
+
         LOGGER.info("Dodano przepis " + recipe.getName() + " do listy zakupów: " + shoppingList.getName());
     }
 
     public void addProductsFromRecipesToShoppingList(Long id) {
-        List<Recipe> shoppingListRecipe = getShoppingList(id).getShoppingListRecipe();
-        List<ProductShoppingList> productsFromRecipe = compareListOfRecipeAndProductsFromFridge(shoppingListRecipe);
-        ShoppingList shoppingList = getShoppingList(id);
+        List<ShoppingListDto.RecipeDto> recipeDtoList = getShoppingList(id).getShoppingListRecipe();
+        List<ShoppingListDto.ProductShoppingListDto> productShoppingListDtos = compareListOfRecipeAndProductsFromFridge(recipeDtoList);
+        List<ProductShoppingList> productsFromRecipe = productShoppingListDtos.stream().map(productShoppingListDto -> modelMapper.map(productShoppingListDto, ProductShoppingList.class)).toList();
+        ShoppingList shoppingList = modelMapper.map(getShoppingList(id), ShoppingList.class);
         deleteProductsFromShoppingList(id);
         shoppingList.setShoppingProductList(productsFromRecipe);
         for (ProductShoppingList list : shoppingList.getShoppingProductList()) {
@@ -93,7 +121,7 @@ public class ShoppingListService {
         shoppingListRepository.deleteProductsFromShoppingList(id);
     }
 
-    public List<ProductShoppingList> compareListOfRecipeAndProductsFromFridge(List<Recipe> recipeList) {
+    public List<ShoppingListDto.ProductShoppingListDto> compareListOfRecipeAndProductsFromFridge(List<ShoppingListDto.RecipeDto> recipeListDto) {
 
 
         List<FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.getFridge().getProductsInFridgeDto();
@@ -110,16 +138,18 @@ public class ShoppingListService {
 
         Map<String, Double> recipeMap = new HashMap<>();
         Map<String, ProductUnit> unitsMap = new HashMap<>();
-        List<ProductShoppingList> shoppingList = new ArrayList<>();
-        convertToMapAndCompareProducts(recipeList, recipeMap, unitsMap);
+        List<ShoppingListDto.ProductShoppingListDto> shoppingList = new ArrayList<>();
+/*        List<RecipeDto> recipeDtoStream = recipeListDto.stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList();*/
+        convertToMapAndCompareProducts(recipeListDto, recipeMap, unitsMap);
         Map<String, Double> map = hashMapDifference(fridgeMap, recipeMap);
         addProductsToShoppingList(unitsMap, shoppingList, map);
         return shoppingList;
     }
 
-    private static void addProductsToShoppingList(Map<String, ProductUnit> unitsMap, List<ProductShoppingList> shoppingList, Map<String, Double> map) {
+    private static void addProductsToShoppingList(Map<String, ProductUnit> unitsMap, List<ShoppingListDto.ProductShoppingListDto> shoppingList, Map<String, Double> map) {
+
         for (String key : map.keySet()) {
-            ProductShoppingList product = new ProductShoppingList();
+            ShoppingListDto.ProductShoppingListDto product = new ShoppingListDto.ProductShoppingListDto();
             product.setProductName(key);
             product.setAmount(map.get(key));
             product.setUnit(unitsMap.get(key));
@@ -127,7 +157,8 @@ public class ShoppingListService {
         }
     }
 
-    private static Map<String, Double> convertToMapAndCompareProducts(List<Recipe> recipeList, Map<String, Double> recipeMap, Map<String, ProductUnit> unitsMap) {
+    private Map<String, Double> convertToMapAndCompareProducts(List<ShoppingListDto.RecipeDto> recipeListDto, Map<String, Double> recipeMap, Map<String, ProductUnit> unitsMap) {
+        List<Recipe> recipeList = recipeListDto.stream().map(recipeDto -> modelMapper.map(recipeDto, Recipe.class)).toList();
         for (Recipe recipe : recipeList) {
             Map<String, Double> recipeOne = recipe.getProductList().stream().collect(Collectors.toMap(ProductRecipe::getProductName, ProductRecipe::getAmount));
             Map<String, ProductUnit> recipeUnits = recipe.getProductList().stream().collect(Collectors.toMap(ProductRecipe::getProductName, ProductRecipe::getUnit));

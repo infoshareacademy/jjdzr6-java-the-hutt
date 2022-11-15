@@ -3,11 +3,12 @@ package com.infoshareacademy.entity.recipe;
 import com.infoshareacademy.entity.product.ProductRecipe;
 
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -39,11 +40,12 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductRecipe> productList = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "shoppingListRecipe", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "shoppingListRecipe", cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<ShoppingList> shoppingList = new ArrayList<>();
 
     @OneToOne(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private RecipeAllegrens recipeAllegrens;
+    private RecipeAllergens recipeAllergens;
 
     private Long userId;
 
@@ -58,6 +60,10 @@ public class Recipe {
     public void addProduct(ProductRecipe product) {
         this.productList.add(product);
         product.setRecipe(this);
+    }
+
+    public void setProductList(List<ProductRecipe> productList) {
+        this.productList = productList;
     }
 
     public List<ShoppingList> getShoppingList() {
@@ -126,8 +132,8 @@ public class Recipe {
         this.preparationTime = preparationTime;
     }
 
-    public RecipeAllegrens getRecipeAllegrens() {
-        return recipeAllegrens;
+    public RecipeAllergens getRecipeAllergens() {
+        return recipeAllergens;
     }
 
 
@@ -142,7 +148,7 @@ public class Recipe {
                 '}';
     }
 
-    public void setRecipeAllegrens(RecipeAllegrens recipeAllegrens) {
-        this.recipeAllegrens = recipeAllegrens;
+    public void setRecipeAllergens(RecipeAllergens recipeAllergens) {
+        this.recipeAllergens = recipeAllergens;
     }
 }

@@ -18,4 +18,6 @@ public class ThymeleafConfiguration {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper;
     }
+
+
 }
