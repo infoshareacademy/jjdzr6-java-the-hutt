@@ -87,7 +87,8 @@ public class ProductRecipe extends Product {
     public String toString() {
 
         return  productName + '\'' +
-                ", ilość:" + amount + " " + unit.getValue();    }
+                ", ilość:" + amount + " " + unit.getValue();
+    }
 
 
     @Override

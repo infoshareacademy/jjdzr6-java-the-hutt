@@ -1,12 +1,8 @@
 package com.infoshareacademy.service;
 
 
-import com.infoshareacademy.DTO.ProductShoppingListDto;
-import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.DTO.ShoppingListDto;
 import com.infoshareacademy.DTO.FridgeDto;
-import com.infoshareacademy.DTO.ProductInFridgeDto;
-import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.product.ProductShoppingList;
 import com.infoshareacademy.entity.product.ProductUnit;
@@ -15,7 +11,6 @@ import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import com.infoshareacademy.repository.ShoppingListRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.collection.spi.PersistentCollection;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class ShoppingListService {
@@ -123,8 +117,11 @@ public class ShoppingListService {
 
     public List<ShoppingListDto.ProductShoppingListDto> compareListOfRecipeAndProductsFromFridge(List<ShoppingListDto.RecipeDto> recipeListDto) {
 
+        List<FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.getFridge().getProductsInFridge();
 
-        List<FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.getFridge().getProductsInFridgeDto();
+        if(productsInFridge == null){
+            productsInFridge = new ArrayList<>();
+        }
         Map<String, Double> fridgeOne = productsInFridge.stream().collect(Collectors.toMap(FridgeDto.ProductInFridgeDto::getProductName, FridgeDto.ProductInFridgeDto::getAmount));
         Map<String, Double> fridgeMap = new HashMap<>();
         for (String key : fridgeOne.keySet()) {

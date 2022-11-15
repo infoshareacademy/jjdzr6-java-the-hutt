@@ -57,6 +57,13 @@ public class RecipeDto implements Serializable {
         private ProductUnit unit;
         private RecipeDto recipeDto;
 
+        @Override
+        public String toString() {
+
+            return  productName + '\'' +
+                    ", ilość:" + amount + " " + unit.getValue();
+        }
+
 
     }
 

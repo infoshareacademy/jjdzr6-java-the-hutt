@@ -18,11 +18,11 @@
             <h1 class = "text-center"> Stwórz nowy przepis </h1>
             <div class = "card-body">
                 <form th:action="@{/recipes/recipe}" th:object = "${recipe}" method="POST">
-                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                        <ul>
-                            <li th:text="${'Niepoprawna treść przepisu.'}"></li>
-                        </ul>
-                    </div>
+<!--                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">-->
+<!--                        <ul>-->
+<!--                            <li th:text="${'Niepoprawna treść przepisu.'}"></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
                     <div class ="form-group">
                         <label> Tytuł </label>
                         <input
@@ -97,16 +97,16 @@
                     </table>
 
                     Lista Twoich alergenów:
-                    <p>Czekolada<input type="checkbox" th:field="${recipe.recipeAllegrens.chocolate}"/></p>
-                    <p>Produkty mleczne<input type="checkbox" th:field="${recipe.recipeAllegrens.dairy}"/></p>
-                    <p>Jaja<input type="checkbox" th:field="${recipe.recipeAllegrens.eggs}"/></p>
-                    <p>Orzechy<input type="checkbox" th:field="${recipe.recipeAllegrens.nuts}"/></p>
-                    <p>Skorupiaki<input type="checkbox" th:field="${recipe.recipeAllegrens.shellfish}"/></p>
-                    <p>Truskawki<input type="checkbox" th:field="${recipe.recipeAllegrens.strawberries}"/></p>
-                    <p>Czy jesz mięso?<input type="checkbox" th:field="${recipe.recipeAllegrens.meatEater}"/></p>
-                    <p>Dieta wegańska?<input type="checkbox" th:field="${recipe.recipeAllegrens.vegan}"/></p>
-                    <p>Dieta wegetariańska?<input type="checkbox" th:field="${recipe.recipeAllegrens.vegetarian}"/></p>
-                    <p>Inne alergeny: <input type="text" th:field="${recipe.recipeAllegrens.other}"/></p>
+                    <p>Czekolada<input type="checkbox" th:field="${recipe.recipeAllergens.chocolate}"/></p>
+                    <p>Produkty mleczne<input type="checkbox" th:field="${recipe.recipeAllergens.dairy}"/></p>
+                    <p>Jaja<input type="checkbox" th:field="${recipe.recipeAllergens.eggs}"/></p>
+                    <p>Orzechy<input type="checkbox" th:field="${recipe.recipeAllergens.nuts}"/></p>
+                    <p>Skorupiaki<input type="checkbox" th:field="${recipe.recipeAllergens.shellfish}"/></p>
+                    <p>Truskawki<input type="checkbox" th:field="${recipe.recipeAllergens.strawberries}"/></p>
+                    <p>Czy jesz mięso?<input type="checkbox" th:field="${recipe.recipeAllergens.meatEater}"/></p>
+                    <p>Dieta wegańska?<input type="checkbox" th:field="${recipe.recipeAllergens.vegan}"/></p>
+                    <p>Dieta wegetariańska?<input type="checkbox" th:field="${recipe.recipeAllergens.vegetarian}"/></p>
+                    <p>Inne alergeny: <input type="text" th:field="${recipe.recipeAllergens.other}"/></p>
 
                     <div class = "box-footer">
                         </br>
