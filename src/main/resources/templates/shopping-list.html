@@ -31,7 +31,7 @@
         <tr th:each="shopping: ${getShopping}">
             <td th:text="${shopping.getName()}"></td>
             <td>
-                <a th:href="@{/shopping-lists/{shoppingListId}(shoppingListId=${shopping.id})}"
+                <a th:href="@{/shopping-lists/shopping-list/{shoppingListId}(shoppingListId=${shopping.id})}"
                    class="btn btn-primary">Wyświetl listę zakupów</a>
 
                 <a th:href="@{/shopping-lists/list/{shoppingListId}(shoppingListId=${shopping.id})}" onclick="deletedList()"

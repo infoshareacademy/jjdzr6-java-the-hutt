@@ -1,10 +1,8 @@
 package com.infoshareacademy.service;
 
 import com.infoshareacademy.DTO.FoodPreferencesDto;
-import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.recipe.Recipe;
-import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import com.infoshareacademy.repository.FoodPreferencesRepository;
 import com.infoshareacademy.repository.RecipeRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -43,12 +41,12 @@ public class FoodPreferencesService {
         this.modelMapper = modelMapper;
     }
 
-    public List<FoodPreferencesDto> getFoodPreferences() {
-        return foodPreferencesRepository.findAll().stream().map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class)).collect(Collectors.toList());
-    }
-
     public Optional<FoodPreferencesDto> getFoodPreferencesById(Long id) {
         return foodPreferencesRepository.findById(id).map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class));
+    }
+
+    public List<FoodPreferencesDto> getFoodPreferences() {
+        return foodPreferencesRepository.findAll().stream().map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class)).collect(Collectors.toList());
     }
 
     public void setFoodPreferences(FoodPreferencesDto foodPreferencesDto) {
@@ -130,7 +128,7 @@ public class FoodPreferencesService {
                         .filter(s -> s.getRecipeAllergens().isVegan())
                         .toList();
             }
-        recipePage = new PageImpl<>(recipeList);
+            recipePage = new PageImpl<>(recipeList);
         }
         return recipePage;
 

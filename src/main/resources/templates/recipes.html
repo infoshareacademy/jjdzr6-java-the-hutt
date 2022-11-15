@@ -20,7 +20,7 @@
 
     <div>&nbsp;</div>
     <div>
-        <form th:action="@{/recipes/filtered-products}">
+        <form th:action="@{/recipes/keyword}">
             <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Wyszukaj..."
                    required/>
             </br>
@@ -38,10 +38,10 @@
             <a th:href="@{/recipes/recipe}" class="btn btn-success mb-2"> Dodaj nowy przepis</a>
         </div>
         <div>
-            <a th:href="@{/recipes/recipes-todo}" class="btn btn-success mb-2"> Filtruj po produktach w lodówce</a>
+            <a th:href="@{/recipes/fridge}" class="btn btn-success mb-2"> Filtruj po produktach w lodówce</a>
         </div>
         <div>
-            <a th:href="@{/foodpreferences/recipe/}" class="btn btn-success mb-2"> Filtruj po alergenach</a>
+            <a th:href="@{/recipes/foodpreferences/}" class="btn btn-success mb-2"> Filtruj po alergenach</a>
         </div>
 
         <div class="dropdown">
