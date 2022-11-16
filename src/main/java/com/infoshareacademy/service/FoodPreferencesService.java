@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @Service
 public class FoodPreferencesService {
 
-
     private final FoodPreferencesRepository foodPreferencesRepository;
 
     private final RecipeService recipeService;
@@ -57,8 +56,7 @@ public class FoodPreferencesService {
 
     public Optional<FoodPreferencesDto> checkIfFoodPreferencesIsSet() {
         if (foodPreferencesRepository.findById(fridgeService.getDEFAULT_FRIDGE_ID()).isPresent()) {
-            Optional<FoodPreferencesDto> foodPreferencesDto = getFoodPreferencesById(fridgeService.getDEFAULT_FRIDGE_ID());
-            return foodPreferencesDto;
+            return getFoodPreferencesById(fridgeService.getDEFAULT_FRIDGE_ID());
         } else {
             return Optional.of(new FoodPreferencesDto());
         }

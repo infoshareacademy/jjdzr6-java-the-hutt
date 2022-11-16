@@ -60,7 +60,7 @@ public class ProductInFridgeController {
 
     @GetMapping("/{fridgeId}/{productId}")
     public String deleteProductFromFridge(@PathVariable Long productId, @PathVariable Long fridgeId) throws Exception {
-        productInFridgeService.deleteProductFromFridge(productId);
+        productInFridgeService.deleteProductInFridge(productId);
         return "redirect:/fridge";
     }
 
@@ -76,7 +76,7 @@ public class ProductInFridgeController {
                                       @ModelAttribute("productInFridge") FridgeDto.ProductInFridgeDto productInFridgeDto, @PathVariable Long fridgeId) throws NotFoundException {
         logger.info(productInFridgeDto.toString());
         model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
-        productInFridgeService.editProductFromFridge(productId, productInFridgeDto);
+        productInFridgeService.editProductInFridge(productId, productInFridgeDto);
         return "redirect:/fridge";
     }
     @PostMapping("/product")

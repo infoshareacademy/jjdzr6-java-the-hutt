@@ -1,16 +1,16 @@
 package com.infoshareacademy.service;
 
 
+import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.DTO.RecipeAllergensDto;
 import com.infoshareacademy.DTO.RecipeDto;
-import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
+import com.infoshareacademy.repository.RecipeRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.infoshareacademy.repository.RecipeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,15 +47,17 @@ public class RecipeService {
     }
 
 
-    public List<RecipeDto> getAllRecipe() {
+    public List<RecipeDto> getAllRecipes() {
         return recipeRepository.findAll().stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList();
     }
 
-    public Page<RecipeDto> getSearchRecipe(String keyword, Pageable pageable) {
+    public Page<RecipeDto> getSearchedRecipe(String keyword, Pageable pageable) {
         if (keyword != null) {
-            return new PageImpl<>(recipeRepository.findRecipeBy(keyword).stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).collect(Collectors.toList()));
+            return new PageImpl<>(recipeRepository.findRecipeBy(keyword)
+                    .stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).collect(Collectors.toList()));
         }
-        return new PageImpl<>(recipeRepository.findAll(pageable).stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).collect(Collectors.toList()));
+        return new PageImpl<>(recipeRepository.findAll(pageable)
+                .stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).collect(Collectors.toList()));
     }
 
     public RecipeDto getRecipeById(Long id) {
@@ -66,13 +68,12 @@ public class RecipeService {
     }
 
     @Transactional
-    public Page<RecipeDto> getRecipesByCanFilterByMeal(Meal meal, Pageable pageable) {
+    public Page<RecipeDto> getRecipesFilteredByMeal(Meal meal, Pageable pageable) {
         Page<Recipe> pageRecipes = recipeRepository.findAll(pageable);
         if (meal != null && meal != Meal.ALL) {
             pageRecipes = recipeRepository.findRecipeByMeal(meal, pageable);
         }
-        Page<RecipeDto> recipeDtos = pageRecipes.map(recipe -> modelMapper.map(recipe, RecipeDto.class));
-        return recipeDtos;
+        return pageRecipes.map(recipe -> modelMapper.map(recipe, RecipeDto.class));
     }
 
     public void saveRecipeAllergens(Long id, RecipeAllergensDto allergens) {
@@ -93,9 +94,9 @@ public class RecipeService {
             existingAllergens.setStrawberries(allergens.isStrawberries());
             existingAllergens.setVegan(allergens.isVegan());
             existingAllergens.setVegetarian(allergens.isVegetarian());
+
             allergensRepository.save(existingAllergens);
             LOGGER.info("Zapisano preferencje żywieniowe!");
-
         }
     }
 
@@ -104,6 +105,7 @@ public class RecipeService {
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
         recipe.getRecipeAllergens().setRecipe(recipe);
         recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
+
         LOGGER.info("Zapisano przepis: " + recipe.getName());
         recipeRepository.save(recipe);
     }
@@ -119,6 +121,7 @@ public class RecipeService {
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
         existingRecipe.setMeal(recipe.getMeal());
+
         recipeRepository.save(existingRecipe);
         LOGGER.info("Zaktualizowano przepis: " + recipe.getName());
     }
@@ -133,30 +136,28 @@ public class RecipeService {
     }
 
     public List<RecipeDto> getRecipesWithProductsToLowerCase() {
-        List<RecipeDto> recipes = getAllRecipe().stream()
+        List<RecipeDto> recipes = getAllRecipes().stream()
                 .peek(recipe -> recipe.getProductList()
                         .forEach(productRecipe -> productRecipe
                                 .setProductName(productRecipe.getProductName().toLowerCase()))).toList();
         return recipes;
     }
 
-    public Map<RecipeDto, List<RecipeDto.ProductRecipeDto>> mapRecipeProducts() {
+    public Map<RecipeDto, List<RecipeDto.ProductRecipeDto>> mapRecipesWithProducts() {
         Map<RecipeDto, List<RecipeDto.ProductRecipeDto>> mapRecipesProducts = getRecipesWithProductsToLowerCase().stream()
                 .collect(Collectors.toMap(Function.identity(), RecipeDto::getProductList));
         return mapRecipesProducts;
     }
 
-    public Page<RecipeDto> getRecipeByProductsInFridge(Pageable pageable) {
+    public Page<RecipeDto> getRecipesFilteredByProductsInFridge(Pageable pageable) {
 
         //TODO: zmienić wczytywanie przepisów po ID
-
-        List<RecipeDto> myRecipes = getRecipesWithProductsToLowerCase();
 
         Map<String, FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
         List<RecipeDto> filteredRecipies = new ArrayList<>();
 
 
-        for (Map.Entry<RecipeDto, List<RecipeDto.ProductRecipeDto>> entry : mapRecipeProducts().entrySet()) {
+        for (Map.Entry<RecipeDto, List<RecipeDto.ProductRecipeDto>> entry : mapRecipesWithProducts().entrySet()) {
             List<RecipeDto.ProductRecipeDto> tempRecipeList = entry.getValue();
             int matchScore = tempRecipeList.size();
 

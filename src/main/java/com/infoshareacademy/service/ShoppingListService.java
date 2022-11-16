@@ -1,8 +1,8 @@
 package com.infoshareacademy.service;
 
 
-import com.infoshareacademy.DTO.ShoppingListDto;
 import com.infoshareacademy.DTO.FridgeDto;
+import com.infoshareacademy.DTO.ShoppingListDto;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.product.ProductShoppingList;
 import com.infoshareacademy.entity.product.ProductUnit;
@@ -30,8 +30,6 @@ public class ShoppingListService {
     private static Logger LOGGER = LogManager.getLogger(ShoppingListService.class.getName());
 
 
-
-
     @Autowired
     public ShoppingListService(ShoppingListRepository shoppingListRepository, FridgeService fridgeService, RecipeService recipeService, ModelMapper modelMapper) {
         this.shoppingListRepository = shoppingListRepository;
@@ -39,7 +37,6 @@ public class ShoppingListService {
         this.recipeService = recipeService;
         this.modelMapper = modelMapper;
     }
-
 
 
     public List<ShoppingListDto> findAllShoppingLists() {
@@ -77,7 +74,7 @@ public class ShoppingListService {
 
     public ShoppingListDto viewShoppingList(Long id) {
         ShoppingList shoppingList = new ShoppingList();
-        addProductsFromRecipesToShoppingList(id);
+        addProductsRecipeToShoppingList(id);
         if (shoppingListRepository.findById(id).isPresent()) shoppingList = shoppingListRepository.findById(id).get();
         return modelMapper.map(shoppingList, ShoppingListDto.class);
     }
@@ -91,17 +88,21 @@ public class ShoppingListService {
         if (!shoppingListRecipe.contains(recipe)) {
             shoppingList.addRecipe(recipe);
         }
-        shoppingListRepository.save(modelMapper.map(shoppingList, ShoppingList.class));
 
+        shoppingListRepository.save(modelMapper.map(shoppingList, ShoppingList.class));
         LOGGER.info("Dodano przepis " + recipe.getName() + " do listy zakupów: " + shoppingList.getName());
     }
 
-    public void addProductsFromRecipesToShoppingList(Long id) {
+    public void addProductsRecipeToShoppingList(Long id) {
         List<ShoppingListDto.RecipeDto> recipeDtoList = getShoppingList(id).getShoppingListRecipe();
-        List<ShoppingListDto.ProductShoppingListDto> productShoppingListDtos = compareListOfRecipeAndProductsFromFridge(recipeDtoList);
-        List<ProductShoppingList> productsFromRecipe = productShoppingListDtos.stream().map(productShoppingListDto -> modelMapper.map(productShoppingListDto, ProductShoppingList.class)).toList();
+        List<ShoppingListDto.ProductShoppingListDto> productShoppingListDtos = compareListOfRecipeAndProductsInFridge(recipeDtoList);
+
+        List<ProductShoppingList> productsFromRecipe = productShoppingListDtos
+                .stream().map(productShoppingListDto -> modelMapper.map(productShoppingListDto, ProductShoppingList.class)).toList();
         ShoppingList shoppingList = modelMapper.map(getShoppingList(id), ShoppingList.class);
+
         deleteProductsFromShoppingList(id);
+
         shoppingList.setShoppingProductList(productsFromRecipe);
         for (ProductShoppingList list : shoppingList.getShoppingProductList()) {
             list.setShoppingList(shoppingList);
@@ -115,14 +116,15 @@ public class ShoppingListService {
         shoppingListRepository.deleteProductsFromShoppingList(id);
     }
 
-    public List<ShoppingListDto.ProductShoppingListDto> compareListOfRecipeAndProductsFromFridge(List<ShoppingListDto.RecipeDto> recipeListDto) {
+    public List<ShoppingListDto.ProductShoppingListDto> compareListOfRecipeAndProductsInFridge(List<ShoppingListDto.RecipeDto> recipeListDto) {
 
         List<FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.getFridge().getProductsInFridge();
 
-        if(productsInFridge == null){
+        if (productsInFridge == null) {
             productsInFridge = new ArrayList<>();
         }
-        Map<String, Double> fridgeOne = productsInFridge.stream().collect(Collectors.toMap(FridgeDto.ProductInFridgeDto::getProductName, FridgeDto.ProductInFridgeDto::getAmount));
+        Map<String, Double> fridgeOne = productsInFridge
+                .stream().collect(Collectors.toMap(FridgeDto.ProductInFridgeDto::getProductName, FridgeDto.ProductInFridgeDto::getAmount));
         Map<String, Double> fridgeMap = new HashMap<>();
         for (String key : fridgeOne.keySet()) {
             if (fridgeMap.get(key) == null) {
@@ -136,7 +138,6 @@ public class ShoppingListService {
         Map<String, Double> recipeMap = new HashMap<>();
         Map<String, ProductUnit> unitsMap = new HashMap<>();
         List<ShoppingListDto.ProductShoppingListDto> shoppingList = new ArrayList<>();
-/*        List<RecipeDto> recipeDtoStream = recipeListDto.stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList();*/
         convertToMapAndCompareProducts(recipeListDto, recipeMap, unitsMap);
         Map<String, Double> map = hashMapDifference(fridgeMap, recipeMap);
         addProductsToShoppingList(unitsMap, shoppingList, map);
@@ -154,8 +155,11 @@ public class ShoppingListService {
         }
     }
 
-    private Map<String, Double> convertToMapAndCompareProducts(List<ShoppingListDto.RecipeDto> recipeListDto, Map<String, Double> recipeMap, Map<String, ProductUnit> unitsMap) {
-        List<Recipe> recipeList = recipeListDto.stream().map(recipeDto -> modelMapper.map(recipeDto, Recipe.class)).toList();
+    private Map<String, Double> convertToMapAndCompareProducts(List<ShoppingListDto.RecipeDto> recipeListDto, Map<String, Double> recipeMap,
+                                                               Map<String, ProductUnit> unitsMap) {
+        List<Recipe> recipeList = recipeListDto
+                .stream().map(recipeDto -> modelMapper.map(recipeDto, Recipe.class)).toList();
+
         for (Recipe recipe : recipeList) {
             Map<String, Double> recipeOne = recipe.getProductList().stream().collect(Collectors.toMap(ProductRecipe::getProductName, ProductRecipe::getAmount));
             Map<String, ProductUnit> recipeUnits = recipe.getProductList().stream().collect(Collectors.toMap(ProductRecipe::getProductName, ProductRecipe::getUnit));
@@ -192,6 +196,5 @@ public class ShoppingListService {
         }
         return difference;
     }
-
 
 }

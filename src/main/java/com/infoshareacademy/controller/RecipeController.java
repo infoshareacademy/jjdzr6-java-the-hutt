@@ -41,13 +41,13 @@ public class RecipeController {
     public String getAllRecipeByMealType(Model model, @Param("meal") Meal meal, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
         model.addAttribute("selectedMeal", meal);
         model.addAttribute("shoppingList", shoppingListService.findAllShoppingLists());
-        model.addAttribute("recipes", recipeService.getRecipesByCanFilterByMeal(meal, pageable));
+        model.addAttribute("recipes", recipeService.getRecipesFilteredByMeal(meal, pageable));
         return "recipes";
     }
 
     @GetMapping("/keyword")
     public String filterRecipesByKeyword(Model model, @Param("keyword") String keyword, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
-        model.addAttribute("recipes", recipeService.getSearchRecipe(keyword, pageable));
+        model.addAttribute("recipes", recipeService.getSearchedRecipe(keyword, pageable));
         model.addAttribute("keyword", keyword);
         return "recipes";
     }
@@ -125,7 +125,7 @@ public class RecipeController {
 
     @GetMapping("/fridge")
     public String recipesByProductsInFridge(@SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable, Model model) {
-        model.addAttribute("recipes", recipeService.getRecipeByProductsInFridge(pageable));
+        model.addAttribute("recipes", recipeService.getRecipesFilteredByProductsInFridge(pageable));
         return "recipes";
     }
 

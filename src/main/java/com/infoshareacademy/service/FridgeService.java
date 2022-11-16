@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,6 +29,10 @@ public class FridgeService {
         this.fridgeRepository = fridgeRepository;
         this.productInFridgeRepository = productInFridgeRepository;
         this.modelMapper = modelMapper;
+    }
+
+    public Long getDEFAULT_FRIDGE_ID() {
+        return DEFAULT_FRIDGE_ID;
     }
 
     public void saveFridge(FridgeDto fridgeDto) {
@@ -67,7 +70,7 @@ public class FridgeService {
 
     public FridgeDto addProductsToFridgeForm() {
         FridgeDto fridgeDto;
-        if(fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).isPresent()) {
+        if (fridgeRepository.findById(getDEFAULT_FRIDGE_ID()).isPresent()) {
             fridgeDto = fridgeRepository
                     .findById(DEFAULT_FRIDGE_ID)
                     .map((fridge -> modelMapper.map(fridge, FridgeDto.class))).get();
@@ -91,11 +94,4 @@ public class FridgeService {
         return productsDto;
     }
 
-    public Optional<FridgeDto> findFridgeById(Long id) {
-        return fridgeRepository.findById(id).map(fridge -> modelMapper.map(fridge, FridgeDto.class));
-    }
-
-    public Long getDEFAULT_FRIDGE_ID() {
-        return DEFAULT_FRIDGE_ID;
-    }
 }
