@@ -15,7 +15,7 @@
 <br>
 <div class="container">
     <div class="row">
-        <h1> Przepisy </h1>
+            <img src="https://i.ibb.co/51xzcvd/Screenshot-from-2022-11-16-11-09-09.png"/>
     </div>
 
     <div>&nbsp;</div>
@@ -90,7 +90,9 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li th:each="list : ${shoppingList}">
-                            <a onclick="addRecipeToShoppingList()" th:href="@{/recipes/{recipeId}/shoppinglist/{shoppingListId}(recipeId= ${recipe.recipeId}, shoppingListId=${list.id})}"><span th:text="${list.name}" th:value="${list.name}"></span></a>
+                            <a onclick="addRecipeToShoppingList()"
+                               th:href="@{/recipes/{recipeId}/shoppinglist/{shoppingListId}(recipeId= ${recipe.recipeId}, shoppingListId=${list.id})}"><span
+                                    th:text="${list.name}" th:value="${list.name}"></span></a>
                         </li>
                     </ul>
                 </div>
@@ -117,16 +119,16 @@
 <div th:insert="~{fragments/footer :: footer}"></div>
 <script type="text/javascript">
     function clearFilter() {
-        window.location = '/recipes/filtered-prodcts';
+        window.location = '/recipes/filtered-products';
     }
 </script>
 <script>
-    function addRecipeToShoppingList(){
+    function addRecipeToShoppingList() {
         alert("Dodano przepis do listy zakupów!");
     };
 </script>
 <script>
-    function deleteRecipeFromShoppingList(){
+    function deleteRecipeFromShoppingList() {
         alert("Usunięto przepis!");
     };
 </script>

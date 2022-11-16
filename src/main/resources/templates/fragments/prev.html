@@ -9,13 +9,17 @@
           crossorigin="anonymous">
 </head>
 <body>
-<prev class="navbar navbar-expand-md bg-dark navbar-dark">
 
-    <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
-    <a class="navbar-brand" th:href="@{/foodpreferences/set-foodpreferences}">Ustaw preferencje</a>
-    <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
-    <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
-    <a class="navbar-brand" th:href="@{/shopping-lists}">Lista zakupów</a>
+<prev class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <a class="navbar-brand" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
+            <a class="navbar-brand" th:href="@{/foodpreferences/set-foodpreferences}">Ustaw preferencje</a>
+            <a class="navbar-brand" th:href="@{/recipes}">Wszystkie przepisy</a>
+            <a class="navbar-brand" th:href="@{/fridge}">Zawartość lodówki</a>
+            <a class="navbar-brand" th:href="@{/shopping-lists}">Lista zakupów</a>
+        </ul>
+    </div>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
