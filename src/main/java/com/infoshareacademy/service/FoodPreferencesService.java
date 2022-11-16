@@ -1,6 +1,7 @@
 package com.infoshareacademy.service;
 
 import com.infoshareacademy.DTO.FoodPreferencesDto;
+import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.FoodPreferencesRepository;
@@ -15,15 +16,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
 public class FoodPreferencesService {
 
     private final FoodPreferencesRepository foodPreferencesRepository;
-
-    private final RecipeService recipeService;
 
     private final RecipeRepository recipeRepository;
 
@@ -32,9 +30,8 @@ public class FoodPreferencesService {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository, RecipeService recipeService, RecipeRepository recipeRepository, FridgeService fridgeService, ModelMapper modelMapper) {
+    public FoodPreferencesService(FoodPreferencesRepository foodPreferencesRepository, RecipeRepository recipeRepository, FridgeService fridgeService, ModelMapper modelMapper) {
         this.foodPreferencesRepository = foodPreferencesRepository;
-        this.recipeService = recipeService;
         this.recipeRepository = recipeRepository;
         this.fridgeService = fridgeService;
         this.modelMapper = modelMapper;
@@ -45,7 +42,7 @@ public class FoodPreferencesService {
     }
 
     public List<FoodPreferencesDto> getFoodPreferences() {
-        return foodPreferencesRepository.findAll().stream().map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class)).collect(Collectors.toList());
+        return foodPreferencesRepository.findAll().stream().map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class)).toList();
     }
 
     public void setFoodPreferences(FoodPreferencesDto foodPreferencesDto) {
@@ -62,12 +59,11 @@ public class FoodPreferencesService {
         }
     }
 
-    // TODO: przerobic na query
-    public Page<Recipe> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
+    public Page<RecipeDto> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
 
         Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
-        List<Recipe> recipeList = recipeRepository.findAll();
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
+        List<Recipe> recipeList = recipeRepository.findAll(pageable).toList();
 
         if (foodPreferencesRepositoryDtoById.isPresent()) {
             FoodPreferencesDto foodPreferencesDto = foodPreferencesRepositoryDtoById.get();
@@ -127,7 +123,7 @@ public class FoodPreferencesService {
             }
             recipePage = new PageImpl<>(recipeList);
         }
-        return recipePage;
+        return recipePage.map(recipe -> modelMapper.map(recipe, RecipeDto.class));
 
     }
 

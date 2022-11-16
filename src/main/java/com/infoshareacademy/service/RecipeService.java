@@ -34,7 +34,7 @@ public class RecipeService {
 
     private final FridgeService fridgeService;
 
-    private static Logger LOGGER = LogManager.getLogger(RecipeService.class.getName());
+    private final static Logger LOGGER = LogManager.getLogger(RecipeService.class.getName());
 
     private final ModelMapper modelMapper;
 
@@ -52,12 +52,12 @@ public class RecipeService {
     }
 
     public Page<RecipeDto> getSearchedRecipe(String keyword, Pageable pageable) {
+        Page<Recipe> pageRecipes = recipeRepository.findAll(pageable);
         if (keyword != null) {
-            return new PageImpl<>(recipeRepository.findRecipeBy(keyword)
-                    .stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).collect(Collectors.toList()));
+            pageRecipes = recipeRepository.findRecipeBy(keyword, pageable);
         }
-        return new PageImpl<>(recipeRepository.findAll(pageable)
-                .stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).collect(Collectors.toList()));
+        return pageRecipes.map(recipe -> modelMapper.map(recipe, RecipeDto.class));
+
     }
 
     public RecipeDto getRecipeById(Long id) {
@@ -136,22 +136,18 @@ public class RecipeService {
     }
 
     public List<RecipeDto> getRecipesWithProductsToLowerCase() {
-        List<RecipeDto> recipes = getAllRecipes().stream()
+        return getAllRecipes().stream()
                 .peek(recipe -> recipe.getProductList()
                         .forEach(productRecipe -> productRecipe
                                 .setProductName(productRecipe.getProductName().toLowerCase()))).toList();
-        return recipes;
     }
 
     public Map<RecipeDto, List<RecipeDto.ProductRecipeDto>> mapRecipesWithProducts() {
-        Map<RecipeDto, List<RecipeDto.ProductRecipeDto>> mapRecipesProducts = getRecipesWithProductsToLowerCase().stream()
+        return getRecipesWithProductsToLowerCase().stream()
                 .collect(Collectors.toMap(Function.identity(), RecipeDto::getProductList));
-        return mapRecipesProducts;
     }
 
     public Page<RecipeDto> getRecipesFilteredByProductsInFridge(Pageable pageable) {
-
-        //TODO: zmienić wczytywanie przepisów po ID
 
         Map<String, FridgeDto.ProductInFridgeDto> productsInFridge = fridgeService.mapProductsInFridgeWithNameAsKey();
         List<RecipeDto> filteredRecipies = new ArrayList<>();

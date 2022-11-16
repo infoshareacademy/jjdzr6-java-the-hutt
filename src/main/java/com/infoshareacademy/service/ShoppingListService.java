@@ -27,7 +27,7 @@ public class ShoppingListService {
 
     private final RecipeService recipeService;
     private final ModelMapper modelMapper;
-    private static Logger LOGGER = LogManager.getLogger(ShoppingListService.class.getName());
+    private final static Logger LOGGER = LogManager.getLogger(ShoppingListService.class.getName());
 
 
     @Autowired
