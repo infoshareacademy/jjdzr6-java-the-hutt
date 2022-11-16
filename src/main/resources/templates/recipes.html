@@ -41,7 +41,7 @@
             <a th:href="@{/recipes/fridge}" class="btn btn-success mb-2"> Filtruj po produktach w lodówce</a>
         </div>
         <div>
-            <a th:href="@{/recipes/foodpreferences/}" class="btn btn-success mb-2"> Filtruj po alergenach</a>
+            <a th:href="@{/recipes/food-preferences/}" class="btn btn-success mb-2"> Filtruj po alergenach</a>
         </div>
 
         <div class="dropdown">
@@ -91,7 +91,7 @@
                     <ul class="dropdown-menu">
                         <li th:each="list : ${shoppingList}">
                             <a onclick="addRecipeToShoppingList()"
-                               th:href="@{/recipes/{recipeId}/shoppinglist/{shoppingListId}(recipeId= ${recipe.recipeId}, shoppingListId=${list.id})}"><span
+                               th:href="@{/recipes/{recipeId}/shopping-list/{shoppingListId}(recipeId= ${recipe.recipeId}, shoppingListId=${list.id})}"><span
                                     th:text="${list.name}" th:value="${list.name}"></span></a>
                         </li>
                     </ul>
@@ -119,7 +119,7 @@
 <div th:insert="~{fragments/footer :: footer}"></div>
 <script type="text/javascript">
     function clearFilter() {
-        window.location = '/recipes/filtered-products';
+        window.location = '/recipes/keyword';
     }
 </script>
 <script>

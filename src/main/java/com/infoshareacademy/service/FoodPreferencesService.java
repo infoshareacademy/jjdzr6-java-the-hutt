@@ -55,9 +55,9 @@ public class FoodPreferencesService {
         foodPreferencesRepository.save(foodPreferences);
     }
 
-    public Optional<FoodPreferencesDto> checkIfFoodPreferencesIsSet(Optional<FoodPreferencesDto> foodPreferencesDto) {
+    public Optional<FoodPreferencesDto> checkIfFoodPreferencesIsSet() {
         if (foodPreferencesRepository.findById(fridgeService.getDEFAULT_FRIDGE_ID()).isPresent()) {
-            foodPreferencesDto = getFoodPreferencesById(fridgeService.getDEFAULT_FRIDGE_ID());
+            Optional<FoodPreferencesDto> foodPreferencesDto = getFoodPreferencesById(fridgeService.getDEFAULT_FRIDGE_ID());
             return foodPreferencesDto;
         } else {
             return Optional.of(new FoodPreferencesDto());
@@ -69,7 +69,6 @@ public class FoodPreferencesService {
 
         Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
         List<Recipe> recipeList = recipeRepository.findAll();
-
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
 
         if (foodPreferencesRepositoryDtoById.isPresent()) {

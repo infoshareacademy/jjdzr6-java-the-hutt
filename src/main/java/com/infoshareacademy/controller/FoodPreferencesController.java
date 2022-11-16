@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
@@ -26,22 +25,22 @@ public class FoodPreferencesController {
         this.fridgeService = fridgeService;
     }
 
-    @GetMapping("/foodpreferences")
+    @GetMapping("/food-preferences")
     public String listFoodPreferences(Model model) {
         model.addAttribute("getfoodpreferences", foodPreferencesService.getFoodPreferences());
         return "food-preferences";
     }
 
-    @GetMapping("/foodpreferences/set-foodpreferences")
-    public String createFoodPreferencesForm(Model model, Optional<FoodPreferencesDto> foodPreferencesDto) {
-        model.addAttribute("foodpreferences", foodPreferencesService.checkIfFoodPreferencesIsSet(foodPreferencesDto));
+    @GetMapping("/food-preferences/set-foodpreferences")
+    public String createFoodPreferencesForm(Model model) {
+        model.addAttribute("foodpreferences", foodPreferencesService.checkIfFoodPreferencesIsSet());
         return "set-food-preferences";
     }
 
-    @PostMapping("/foodpreferences")
+    @PostMapping("/food-preferences")
     public String saveFoodPreferences(@ModelAttribute("foodpreferences") FoodPreferencesDto foodPreferencesDto) {
         foodPreferencesService.setFoodPreferences(foodPreferencesDto);
-        return "redirect:/foodpreferences";
+        return "redirect:/food-preferences";
     }
 
 }

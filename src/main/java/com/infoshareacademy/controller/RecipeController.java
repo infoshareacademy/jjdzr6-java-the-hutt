@@ -111,7 +111,7 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-    @GetMapping("/{recipeId}/shoppinglist/{shoppingListId}")
+    @GetMapping("/{recipeId}/shopping-list/{shoppingListId}")
     public String addRecipeToShoppingList(@PathVariable Long recipeId, @PathVariable Long shoppingListId) {
         shoppingListService.addRecipeToShoppingList(recipeId, shoppingListId);
         return "redirect:/recipes";
@@ -123,13 +123,13 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-    @GetMapping("/recipes/fridge")
+    @GetMapping("/fridge")
     public String recipesByProductsInFridge(@SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable, Model model) {
         model.addAttribute("recipes", recipeService.getRecipeByProductsInFridge(pageable));
         return "recipes";
     }
 
-    @GetMapping("/recipes/foodpreferences")
+    @GetMapping("/food-preferences")
     public String getRecipesByFoodPreferences(Model model, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
         model.addAttribute("recipes", foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getDEFAULT_FRIDGE_ID(), pageable));
         return "recipes";
