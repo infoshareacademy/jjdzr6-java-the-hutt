@@ -31,7 +31,7 @@ public class RecipeDto implements Serializable {
     @Max(120)
     private int preparationTime;
     private Meal meal;
-    private List<ProductRecipeDto> productList;
+    private List<ProductRecipeDto> productList = new ArrayList<>();
     private List<ShoppingListDto> shoppingList;
     private RecipeAllergensDto recipeAllergens;
     private Long userId;
@@ -56,6 +56,13 @@ public class RecipeDto implements Serializable {
         private Double amount;
         private ProductUnit unit;
         private RecipeDto recipeDto;
+
+        @Override
+        public String toString() {
+
+            return  productName + '\'' +
+                    ", ilość:" + amount + " " + unit.getValue();
+        }
 
 
     }

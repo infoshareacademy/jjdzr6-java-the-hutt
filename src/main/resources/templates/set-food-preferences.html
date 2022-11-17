@@ -14,9 +14,10 @@
 <br>
 <div class="container">
     <div class="row">
-        <h1> Ustaw preferencje żywieniowe </h1>
+        <img src="https://i.ibb.co/CvSRJW8/Screenshot-from-2022-11-16-11-21-30.png"/>
     </div>
-<form action="#" th:action="@{/foodpreferences}" th:object="${foodpreferences}" method="post">
+
+<form action="#" th:action="@{/food-preferences}" th:object="${foodpreferences}" method="post">
     Lista Twoich alergenów:
     <p>Czekolada<input type="checkbox" th:field="*{chocolate}"/>
     <p>Produkty mleczne<input type="checkbox" th:field="*{dairy}"/>

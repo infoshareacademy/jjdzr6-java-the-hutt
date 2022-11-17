@@ -1,7 +1,6 @@
 package com.infoshareacademy.controller;
 
 import com.infoshareacademy.DTO.FridgeDto;
-import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.service.FridgeService;
 import com.infoshareacademy.service.ProductInFridgeService;
@@ -42,48 +41,48 @@ public class ProductInFridgeController {
     public String addProductsToFridgeForm(Model model, FridgeDto fridgeDto) {
         fridgeService.addProductsToFridgeForm();
         model.addAttribute("fridgeDtoForm", fridgeDto);
-        return "addproductstofridge";
+        return "add-product-to-fridge";
     }
 
     @PostMapping(value = "/product", params = {"addProduct"})
-    public String addProduct(@ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto) {
+    public String addProductsToFridge(@ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto) {
         fridgeDto.addProductDto(new FridgeDto.ProductInFridgeDto());
-        return "addproductstofridge";
+        return "add-product-to-fridge";
     }
 
     @PostMapping(value = "/product", params = {"removeProduct"})
-    public String removeProduct(@ModelAttribute("fridge") Fridge fridge,
-                                HttpServletRequest request) {
+    public String removeProductFromFridgeForm(@ModelAttribute("fridge") Fridge fridge,
+                                              HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
         fridge.getProductsInFridge().remove(index);
-        return "addproductstofridge";
+        return "add-product-to-fridge";
     }
 
     @GetMapping("/{fridgeId}/{productId}")
-    public String deleteProductFromFridge(@PathVariable Long productId) throws Exception {
-        productInFridgeService.deleteProductFromFridge(productId);
+    public String deleteProductFromFridge(@PathVariable Long productId, @PathVariable Long fridgeId) throws Exception {
+        productInFridgeService.deleteProductInFridge(productId);
         return "redirect:/fridge";
     }
 
     @GetMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(@PathVariable Long productId, Model model) throws NotFoundException {
+    public String editProductInFridge(@PathVariable Long productId, Model model, @PathVariable Long fridgeId) throws NotFoundException {
         model.addAttribute("productInFridge", productInFridgeService.findProductInFridgeById(productId));
         model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
         return "edit-products-in-fridge";
     }
 
     @PostMapping("/product/{fridgeId}/{productId}")
-    public String editProductFromFridge(Model model, @PathVariable Long productId,
-                                        @ModelAttribute("productInFridge") FridgeDto.ProductInFridgeDto productInFridgeDto) throws NotFoundException {
+    public String editProductInFridge(Model model, @PathVariable Long productId,
+                                      @ModelAttribute("productInFridge") FridgeDto.ProductInFridgeDto productInFridgeDto, @PathVariable Long fridgeId) throws NotFoundException {
         logger.info(productInFridgeDto.toString());
         model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
-        productInFridgeService.editProductFromFridge(productId, productInFridgeDto);
+        productInFridgeService.editProductInFridge(productId, productInFridgeDto);
         return "redirect:/fridge";
     }
     @PostMapping("/product")
     public String saveFridge(@Valid @ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "addproductstofridge";
+            return "add-product-to-fridge";
         }
         fridgeService.saveFridge(fridgeDto);
         return "redirect:/fridge";

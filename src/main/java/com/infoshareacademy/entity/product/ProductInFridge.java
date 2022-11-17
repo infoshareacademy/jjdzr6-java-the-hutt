@@ -1,6 +1,9 @@
 package com.infoshareacademy.entity.product;
 
 import com.infoshareacademy.entity.fridge.Fridge;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +13,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "products_in_fridge")
 public class ProductInFridge extends Product {
 
@@ -32,68 +38,10 @@ public class ProductInFridge extends Product {
     @Future
     private LocalDate expirationDate;
 
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "fridge_id")
     private Fridge fridge;
-
-    public ProductInFridge() {
-    }
-
-    public ProductInFridge(String productName, Double amount, ProductUnit unit, LocalDate expirationDate) {
-        this.productName = productName;
-        this.amount = amount;
-        this.unit = unit;
-        this.expirationDate = expirationDate;
-    }
-
-    public Fridge getFridge() {
-        return fridge;
-    }
-
-    public void setFridge(Fridge fridge) {
-        this.fridge = fridge;
-    }
-
-    public void setProductId(Long id) {
-        this.productId = id;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double quantity) {
-        this.amount = quantity;
-    }
-
-    public ProductUnit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(ProductUnit unit) {
-        this.unit = unit;
-    }
-
-    public LocalDate getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(LocalDate expirationDate) {
-        this.expirationDate = expirationDate;
-    }
 
     @Override
     public String toString() {

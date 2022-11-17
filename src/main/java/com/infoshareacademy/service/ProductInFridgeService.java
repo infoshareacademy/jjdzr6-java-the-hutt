@@ -21,7 +21,8 @@ public class ProductInFridgeService {
 
     private final ModelMapper modelMapper;
 
-    public ProductInFridgeService(ProductInFridgeRepository productInFridgeRepository, FridgeRepository fridgeRepository, FridgeService fridgeService, ModelMapper modelMapper) {
+    public ProductInFridgeService(ProductInFridgeRepository productInFridgeRepository, FridgeRepository fridgeRepository,
+                                  FridgeService fridgeService, ModelMapper modelMapper) {
         this.productInFridgeRepository = productInFridgeRepository;
         this.fridgeRepository = fridgeRepository;
         this.fridgeService = fridgeService;
@@ -31,18 +32,18 @@ public class ProductInFridgeService {
     public ProductInFridgeDto findProductInFridgeById(Long productId) throws NotFoundException {
         Optional<ProductInFridgeDto> productInFridgeDto = Optional.ofNullable(productInFridgeRepository.findById(productId)
                 .map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class))
-                .orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));;
-        return productInFridgeDto.get();
+                .orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));
 
+        return productInFridgeDto.get();
     }
 
-    public void deleteProductFromFridge(Long productId) throws NotFoundException {
+    public void deleteProductInFridge(Long productId) throws NotFoundException {
         if (productInFridgeRepository.findById(productId).isPresent()) {
             productInFridgeRepository.deleteById(productId);
         } else throw new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId));
     }
 
-    public void editProductFromFridge(Long productId, FridgeDto.ProductInFridgeDto productInFridgeDto) throws NotFoundException {
+    public void editProductInFridge(Long productId, FridgeDto.ProductInFridgeDto productInFridgeDto) throws NotFoundException {
         Optional<ProductInFridge> productInFridge = Optional.ofNullable(productInFridgeRepository
                 .findById(productId)
                 .orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));

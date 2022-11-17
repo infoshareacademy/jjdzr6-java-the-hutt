@@ -17,16 +17,16 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
 
     @Query("SELECT DISTINCT r FROM Recipe r " +
-            "LEFT JOIN FETCH r.productList p " +
+            "LEFT JOIN r.productList p " +
             "WHERE " + "CONCAT(r.name, r.description,r.preparationTime, p.productName)" + "LIKE %?1%")
-    List<Recipe> findRecipeBy(String keyword);
+    Page<Recipe> findRecipeBy(String keyword, Pageable pageable);
 
+    Page<Recipe> findAll(Pageable pageable);
 
     @Modifying
     void deleteByRecipeId(Long id);
 
     @Query("SELECT DISTINCT r FROM Recipe r WHERE r.meal = ?1")
     Page<Recipe> findRecipeByMeal(Meal meal, Pageable pageable);
-
 
 }

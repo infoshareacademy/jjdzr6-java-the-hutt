@@ -1,9 +1,16 @@
 package com.infoshareacademy.entity.product;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "product_elements")
 public class ProductElement {
 
@@ -16,38 +23,6 @@ public class ProductElement {
 
     @Column(name = "amount")
     private Double amount;
-
-    public ProductElement() {
-    }
-
-    public ProductElement(String productName, Double amount) {
-        this.productName = productName;
-        this.amount = amount;
-    }
-
-    public void setElementId(Long id) {
-        this.elementId = id;
-    }
-
-    public Long getElementId() {
-        return elementId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double quantity) {
-        this.amount = quantity;
-    }
 
     @Override
     public boolean equals(Object o) {

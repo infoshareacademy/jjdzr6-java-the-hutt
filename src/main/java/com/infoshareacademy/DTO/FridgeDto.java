@@ -17,18 +17,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FridgeDto implements Serializable {
-    private Long fridgeDtoId;
-    private List<FridgeDto.ProductInFridgeDto> productsInFridgeDto;
+    private Long fridgeId;
+    private List<ProductInFridgeDto> productsInFridge;
 
     public void addProductDto(FridgeDto.ProductInFridgeDto product) {
-        if(productsInFridgeDto == null){
-            this.productsInFridgeDto = new ArrayList<>();
+        if(productsInFridge == null){
+            this.productsInFridge = new ArrayList<>();
         }
-        this.productsInFridgeDto.add(product);
-        this.setFridgeDtoId(1L);
+        this.productsInFridge.add(product);
+        this.setFridgeId(1L);
         product.setFridgeDto(this);
     }
 
+    public List<ProductInFridgeDto> getProductsInFridge() {
+        return productsInFridge;
+    }
 
     @Data
     @AllArgsConstructor

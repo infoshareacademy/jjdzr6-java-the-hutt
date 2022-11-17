@@ -14,8 +14,9 @@
 <br>
 <div class="container">
     <div class="row">
-        <h1> Shoping list </h1>
+        <img src="https://i.ibb.co/Vjc9BtY/Screenshot-from-2022-11-16-11-14-23.png"/>
     </div>
+
     <div class="col-lg-2">
         <a th:href="@{/shopping-lists/shopping-list}" class="btn btn-success mb-2"> Stwórz listę</a>
     </div>
@@ -31,7 +32,7 @@
         <tr th:each="shopping: ${getShopping}">
             <td th:text="${shopping.getName()}"></td>
             <td>
-                <a th:href="@{/shopping-lists/{shoppingListId}(shoppingListId=${shopping.id})}"
+                <a th:href="@{/shopping-lists/shopping-list/{shoppingListId}(shoppingListId=${shopping.id})}"
                    class="btn btn-primary">Wyświetl listę zakupów</a>
 
                 <a th:href="@{/shopping-lists/list/{shoppingListId}(shoppingListId=${shopping.id})}" onclick="deletedList()"

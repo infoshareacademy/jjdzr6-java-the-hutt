@@ -49,4 +49,11 @@ public class ProductRecipeDto implements Serializable {
         private  Meal meal;
         private  Long userId;
     }
+
+    @Override
+    public String toString() {
+
+        return  productName + '\'' +
+                ", ilość:" + amount + " " + unit.getValue();
+    }
 }
