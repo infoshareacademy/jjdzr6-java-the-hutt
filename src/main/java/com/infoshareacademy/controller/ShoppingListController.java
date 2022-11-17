@@ -3,6 +3,9 @@ package com.infoshareacademy.controller;
 import com.infoshareacademy.DTO.ShoppingListDto;
 import com.infoshareacademy.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,8 +45,8 @@ public class ShoppingListController {
     }
 
     @GetMapping("/shopping-list/{shoppingListId}")
-    public String productsInShoppingList(@PathVariable Long shoppingListId, Model model) {
-        model.addAttribute("shoppinglist", shoppingListService.viewShoppingList(shoppingListId));
+    public String productsInShoppingList(@PathVariable Long shoppingListId, Model model, @SortDefault(value = "productName")  @PageableDefault(size = 5) Pageable pageable) {
+        model.addAttribute("shoppinglist", shoppingListService.viewShoppingList(shoppingListId, pageable));
         return "details-shopping-list";
     }
 
