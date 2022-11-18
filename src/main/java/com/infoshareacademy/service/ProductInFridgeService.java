@@ -52,7 +52,7 @@ public class ProductInFridgeService {
                 .map(product -> modelMapper.map(product, ProductInFridgeDto.class));
 
         ProductInFridgeDto.FridgeDto fridgeDto = modelMapper.map(fridgeRepository
-                .findById(fridgeService.getDEFAULT_FRIDGE_ID()).get(), ProductInFridgeDto.FridgeDto.class);
+                .findById(fridgeService.getUSER_ID()).get(), ProductInFridgeDto.FridgeDto.class);
         productDto.get().setFridgeDto(fridgeDto);
         productDto.get().setProductId(productInFridgeDto.getProductId());
         productDto.get().setProductName(productInFridgeDto.getProductName());

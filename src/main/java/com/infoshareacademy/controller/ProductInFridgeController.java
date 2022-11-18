@@ -33,7 +33,7 @@ public class ProductInFridgeController {
     @GetMapping
     public String productsInFridge(Model model) {
         model.addAttribute("fridgeProducts", fridgeService.getProductsInFridge());
-        model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
+        model.addAttribute("fridgeId", fridgeService.getUSER_ID());
         return "fridge";
     }
 
@@ -67,7 +67,7 @@ public class ProductInFridgeController {
     @GetMapping("/product/{fridgeId}/{productId}")
     public String editProductInFridge(@PathVariable Long productId, Model model, @PathVariable Long fridgeId) throws NotFoundException {
         model.addAttribute("productInFridge", productInFridgeService.findProductInFridgeById(productId));
-        model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
+        model.addAttribute("fridgeId", fridgeService.getUSER_ID());
         return "edit-products-in-fridge";
     }
 
@@ -75,7 +75,7 @@ public class ProductInFridgeController {
     public String editProductInFridge(Model model, @PathVariable Long productId,
                                       @ModelAttribute("productInFridge") FridgeDto.ProductInFridgeDto productInFridgeDto, @PathVariable Long fridgeId) throws NotFoundException {
         logger.info(productInFridgeDto.toString());
-        model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
+        model.addAttribute("fridgeId", fridgeService.getUSER_ID());
         productInFridgeService.editProductInFridge(productId, productInFridgeDto);
         return "redirect:/fridge";
     }

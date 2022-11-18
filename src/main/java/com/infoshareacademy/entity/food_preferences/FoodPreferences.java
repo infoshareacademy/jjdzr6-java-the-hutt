@@ -13,7 +13,6 @@ import javax.persistence.*;
 public class FoodPreferences {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private boolean shellfish;
     private boolean chocolate;
