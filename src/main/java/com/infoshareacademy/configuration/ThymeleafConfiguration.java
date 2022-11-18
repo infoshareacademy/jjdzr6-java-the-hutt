@@ -11,6 +11,7 @@ import org.thymeleaf.dialect.springdata.SpringDataDialect;
 @Configuration
 public class ThymeleafConfiguration {
 
+
     @Bean
     public SpringDataDialect springDataDialect() {
         return new SpringDataDialect();
@@ -28,5 +29,6 @@ public class ThymeleafConfiguration {
         user.setPassword(passwordEncoder.encode("admin"));
         user.setRole("ROLE_ADMIN");
         userRepository.save(user);
+
     }
 }

@@ -34,7 +34,7 @@ public class RecipeService {
 
     private final FridgeService fridgeService;
 
-    private final static Logger LOGGER = LogManager.getLogger(RecipeService.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(RecipeService.class.getName());
 
     private final ModelMapper modelMapper;
 
@@ -46,9 +46,13 @@ public class RecipeService {
         this.modelMapper = modelMapper;
     }
 
-
     public List<RecipeDto> getAllRecipes() {
         return recipeRepository.findAll().stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList();
+    }
+
+    @Transactional
+    public void setUserIdForInitRecipes(){
+        recipeRepository.findAll().stream().forEach(recipe -> recipe.setUserId(fridgeService.getUSER_ID()));
     }
 
     public Page<RecipeDto> getSearchedRecipe(String keyword, Pageable pageable) {
