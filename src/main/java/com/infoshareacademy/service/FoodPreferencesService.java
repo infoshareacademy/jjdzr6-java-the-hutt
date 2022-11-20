@@ -14,8 +14,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -59,11 +62,11 @@ public class FoodPreferencesService {
         }
     }
 
-    public Page<RecipeDto> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
+    public Page<Recipe> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
 
         Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
-        List<Recipe> recipeList = recipeRepository.findAll(pageable).toList();
+        List<Recipe> recipeList = recipeRepository.findAll();
 
         if (foodPreferencesRepositoryDtoById.isPresent()) {
             FoodPreferencesDto foodPreferencesDto = foodPreferencesRepositoryDtoById.get();
@@ -121,11 +124,26 @@ public class FoodPreferencesService {
                         .filter(s -> s.getRecipeAllergens().isVegan())
                         .toList();
             }
-            recipePage = new PageImpl<>(recipeList);
+            recipeList.stream().sorted(Comparator.comparing(Recipe::getName)).collect(Collectors.toList());
         }
-        return recipePage.map(recipe -> modelMapper.map(recipe, RecipeDto.class));
+        return recipePage;
 
     }
+    static Page<Recipe> createPageFromList(List<Recipe> list, Pageable pageable) {
+        if (list == null) {
+            throw new IllegalArgumentException("To create a Page, the list mustn't be null!");
+        }
+
+        int startOfPage = pageable.getPageNumber() * pageable.getPageSize();
+        if (startOfPage > list.size()) {
+            return new PageImpl<>(new ArrayList<>(), pageable, 0);
+        }
+
+        int endOfPage = Math.min(startOfPage + pageable.getPageSize(), list.size());
+        return new PageImpl<>(list.subList(startOfPage, endOfPage), pageable, list.size());
+    }
+
+
 
     private static boolean isNotEqual(String string1, String string2) {
         return !StringUtils.equalsIgnoreCase(string1, string2);
