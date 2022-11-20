@@ -1,5 +1,6 @@
 package com.infoshareacademy.controller;
 
+import com.infoshareacademy.DTO.UserDto;
 import com.infoshareacademy.entity.user.User;
 import com.infoshareacademy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +19,21 @@ public class SecurityController {
         this.userService = userService;
     }
 
-    @GetMapping("login")
-    public String loginPage() {
-        return "login";
+    @GetMapping("/sign-in")
+    public String signIn() {
+        return "sign-in";
     }
 
     @GetMapping("/sign-up")
-    public String signup(Model model){
+    public String signUp(Model model){
         model.addAttribute("user", new User());
         return "sign-up";
     }
 
     @PostMapping("/register")
-    public String register(User user){
-        userService.addUser(user);
-        return "/login";
+    public String register(UserDto userDto){
+        userService.addUser(userDto);
+        return "sign-in";
     }
 
 }

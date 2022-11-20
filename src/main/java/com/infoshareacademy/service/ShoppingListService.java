@@ -40,7 +40,7 @@ public class ShoppingListService {
 
 
     public List<ShoppingListDto> findAllShoppingLists() {
-        return shoppingListRepository.findByUserId(fridgeService.getUSER_ID()).stream().map(shoppingList -> modelMapper.
+        return shoppingListRepository.findByUserId(fridgeService.getUserId()).stream().map(shoppingList -> modelMapper.
                 map(shoppingList, ShoppingListDto.class)).toList();
     }
 
@@ -50,7 +50,7 @@ public class ShoppingListService {
         if (shoppingList.getShoppingProductList() != null) {
             shoppingList.getShoppingProductList().forEach(x -> x.setShoppingList(shoppingList));
         }
-        shoppingList.setUserId(fridgeService.getUSER_ID());
+        shoppingList.setUserId(fridgeService.getUserId());
         shoppingListRepository.save(shoppingList);
         LOGGER.info("Zapisano listę zakupów: " + shoppingList.getName());
 

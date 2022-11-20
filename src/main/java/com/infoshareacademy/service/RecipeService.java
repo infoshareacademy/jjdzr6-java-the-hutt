@@ -52,7 +52,7 @@ public class RecipeService {
 
     @Transactional
     public void setUserIdForInitRecipes(){
-        recipeRepository.findAll().stream().forEach(recipe -> recipe.setUserId(fridgeService.getUSER_ID()));
+        recipeRepository.findAll().stream().forEach(recipe -> recipe.setUserId(fridgeService.getUserId()));
     }
 
     public Page<RecipeDto> getSearchedRecipe(String keyword, Pageable pageable) {
@@ -82,7 +82,7 @@ public class RecipeService {
 
     public void saveRecipeAllergens(Long id, RecipeAllergensDto allergens) {
         Recipe recipe = new Recipe();
-        recipe.setUserId(fridgeService.getUSER_ID());
+        recipe.setUserId(fridgeService.getUserId());
         if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
         RecipeAllergens existingAllergens;
         if (allergensRepository.findById(recipe.getRecipeAllergens().getId()).isPresent()) {
@@ -108,7 +108,7 @@ public class RecipeService {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
         recipe.getRecipeAllergens().setRecipe(recipe);
-        recipe.setUserId(fridgeService.getUSER_ID());
+        recipe.setUserId(fridgeService.getUserId());
 
         LOGGER.info("Zapisano przepis: " + recipe.getName());
         recipeRepository.save(recipe);
@@ -118,7 +118,7 @@ public class RecipeService {
     public void updateRecipe(Long recipeId, RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         Recipe existingRecipe = new Recipe();
-        existingRecipe.setUserId(fridgeService.getUSER_ID());
+        existingRecipe.setUserId(fridgeService.getUserId());
         if (recipeRepository.findById(recipeId).isPresent()) existingRecipe = recipeRepository.findById(recipeId).get();
         existingRecipe.setRecipeId(recipeId);
         existingRecipe.setName(recipe.getName());
