@@ -9,14 +9,20 @@
           crossorigin="anonymous">
 </head>
 <body>
-<prev class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+<prev class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;" >
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <a class="nav-link" th:href="@{/foodpreferences}">Preferencje żywieniowe</a>
-            <a class="nav-link" th:href="@{/foodpreferences/user-foodpreferences}">Ustaw preferencje</a>
-            <a class="nav-link" th:href="@{/recipes}">Wszystkie przepisy</a>
-            <a class="nav-link" th:href="@{/fridge}">Zawartość lodówki</a>
-            <a class="nav-link" th:href="@{/shopping-lists}">Lista zakupów</a>
+                <a class="nav-link" th:href="@{/food-preferences}">Preferencje żywieniowe</a>
+                <a class="nav-link" th:href="@{/food-preferences/set-foodpreferences}">Ustaw preferencje</a>
+                <a class="nav-link" th:href="@{/recipes}">Wszystkie przepisy</a>
+                <a class="nav-link" th:href="@{/fridge}">Zawartość lodówki</a>
+                <a class="nav-link"th:href="@{/shopping-lists}">Lista zakupów</a>
+                    <li>
+                        <form th:action="@{/logout}" method="post" id="logout-form">
+                            <a href="#" onclick="document.getElementById('logout-form').submit()"
+                               class="navbar-brand">Wyloguj</a>
+                        </form>
+                    </li>
         </ul>
     </div>
 

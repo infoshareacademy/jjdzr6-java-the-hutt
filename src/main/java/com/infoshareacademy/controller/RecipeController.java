@@ -132,7 +132,7 @@ public class RecipeController {
 
     @GetMapping("/food-preferences")
     public String getRecipesByFoodPreferences(Model model, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
-        model.addAttribute("recipes", foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getDEFAULT_FRIDGE_ID(), pageable));
+        model.addAttribute("recipes", foodPreferencesService.filterRecipeByFoodPreferences(pageable));
         return "recipes";
     }
 }

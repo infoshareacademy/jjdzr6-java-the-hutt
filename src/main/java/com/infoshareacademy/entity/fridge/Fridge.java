@@ -18,7 +18,7 @@ public class Fridge {
 
     @Id
     @Column(name = "fridge_id")
-    private Long fridgeId = 1L;
+    private Long fridgeId;
 
     @OneToMany(mappedBy = "fridge",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductInFridge> productsInFridge = new ArrayList<>();

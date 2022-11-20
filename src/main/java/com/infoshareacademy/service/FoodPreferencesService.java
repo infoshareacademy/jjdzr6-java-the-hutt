@@ -37,7 +37,8 @@ public class FoodPreferencesService {
         this.modelMapper = modelMapper;
     }
 
-    public Optional<FoodPreferencesDto> getFoodPreferencesById(Long id) {
+    public Optional<FoodPreferencesDto> getFoodPreferencesById() {
+        Long id = fridgeService.getUserId();
         return foodPreferencesRepository.findById(id).map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class));
     }
 
@@ -46,22 +47,22 @@ public class FoodPreferencesService {
     }
 
     public void setFoodPreferences(FoodPreferencesDto foodPreferencesDto) {
-        foodPreferencesDto.setId(fridgeService.getDEFAULT_FRIDGE_ID());
+        foodPreferencesDto.setId(fridgeService.getUserId());
         FoodPreferences foodPreferences = modelMapper.map(foodPreferencesDto, FoodPreferences.class);
         foodPreferencesRepository.save(foodPreferences);
     }
 
     public Optional<FoodPreferencesDto> checkIfFoodPreferencesIsSet() {
-        if (foodPreferencesRepository.findById(fridgeService.getDEFAULT_FRIDGE_ID()).isPresent()) {
-            return getFoodPreferencesById(fridgeService.getDEFAULT_FRIDGE_ID());
+        if (foodPreferencesRepository.findById(fridgeService.getUserId()).isPresent()) {
+            return getFoodPreferencesById();
         } else {
             return Optional.of(new FoodPreferencesDto());
         }
     }
 
-    public Page<RecipeDto> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
+    public Page<RecipeDto> filterRecipeByFoodPreferences(Pageable pageable) {
 
-        Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
+        Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById();
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
         List<Recipe> recipeList = recipeRepository.findAll(pageable).toList();
 

@@ -21,7 +21,7 @@ public class FoodPreferencesController {
 
     @GetMapping("/food-preferences")
     public String listFoodPreferences(Model model) {
-        model.addAttribute("getfoodpreferences", foodPreferencesService.getFoodPreferences());
+        model.addAttribute("getfoodpreferences", foodPreferencesService.checkIfFoodPreferencesIsSet().get());
         return "food-preferences";
     }
 
