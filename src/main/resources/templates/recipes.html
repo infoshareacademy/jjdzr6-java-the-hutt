@@ -19,7 +19,7 @@
     </div>
 
     <div>
-        <form th:action="@{/recipes/filtered-products}">
+        <form th:action="@{/recipes/keyword}">
             <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Wyszukaj..."
                    required/>
             </br>
@@ -33,8 +33,8 @@
         <div class="col-10">
             <a th:href="@{/recipes/delete-all-recipes}" class="btn btn-outline-danger btn-sm mb-2">Usuń Przepisy</a>
             <a th:href="@{/recipes/recipe}" class="btn btn-outline-info btn-sm mb-2"> Dodaj nowy przepis</a>
-            <a th:href="@{/recipes/recipes-todo}" class="btn btn-outline-info btn-sm mb-2"> Filtruj po produktach w lodówce</a>
-            <a th:href="@{/foodpreferences/recipe/}" class="btn btn-outline-info btn-sm mb-2"> Filtruj po alergenach</a>
+            <a th:href="@{/recipes/fridge}" class="btn btn-outline-info btn-sm mb-2"> Filtruj po produktach w lodówce</a>
+            <a th:href="@{/recipes/food-preferences}" class="btn btn-outline-info btn-sm mb-2"> Filtruj po alergenach</a>
         </div>
         <div class="col">
             <form th:action="@{/recipes}">
@@ -84,7 +84,7 @@
                     <ul class="dropdown-menu">
                         <li th:each="list : ${shoppingList}">
                             <a onclick="addRecipeToShoppingList()"
-                               th:href="@{/recipes/{recipeId}/shoppinglist/{shoppingListId}(recipeId= ${recipe.recipeId}, shoppingListId=${list.id})}"><span
+                               th:href="@{/recipes/{recipeId}/shopping-list/{shoppingListId}(recipeId= ${recipe.recipeId}, shoppingListId=${list.id})}"><span
                                     th:text="${list.name}" th:value="${list.name}"></span></a>
                         </li>
                     </ul>
@@ -112,7 +112,7 @@
 <div th:insert="~{fragments/footer :: footer}"></div>
 <script type="text/javascript">
     function clearFilter() {
-        window.location = '/recipes/filtered-products';
+        window.location = '/recipes/keyword';
     }
 </script>
 <script>

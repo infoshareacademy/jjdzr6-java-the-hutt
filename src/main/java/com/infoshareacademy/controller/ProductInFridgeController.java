@@ -5,7 +5,6 @@ import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.service.FridgeService;
 import com.infoshareacademy.service.ProductInFridgeService;
 import javassist.NotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,7 @@ public class ProductInFridgeController {
     @GetMapping
     public String productsInFridge(Model model, @SortDefault(value = "productName")  @PageableDefault(size = 5) Pageable pageable) {
         model.addAttribute("fridgeProducts", fridgeService.getProductsInFridge(pageable));
-        model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
+        model.addAttribute("fridgeId", fridgeService.getUserId());
         return "fridge";
     }
 

@@ -6,12 +6,12 @@ import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.entity.user.User;
 import com.infoshareacademy.repository.FridgeRepository;
+import com.infoshareacademy.repository.ProductInFridgeRepository;
 import com.infoshareacademy.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -30,11 +30,13 @@ public class FridgeService {
     private final FridgeRepository fridgeRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final ProductInFridgeRepository productInFridgeRepository;
 
-    public FridgeService(FridgeRepository fridgeRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    public FridgeService(FridgeRepository fridgeRepository, UserRepository userRepository, ModelMapper modelMapper, ProductInFridgeRepository productInFridgeRepository) {
         this.fridgeRepository = fridgeRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.productInFridgeRepository = productInFridgeRepository;
     }
 
     public Long getUserId() {
@@ -68,9 +70,9 @@ public class FridgeService {
 
     public Page<ProductInFridgeDto> getProductsInFridge(Pageable pageable) {
         Page<ProductInFridgeDto> collect = new PageImpl<>(new ArrayList<>());
-        boolean flag = productInFridgeRepository.findProductInFridgeByFridge(DEFAULT_FRIDGE_ID, pageable).isEmpty();
+        boolean flag = productInFridgeRepository.findProductInFridgeByFridge(getUserId(), pageable).isEmpty();
         if (!flag) {
-            Page<ProductInFridge> fridgeProducts = productInFridgeRepository.findProductInFridgeByFridge(DEFAULT_FRIDGE_ID, pageable);
+            Page<ProductInFridge> fridgeProducts = productInFridgeRepository.findProductInFridgeByFridge(getUserId(), pageable);
             collect = fridgeProducts.map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class));
         }
         return collect;
