@@ -2,17 +2,22 @@ package com.infoshareacademy.service;
 
 
 import com.infoshareacademy.DTO.FridgeDto;
+import com.infoshareacademy.DTO.ProductShoppingListDto;
 import com.infoshareacademy.DTO.ShoppingListDto;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.product.ProductShoppingList;
 import com.infoshareacademy.entity.product.ProductUnit;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
+import com.infoshareacademy.repository.ProductShoppingListRepository;
 import com.infoshareacademy.repository.ShoppingListRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +29,7 @@ public class ShoppingListService {
 
     private final ShoppingListRepository shoppingListRepository;
     private final FridgeService fridgeService;
+    private final ProductShoppingListRepository productShoppingListRepository;
 
     private final RecipeService recipeService;
     private final ModelMapper modelMapper;
@@ -31,9 +37,10 @@ public class ShoppingListService {
 
 
     @Autowired
-    public ShoppingListService(ShoppingListRepository shoppingListRepository, FridgeService fridgeService, RecipeService recipeService, ModelMapper modelMapper) {
+    public ShoppingListService(ShoppingListRepository shoppingListRepository, FridgeService fridgeService, ProductShoppingListRepository productShoppingListRepository, RecipeService recipeService, ModelMapper modelMapper) {
         this.shoppingListRepository = shoppingListRepository;
         this.fridgeService = fridgeService;
+        this.productShoppingListRepository = productShoppingListRepository;
         this.recipeService = recipeService;
         this.modelMapper = modelMapper;
     }
@@ -72,11 +79,11 @@ public class ShoppingListService {
         return modelMapper.map(shoppingList, ShoppingListDto.class);
     }
 
-    public ShoppingListDto viewShoppingList(Long id) {
-        ShoppingList shoppingList = new ShoppingList();
+    public Page<ProductShoppingListDto> viewShoppingList(Long id, Pageable pageable) {
+        Page<ProductShoppingList> shoppingList = new PageImpl<>( new ArrayList<>());
         addProductsRecipeToShoppingList(id);
-        if (shoppingListRepository.findById(id).isPresent()) shoppingList = shoppingListRepository.findById(id).get();
-        return modelMapper.map(shoppingList, ShoppingListDto.class);
+        if (!productShoppingListRepository.findProductsInShoppingList(id, pageable).isEmpty()) shoppingList = productShoppingListRepository.findProductsInShoppingList(id, pageable);
+        return shoppingList.map(productShoppingList -> modelMapper.map(productShoppingList, ProductShoppingListDto.class));
     }
 
     @Transactional

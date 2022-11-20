@@ -11,6 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -62,15 +66,12 @@ public class FridgeService {
         return fridgeDto;
     }
 
-    public List<ProductInFridgeDto> getProductsInFridge() {
-        List<ProductInFridgeDto> collect;
-        boolean flag = fridgeRepository.findById(getUserId()).isPresent();
-        if (flag) {
-            List<ProductInFridge> fridgeProducts = fridgeRepository.findById(getUserId()).get().getProductsInFridge();
-            collect = fridgeProducts
-                    .stream().map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class)).collect(Collectors.toList());
-        } else {
-            collect = new ArrayList<>();
+    public Page<ProductInFridgeDto> getProductsInFridge(Pageable pageable) {
+        Page<ProductInFridgeDto> collect = new PageImpl<>(new ArrayList<>());
+        boolean flag = productInFridgeRepository.findProductInFridgeByFridge(DEFAULT_FRIDGE_ID, pageable).isEmpty();
+        if (!flag) {
+            Page<ProductInFridge> fridgeProducts = productInFridgeRepository.findProductInFridgeByFridge(DEFAULT_FRIDGE_ID, pageable);
+            collect = fridgeProducts.map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class));
         }
         return collect;
     }
