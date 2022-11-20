@@ -8,6 +8,9 @@ import javassist.NotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,8 +34,8 @@ public class ProductInFridgeController {
     }
 
     @GetMapping
-    public String productsInFridge(Model model) {
-        model.addAttribute("fridgeProducts", fridgeService.getProductsInFridge());
+    public String productsInFridge(Model model, @SortDefault(value = "productName")  @PageableDefault(size = 5) Pageable pageable) {
+        model.addAttribute("fridgeProducts", fridgeService.getProductsInFridge(pageable));
         model.addAttribute("fridgeId", fridgeService.getDEFAULT_FRIDGE_ID());
         return "fridge";
     }
