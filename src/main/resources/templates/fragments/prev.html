@@ -17,13 +17,13 @@
                 <a class="nav-link" th:href="@{/recipes}">Wszystkie przepisy</a>
                 <a class="nav-link" th:href="@{/fridge}">Zawartość lodówki</a>
                 <a class="nav-link"th:href="@{/shopping-lists}">Lista zakupów</a>
-                    <li>
-                        <form th:action="@{/logout}" method="post" id="logout-form">
-                            <a href="#" onclick="document.getElementById('logout-form').submit()"
-                               class="nav-link">Wyloguj</a>
-                        </form>
-                    </li>
         </ul>
+        <li class="navbar-nav my-2 my-lg-0">
+            <form th:action="@{/logout}" method="post" id="logout-form">
+                <a href="#" onclick="document.getElementById('logout-form').submit()"
+                   class="nav-link">Wyloguj</a>
+            </form>
+        </li>
     </div>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
