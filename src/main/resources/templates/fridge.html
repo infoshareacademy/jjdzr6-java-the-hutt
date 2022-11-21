@@ -14,22 +14,22 @@
 <br>
 <div class="container">
     <div class="row">
-        <img src="https://i.ibb.co/M6by83q/Screenshot-from-2022-11-16-11-18-43.png"/>
+        <img src="https://i.ibb.co/mcSpJc2/Screenshot-from-2022-11-21-10-59-01.png"/>
     </div>
 
     <div class="row">
         <div class="col-lg-3">
-            <a th:href="@{/fridge/product}" class="btn btn-primary mb-3"> Dodaj Produkty</a>
+            <a th:href="@{/fridge/product}" class="btn btn-outline-info btn-sm mb-2"> Dodaj Produkty</a>
         </div>
     </div>
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
+    <table class="table table-striped table-hover">
+        <thead class="table">
         <tr>
-            <th><a class="sorted" sd:pagination-sort="productName">Nazwa</a></th>
-            <th><a class="sorted" sd:pagination-sort="amount">Ilość</a></th>
-            <th> Jednostka miary</th>
-            <th><a class="sorted" sd:pagination-sort="expirationDate">Data ważności</a></th>
-            <th> Opcje</th>
+            <th style="background-color: #e3f2fd;" class="align-middle"><a class="sorted" sd:pagination-sort="productName">Nazwa</a></th>
+            <th style="background-color: #e3f2fd;" class="align-middle"><a class="sorted" sd:pagination-sort="amount">Ilość</a></th>
+            <th style="background-color: #e3f2fd;" class="align-middle"> Jednostka miary</th>
+            <th style="background-color: #e3f2fd;" class="align-middle"><a class="sorted" sd:pagination-sort="expirationDate">Data ważności</a></th>
+            <th style="background-color: #e3f2fd;" class="align-middle"> Opcje</th>
         </tr>
         </thead>
 
@@ -42,10 +42,10 @@
             <td>
                 <a th:href="@{/fridge/product/{fridgeId}/{productId}(
         fridgeId=${fridgeId},productId=${product.productId})}"
-                   class="btn btn-primary">Edytuj</a>
+                   class="btn btn-outline-info btn-sm mb-2">Edytuj</a>
                 <a th:href="@{/fridge/{fridgeId}/{productId}(
         fridgeId=${fridgeId},productId=${product.productId})}"
-                   type="button" class="btn btn-danger">Usuń
+                   type="button" class="btn btn-outline-danger btn-sm mb-2">Usuń
                     <input name="_method" type="hidden" value="DELETE"/></a>
             </td>
         </tr>

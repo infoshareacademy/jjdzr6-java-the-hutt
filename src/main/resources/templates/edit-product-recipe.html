@@ -23,7 +23,10 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <h1 class="text-center"> Edytuj produkty </h1>
+            <div >
+                </br>
+                <p style="text-align:center;"><img src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
+            </div>
             <div class="card-body">
                 <form th:action="@{/recipes/{recipeId}/products(recipeId=${productRecipe.recipe.recipeId})}"
                       th:object="${productRecipe}"
@@ -58,7 +61,7 @@
                             </td>
                         </tr>
                         </tbody>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
                             Dodaj produkt
                         </button>
@@ -107,7 +110,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Zapisz</button>
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">Zapisz</button>
                                     </div>
                                 </div>
                             </div>

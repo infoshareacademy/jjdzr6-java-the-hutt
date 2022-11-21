@@ -15,7 +15,11 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <h1 class="text-center"> Edytuj przepis </h1>
+            <div>
+                </br>
+                <p style="text-align:center;"><img
+                        src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
+            </div>
             <div class="card-body">
                 <form th:action="@{/recipes/{id} (id=${recipe.recipeId})}" th:object="${recipe}" method="POST">
                     <div class="form-group">
@@ -45,29 +49,29 @@
                                placeholder="Podaj czas przygotowania."/>
                     </div>
 
-                    <label> Rodzaj posiłku</label>
+                    Rodzaj posiłku <select name="meal">
+                    <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
+                            th:value="${meal}" th:text="${meal.value}"></option>
+                </select>
                     <br>
-                    <select name="meal">
-                        <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
-                                th:value="${meal}" th:text="${meal.value}"></option>
-                    </select>
                     <br>
                     <div class="pull-right">
                         <a th:href="@{/recipes/{recipeId}/products(recipeId=${recipe.recipeId})}">
-                            <button type="button" name="editRecipe" class="btn btn-warning float-right">
+                            <button type="button" name="editRecipe" class="btn btn-outline-primary btn-sm float-right">
                                 Edytuj produkty
                             </button>
                         </a>
                     </div>
                     <div class="pull-right">
                         <a th:href="@{/recipes/{recipeId}/allergens (recipeId=${recipe.recipeId})}">
-                            <button type="button" name="editRecipeAllergens" class="btn btn-warning float-right">
+                            <button type="button" name="editRecipeAllergens"
+                                    class="btn btn-outline-primary btn-sm float-right">
                                 Edytuj alergeny
                             </button>
                         </a>
                     </div>
                     <div class="pull-left">
-                        <button type="submit" name="addRecipe" class="btn btn-success float-left">
+                        <button type="submit" name="addRecipe" class="btn btn-outline-primary btn-sm float-left">
                             Zapisz
                         </button>
                     </div>

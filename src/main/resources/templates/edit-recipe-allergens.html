@@ -13,28 +13,32 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-      <h1 class="text-center"> Edytuj Alergeny </h1>
+      <div >
+        </br>
+        <p style="text-align:center;"><img src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
+      </div>
       <div class="card-body">
         <form th:action="@{/recipes/{recipeId}/allergens/(recipeId=${recipeId})}"
               th:object="${allergens}"
               method="post">
 
-
           Lista Twoich alergenów:
-          <p>Czekolada<input type="checkbox" th:field="*{chocolate}"/>
-          <p>Produkty mleczne<input type="checkbox" th:field="*{dairy}"/>
-          <p>Jaja<input type="checkbox" th:field="*{eggs}"/>
-          <p>Orzechy<input type="checkbox" th:field="*{nuts}"/>
-          <p>Skorupiaki<input type="checkbox" th:field="*{shellfish}"/>
-          <p>Truskawki<input type="checkbox" th:field="*{strawberries}"/>
-          <p>Czy jesz mięso?<input type="checkbox" th:field="*{meatEater}"/>
-          <p>Dieta wegańska?<input type="checkbox" th:field="*{vegan}"/>
-          <p>Dieta wegetariańska?<input type="checkbox" th:field="*{vegetarian}"/>
+          <br>
+          <br>
+          <p>Czekolada <input type="checkbox" th:field="*{chocolate}"/>
+          <p>Produkty mleczne <input type="checkbox" th:field="*{dairy}"/>
+          <p>Jaja <input type="checkbox" th:field="*{eggs}"/>
+          <p>Orzechy <input type="checkbox" th:field="*{nuts}"/>
+          <p>Skorupiaki <input type="checkbox" th:field="*{shellfish}"/>
+          <p>Truskawki <input type="checkbox" th:field="*{strawberries}"/>
+          <p>Czy jesz mięso? <input type="checkbox" th:field="*{meatEater}"/>
+          <p>Dieta wegańska? <input type="checkbox" th:field="*{vegan}"/>
+          <p>Dieta wegetariańska? <input type="checkbox" th:field="*{vegetarian}"/>
           <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
 
 
           <div class="box-footer">
-            <button type="submit" name="saveRecipeAllergens" class="btn btn-success">
+            <button type="submit" name="saveRecipeAllergens" class="btn btn-outline-primary btn-sm">
               Zapisz
             </button>
           </div>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Fridge Food Preferences</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -14,22 +15,25 @@
 <br>
 <div class="container">
     <div class="row">
-        <img src="https://i.ibb.co/CvSRJW8/Screenshot-from-2022-11-16-11-21-30.png"/>
+        <img src="https://i.ibb.co/QjKhN9p/Screenshot-from-2022-11-21-10-57-50.png"/>
     </div>
-
+    <div class="row">
+        <div class="col-10">
+        <a th:href="@{/food-preferences/set-foodpreferences}" class="btn btn-outline-info btn-sm mb-2">Edytuj preferencje</a>
+        </div>
+        </div>
 
 <tr th:each="allergen: ${getfoodpreferences}">
-    ID: <th scope="col" th:text="${allergen.id}"></th> <br>
-    CZEKOLADA: <td th:text="${allergen.chocolate}"></td><br>
-    PRODUKTY MLECZNE: <td th:text="${allergen.dairy}"></td><br>
-    JAJA: <td th:text="${allergen.eggs}"></td><br>
-    ORZECHY: <td th:text="${allergen.nuts}"></td><br>
-    SKORUPIAKI: <td th:text="${allergen.shellfish}"></td><br>
-    TRUSKAWKI: <td th:text="${allergen.strawberries}"></td><br>
-    MIĘSO: <td th:text="${allergen.meatEater}"></td><br><br>
-    VEGANIN: <td th:text="${allergen.vegan}"></td><br><br>
-    WEGETARIANIN: <td th:text="${allergen.vegetarian}"></td><br><br>
-    INNE ALERGENY: <td th:text="${allergen.other}"></td><br><br>
+    Czekolada: <td th:text="${allergen.chocolate}"></td><br>
+    Produkty mleczne: <td th:text="${allergen.dairy}"></td><br>
+    Jaja: <td th:text="${allergen.eggs}"></td><br>
+    Orzechy: <td th:text="${allergen.nuts}"></td><br>
+    Skorupiaki: <td th:text="${allergen.shellfish}"></td><br>
+    Truskawki: <td th:text="${allergen.strawberries}"></td><br>
+    Mięso: <td th:text="${allergen.meatEater}"></td><br><br>
+    Weganin: <td th:text="${allergen.vegan}"></td><br><br>
+    Wegetarianin: <td th:text="${allergen.vegetarian}"></td><br><br>
+    Inne alergeny: <td th:text="${allergen.other}"></td><br><br>
 </tr>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>

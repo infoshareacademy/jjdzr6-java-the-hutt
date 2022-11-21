@@ -14,22 +14,20 @@
 <br>
 <div class="container">
     <div class="row">
-        <img src="https://i.ibb.co/CvSRJW8/Screenshot-from-2022-11-16-11-21-30.png"/>
+        <img src="https://i.ibb.co/QjKhN9p/Screenshot-from-2022-11-21-10-57-50.pngg"/>
     </div>
-
 <form action="#" th:action="@{/food-preferences}" th:object="${foodpreferences}" method="post">
-    Lista Twoich alergenów:
-    <p>Czekolada<input type="checkbox" th:field="*{chocolate}"/>
-    <p>Produkty mleczne<input type="checkbox" th:field="*{dairy}"/>
-    <p>Jaja<input type="checkbox" th:field="*{eggs}"/>
-    <p>Orzechy<input type="checkbox" th:field="*{nuts}"/>
-    <p>Skorupiaki<input type="checkbox" th:field="*{shellfish}"/>
-    <p>Truskawki<input type="checkbox" th:field="*{strawberries}"/>
-    <p>Czy jesz mięso?<input type="checkbox" th:field="*{meatEater}"/>
-    <p>Dieta wegańska?<input type="checkbox" th:field="*{vegan}"/>
-    <p>Dieta wegetariańska?<input type="checkbox" th:field="*{vegetarian}"/>
+    <p>Czekolada <input type="checkbox" th:field="*{chocolate}"/>
+    <p>Produkty mleczne <input type="checkbox" th:field="*{dairy}"/>
+    <p>Jaja <input type="checkbox" th:field="*{eggs}"/>
+    <p>Orzechy <input type="checkbox" th:field="*{nuts}"/>
+    <p>Skorupiaki <input type="checkbox" th:field="*{shellfish}"/>
+    <p>Truskawki <input type="checkbox" th:field="*{strawberries}"/>
+    <p>Czy jesz mięso? <input type="checkbox" th:field="*{meatEater}"/>
+    <p>Dieta wegańska? <input type="checkbox" th:field="*{vegan}"/>
+    <p>Dieta wegetariańska? <input type="checkbox" th:field="*{vegetarian}"/>
     <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
-    <p><input class="btn btn-primary" type="submit" value="Dodaj">
+    <p><input class="btn btn-outline-info btn-sm mb-2" type="submit" value="Dodaj">
 
 </form>
 </div>
