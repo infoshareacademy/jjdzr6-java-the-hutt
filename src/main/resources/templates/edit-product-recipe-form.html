@@ -13,7 +13,10 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <h1 class="text-center"> Edytuj produkt </h1>
+            <div >
+                </br>
+                <p style="text-align:center;"><img src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
+            </div>
             <div class="card-body">
                 <form th:action="@{/recipes/{recipeId}/products/{productId}
                         (recipeId=${productRecipe.recipe.recipeId},
@@ -54,7 +57,7 @@
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" name="saveRecipe" class="btn btn-success">
+                        <button type="submit" name="saveRecipe" class="btn btn-outline-primary btn-sm">
                             Zapisz
                         </button>
                     </div>
