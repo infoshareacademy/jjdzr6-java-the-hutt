@@ -22,7 +22,7 @@
     </div>
 
     <div class="col-lg-2">
-        <a th:href="@{/shopping-lists/shopping-list}" class="btn btn-success mb-2"> Stwórz listę</a>
+        <a th:href="@{/shopping-lists/shopping-list}" class="btn btn-outline-info btn-sm mb-2"> Stwórz listę</a>
     </div>
     <form th:action="@{/shopping-lists/shopping-list}" th:object = "${shoppinglist}" method="POST">
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -42,7 +42,7 @@
         </div>
         <div class = "box-footer">
             </br>
-            <button id="createdList" type="submit" class = "btn btn-primary">
+            <button id="createdList" type="submit" class = "btn btn-outline-info btn-sm mb-2">
                 Dodaj
             </button>
         </div>
