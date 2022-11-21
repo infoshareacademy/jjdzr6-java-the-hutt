@@ -14,8 +14,11 @@
 <br>
 <div class = "container">
     <div class = "row">
-        <div class ="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <h1 class = "text-center"> Stwórz nowy przepis </h1>
+        <div class ="col-lg-10 col-md-10 col-sm-10 container justify-content-center card">
+            <div >
+                </br>
+                <p style="text-align:center;"><img src="https://i.ibb.co/S6fmn0w/Screenshot-from-2022-11-21-12-38-15.png"></p>
+            </div>
             <div class = "card-body">
                 <form th:action="@{/recipes/recipe}" th:object = "${recipe}" method="POST">
                     <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -56,27 +59,24 @@
                         />
                     </div>
 
-                    <label> Rodzaj posiłku</label>
-                    <br>
-                    <select name="meal">
+                    Rodzaj posiłku  <select name="meal">
                         <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
                                 th:value="${meal}" th:text="${meal.value}"></option>
                     </select>
-                    <br>
-
-                    <label> Niezbędne produkty </label>
+                    </br>
                     <table>
-                        <td>
+                        <td>Niezbędne produkty
                             <button type="submit" name="addProduct" class = "btn btn-outline-primary btn-sm">Dodaj</button>
                         </td>
+                        </br>
                         <tr>
-                            <th >Lp.</th>
-                            <th >Produkt</th>
-                            <th >Ilość</th>
-                            <th >Jednostka miary</th>
+                            <th style="text-align: center">Lp.</th>
+                            <th style="text-align: center">Produkt</th>
+                            <th style="text-align: center">Ilość</th>
+                            <th style="text-align: center">Jednostka miary</th>
                         </tr>
                         <tr th:each="product,iterStat : *{productList}" th:class="${iterStat.odd}? 'grey-row'">
-                            <td th:text="${iterStat.count}"></td>
+                            <td style="text-align: center" th:text="${iterStat.count}"></td>
 
                             <td>
                                 <input type="text" th:field="*{productList[__${iterStat.index}__].productName}"  />
@@ -84,7 +84,7 @@
                             <td>
                                 <input type="text" th:field="*{productList[__${iterStat.index}__].amount}"  />
                             </td>
-                            <td>
+                            <td style="text-align: center">
                                 <select name="unit" th:field="*{productList[__${iterStat.index}__].unit}"  />
                                 <option th:each="unit : ${T(com.infoshareacademy.entity.product.ProductUnit).values()}"
                                         th:value="${unit}" th:text="${unit.value}"></option>
@@ -95,22 +95,24 @@
                             </td>
                         </tr>
                     </table>
-
+                    </br>
                     Lista Twoich alergenów:
-                    <p>Czekolada<input type="checkbox" th:field="${recipe.recipeAllergens.chocolate}"/></p>
-                    <p>Produkty mleczne<input type="checkbox" th:field="${recipe.recipeAllergens.dairy}"/></p>
-                    <p>Jaja<input type="checkbox" th:field="${recipe.recipeAllergens.eggs}"/></p>
-                    <p>Orzechy<input type="checkbox" th:field="${recipe.recipeAllergens.nuts}"/></p>
-                    <p>Skorupiaki<input type="checkbox" th:field="${recipe.recipeAllergens.shellfish}"/></p>
-                    <p>Truskawki<input type="checkbox" th:field="${recipe.recipeAllergens.strawberries}"/></p>
-                    <p>Czy jesz mięso?<input type="checkbox" th:field="${recipe.recipeAllergens.meatEater}"/></p>
-                    <p>Dieta wegańska?<input type="checkbox" th:field="${recipe.recipeAllergens.vegan}"/></p>
-                    <p>Dieta wegetariańska?<input type="checkbox" th:field="${recipe.recipeAllergens.vegetarian}"/></p>
+                    </br>
+                    </br>
+                    <p>Czekolada <input type="checkbox" th:field="${recipe.recipeAllergens.chocolate}"/></p>
+                    <p>Produkty mleczne <input type="checkbox" th:field="${recipe.recipeAllergens.dairy}"/></p>
+                    <p>Jaja <input type="checkbox" th:field="${recipe.recipeAllergens.eggs}"/></p>
+                    <p>Orzechy <input type="checkbox" th:field="${recipe.recipeAllergens.nuts}"/></p>
+                    <p>Skorupiaki <input type="checkbox" th:field="${recipe.recipeAllergens.shellfish}"/></p>
+                    <p>Truskawki <input type="checkbox" th:field="${recipe.recipeAllergens.strawberries}"/></p>
+                    <p>Czy jesz mięso? <input type="checkbox" th:field="${recipe.recipeAllergens.meatEater}"/></p>
+                    <p>Dieta wegańska? <input type="checkbox" th:field="${recipe.recipeAllergens.vegan}"/></p>
+                    <p>Dieta wegetariańska? <input type="checkbox" th:field="${recipe.recipeAllergens.vegetarian}"/></p>
                     <p>Inne alergeny: <input type="text" th:field="${recipe.recipeAllergens.other}"/></p>
 
                     <div class = "box-footer">
                         </br>
-                        <button type="submit" name="addRecipe" class = "btn btn-primary">
+                        <button type="submit" name="addRecipe" class = "btn btn-outline-primary btn-sm">
                             Dodaj
                         </button>
                     </div>
