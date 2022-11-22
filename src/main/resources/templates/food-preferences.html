@@ -24,15 +24,15 @@
         </div>
 
 <tr th:each="allergen: ${getfoodpreferences}">
-    Czekolada: <td th:text="${allergen.chocolate} ? 'uczulony' : 'nieuczulony'" ></td><br>
-    Produkty mleczne: <td th:text="${allergen.dairy} ? 'uczulony' : 'nieuczulony'" >"></td><br>
-    Jaja: <td th:text="${allergen.eggs} ? 'uczulony' : 'nieuczulony'" ></td><br>
-    Orzechy: <td th:text="${allergen.nuts} ? 'uczulony' : 'nieuczulony'"></td><br>
-    Skorupiaki: <td th:text="${allergen.shellfish} ? 'uczulony' : 'nieuczulony'"></td><br>
-    Truskawki: <td th:text="${allergen.strawberries} ? 'uczulony' : 'nieuczulony'"></td><br>
-    Mięso: <td th:text="${allergen.meatEater}  ? 'tak' : 'nie'"></td><br>
-    Weganin: <td th:text="${allergen.vegan} ? 'tak' : 'nie'"></td><br>
-    Wegetarianin: <td th:text="${allergen.vegetarian}  ? 'tak' : 'nie'"></td><br>
+    Czekolada: <td th:text="${allergen.chocolate} ? '✓' : 'x'" ></td><br>
+    Produkty mleczne: <td th:text="${allergen.dairy} ? '✓' : 'x'" ></td><br>
+    Jaja: <td th:text="${allergen.eggs} ? '✓' : 'x'"></td><br>
+    Orzechy: <td th:text="${allergen.nuts} ? '✓' : 'x'"></td><br>
+    Skorupiaki: <td th:text="${allergen.shellfish} ? '✓' : 'x'"></td><br>
+    Truskawki: <td th:text="${allergen.strawberries} ? '✓' : 'x'"></td><br>
+    Czy jesz mięso?: <td th:text="${allergen.meatEater}  ? '✓' : 'x'"></td><br>
+    Dieta wegańska? <td th:text="${allergen.vegan} ? '✓' : 'x'"></td><br>
+    Dieta wegańska? <td th:text="${allergen.vegetarian}  ? '✓' : 'x'"></td><br>
     Inne alergeny: <td th:text="${allergen.other}"></td><br><br>
 </tr>
 </div>
