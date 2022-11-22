@@ -38,7 +38,7 @@
 
 
           <div class="box-footer">
-            <button type="submit" name="saveRecipeAllergens" class="btn btn-outline-primary btn-sm">
+            <button onclick="recipeAllergensUpdated()" type="submit" name="saveRecipeAllergens" class="btn btn-outline-primary btn-sm">
               Zapisz
             </button>
           </div>
@@ -49,5 +49,10 @@
   </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+  function recipeAllergensUpdated() {
+    alert("Allergeny w przepisie zaktualizowano!");
+  };
+</script>
 </body>
 </html>

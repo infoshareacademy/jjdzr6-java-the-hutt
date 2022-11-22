@@ -8,13 +8,14 @@ import com.infoshareacademy.entity.user.User;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
 import com.infoshareacademy.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,6 +26,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class FridgeService {
 
     private final FridgeRepository fridgeRepository;
@@ -53,6 +55,7 @@ public class FridgeService {
         fridge.getProductsInFridge().forEach(x -> x.setFridge(fridge));
         fridge.setFridgeId(getUserId());
         fridgeRepository.save(fridge);
+        log.info("Zapisano lodówkę dla użytkownika o id: " + getUserId());
     }
 
     public FridgeDto getFridge() {

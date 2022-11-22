@@ -71,7 +71,7 @@
                         </a>
                     </div>
                     <div class="pull-left">
-                        <button type="submit" name="addRecipe" class="btn btn-outline-primary btn-sm float-left">
+                        <button onclick="recipeUpdated()" type="submit" name="addRecipe" class="btn btn-outline-primary btn-sm float-left">
                             Zapisz
                         </button>
                     </div>
@@ -82,5 +82,10 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function recipeUpdated() {
+        alert("Zaktualizowano przepis!");
+    };
+</script>
 </body>
 </html>

@@ -27,10 +27,15 @@
     <p>Dieta wegańska? <input type="checkbox" th:field="*{vegan}"/>
     <p>Dieta wegetariańska? <input type="checkbox" th:field="*{vegetarian}"/>
     <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
-    <p><input class="btn btn-outline-info btn-sm mb-2" type="submit" value="Dodaj">
+    <p><input class="btn btn-outline-info btn-sm mb-2" onclick="setFoodPreferences()"  type="submit" value="Dodaj">
 
 </form>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function setFoodPreferences() {
+        alert("Preferencje zostały zapisane!");
+    };
+</script>
 </body>
 </html>

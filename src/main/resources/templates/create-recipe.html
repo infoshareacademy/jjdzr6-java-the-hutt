@@ -91,7 +91,7 @@
                             </select>
                             </td>
                             <td>
-                                <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
+                                <button onclick="removeProductFromRecipe()" type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
                             </td>
                         </tr>
                     </table>
@@ -112,7 +112,8 @@
 
                     <div class = "box-footer">
                         </br>
-                        <button type="submit" name="addRecipe" class = "btn btn-outline-primary btn-sm">
+                        <button class="btn btn-outline-primary btn-sm" name="addRecipe" onclick="addRecipe()"
+                                type="submit">
                             Dodaj
                         </button>
                     </div>
@@ -123,5 +124,15 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function addRecipe() {
+        alert("Dodano przepis!");
+    };
+</script>
+<script>
+    function removeProductFromRecipe() {
+        alert("Usunięto produkt z przepisu!");
+    };
+</script>
 </body>
 </html>
