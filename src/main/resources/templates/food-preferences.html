@@ -24,15 +24,33 @@
         </div>
 
 <tr th:each="allergen: ${getfoodpreferences}">
-    Czekolada: <td th:text="${allergen.chocolate} ? '✓' : 'x'" ></td><br>
-    Produkty mleczne: <td th:text="${allergen.dairy} ? '✓' : 'x'" ></td><br>
-    Jaja: <td th:text="${allergen.eggs} ? '✓' : 'x'"></td><br>
-    Orzechy: <td th:text="${allergen.nuts} ? '✓' : 'x'"></td><br>
-    Skorupiaki: <td th:text="${allergen.shellfish} ? '✓' : 'x'"></td><br>
-    Truskawki: <td th:text="${allergen.strawberries} ? '✓' : 'x'"></td><br>
-    Czy jesz mięso?: <td th:text="${allergen.meatEater}  ? '✓' : 'x'"></td><br>
-    Dieta wegańska? <td th:text="${allergen.vegan} ? '✓' : 'x'"></td><br>
-    Dieta wegańska? <td th:text="${allergen.vegetarian}  ? '✓' : 'x'"></td><br>
+    Czekolada:
+        <span th:if="${allergen.chocolate}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+        <span th:unless="${allergen.chocolate}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
+    Produkty mleczne:
+    <span th:if="${allergen.dairy}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+    <span th:unless="${allergen.dairy}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
+    Jaja:
+    <span th:if="${allergen.eggs}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+    <span th:unless="${allergen.eggs}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
+    Orzechy:
+    <span th:if="${allergen.nuts}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+    <span th:unless="${allergen.nuts}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
+    Skorupiaki:
+    <span th:if="${allergen.shellfish}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+    <span th:unless="${allergen.shellfish}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
+    Truskawki:
+    <span th:if="${allergen.strawberries}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+    <span th:unless="${allergen.strawberries}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
+    Czy jesz mięso?:
+    <span th:if="${allergen.meatEater}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+    <span th:unless="${allergen.meatEater}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
+    Dieta wegańska?
+    <span th:if="${allergen.vegan}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+    <span th:unless="${allergen.vegan}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
+    Dieta wegańska?
+    <span th:if="${allergen.vegetarian}" th:text="'x'" style="color: red; font-weight: bolder"></span>
+    <span th:unless="${allergen.vegetarian}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
     Inne alergeny: <td th:text="${allergen.other}"></td><br><br>
 </tr>
 </div>
