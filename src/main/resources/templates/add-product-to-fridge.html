@@ -14,8 +14,12 @@
 <br>
 <div class = "container">
     <div class = "row">
-        <div class ="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <h1 class = "text-center"> Dodaj produkty </h1>
+        <div class ="col-lg-9 col-md-9 col-sm-9 container justify-content-center card">
+            <div>
+                </br>
+                <p style="text-align:center;"><img
+                        src="https://i.ibb.co/zHRgKpv/Screenshot-from-2022-11-22-09-32-13.png"></p>
+            </div>
             <div class = "card-body">
                 <form th:action="@{/fridge/product}" th:object = "${fridgeDtoForm}" method="POST">
 <!--                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">-->
@@ -57,7 +61,7 @@
 
                     <div class = "box-footer">
                         </br>
-                        <button type="submit" name="addFridge" class = "btn btn-primary">
+                        <button type="submit" name="addFridge" class = "btn btn-outline-primary btn-sm">
                             Dodaj
                         </button>
                     </div>
