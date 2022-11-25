@@ -34,11 +34,12 @@
           <p>Czy jesz mięso? <input type="checkbox" th:field="*{meatEater}"/>
           <p>Dieta wegańska? <input type="checkbox" th:field="*{vegan}"/>
           <p>Dieta wegetariańska? <input type="checkbox" th:field="*{vegetarian}"/>
+          <div class="alert alert-danger" th:if="${#fields.hasErrors('other')}" th:errors="*{other}"></div>
           <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
 
 
           <div class="box-footer">
-            <button onclick="recipeAllergensUpdated()" type="submit" name="saveRecipeAllergens" class="btn btn-outline-primary btn-sm">
+            <button onsubmit="recipeAllergensUpdated()" type="submit" name="saveRecipeAllergens" class="btn btn-outline-primary btn-sm">
               Zapisz
             </button>
           </div>

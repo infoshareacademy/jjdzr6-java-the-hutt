@@ -8,7 +8,6 @@ import com.infoshareacademy.service.FridgeService;
 import com.infoshareacademy.service.RecipeService;
 import com.infoshareacademy.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
@@ -88,7 +87,10 @@ public class RecipeController {
     }
 
     @PostMapping(value = "/{recipeId}")
-    public String updateRecipe(@PathVariable Long recipeId, @ModelAttribute("recipe") RecipeDto recipe) {
+    public String updateRecipe(@PathVariable Long recipeId, @Valid @ModelAttribute("recipe") RecipeDto recipe, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit-recipe";
+        }
         recipeService.updateRecipe(recipeId, recipe);
         return "redirect:/recipes";
     }
@@ -101,7 +103,10 @@ public class RecipeController {
     }
 
     @PostMapping("/{recipeId}/allergens")
-    public String saveRecipeAllergens(@PathVariable Long recipeId, @ModelAttribute RecipeAllergensDto allergens) {
+    public String saveRecipeAllergens(@PathVariable Long recipeId, @ModelAttribute("allergens") @Valid RecipeAllergensDto allergens, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit-recipe-allergens";
+        }
         recipeService.saveRecipeAllergens(recipeId, allergens);
         return "redirect:/recipes/" + recipeId;
     }
