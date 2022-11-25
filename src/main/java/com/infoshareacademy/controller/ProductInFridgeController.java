@@ -47,7 +47,7 @@ public class ProductInFridgeController {
     }
 
     @PostMapping(value = "/product", params = {"addProduct"})
-    public String addProductsToFridge(@ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto) {
+    public String addProductsToFridge(@Valid @ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto) {
         fridgeDto.addProductDto(new FridgeDto.ProductInFridgeDto());
         return "add-product-to-fridge";
     }
