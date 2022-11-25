@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" name="saveRecipe" class="btn btn-outline-primary btn-sm">
+                        <button onclick="productInRecipeUpdated()" type="submit" name="saveRecipe" class="btn btn-outline-primary btn-sm">
                             Zapisz
                         </button>
                     </div>
@@ -68,5 +68,10 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function productInRecipeUpdated() {
+        alert("Zaktualizowano produkt!");
+    };
+</script>
 </body>
 </html>

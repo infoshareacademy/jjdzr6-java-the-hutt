@@ -62,7 +62,7 @@
                                class="form-control"/>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" name="productInFridge" class="btn btn-outline-primary btn-sm">
+                        <button onclick="productsInFridgeUpdated()" type="submit" name="productInFridge" class="btn btn-outline-primary btn-sm">
                             Zapisz
                         </button>
                     </div>
@@ -72,5 +72,10 @@
         </div>
     </div>
 </div>
+<script>
+    function productsInFridgeUpdated() {
+        alert("Zaktualizowano produkty!");
+    };
+</script>
 </body>
 </html>

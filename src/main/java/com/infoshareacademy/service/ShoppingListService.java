@@ -11,8 +11,7 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import com.infoshareacademy.repository.ProductShoppingListRepository;
 import com.infoshareacademy.repository.ShoppingListRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +24,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ShoppingListService {
 
     private final ShoppingListRepository shoppingListRepository;
@@ -33,7 +33,6 @@ public class ShoppingListService {
 
     private final RecipeService recipeService;
     private final ModelMapper modelMapper;
-    private final static Logger LOGGER = LogManager.getLogger(ShoppingListService.class.getName());
 
 
     @Autowired
@@ -59,12 +58,12 @@ public class ShoppingListService {
         }
         shoppingList.setUserId(fridgeService.getUserId());
         shoppingListRepository.save(shoppingList);
-        LOGGER.info("Zapisano listę zakupów: " + shoppingList.getName());
+        log.info("Zapisano listę zakupów: " + shoppingList.getName());
 
     }
 
     public void deleteShoppingListById(Long shoppingListId) {
-        LOGGER.info("Usunięto listę zakupów: " + shoppingListRepository.findById(shoppingListId).get().getName());
+        log.info("Usunięto listę zakupów: " + shoppingListRepository.findById(shoppingListId).get().getName());
         shoppingListRepository.deleteShoppingListById(shoppingListId);
 
     }
@@ -80,9 +79,10 @@ public class ShoppingListService {
     }
 
     public Page<ProductShoppingListDto> viewShoppingList(Long id, Pageable pageable) {
-        Page<ProductShoppingList> shoppingList = new PageImpl<>( new ArrayList<>());
+        Page<ProductShoppingList> shoppingList = new PageImpl<>(new ArrayList<>());
         addProductsRecipeToShoppingList(id);
-        if (!productShoppingListRepository.findProductsInShoppingList(id, pageable).isEmpty()) shoppingList = productShoppingListRepository.findProductsInShoppingList(id, pageable);
+        if (!productShoppingListRepository.findProductsInShoppingList(id, pageable).isEmpty())
+            shoppingList = productShoppingListRepository.findProductsInShoppingList(id, pageable);
         return shoppingList.map(productShoppingList -> modelMapper.map(productShoppingList, ProductShoppingListDto.class));
     }
 
@@ -97,7 +97,7 @@ public class ShoppingListService {
         }
 
         shoppingListRepository.save(modelMapper.map(shoppingList, ShoppingList.class));
-        LOGGER.info("Dodano przepis " + recipe.getName() + " do listy zakupów: " + shoppingList.getName());
+        log.info("Dodano przepis " + recipe.getName() + " do listy zakupów: " + shoppingList.getName());
     }
 
     public void addProductsRecipeToShoppingList(Long id) {
@@ -115,7 +115,7 @@ public class ShoppingListService {
             list.setShoppingList(shoppingList);
         }
         shoppingListRepository.save(shoppingList);
-        LOGGER.info("Dodane produkty z przepisu do listy zakupów: " + shoppingList.getName());
+        log.info("Dodane produkty z przepisu do listy zakupów: " + shoppingList.getName());
 
     }
 

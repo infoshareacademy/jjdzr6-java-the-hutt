@@ -6,6 +6,7 @@ import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
 import javassist.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ProductInFridgeService {
 
     private final ProductInFridgeRepository productInFridgeRepository;
@@ -41,6 +43,7 @@ public class ProductInFridgeService {
         if (productInFridgeRepository.findById(productId).isPresent()) {
             productInFridgeRepository.deleteById(productId);
         } else throw new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId));
+        log.info("Usunięto produkt o id: " + productId + " z lodówki dla użytkownika o id: " + fridgeService.getUserId());
     }
 
     public void editProductInFridge(Long productId, FridgeDto.ProductInFridgeDto productInFridgeDto) throws NotFoundException {
@@ -62,5 +65,6 @@ public class ProductInFridgeService {
 
         ProductInFridge product = modelMapper.map(productDto, ProductInFridge.class);
         productInFridgeRepository.save(product);
+        log.info("Zaktualizowano produkty w lodówce dla użytkownika o id: " + fridgeService.getUserId());
     }
 }

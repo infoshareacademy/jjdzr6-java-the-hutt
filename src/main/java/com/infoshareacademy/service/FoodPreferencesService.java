@@ -6,6 +6,7 @@ import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.FoodPreferencesRepository;
 import com.infoshareacademy.repository.RecipeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 
 @Service
+@Slf4j
 public class FoodPreferencesService {
 
     private final FoodPreferencesRepository foodPreferencesRepository;
@@ -50,6 +52,7 @@ public class FoodPreferencesService {
         foodPreferencesDto.setId(fridgeService.getUserId());
         FoodPreferences foodPreferences = modelMapper.map(foodPreferencesDto, FoodPreferences.class);
         foodPreferencesRepository.save(foodPreferences);
+        log.info("Zapisano preferencje żywieniowe dla użytkownika o id: " + fridgeService.getUserId());
     }
 
     public Optional<FoodPreferencesDto> checkIfFoodPreferencesIsSet() {

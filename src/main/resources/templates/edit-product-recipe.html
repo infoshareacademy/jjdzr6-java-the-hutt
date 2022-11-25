@@ -49,7 +49,7 @@
                             <td th:text="${productRecipe.productName}"></td>
 
                             <td>
-                                <a th:href="@{/recipes/{recipeId}/{productId}(
+                                <a onclick="removeProduct()" th:href="@{/recipes/{recipeId}/{productId}(
                                    recipeId=${productRecipe.recipe.recipeId}, productId=${productRecipe.productId})}"
                                    type="button" class="btn btn-outline-danger">Usuń
                                     <input name="_method" type="hidden" value="DELETE"/>
@@ -110,7 +110,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-outline-primary btn-sm">Zapisz</button>
+                                        <button onclick="recipeUpdated()" type="submit" class="btn btn-outline-primary btn-sm">Zapisz</button>
                                     </div>
                                 </div>
                             </div>
@@ -122,5 +122,15 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function recipeUpdated() {
+        alert("Zaktualizowano przepis!");
+    };
+</script>
+<script>
+    function removeProduct() {
+        alert("Usunięto produkt!");
+    };
+</script>
 </body>
 </html>

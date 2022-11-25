@@ -61,7 +61,7 @@
 
                     <div class = "box-footer">
                         </br>
-                        <button type="submit" name="addFridge" class = "btn btn-outline-primary btn-sm">
+                        <button onclick="addProductsToFridge()" type="submit" name="addFridge" class = "btn btn-outline-primary btn-sm">
                             Dodaj
                         </button>
                     </div>
@@ -72,5 +72,10 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function addProductsToFridge() {
+        alert("Dodano produkty do lodówki!");
+    };
+</script>
 </body>
 </html>

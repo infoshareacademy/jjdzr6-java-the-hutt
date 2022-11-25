@@ -43,7 +43,7 @@
                 <a th:href="@{/fridge/product/{fridgeId}/{productId}(
         fridgeId=${fridgeId},productId=${product.productId})}"
                    class="btn btn-outline-info btn-sm mb-2">Edytuj</a>
-                <a th:href="@{/fridge/{fridgeId}/{productId}(
+                <a onclick="deleteProductFromFridge()" th:href="@{/fridge/{fridgeId}/{productId}(
         fridgeId=${fridgeId},productId=${product.productId})}"
                    type="button" class="btn btn-outline-danger btn-sm mb-2">Usuń
                     <input name="_method" type="hidden" value="DELETE"/></a>
@@ -68,5 +68,10 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function deleteProductFromFridge() {
+        alert("Usunięto produkt!");
+    };
+</script>
 </body>
 </html>
