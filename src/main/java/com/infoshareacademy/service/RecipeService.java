@@ -4,6 +4,8 @@ package com.infoshareacademy.service;
 import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.DTO.RecipeAllergensDto;
 import com.infoshareacademy.DTO.RecipeDto;
+import com.infoshareacademy.entity.product.ProductRecipe;
+import com.infoshareacademy.entity.product.ProductUnit;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllergens;
@@ -105,6 +107,7 @@ public class RecipeService {
     public void saveRecipe(RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
+        recipe.getProductList().forEach(productRecipe -> convertUnitsInProducts(productRecipe));
         recipe.getRecipeAllergens().setRecipe(recipe);
         recipe.setUserId(fridgeService.getUserId());
 
@@ -123,7 +126,7 @@ public class RecipeService {
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
         existingRecipe.setMeal(recipe.getMeal());
-
+        existingRecipe.getProductList().forEach(this::convertUnitsInProducts);
         recipeRepository.save(existingRecipe);
         log.info("Zaktualizowano przepis: " + recipe.getName());
     }
@@ -175,6 +178,30 @@ public class RecipeService {
             }
         }
         return new PageImpl<>(filteredRecipies);
+    }
+
+    public void convertUnitsInProducts(ProductRecipe product) {
+        Double convertedAmount = 0.0;
+        switch (product.getUnit()) {
+
+            case MILIGRAM:
+                convertedAmount = (product.getAmount()) / 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.GRAM);
+                break;
+
+            case KILOGRAM:
+                convertedAmount = (product.getAmount()) * 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.GRAM);
+                break;
+
+            case LITR:
+                convertedAmount = (product.getAmount()) * 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.MILILITR);
+                break;
+        }
     }
 
 }

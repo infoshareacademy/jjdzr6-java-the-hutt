@@ -64,7 +64,10 @@ public class ProductInFridgeService {
         productDto.get().setExpirationDate(LocalDate.parse(productInFridgeDto.getExpirationDate().toString()));
 
         ProductInFridge product = modelMapper.map(productDto, ProductInFridge.class);
+        fridgeService.convertUnitsInProducts(product);
         productInFridgeRepository.save(product);
         log.info("Zaktualizowano produkty w lodówce dla użytkownika o id: " + fridgeService.getUserId());
     }
+
+
 }
