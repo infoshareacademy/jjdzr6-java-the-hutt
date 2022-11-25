@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,7 @@ public class FoodPreferencesService {
     public List<FoodPreferencesDto> getFoodPreferences() {
         return foodPreferencesRepository.findAll().stream().map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class)).toList();
     }
+
 
     public void setFoodPreferences(FoodPreferencesDto foodPreferencesDto) {
         foodPreferencesDto.setId(fridgeService.getUserId());
