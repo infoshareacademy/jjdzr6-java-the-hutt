@@ -8,7 +8,7 @@ import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -17,16 +17,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "products_in_fridge")
-public class ProductInFridge extends Product {
+public class ProductInFridge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
     @Column(name = "product_name")
+    @NotBlank(message = "Nazwa produktu nie może być pusta!")
     private String productName;
 
     @Column(name = "amount")
+    @NotNull(message = "Ilość produktu nie może być pusta!")
+    @Min(value = 1, message = "Ilość produktu musi być większa lub równa 1!")
+    @Max(value = 999, message = "Ilość produktu nie może być mniejsza niż 1000!")
     private Double amount;
 
     @Column(name = "unit")
@@ -35,7 +39,7 @@ public class ProductInFridge extends Product {
 
     @Column(name = "expiration_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Future
+    @Future(message = "Data spożycia musi być datą przyszłą!")
     private LocalDate expirationDate;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
