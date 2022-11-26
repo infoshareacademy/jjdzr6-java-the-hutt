@@ -87,7 +87,10 @@ public class RecipeController {
     }
 
     @PostMapping(value = "/{recipeId}")
-    public String updateRecipe(@PathVariable Long recipeId, @ModelAttribute("recipe") RecipeDto recipe) {
+    public String updateRecipe(@PathVariable Long recipeId, @Valid @ModelAttribute("recipe") RecipeDto recipe, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit-recipe";
+        }
         recipeService.updateRecipe(recipeId, recipe);
         return "redirect:/recipes";
     }
@@ -100,7 +103,10 @@ public class RecipeController {
     }
 
     @PostMapping("/{recipeId}/allergens")
-    public String saveRecipeAllergens(@PathVariable Long recipeId, @ModelAttribute RecipeAllergensDto allergens) {
+    public String saveRecipeAllergens(@PathVariable Long recipeId, @ModelAttribute("allergens") @Valid RecipeAllergensDto allergens, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit-recipe-allergens";
+        }
         recipeService.saveRecipeAllergens(recipeId, allergens);
         return "redirect:/recipes/" + recipeId;
     }
@@ -131,7 +137,7 @@ public class RecipeController {
 
     @GetMapping("/food-preferences")
     public String getRecipesByFoodPreferences(Model model, @SortDefault(value = "name") @PageableDefault(size = 3) Pageable pageable) {
-        model.addAttribute("recipes", foodPreferencesService.filterRecipeByFoodPreferences(fridgeService.getDEFAULT_FRIDGE_ID(), pageable));
+        model.addAttribute("recipes", foodPreferencesService.filterRecipeByFoodPreferences(pageable));
         return "recipes";
     }
 }

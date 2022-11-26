@@ -4,13 +4,14 @@ package com.infoshareacademy.service;
 import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.DTO.RecipeAllergensDto;
 import com.infoshareacademy.DTO.RecipeDto;
+import com.infoshareacademy.entity.product.ProductRecipe;
+import com.infoshareacademy.entity.product.ProductUnit;
 import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
 import com.infoshareacademy.repository.RecipeRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class RecipeService {
 
     private final RecipeRepository recipeRepository;
@@ -33,8 +35,6 @@ public class RecipeService {
     private final RecipeAllergensRepository allergensRepository;
 
     private final FridgeService fridgeService;
-
-    private final static Logger LOGGER = LogManager.getLogger(RecipeService.class.getName());
 
     private final ModelMapper modelMapper;
 
@@ -46,9 +46,13 @@ public class RecipeService {
         this.modelMapper = modelMapper;
     }
 
-
     public List<RecipeDto> getAllRecipes() {
         return recipeRepository.findAll().stream().map(recipeDto -> modelMapper.map(recipeDto, RecipeDto.class)).toList();
+    }
+
+    @Transactional
+    public void setUserIdForInitRecipes() {
+        recipeRepository.findAll().stream().forEach(recipe -> recipe.setUserId(fridgeService.getUserId()));
     }
 
     public Page<RecipeDto> getSearchedRecipe(String keyword, Pageable pageable) {
@@ -78,7 +82,7 @@ public class RecipeService {
 
     public void saveRecipeAllergens(Long id, RecipeAllergensDto allergens) {
         Recipe recipe = new Recipe();
-        recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
+        recipe.setUserId(fridgeService.getUserId());
         if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
         RecipeAllergens existingAllergens;
         if (allergensRepository.findById(recipe.getRecipeAllergens().getId()).isPresent()) {
@@ -96,17 +100,18 @@ public class RecipeService {
             existingAllergens.setVegetarian(allergens.isVegetarian());
 
             allergensRepository.save(existingAllergens);
-            LOGGER.info("Zapisano preferencje żywieniowe!");
+            log.info("Zapisano preferencje żywieniowe!");
         }
     }
 
+    @Transactional
     public void saveRecipe(RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
+        recipe.getProductList().forEach(productRecipe -> convertUnitsInProducts(productRecipe));
         recipe.getRecipeAllergens().setRecipe(recipe);
-        recipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
-
-        LOGGER.info("Zapisano przepis: " + recipe.getName());
+        recipe.setUserId(fridgeService.getUserId());
+        log.info("Zapisano przepis: " + recipe.getName());
         recipeRepository.save(recipe);
     }
 
@@ -114,25 +119,28 @@ public class RecipeService {
     public void updateRecipe(Long recipeId, RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         Recipe existingRecipe = new Recipe();
-        existingRecipe.setUserId(fridgeService.getDEFAULT_FRIDGE_ID());
+        existingRecipe.setUserId(fridgeService.getUserId());
         if (recipeRepository.findById(recipeId).isPresent()) existingRecipe = recipeRepository.findById(recipeId).get();
         existingRecipe.setRecipeId(recipeId);
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setPreparationTime(recipe.getPreparationTime());
         existingRecipe.setMeal(recipe.getMeal());
-
+        existingRecipe.getProductList().forEach(this::convertUnitsInProducts);
         recipeRepository.save(existingRecipe);
-        LOGGER.info("Zaktualizowano przepis: " + recipe.getName());
+        log.info("Zaktualizowano przepis: " + recipe.getName());
     }
 
     @Transactional
     public void deleteRecipeById(Long id) {
         recipeRepository.deleteByRecipeId(id);
+        log.info("Usunięto przepis o id: " + id);
+
     }
 
     public void deleteAllRecipes() {
         recipeRepository.deleteAll();
+        log.info("Usunięto wszystkie przpeisy");
     }
 
     public List<RecipeDto> getRecipesWithProductsToLowerCase() {
@@ -170,6 +178,30 @@ public class RecipeService {
             }
         }
         return new PageImpl<>(filteredRecipies);
+    }
+
+    public void convertUnitsInProducts(ProductRecipe product) {
+        Double convertedAmount = 0.0;
+        switch (product.getUnit()) {
+
+            case MILIGRAM:
+                convertedAmount = (product.getAmount()) / 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.GRAM);
+                break;
+
+            case KILOGRAM:
+                convertedAmount = (product.getAmount()) * 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.GRAM);
+                break;
+
+            case LITR:
+                convertedAmount = (product.getAmount()) * 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.MILILITR);
+                break;
+        }
     }
 
 }

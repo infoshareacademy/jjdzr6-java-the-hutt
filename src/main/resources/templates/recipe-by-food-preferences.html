@@ -45,7 +45,7 @@
                 <a th:href="@{/recipes/{id}(id=${recipe.recipeId})}"
                    class="btn btn-primary">Zaktualizuj</a>
 
-                <a th:href="@{/recipes/{id}(id=${recipe.recipeId})}"
+                <a onclick="deleteRecipeFromShoppingList()" th:href="@{/recipes/{id}(id=${recipe.recipeId})}"
                    class="btn btn-danger">Usuń</a>
 
             </td>
@@ -56,5 +56,10 @@
 
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function deleteRecipeFromShoppingList() {
+        alert("Usunięto przepis!");
+    };
+</script>
 </body>
 </html>

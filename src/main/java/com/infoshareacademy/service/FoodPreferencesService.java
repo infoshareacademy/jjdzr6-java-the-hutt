@@ -6,6 +6,7 @@ import com.infoshareacademy.entity.food_preferences.FoodPreferences;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.repository.FoodPreferencesRepository;
 import com.infoshareacademy.repository.RecipeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +14,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Comparator;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 public class FoodPreferencesService {
 
     private final FoodPreferencesRepository foodPreferencesRepository;
@@ -40,7 +42,8 @@ public class FoodPreferencesService {
         this.modelMapper = modelMapper;
     }
 
-    public Optional<FoodPreferencesDto> getFoodPreferencesById(Long id) {
+    public Optional<FoodPreferencesDto> getFoodPreferencesById() {
+        Long id = fridgeService.getUserId();
         return foodPreferencesRepository.findById(id).map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class));
     }
 
@@ -48,15 +51,17 @@ public class FoodPreferencesService {
         return foodPreferencesRepository.findAll().stream().map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class)).toList();
     }
 
+
     public void setFoodPreferences(FoodPreferencesDto foodPreferencesDto) {
-        foodPreferencesDto.setId(fridgeService.getDEFAULT_FRIDGE_ID());
+        foodPreferencesDto.setId(fridgeService.getUserId());
         FoodPreferences foodPreferences = modelMapper.map(foodPreferencesDto, FoodPreferences.class);
         foodPreferencesRepository.save(foodPreferences);
+        log.info("Zapisano preferencje żywieniowe dla użytkownika o id: " + fridgeService.getUserId());
     }
 
     public Optional<FoodPreferencesDto> checkIfFoodPreferencesIsSet() {
-        if (foodPreferencesRepository.findById(fridgeService.getDEFAULT_FRIDGE_ID()).isPresent()) {
-            return getFoodPreferencesById(fridgeService.getDEFAULT_FRIDGE_ID());
+        if (foodPreferencesRepository.findById(fridgeService.getUserId()).isPresent()) {
+            return getFoodPreferencesById();
         } else {
             return Optional.of(new FoodPreferencesDto());
         }
@@ -67,6 +72,7 @@ public class FoodPreferencesService {
         Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
         Page<RecipeDto> recipePage = recipeRepository.findAll(pageable).map(recipe -> modelMapper.map(recipe, RecipeDto.class));
         List<Recipe> recipeList = recipeRepository.findAll();
+
 
         if (foodPreferencesRepositoryDtoById.isPresent()) {
             FoodPreferencesDto foodPreferencesDto = foodPreferencesRepositoryDtoById.get();

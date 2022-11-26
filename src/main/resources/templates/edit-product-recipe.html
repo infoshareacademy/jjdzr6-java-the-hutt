@@ -23,9 +23,12 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <h1 class="text-center"> Edytuj produkty </h1>
+            <div >
+                </br>
+                <p style="text-align:center;"><img src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
+            </div>
             <div class="card-body">
-                <form th:action="@{/recipes/{recipeId}/products(recipeId=${productRecipe.recipe.recipeId})}"
+                <form th:action="@{/recipes/{recipeId}/products(recipeId=${recipeId})}"
                       th:object="${productRecipe}"
                       method="POST">
                     <table class="table table-striped">
@@ -46,19 +49,20 @@
                             <td th:text="${productRecipe.productName}"></td>
 
                             <td>
-                                <a th:href="@{/recipes/{recipeId}/{productId}(
-                                   recipeId=${productRecipe.recipe.recipeId}, productId=${productRecipe.productId})}"
+                                <a onclick="removeProduct()" th:href="@{/recipes/{recipeId}/{productId}(
+                                   recipeId=${recipeId},
+                                   productId=${productRecipe.productId})}"
                                    type="button" class="btn btn-outline-danger">Usuń
                                     <input name="_method" type="hidden" value="DELETE"/>
                                 </a>
                                 <a type="button" name="editProduct"
                                    th:href="@{/recipes/{recipeId}/products/{productId}(
-                                   recipeId=${productRecipe.recipe.recipeId}, productId=${productRecipe.productId})}"
+                                   recipeId=${recipeId}, productId=${productRecipe.productId})}"
                                    class="btn btn-outline-info">Edytuj produkt</a>
                             </td>
                         </tr>
                         </tbody>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
                             Dodaj produkt
                         </button>
@@ -77,18 +81,18 @@
                                         <form th:action="@{/recipes/{recipeId}/products(recipeId=${productRecipe.recipe.recipeId})}"
                                               th:object="${productRecipe}"
                                               method="POST">
-
                                             <div class="form-group">
                                                 <label> Nazwa produktu </label>
-                                                <input type="text"
+                                                <input type="text" required
                                                        name="productName"
                                                        th:field="*{productName}"
                                                        class="form-control"
                                                        placeholder="Podaj nazwe produktu."/>
                                             </div>
+
                                             <div class="form-group">
                                                 <label> Ilość </label>
-                                                <input type="number"
+                                                <input type="number" required
                                                        name="amount"
                                                        th:field="*{amount}"
                                                        class="form-control"
@@ -107,7 +111,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Zapisz</button>
+                                        <button onsubmit="recipeUpdated()" type="submit" class="btn btn-outline-primary btn-sm">Zapisz</button>
                                     </div>
                                 </div>
                             </div>
@@ -119,5 +123,15 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function recipeUpdated() {
+        alert("Zaktualizowano przepis!");
+    };
+</script>
+<script>
+    function removeProduct() {
+        alert("Usunięto produkt!");
+    };
+</script>
 </body>
 </html>

@@ -15,59 +15,69 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <h1 class="text-center"> Edytuj przepis </h1>
+            <div>
+                </br>
+                <p style="text-align:center;"><img
+                        src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
+            </div>
             <div class="card-body">
                 <form th:action="@{/recipes/{id} (id=${recipe.recipeId})}" th:object="${recipe}" method="POST">
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                     <div class="form-group">
                         <label> Tytuł </label>
                         <input type="text"
+                               required
                                name="name"
                                th:field="*{name}"
                                class="form-control"
                                placeholder="Podaj tytuł przepisu."/>
                     </div>
-
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('description')}"
+                         th:errors="*{description}"></div>
                     <div class="form-group">
                         <label> Opis </label>
                         <input type="text"
+                               required
                                name="description"
                                th:field="*{description}"
                                class="form-control"
                                placeholder="Podaj opis przepisu."/>
                     </div>
-
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('preparationTime')}"
+                         th:errors="*{preparationTime}"></div>
                     <div class="form-group">
                         <label> Czas przygotowania </label>
-                        <input type="text"
+                        <input type="number"
+                               required
                                name="preparation_time"
                                th:field="*{preparationTime}"
                                class="form-control"
                                placeholder="Podaj czas przygotowania."/>
                     </div>
 
-                    <label> Rodzaj posiłku</label>
+                    Rodzaj posiłku <select name="meal">
+                    <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
+                            th:value="${meal}" th:text="${meal.value}"></option>
+                </select>
                     <br>
-                    <select name="meal">
-                        <option th:each="meal : ${T(com.infoshareacademy.entity.recipe.Meal).values()}"
-                                th:value="${meal}" th:text="${meal.value}"></option>
-                    </select>
                     <br>
                     <div class="pull-right">
                         <a th:href="@{/recipes/{recipeId}/products(recipeId=${recipe.recipeId})}">
-                            <button type="button" name="editRecipe" class="btn btn-warning float-right">
+                            <button type="button" name="editRecipe" class="btn btn-outline-primary btn-sm float-right">
                                 Edytuj produkty
                             </button>
                         </a>
                     </div>
                     <div class="pull-right">
                         <a th:href="@{/recipes/{recipeId}/allergens (recipeId=${recipe.recipeId})}">
-                            <button type="button" name="editRecipeAllergens" class="btn btn-warning float-right">
+                            <button type="button" name="editRecipeAllergens"
+                                    class="btn btn-outline-primary btn-sm float-right">
                                 Edytuj alergeny
                             </button>
                         </a>
                     </div>
                     <div class="pull-left">
-                        <button type="submit" name="addRecipe" class="btn btn-success float-left">
+                        <button onsubmit="recipeUpdated()" type="submit" name="addRecipe" class="btn btn-outline-primary btn-sm float-left">
                             Zapisz
                         </button>
                     </div>
@@ -78,5 +88,10 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function recipeUpdated() {
+        alert("Zaktualizowano przepis!");
+    };
+</script>
 </body>
 </html>

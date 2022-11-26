@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -13,7 +15,6 @@ import javax.persistence.*;
 public class FoodPreferences {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private boolean shellfish;
     private boolean chocolate;
@@ -21,6 +22,7 @@ public class FoodPreferences {
     private boolean eggs;
     private boolean strawberries;
     private boolean dairy;
+    @Pattern(regexp = "^[A-Za-z]*$", message = "Pole \"Inne alergeny\" musi być tekstem!")
     private String other;
     private boolean meatEater;
     private boolean isVegan;

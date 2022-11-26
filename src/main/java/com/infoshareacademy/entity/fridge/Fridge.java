@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +19,10 @@ public class Fridge {
 
     @Id
     @Column(name = "fridge_id")
-    private Long fridgeId = 1L;
+    private Long fridgeId;
 
     @OneToMany(mappedBy = "fridge",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Valid
     private List<ProductInFridge> productsInFridge = new ArrayList<>();
 
     public void addProduct(ProductInFridge product) {

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -21,13 +22,14 @@ public class RecipeAllergens {
     private boolean strawberries;
     private boolean shellfish;
     private boolean dairy;
+    @Pattern(regexp = "^[A-Za-z]*$", message = "Pole \"Inne alergeny\" musi być tekstem!")
     private String other;
     private boolean meatEater;
     private boolean isVegan;
     private boolean isVegetarian;
 
     @JoinColumn(name = "recipe_id")
-    @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Recipe recipe;
 
     @Override

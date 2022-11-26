@@ -1,7 +1,6 @@
 package com.infoshareacademy.entity.recipe;
 
 import com.infoshareacademy.entity.product.ProductRecipe;
-
 import com.infoshareacademy.entity.shopping_list.ShoppingList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +11,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import java.util.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,16 +27,17 @@ public class Recipe {
     @Column(name = "recipe_id", unique = true, updatable = true)
     private Long recipeId;
 
-    @NotEmpty
+    @NotEmpty(message = "Pole \"tytuł\" nie może być puste!")
     @Column(name = "name")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "Pole \"opis\" nie może być puste!")
     @Column(name = "description")
     private String description;
 
-    @Min(1)
-    @Max(120)
+    @Min(value = 1, message = "Czas przygotowania nie może być krótszy niż minuta!")
+    @Max(value = 120, message = "Czas przygotowania nie może przekroczyć 120 minut!")
+    @NotNull(message = "Czas przygotowania nie może być pusty!")
     @Column(name = "preparation_time")
     private int preparationTime;
 

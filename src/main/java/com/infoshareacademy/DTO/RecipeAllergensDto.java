@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
@@ -19,18 +20,19 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeAllergensDto implements Serializable {
-    private  Long id;
-    private  boolean chocolate;
-    private  boolean nuts;
-    private  boolean eggs;
-    private  boolean strawberries;
-    private  boolean shellfish;
-    private  boolean dairy;
-    private  String other;
-    private  boolean meatEater;
-    private  boolean isVegan;
-    private  boolean isVegetarian;
-    private  RecipeDto recipe;
+    private Long id;
+    private boolean chocolate;
+    private boolean nuts;
+    private boolean eggs;
+    private boolean strawberries;
+    private boolean shellfish;
+    private boolean dairy;
+    @Pattern(regexp = "^[A-Za-z]*$", message = "Pole \"Inne alergeny\" musi być tekstem!")
+    private String other;
+    private boolean meatEater;
+    private boolean isVegan;
+    private boolean isVegetarian;
+    private RecipeDto recipe;
 
     /**
      * A DTO for the {@link Recipe} entity
@@ -39,15 +41,15 @@ public class RecipeAllergensDto implements Serializable {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RecipeDto implements Serializable {
-        private  Long recipeId;
+        private Long recipeId;
         @NotEmpty
-        private  String name;
+        private String name;
         @NotEmpty
-        private  String description;
+        private String description;
         @Min(1)
         @Max(120)
-        private  int preparationTime;
-        private  Meal meal;
-        private  Long userId;
+        private int preparationTime;
+        private Meal meal;
+        private Long userId;
     }
 }

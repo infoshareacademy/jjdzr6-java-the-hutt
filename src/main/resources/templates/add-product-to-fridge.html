@@ -14,15 +14,14 @@
 <br>
 <div class = "container">
     <div class = "row">
-        <div class ="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <h1 class = "text-center"> Dodaj produkty </h1>
+        <div class ="col-lg-9 col-md-9 col-sm-9 container justify-content-center card">
+            <div>
+                </br>
+                <p style="text-align:center;"><img
+                        src="https://i.ibb.co/zHRgKpv/Screenshot-from-2022-11-22-09-32-13.png"></p>
+            </div>
             <div class = "card-body">
                 <form th:action="@{/fridge/product}" th:object = "${fridgeDtoForm}" method="POST">
-<!--                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">-->
-<!--                        <ul>-->
-<!--                            <li th:text="${'Niepoprawna treść.'}"></li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
                     <table>
                         <td>
                             <button type="submit" name="addProduct" class = "btn btn-outline-primary btn-sm">Dodaj</button>
@@ -35,10 +34,12 @@
                         <tr th:each="product ,iterStat : *{productsInFridge}" th:class="${iterStat.odd}? 'grey-row'">
                             <td th:text="${iterStat.count}"></td>
                             <td>
-                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].amount}" required />
+                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].amount}" />
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('productsInFridge[__${iterStat.index}__].amount')}" th:errors="*{productsInFridge[__${iterStat.index}__].amount}"></div>
                             </td>
                             <td>
-                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].productName}" required />
+                                <input type="text" th:field="*{productsInFridge[__${iterStat.index}__].productName}" />
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('productsInFridge[__${iterStat.index}__].productName')}" th:errors="*{productsInFridge[__${iterStat.index}__].productName}"></div>
                             </td>
                             <td>
                                 <select name="unit" th:field="*{productsInFridge[__${iterStat.index}__].unit}"  />
@@ -48,6 +49,7 @@
                             </td>
                             <td>
                                 <input type="date" th:field="*{productsInFridge[__${iterStat.index}__].expirationDate}" />
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('productsInFridge[__${iterStat.index}__].expirationDate')}" th:errors="*{productsInFridge[__${iterStat.index}__].expirationDate}"></div>
                             </td>
                             <td>
                                 <button type="submit" name="removeProduct" th:value="${iterStat.index}" class = "btn btn-outline-primary btn-sm">Usun</button>
@@ -57,7 +59,7 @@
 
                     <div class = "box-footer">
                         </br>
-                        <button type="submit" name="addFridge" class = "btn btn-primary">
+                        <button onclick="addProductsToFridge()" type="submit" name="addFridge" class = "btn btn-outline-primary btn-sm">
                             Dodaj
                         </button>
                     </div>
@@ -68,5 +70,10 @@
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script>
+    function addProductsToFridge() {
+        alert("Dodano produkty do lodówki!");
+    };
+</script>
 </body>
 </html>

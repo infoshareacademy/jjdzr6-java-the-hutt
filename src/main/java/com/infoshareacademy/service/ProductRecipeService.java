@@ -4,6 +4,7 @@ import com.infoshareacademy.DTO.ProductRecipeDto;
 import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.repository.ProductRecipeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ProductRecipeService {
 
     private final ProductRecipeRepository productRepository;
@@ -50,13 +52,18 @@ public class ProductRecipeService {
     public void deleteProductRecipe(Long productId) throws Exception {
         ProductRecipeDto product = findProductRecipeById(productId);
         productRepository.delete(modelMapper.map(product, ProductRecipe.class));
+        log.info("Usunięto produkt z przpisu o id: " + productId);
     }
 
     public void saveProductRecipe(RecipeDto.ProductRecipeDto productRecipeDto, RecipeDto recipe) {
         if (productRecipeDto != null) {
             productRecipeDto.setRecipeDto(recipe);
             ProductRecipe productRecipe = modelMapper.map(productRecipeDto, ProductRecipe.class);
+            recipeService.convertUnitsInProducts(productRecipe);
             productRepository.save(productRecipe);
         }
+        log.info("Zapisano produkt o id: " + productRecipeDto.getProductId() + " dla przepisu o id: " + recipe.getRecipeId());
     }
+
+
 }
