@@ -13,30 +13,31 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 container justify-content-center card">
-            <div >
+            <div>
                 </br>
-                <p style="text-align:center;"><img src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
+                <p style="text-align:center;"><img
+                        src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
             </div>
             <div class="card-body">
                 <form th:action="@{/recipes/{recipeId}/products/{productId}
-                        (recipeId=${productRecipe.recipe.recipeId},
+                        (recipeId=${recipeId},
                         productId=${productRecipe.productId})}"
                       th:object="${productRecipe}"
                       method="POST">
-
                     <div class="form-group">
                         <label> Nazwa produktu </label>
                         <input type="text"
                                name="productName"
+                               required
                                th:field="*{productName}"
                                class="form-control"
                                placeholder="Podaj nazwe produktu."/>
                     </div>
-
                     <div class="form-group">
                         <label> Ilość </label>
                         <input type="number"
                                name="amount"
+                               required
                                th:field="*{amount}"
                                class="form-control"
                                placeholder="Podaj ilość produktu."/>
@@ -57,7 +58,8 @@
                     </div>
 
                     <div class="box-footer">
-                        <button onclick="productInRecipeUpdated()" type="submit" name="saveRecipe" class="btn btn-outline-primary btn-sm">
+                        <button onsubmit="productInRecipeUpdated()" type="submit" name="saveRecipe"
+                                class="btn btn-outline-primary btn-sm">
                             Zapisz
                         </button>
                     </div>

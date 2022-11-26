@@ -4,6 +4,7 @@ import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.DTO.ProductInFridgeDto;
 import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
+import com.infoshareacademy.entity.product.ProductUnit;
 import com.infoshareacademy.entity.user.User;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
@@ -53,6 +54,7 @@ public class FridgeService {
     public void saveFridge(FridgeDto fridgeDto) {
         Fridge fridge = modelMapper.map(fridgeDto, Fridge.class);
         fridge.getProductsInFridge().forEach(x -> x.setFridge(fridge));
+        fridge.getProductsInFridge().forEach(this::convertUnitsInProducts);
         fridge.setFridgeId(getUserId());
         fridgeRepository.save(fridge);
         log.info("Zapisano lodówkę dla użytkownika o id: " + getUserId());
@@ -106,4 +108,27 @@ public class FridgeService {
                 .collect(Collectors.toMap(FridgeDto.ProductInFridgeDto::getProductName, Function.identity()));
     }
 
+    public void convertUnitsInProducts(ProductInFridge product) {
+        Double convertedAmount = 0.0;
+        switch (product.getUnit()) {
+
+            case MILIGRAM:
+                convertedAmount = (product.getAmount()) / 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.GRAM);
+                break;
+
+            case KILOGRAM:
+                convertedAmount = (product.getAmount()) * 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.GRAM);
+                break;
+
+            case LITR:
+                convertedAmount = (product.getAmount()) * 1000;
+                product.setAmount(convertedAmount);
+                product.setUnit(ProductUnit.MILILITR);
+                break;
+        }
+    }
 }

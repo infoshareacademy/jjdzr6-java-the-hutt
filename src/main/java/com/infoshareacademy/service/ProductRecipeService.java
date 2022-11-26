@@ -59,8 +59,11 @@ public class ProductRecipeService {
         if (productRecipeDto != null) {
             productRecipeDto.setRecipeDto(recipe);
             ProductRecipe productRecipe = modelMapper.map(productRecipeDto, ProductRecipe.class);
+            recipeService.convertUnitsInProducts(productRecipe);
             productRepository.save(productRecipe);
         }
         log.info("Zapisano produkt o id: " + productRecipeDto.getProductId() + " dla przepisu o id: " + recipe.getRecipeId());
     }
+
+
 }

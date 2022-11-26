@@ -23,25 +23,29 @@ public class ProductRecipeController {
     @GetMapping("/{recipeId}/products")
     public String editProductRecipeList(@PathVariable Long recipeId, Model model) {
         List<ProductRecipeDto> productRecipeList = productRecipeService.getAllProductRecipeByRecipeId(recipeId);
+        model.addAttribute("recipeId", recipeId);
         model.addAttribute("productList", productRecipeList);
         model.addAttribute("productRecipe", productRecipeList.stream().findFirst().get());
         return "edit-product-recipe";
     }
 
     @PostMapping("/{recipeId}/products")
-    public String saveProductRecipe(@PathVariable Long recipeId, @ModelAttribute RecipeDto.ProductRecipeDto productRecipe, @ModelAttribute("recipe") RecipeDto recipe) {
+    public String saveProductRecipe(@PathVariable Long recipeId, @ModelAttribute("productRecipe") RecipeDto.ProductRecipeDto productRecipe, @ModelAttribute("recipe") RecipeDto recipe, Model model) {
+        model.addAttribute("recipeId", recipeId);
         productRecipeService.saveProductRecipe(productRecipe, recipe);
         return "redirect:/recipes/" + recipeId + "/products";
     }
 
     @GetMapping("/{recipeId}/products/{productId}")
-    public String editProductRecipeForm(@PathVariable Long productId, Model model) throws Exception {
+    public String editProductRecipeForm(@PathVariable Long recipeId, @PathVariable Long productId, Model model) throws Exception {
         model.addAttribute("productRecipe", productRecipeService.findProductRecipeById(productId));
+        model.addAttribute("recipeId", recipeId);
         return "edit-product-recipe-form";
     }
 
     @PostMapping("/{recipeId}/products/{productId}")
-    public String saveProductRecipeForm(@PathVariable Long recipeId, @ModelAttribute RecipeDto.ProductRecipeDto productRecipe, @ModelAttribute("recipe") RecipeDto recipe) {
+    public String saveProductRecipeForm(@PathVariable Long recipeId, @ModelAttribute("productRecipe") RecipeDto.ProductRecipeDto productRecipe, @ModelAttribute("recipe") RecipeDto recipe, Model model) {
+        model.addAttribute("recipeId", recipe.getRecipeId());
         productRecipeService.saveProductRecipe(productRecipe, recipe);
         return "redirect:/recipes/" + recipeId + "/products";
     }
