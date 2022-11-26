@@ -8,9 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,21 +22,24 @@ import java.util.List;
 @AllArgsConstructor
 public class RecipeDto implements Serializable {
     private Long recipeId;
-    @NotEmpty
+    @NotEmpty(message = "Pole \"tytuł\" nie może być puste!")
     private String name;
-    @NotEmpty
+    @NotEmpty(message = "Pole \"opis\" nie może być puste!")
     private String description;
-    @Min(1)
-    @Max(120)
+    @NotNull(message = "Czas przygotowania nie może być pusty!")
+    @Min(value = 1, message = "Czas przygotowania nie może być krótszy niż minuta!")
+    @Max(value = 120, message = "Czas przygotowania nie może przekroczyć 120 minut!")
     private int preparationTime;
     private Meal meal;
+    @Valid
     private List<ProductRecipeDto> productList = new ArrayList<>();
     private List<ShoppingListDto> shoppingList;
+    @Valid
     private RecipeAllergensDto recipeAllergens;
     private Long userId;
 
     public void addProduct(ProductRecipeDto product) {
-        if(productList == null){
+        if (productList == null) {
             productList = new ArrayList<>();
         }
         this.productList.add(product);
@@ -52,7 +54,9 @@ public class RecipeDto implements Serializable {
     @AllArgsConstructor
     public static class ProductRecipeDto implements Serializable {
         private Long productId;
+        @NotBlank(message = "Nazwa produktu nie może być pusta!")
         private String productName;
+        @NotNull(message = "Ilość musi być większa od zera!")
         private Double amount;
         private ProductUnit unit;
         private RecipeDto recipeDto;
@@ -60,7 +64,7 @@ public class RecipeDto implements Serializable {
         @Override
         public String toString() {
 
-            return  productName + '\'' +
+            return productName + '\'' +
                     ", ilość:" + amount + " " + unit.getValue();
         }
 
@@ -94,6 +98,7 @@ public class RecipeDto implements Serializable {
         private boolean strawberries;
         private boolean shellfish;
         private boolean dairy;
+        @Pattern(regexp = "^[A-Za-z]*$", message = "Pole \"Inne alergeny\" musi być tekstem!")
         private String other;
         private boolean meatEater;
         private boolean isVegan;

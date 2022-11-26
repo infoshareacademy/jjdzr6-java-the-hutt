@@ -104,13 +104,13 @@ public class RecipeService {
         }
     }
 
+    @Transactional
     public void saveRecipe(RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
         recipe.getProductList().forEach(productRecipe -> convertUnitsInProducts(productRecipe));
         recipe.getRecipeAllergens().setRecipe(recipe);
         recipe.setUserId(fridgeService.getUserId());
-
         log.info("Zapisano przepis: " + recipe.getName());
         recipeRepository.save(recipe);
     }

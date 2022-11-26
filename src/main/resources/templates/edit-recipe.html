@@ -22,27 +22,33 @@
             </div>
             <div class="card-body">
                 <form th:action="@{/recipes/{id} (id=${recipe.recipeId})}" th:object="${recipe}" method="POST">
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                     <div class="form-group">
                         <label> Tytuł </label>
                         <input type="text"
+                               required
                                name="name"
                                th:field="*{name}"
                                class="form-control"
                                placeholder="Podaj tytuł przepisu."/>
                     </div>
-
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('description')}"
+                         th:errors="*{description}"></div>
                     <div class="form-group">
                         <label> Opis </label>
                         <input type="text"
+                               required
                                name="description"
                                th:field="*{description}"
                                class="form-control"
                                placeholder="Podaj opis przepisu."/>
                     </div>
-
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('preparationTime')}"
+                         th:errors="*{preparationTime}"></div>
                     <div class="form-group">
                         <label> Czas przygotowania </label>
-                        <input type="text"
+                        <input type="number"
+                               required
                                name="preparation_time"
                                th:field="*{preparationTime}"
                                class="form-control"
@@ -71,7 +77,7 @@
                         </a>
                     </div>
                     <div class="pull-left">
-                        <button onclick="recipeUpdated()" type="submit" name="addRecipe" class="btn btn-outline-primary btn-sm float-left">
+                        <button onsubmit="recipeUpdated()" type="submit" name="addRecipe" class="btn btn-outline-primary btn-sm float-left">
                             Zapisz
                         </button>
                     </div>
