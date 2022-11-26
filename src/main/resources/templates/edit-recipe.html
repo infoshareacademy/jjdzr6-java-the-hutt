@@ -20,6 +20,8 @@
                 <p style="text-align:center;"><img
                         src="https://i.ibb.co/0ZtW5G5/Screenshot-from-2022-11-21-13-09-26.png"></p>
             </div>
+            <a th:href="@{/recipes/}"
+               class="btn btn-outline-info btn-sm">Wróć</a>
             <div class="card-body">
                 <form th:action="@{/recipes/{id} (id=${recipe.recipeId})}" th:object="${recipe}" method="POST">
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>

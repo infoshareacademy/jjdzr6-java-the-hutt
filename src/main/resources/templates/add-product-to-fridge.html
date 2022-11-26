@@ -20,6 +20,8 @@
                 <p style="text-align:center;"><img
                         src="https://i.ibb.co/zHRgKpv/Screenshot-from-2022-11-22-09-32-13.png"></p>
             </div>
+            <a th:href="@{/fridge/}"
+               class="btn btn-outline-info btn-sm">Wróć</a>
             <div class = "card-body">
                 <form th:action="@{/fridge/product}" th:object = "${fridgeDtoForm}" method="POST">
                     <table>
@@ -48,7 +50,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="date" th:field="*{productsInFridge[__${iterStat.index}__].expirationDate}" />
+                                <input type="date" th:field="*{productsInFridge[__${iterStat.index}__].expirationDate}" required/>
                                 <div class="alert alert-danger" th:if="${#fields.hasErrors('productsInFridge[__${iterStat.index}__].expirationDate')}" th:errors="*{productsInFridge[__${iterStat.index}__].expirationDate}"></div>
                             </td>
                             <td>
@@ -59,8 +61,8 @@
 
                     <div class = "box-footer">
                         </br>
-                        <button onclick="addProductsToFridge()" type="submit" name="addFridge" class = "btn btn-outline-primary btn-sm">
-                            Dodaj
+                        <button onsubmit="addProductsToFridge()" type="submit" name="addFridge" class = "btn btn-outline-primary btn-sm">
+                            Zapisz
                         </button>
                     </div>
                 </form>

@@ -14,9 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A DTO for the {@link Recipe} entity
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,9 +44,7 @@ public class RecipeDto implements Serializable {
         product.setRecipeDto(this);
     }
 
-    /**
-     * A DTO for the {@link com.infoshareacademy.entity.product.ProductRecipe} entity
-     */
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -64,16 +60,13 @@ public class RecipeDto implements Serializable {
         @Override
         public String toString() {
 
-            return productName + '\'' +
-                    ", ilość:" + amount + " " + unit.getValue();
+            return productName + "," +
+                    " ilość: " + amount + " " + unit.getValue() + "\n";
         }
 
 
     }
 
-    /**
-     * A DTO for the {@link com.infoshareacademy.entity.shopping_list.ShoppingList} entity
-     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -84,9 +77,7 @@ public class RecipeDto implements Serializable {
         private RecipeDto recipeDto;
     }
 
-    /**
-     * A DTO for the {@link RecipeAllergens} entity
-     */
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -104,5 +95,7 @@ public class RecipeDto implements Serializable {
         private boolean isVegan;
         private boolean isVegetarian;
         private RecipeDto recipeDto;
+
+
     }
 }

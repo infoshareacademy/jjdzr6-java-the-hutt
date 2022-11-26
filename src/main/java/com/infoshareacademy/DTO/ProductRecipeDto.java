@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 
-/**
- * A DTO for the {@link ProductRecipe} entity
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,9 +29,6 @@ public class ProductRecipeDto implements Serializable {
         this.amount = amount;
     }
 
-    /**
-     * A DTO for the {@link Recipe} entity
-     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

@@ -38,9 +38,6 @@ public class ShoppingListDto implements Serializable {
         recipe.getShoppingList().remove(this);
     }
 
-    /**
-     * A DTO for the {@link com.infoshareacademy.entity.product.ProductShoppingList} entity
-     */
     @Data
     public static class ProductShoppingListDto implements Serializable {
         private  Long productId;
@@ -50,9 +47,7 @@ public class ShoppingListDto implements Serializable {
         private ShoppingListDto shoppingListDto;
     }
 
-    /**
-     * A DTO for the {@link com.infoshareacademy.entity.recipe.Recipe} entity
-     */
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
