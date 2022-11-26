@@ -62,10 +62,10 @@ public class FoodPreferencesService {
         }
     }
 
-    public Page<Recipe> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
+    public Page<RecipeDto> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
 
         Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
-        Page<Recipe> recipePage = recipeRepository.findAll(pageable);
+        Page<RecipeDto> recipePage = recipeRepository.findAll(pageable).map(recipe -> modelMapper.map(recipe, RecipeDto.class));
         List<Recipe> recipeList = recipeRepository.findAll();
 
         if (foodPreferencesRepositoryDtoById.isPresent()) {
@@ -124,7 +124,7 @@ public class FoodPreferencesService {
                         .filter(s -> s.getRecipeAllergens().isVegan())
                         .toList();
             }
-            recipeList.stream().sorted(Comparator.comparing(Recipe::getName)).collect(Collectors.toList());
+            recipePage = createPageFromList(recipeList, pageable).map(recipe -> modelMapper.map(recipe, RecipeDto.class));
         }
         return recipePage;
 
