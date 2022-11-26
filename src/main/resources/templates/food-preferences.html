@@ -48,7 +48,7 @@
     Dieta wegańska?
     <span th:if="${allergen.vegan}" th:text="'x'" style="color: red; font-weight: bolder"></span>
     <span th:unless="${allergen.vegan}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
-    Dieta wegańska?
+    Dieta wegetariańska?
     <span th:if="${allergen.vegetarian}" th:text="'x'" style="color: red; font-weight: bolder"></span>
     <span th:unless="${allergen.vegetarian}" th:text="'✓'" style="color:green; font-weight: bolder"></span><br>
     Inne alergeny: <td th:text="${allergen.other}"></td><br><br>

@@ -16,20 +16,23 @@
     <div class="row">
         <img src="https://i.ibb.co/QjKhN9p/Screenshot-from-2022-11-21-10-57-50.pngg"/>
     </div>
-<form action="#" th:action="@{/food-preferences}" th:object="${foodpreferences}" method="post">
-    <p>Czekolada <input type="checkbox" th:field="*{chocolate}"/>
-    <p>Produkty mleczne <input type="checkbox" th:field="*{dairy}"/>
-    <p>Jaja <input type="checkbox" th:field="*{eggs}"/>
-    <p>Orzechy <input type="checkbox" th:field="*{nuts}"/>
-    <p>Skorupiaki <input type="checkbox" th:field="*{shellfish}"/>
-    <p>Truskawki <input type="checkbox" th:field="*{strawberries}"/>
-    <p>Czy jesz mięso? <input type="checkbox" th:field="*{meatEater}"/>
-    <p>Dieta wegańska? <input type="checkbox" th:field="*{vegan}"/>
-    <p>Dieta wegetariańska? <input type="checkbox" th:field="*{vegetarian}"/>
-    <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
-    <p><input class="btn btn-outline-info btn-sm mb-2" onclick="setFoodPreferences()"  type="submit" value="Dodaj">
 
-</form>
+    <form action="#" th:action="@{/food-preferences}" th:object="${foodpreferences}" method="post">
+
+        <p>Czekolada <input type="checkbox" th:field="*{chocolate}"/>
+        <p>Produkty mleczne <input type="checkbox" th:field="*{dairy}"/>
+        <p>Jaja <input type="checkbox" th:field="*{eggs}"/>
+        <p>Orzechy <input type="checkbox" th:field="*{nuts}"/>
+        <p>Skorupiaki <input type="checkbox" th:field="*{shellfish}"/>
+        <p>Truskawki <input type="checkbox" th:field="*{strawberries}"/>
+        <p>Czy jesz mięso? <input type="checkbox" th:field="*{meatEater}"/>
+        <p>Dieta wegańska? <input type="checkbox" th:field="*{vegan}"/>
+        <p>Dieta wegetariańska? <input type="checkbox" th:field="*{vegetarian}"/>
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('other')}" th:errors="*{other}"></div>
+        <p>Inne alergeny: <input type="text" th:field="*{other}"/></p>
+        <p><input class="btn btn-outline-info btn-sm mb-2" onclick="setFoodPreferences()" type="submit" value="Dodaj">
+
+    </form>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 <script>
