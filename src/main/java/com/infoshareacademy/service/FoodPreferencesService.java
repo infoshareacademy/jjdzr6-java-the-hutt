@@ -67,9 +67,9 @@ public class FoodPreferencesService {
         }
     }
 
-    public Page<RecipeDto> filterRecipeByFoodPreferences(Long id, Pageable pageable) {
+    public Page<RecipeDto> filterRecipeByFoodPreferences(Pageable pageable) {
 
-        Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById(id);
+        Optional<FoodPreferencesDto> foodPreferencesRepositoryDtoById = getFoodPreferencesById();
         Page<RecipeDto> recipePage = recipeRepository.findAll(pageable).map(recipe -> modelMapper.map(recipe, RecipeDto.class));
         List<Recipe> recipeList = recipeRepository.findAll();
 
