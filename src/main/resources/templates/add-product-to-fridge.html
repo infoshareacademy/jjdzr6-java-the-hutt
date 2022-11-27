@@ -20,8 +20,9 @@
                 <p style="text-align:center;"><img
                         src="https://i.ibb.co/zHRgKpv/Screenshot-from-2022-11-22-09-32-13.png"></p>
             </div>
+            <div class="mb-1">
             <a th:href="@{/fridge/}"
-               class="btn btn-outline-info btn-sm">Wróć</a>
+               class="btn btn-outline-info btn-sm">Wróć</a></div>
             <div class = "card-body">
                 <form th:action="@{/fridge/product}" th:object = "${fridgeDtoForm}" method="POST">
                     <table>
