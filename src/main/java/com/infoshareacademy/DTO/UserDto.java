@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/**
- * A DTO for the {@link User} entity
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/**
- * A DTO for the {@link ProductShoppingList} entity
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,9 +19,6 @@ public class ProductShoppingListDto implements Serializable {
     private  ProductUnit unit;
     private  ShoppingListDto shoppingList;
 
-    /**
-     * A DTO for the {@link com.infoshareacademy.entity.shopping_list.ShoppingList} entity
-     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

@@ -92,6 +92,7 @@ public class FridgeService {
         } else {
             fridgeDto = new FridgeDto();
             fridgeDto.setFridgeId(getUserId());
+            fridgeDto.setProductsInFridge(new ArrayList<>());
         }
         return fridgeDto;
     }

@@ -66,6 +66,8 @@
                                 data-bs-target="#staticBackdrop">
                             Dodaj produkt
                         </button>
+                        <a th:href="@{/recipes/{recipeId}(recipeId=${recipeId})}"
+                           class="btn btn-outline-info btn-sm">Wróć</a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"

@@ -22,7 +22,6 @@ public class FoodPreferences {
     private boolean eggs;
     private boolean strawberries;
     private boolean dairy;
-    @Pattern(regexp = "^[A-Za-z]*$", message = "Pole \"Inne alergeny\" musi być tekstem!")
     private String other;
     private boolean meatEater;
     private boolean isVegan;

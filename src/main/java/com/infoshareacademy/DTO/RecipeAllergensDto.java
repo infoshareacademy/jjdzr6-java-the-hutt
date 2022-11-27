@@ -13,9 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
-/**
- * A DTO for the {@link RecipeAllergens} entity
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

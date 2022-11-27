@@ -53,10 +53,10 @@ public class ProductInFridgeController {
     }
 
     @PostMapping(value = "/product", params = {"removeProduct"})
-    public String removeProductFromFridgeForm(@ModelAttribute("fridge") Fridge fridge,
+    public String removeProductFromFridgeForm(@ModelAttribute("fridgeDtoForm") FridgeDto fridgeDto,
                                               HttpServletRequest request) {
         int index = Integer.parseInt(request.getParameter("removeProduct"));
-        fridge.getProductsInFridge().remove(index);
+        fridgeDto.getProductsInFridge().remove(index);
         return "add-product-to-fridge";
     }
 
