@@ -53,8 +53,10 @@ public class FridgeService {
     @Transactional
     public void saveFridge(FridgeDto fridgeDto) {
         Fridge fridge = modelMapper.map(fridgeDto, Fridge.class);
-        fridge.getProductsInFridge().forEach(x -> x.setFridge(fridge));
-        fridge.getProductsInFridge().forEach(this::convertUnitsInProducts);
+        if(fridge.getProductsInFridge() != null) {
+            fridge.getProductsInFridge().forEach(x -> x.setFridge(fridge));
+            fridge.getProductsInFridge().forEach(this::convertUnitsInProducts);
+        }
         fridge.setFridgeId(getUserId());
         fridgeRepository.save(fridge);
         log.info("Zapisano lodówkę dla użytkownika o id: " + getUserId());

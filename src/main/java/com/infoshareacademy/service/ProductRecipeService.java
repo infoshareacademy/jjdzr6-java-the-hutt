@@ -61,6 +61,8 @@ public class ProductRecipeService {
             ProductRecipe productRecipe = modelMapper.map(productRecipeDto, ProductRecipe.class);
             recipeService.convertUnitsInProducts(productRecipe);
             productRepository.save(productRecipe);
+        } else {
+            throw new NullPointerException("Empty Product?");
         }
         log.info("Zapisano produkt o id: " + productRecipeDto.getProductId() + " dla przepisu o id: " + recipe.getRecipeId());
     }

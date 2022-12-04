@@ -52,7 +52,7 @@ public class RecipeService {
 
     @Transactional
     public void setUserIdForInitRecipes() {
-        recipeRepository.findAll().stream().forEach(recipe -> recipe.setUserId(fridgeService.getUserId()));
+        recipeRepository.findAll().forEach(recipe -> recipe.setUserId(fridgeService.getUserId()));
     }
 
     public Page<RecipeDto> getSearchedRecipe(String keyword, Pageable pageable) {
@@ -65,10 +65,8 @@ public class RecipeService {
     }
 
     public RecipeDto getRecipeById(Long id) {
-        RecipeDto recipe = new RecipeDto();
-        if (recipeRepository.findById(id).isPresent())
-            recipe = modelMapper.map(recipeRepository.findById(id).get(), RecipeDto.class);
-        return recipe;
+        Recipe recipe = recipeRepository.findById(id).orElse(new Recipe());
+        return modelMapper.map(recipe, RecipeDto.class);
     }
 
     @Transactional
@@ -81,34 +79,31 @@ public class RecipeService {
     }
 
     public void saveRecipeAllergens(Long id, RecipeAllergensDto allergens) {
-        Recipe recipe = new Recipe();
+        Recipe recipe;
+        recipe = recipeRepository.findById(id).orElse(new Recipe());
         recipe.setUserId(fridgeService.getUserId());
-        if (recipeRepository.findById(id).isPresent()) recipe = recipeRepository.findById(id).get();
         RecipeAllergens existingAllergens;
-        if (allergensRepository.findById(recipe.getRecipeAllergens().getId()).isPresent()) {
-            existingAllergens = allergensRepository.findById(recipe.getRecipeAllergens().getId()).get();
-            existingAllergens.setRecipe(recipe);
-            existingAllergens.setChocolate(allergens.isChocolate());
-            existingAllergens.setDairy(allergens.isDairy());
-            existingAllergens.setEggs(allergens.isEggs());
-            existingAllergens.setMeatEater(allergens.isMeatEater());
-            existingAllergens.setNuts(allergens.isNuts());
-            existingAllergens.setOther(allergens.getOther());
-            existingAllergens.setShellfish(allergens.isShellfish());
-            existingAllergens.setStrawberries(allergens.isStrawberries());
-            existingAllergens.setVegan(allergens.isVegan());
-            existingAllergens.setVegetarian(allergens.isVegetarian());
-
-            allergensRepository.save(existingAllergens);
-            log.info("Zapisano preferencje żywieniowe!");
-        }
+        existingAllergens = allergensRepository.findById(recipe.getRecipeAllergens().getId()).orElse(new RecipeAllergens());
+        existingAllergens.setRecipe(recipe);
+        existingAllergens.setChocolate(allergens.isChocolate());
+        existingAllergens.setDairy(allergens.isDairy());
+        existingAllergens.setEggs(allergens.isEggs());
+        existingAllergens.setMeatEater(allergens.isMeatEater());
+        existingAllergens.setNuts(allergens.isNuts());
+        existingAllergens.setOther(allergens.getOther());
+        existingAllergens.setShellfish(allergens.isShellfish());
+        existingAllergens.setStrawberries(allergens.isStrawberries());
+        existingAllergens.setVegan(allergens.isVegan());
+        existingAllergens.setVegetarian(allergens.isVegetarian());
+        allergensRepository.save(existingAllergens);
+        log.info("Zapisano preferencje żywieniowe!");
     }
 
     @Transactional
     public void saveRecipe(RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
         recipe.getProductList().forEach(x -> x.setRecipe(recipe));
-        recipe.getProductList().forEach(productRecipe -> convertUnitsInProducts(productRecipe));
+        recipe.getProductList().forEach(this::convertUnitsInProducts);
         recipe.getRecipeAllergens().setRecipe(recipe);
         recipe.setUserId(fridgeService.getUserId());
         log.info("Zapisano przepis: " + recipe.getName());
@@ -118,9 +113,8 @@ public class RecipeService {
 
     public void updateRecipe(Long recipeId, RecipeDto recipeDto) {
         Recipe recipe = modelMapper.map(recipeDto, Recipe.class);
-        Recipe existingRecipe = new Recipe();
+        Recipe existingRecipe = recipeRepository.findById(recipeId).orElse(new Recipe());
         existingRecipe.setUserId(fridgeService.getUserId());
-        if (recipeRepository.findById(recipeId).isPresent()) existingRecipe = recipeRepository.findById(recipeId).get();
         existingRecipe.setRecipeId(recipeId);
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
@@ -181,26 +175,23 @@ public class RecipeService {
     }
 
     public void convertUnitsInProducts(ProductRecipe product) {
-        Double convertedAmount = 0.0;
+        double convertedAmount;
         switch (product.getUnit()) {
-
-            case MILIGRAM:
+            case MILIGRAM -> {
                 convertedAmount = (product.getAmount()) / 1000;
                 product.setAmount(convertedAmount);
                 product.setUnit(ProductUnit.GRAM);
-                break;
-
-            case KILOGRAM:
+            }
+            case KILOGRAM -> {
                 convertedAmount = (product.getAmount()) * 1000;
                 product.setAmount(convertedAmount);
                 product.setUnit(ProductUnit.GRAM);
-                break;
-
-            case LITR:
+            }
+            case LITR -> {
                 convertedAmount = (product.getAmount()) * 1000;
                 product.setAmount(convertedAmount);
                 product.setUnit(ProductUnit.MILILITR);
-                break;
+            }
         }
     }
 
