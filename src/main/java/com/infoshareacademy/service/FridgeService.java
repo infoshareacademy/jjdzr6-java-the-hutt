@@ -61,20 +61,15 @@ public class FridgeService {
     }
 
     public FridgeDto getFridge() {
-        FridgeDto fridgeDto;
-        boolean flag = fridgeRepository.findById(getUserId()).isPresent();
-        if (flag) {
-            Fridge fridge = fridgeRepository.findById(getUserId()).get();
-            fridgeDto = modelMapper.map(fridge, FridgeDto.class);
-        } else {
-            fridgeDto = new FridgeDto();
-            fridgeDto.setFridgeId(getUserId());
-        }
+
+        FridgeDto fridgeDto = modelMapper.map(fridgeRepository.findById(getUserId()).orElse(new Fridge()), FridgeDto.class);
+        fridgeDto.setFridgeId(getUserId());
         return fridgeDto;
     }
 
     public Page<ProductInFridgeDto> getProductsInFridge(Pageable pageable) {
         Page<ProductInFridgeDto> collect = new PageImpl<>(new ArrayList<>());
+
         boolean flag = productInFridgeRepository.findProductInFridgeByFridge(getUserId(), pageable).isEmpty();
         if (!flag) {
             Page<ProductInFridge> fridgeProducts = productInFridgeRepository.findProductInFridgeByFridge(getUserId(), pageable);
@@ -84,18 +79,16 @@ public class FridgeService {
     }
 
     public FridgeDto addProductsToFridgeForm() {
-        FridgeDto fridgeDto;
-        if (fridgeRepository.findById(getUserId()).isPresent()) {
-            fridgeDto = fridgeRepository
-                    .findById(getUserId())
-                    .map((fridge -> modelMapper.map(fridge, FridgeDto.class))).get();
-        } else {
-            fridgeDto = new FridgeDto();
-            fridgeDto.setFridgeId(getUserId());
-            fridgeDto.setProductsInFridge(new ArrayList<>());
-        }
-        return fridgeDto;
+        Fridge fridge = fridgeRepository.findById(getUserId()).orElseGet(() -> {
+            Fridge emptyFridge = new Fridge();
+            emptyFridge.setProductsInFridge(new ArrayList<>());
+            emptyFridge.setFridgeId(getUserId());
+            return emptyFridge;
+        });
+
+        return modelMapper.map(fridge, FridgeDto.class);
     }
+
 
     public Map<String, FridgeDto.ProductInFridgeDto> mapProductsInFridgeWithNameAsKey() {
         List<FridgeDto.ProductInFridgeDto> productsInFridgeDto = getFridge().getProductsInFridge();
@@ -110,26 +103,23 @@ public class FridgeService {
     }
 
     public void convertUnitsInProducts(ProductInFridge product) {
-        Double convertedAmount = 0.0;
+        double convertedAmount;
         switch (product.getUnit()) {
-
-            case MILIGRAM:
+            case MILIGRAM -> {
                 convertedAmount = (product.getAmount()) / 1000;
                 product.setAmount(convertedAmount);
                 product.setUnit(ProductUnit.GRAM);
-                break;
-
-            case KILOGRAM:
+            }
+            case KILOGRAM -> {
                 convertedAmount = (product.getAmount()) * 1000;
                 product.setAmount(convertedAmount);
                 product.setUnit(ProductUnit.GRAM);
-                break;
-
-            case LITR:
+            }
+            case LITR -> {
                 convertedAmount = (product.getAmount()) * 1000;
                 product.setAmount(convertedAmount);
                 product.setUnit(ProductUnit.MILILITR);
-                break;
+            }
         }
     }
 }
