@@ -2,6 +2,7 @@ package com.infoshareacademy.service;
 
 import com.infoshareacademy.DTO.FridgeDto;
 import com.infoshareacademy.DTO.ProductInFridgeDto;
+import com.infoshareacademy.entity.fridge.Fridge;
 import com.infoshareacademy.entity.product.ProductInFridge;
 import com.infoshareacademy.repository.FridgeRepository;
 import com.infoshareacademy.repository.ProductInFridgeRepository;
@@ -31,15 +32,16 @@ public class ProductInFridgeService {
         this.modelMapper = modelMapper;
     }
 
-    public ProductInFridgeDto findProductInFridgeById(Long productId) throws NotFoundException {
-        Optional<ProductInFridgeDto> productInFridgeDto = Optional.ofNullable(productInFridgeRepository.findById(productId)
+
+    public Optional<ProductInFridgeDto> findProductInFridgeById(Long productId) throws NotFoundException {
+
+        return Optional.ofNullable(productInFridgeRepository.findById(productId)
                 .map(productInFridge -> modelMapper.map(productInFridge, ProductInFridgeDto.class))
                 .orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));
-
-        return productInFridgeDto.get();
     }
 
     public void deleteProductInFridge(Long productId) throws NotFoundException {
+
         if (productInFridgeRepository.findById(productId).isPresent()) {
             productInFridgeRepository.deleteById(productId);
         } else throw new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId));
@@ -51,17 +53,16 @@ public class ProductInFridgeService {
                 .findById(productId)
                 .orElseThrow(() -> new NotFoundException(String.format("Not found Product in Fridge for ID %s", productId))));
 
-        Optional<ProductInFridgeDto> productDto = productInFridge
-                .map(product -> modelMapper.map(product, ProductInFridgeDto.class));
-
-        ProductInFridgeDto.FridgeDto fridgeDto = modelMapper.map(fridgeRepository
-                .findById(fridgeService.getUserId()).get(), ProductInFridgeDto.FridgeDto.class);
-        productDto.get().setFridgeDto(fridgeDto);
-        productDto.get().setProductId(productInFridgeDto.getProductId());
-        productDto.get().setProductName(productInFridgeDto.getProductName());
-        productDto.get().setAmount(productInFridgeDto.getAmount());
-        productDto.get().setUnit(productInFridgeDto.getUnit());
-        productDto.get().setExpirationDate(LocalDate.parse(productInFridgeDto.getExpirationDate().toString()));
+        ProductInFridgeDto productDto = productInFridge
+                .map(product -> modelMapper.map(product, ProductInFridgeDto.class)).orElse(new ProductInFridgeDto());
+        Fridge fridge = fridgeRepository.findById(fridgeService.getUserId()).orElse(new Fridge());
+        ProductInFridgeDto.FridgeDto fridgeDto = modelMapper.map(fridge, ProductInFridgeDto.FridgeDto.class);
+        productDto.setFridgeDto(fridgeDto);
+        productDto.setProductId(productInFridgeDto.getProductId());
+        productDto.setProductName(productInFridgeDto.getProductName());
+        productDto.setAmount(productInFridgeDto.getAmount());
+        productDto.setUnit(productInFridgeDto.getUnit());
+        productDto.setExpirationDate(LocalDate.parse(productInFridgeDto.getExpirationDate().toString()));
 
         ProductInFridge product = modelMapper.map(productDto, ProductInFridge.class);
         fridgeService.convertUnitsInProducts(product);

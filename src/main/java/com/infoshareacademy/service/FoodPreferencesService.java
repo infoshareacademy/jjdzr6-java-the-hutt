@@ -14,12 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
-import java.util.Comparator;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -47,11 +45,6 @@ public class FoodPreferencesService {
         return foodPreferencesRepository.findById(id).map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class));
     }
 
-    public List<FoodPreferencesDto> getFoodPreferences() {
-        return foodPreferencesRepository.findAll().stream().map(foodPreferences -> modelMapper.map(foodPreferences, FoodPreferencesDto.class)).toList();
-    }
-
-
     public void setFoodPreferences(FoodPreferencesDto foodPreferencesDto) {
         foodPreferencesDto.setId(fridgeService.getUserId());
         FoodPreferences foodPreferences = modelMapper.map(foodPreferencesDto, FoodPreferences.class);
@@ -60,11 +53,10 @@ public class FoodPreferencesService {
     }
 
     public Optional<FoodPreferencesDto> checkIfFoodPreferencesIsSet() {
-        if (foodPreferencesRepository.findById(fridgeService.getUserId()).isPresent()) {
-            return getFoodPreferencesById();
-        } else {
-            return Optional.of(new FoodPreferencesDto());
-        }
+
+        FoodPreferences foodPreferences = foodPreferencesRepository.findById(fridgeService.getUserId()).orElse(new FoodPreferences());
+        return Optional.of(modelMapper.map(foodPreferences, FoodPreferencesDto.class));
+
     }
 
     public Page<RecipeDto> filterRecipeByFoodPreferences(Pageable pageable) {
@@ -135,6 +127,7 @@ public class FoodPreferencesService {
         return recipePage;
 
     }
+
     static Page<Recipe> createPageFromList(List<Recipe> list, Pageable pageable) {
         if (list == null) {
             throw new IllegalArgumentException("To create a Page, the list mustn't be null!");
@@ -148,7 +141,6 @@ public class FoodPreferencesService {
         int endOfPage = Math.min(startOfPage + pageable.getPageSize(), list.size());
         return new PageImpl<>(list.subList(startOfPage, endOfPage), pageable, list.size());
     }
-
 
 
     private static boolean isNotEqual(String string1, String string2) {

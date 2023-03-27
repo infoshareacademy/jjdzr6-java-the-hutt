@@ -63,18 +63,14 @@ public class ShoppingListService {
     }
 
     public void deleteShoppingListById(Long shoppingListId) {
-        log.info("Usunięto listę zakupów: " + shoppingListRepository.findById(shoppingListId).get().getName());
+        ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new RuntimeException("Shopping List not found!"));
+        log.info("Usunięto listę zakupów: " + shoppingList.getName());
         shoppingListRepository.deleteShoppingListById(shoppingListId);
 
     }
 
     public ShoppingListDto getShoppingList(Long id) {
-        ShoppingList shoppingList;
-        if (shoppingListRepository.findById(id).isPresent()) {
-            shoppingList = shoppingListRepository.findById(id).get();
-        } else {
-            shoppingList = new ShoppingList();
-        }
+        ShoppingList shoppingList = shoppingListRepository.findById(id).orElse(new ShoppingList());
         return modelMapper.map(shoppingList, ShoppingListDto.class);
     }
 
