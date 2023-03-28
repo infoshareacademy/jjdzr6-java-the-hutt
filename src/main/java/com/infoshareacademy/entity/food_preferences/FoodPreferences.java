@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Pattern;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 @Data
