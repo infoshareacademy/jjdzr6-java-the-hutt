@@ -1,5 +1,6 @@
 package com.infoshareacademy.service;
 
+import com.infoshareacademy.DTO.RecipeAllergensDto;
 import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.entity.product.ProductUnit;
@@ -8,11 +9,12 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
 import com.infoshareacademy.repository.RecipeRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +30,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -36,12 +40,9 @@ class RecipeServiceTest {
     RecipeRepository recipeRepository;
 
     @Mock
-    RecipeAllergensRepository allergensRepositoryMock;
-    @InjectMocks
-    RecipeService recipeService;
+    RecipeAllergensRepository allergensRepository;
 
-    @Mock
-    ModelMapper modelMapper;
+    RecipeService recipeService;
 
     @Mock
     Pageable pageable;
@@ -49,16 +50,19 @@ class RecipeServiceTest {
     @Mock
     private FridgeService fridgeService;
 
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+        recipeService = new RecipeService(recipeRepository, allergensRepository, fridgeService, new ModelMapper());
+    }
+
 
     @Test
-    void getAllRecipe() {
+    void testShouldReturnAllRecipes() {
         //given
         List<RecipeDto> listOfRecipesDto = createRecipesDtoToTest();
         List<Recipe> recipesToTest = createRecipesToTest();
         when(recipeRepository.findAll()).thenReturn(recipesToTest);
-        when(modelMapper.map(recipesToTest.get(0), RecipeDto.class)).thenReturn(listOfRecipesDto.get(0));
-        when(modelMapper.map(recipesToTest.get(1), RecipeDto.class)).thenReturn(listOfRecipesDto.get(1));
-        when(modelMapper.map(recipesToTest.get(2), RecipeDto.class)).thenReturn(listOfRecipesDto.get(2));
 
 
         //when
@@ -72,10 +76,8 @@ class RecipeServiceTest {
     @Test
     public void testGetSearchedRecipe() {
         List<Recipe> recipes = createRecipesToTest();
-        List<RecipeDto> recipesDtoToTest = createRecipesDtoToTest();
         Mockito.when(recipeRepository.findAll(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(recipes));
         Mockito.when(recipeRepository.findRecipeBy(Mockito.anyString(), Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(List.of(recipes.get(0))));
-        when(modelMapper.map(recipes.get(0), RecipeDto.class)).thenReturn(recipesDtoToTest.get(0));
 
         Pageable pageable = PageRequest.of(0, 10);
         Page<RecipeDto> result = recipeService.getSearchedRecipe("first", pageable);
@@ -106,8 +108,6 @@ class RecipeServiceTest {
         List<Recipe> recipes = createRecipesToTest();
         List<RecipeDto> recipesDtoToTest = createRecipesDtoToTest();
         Mockito.when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipes.get(1)));
-        when(modelMapper.map(recipes.get(1), RecipeDto.class)).thenReturn(recipesDtoToTest.get(1));
-
 
         // When
         RecipeDto recipeById = recipeService.getRecipeById(2L);
@@ -118,14 +118,13 @@ class RecipeServiceTest {
     }
 
     @Test
-    void getRecipesFilteredByMeal() {
+    void shouldReturnRecipesFilteredByMeal() {
 
         //given
         List<RecipeDto> listOfRecipes = createRecipesDtoToTest();
         List<Recipe> recipesToTest = createRecipesToTest();
         when(recipeRepository.findAll(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(recipesToTest));
         when(recipeRepository.findRecipeByMeal(Mockito.any(Meal.class), Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(List.of(recipesToTest.get(0))));
-        when(modelMapper.map(recipesToTest.get(0), RecipeDto.class)).thenReturn(listOfRecipes.get(0));
 
         //when
         Page<RecipeDto> recipesByMeal = recipeService.getRecipesFilteredByMeal(Meal.BREAKFAST, pageable);
@@ -134,10 +133,148 @@ class RecipeServiceTest {
         assertThat(recipesByMeal).hasSize(1).contains(listOfRecipes.get(0));
     }
 
+    @Test
+    void shouldSaveRecipeTest() {
+        //given
+        RecipeDto recipeDto = new RecipeDto();
+        recipeDto.setName("Test Recipe");
+        recipeDto.setDescription("This is a test recipe");
+        recipeDto.setMeal(Meal.BREAKFAST);
+        recipeDto.setPreparationTime(10);
+        RecipeDto.RecipeAllergensDto recipeAllergens = new RecipeDto.RecipeAllergensDto();
+        recipeDto.setRecipeAllergens(recipeAllergens);
+        List<RecipeDto.ProductRecipeDto> products = new ArrayList<>();
+        RecipeDto.ProductRecipeDto product1 = new RecipeDto.ProductRecipeDto();
+        product1.setProductName("Eggs");
+        product1.setAmount(2.0);
+        product1.setUnit(ProductUnit.PIECE);
+        products.add(product1);
+
+        RecipeDto.ProductRecipeDto product2 = new RecipeDto.ProductRecipeDto();
+        product2.setProductName("Milk");
+        product2.setAmount(100.0);
+        product2.setUnit(ProductUnit.MILILITR);
+        products.add(product2);
+
+        recipeDto.setProductList(products);
+
+        when(fridgeService.getUserId()).thenReturn(1L);
+        when(recipeRepository.save(any())).thenReturn(new Recipe());
+
+        //when
+        recipeService.saveRecipe(recipeDto);
+
+        //then
+        verify(recipeRepository).save(any(Recipe.class));
+    }
+
+    @Test
+    public void shouldSaveRecipeAllergens() {
+        // given
+        Recipe recipe = new Recipe();
+        recipe.setRecipeId(1L);
+        recipe.setName("Test Recipe");
+        when(fridgeService.getUserId()).thenReturn(1L);
+
+        RecipeAllergensDto allergens = new RecipeAllergensDto();
+        allergens.setChocolate(true);
+        allergens.setEggs(true);
+        allergens.setShellfish(true);
+
+        RecipeAllergens allergen = new RecipeAllergens();
+        allergen.setChocolate(true);
+        allergen.setEggs(true);
+        allergen.setShellfish(true);
+        recipe.setRecipeAllergens(allergen);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+
+        //when
+        recipeService.saveRecipeAllergens(2L, allergens);
+
+        // then
+        verify(allergensRepository).save(any());
+        assertTrue(recipe.getRecipeAllergens().isChocolate());
+        assertTrue(recipe.getRecipeAllergens().isEggs());
+        assertTrue(recipe.getRecipeAllergens().isShellfish());
+
+    }
+
+    @Test
+    public void shouldUpdateRecipe() {
+        // given
+        RecipeDto recipe = new RecipeDto();
+        recipe.setName("Old Recipe Name");
+        recipe.setDescription("Old Recipe Description");
+        recipe.setPreparationTime(60);
+        recipe.setMeal(Meal.LUNCH);
+
+        when(fridgeService.getUserId()).thenReturn(1L);
+
+        // when
+        recipeService.updateRecipe(1L, recipe);
+
+        // then
+        verify(recipeRepository, times(1)).save(any(Recipe.class));
+    }
+
+    @Test
+    public void shouldDeleteRecipeById() {
+        // given
+        Long recipeId = 1L;
+        Recipe recipe = new Recipe();
+        recipe.setRecipeId(recipeId);
+
+        // when
+        recipeService.deleteRecipeById(recipeId);
+
+        // then
+        verify(recipeRepository, times(1)).deleteByRecipeId(recipeId);
+    }
+
+    @Test
+    public void shouldDeleteAllRecipes() {
+
+        // when
+        recipeService.deleteAllRecipes();
+
+        // then
+        verify(recipeRepository, times(1)).deleteAll();
+    }
+
+    @Test
+    void shouldReturnRecipesWithProductsToLowerCase() {
+        //given
+        List<Recipe> recipesToTest = createRecipesToTest();
+        when(recipeRepository.findAll()).thenReturn(recipesToTest);
+
+        //when
+        List<RecipeDto> lowerCaseRecipes = recipeService.getRecipesWithProductsToLowerCase();
+        //then
+        assertEquals("first product", lowerCaseRecipes.get(0).getProductList().get(0).getProductName());
+    }
+
+    @Test
+    void shouldConvertUnitsInProducts() {
+        //given
+        ProductRecipe productRecipe = new ProductRecipe();
+        productRecipe.setProductName("First");
+        productRecipe.setAmount(10000.0);
+        productRecipe.setUnit(ProductUnit.MILIGRAM);
+
+        //when
+        recipeService.convertUnitsInProducts(productRecipe);
+        //then
+        assertEquals(10.0, productRecipe.getAmount());
+        assertEquals(ProductUnit.GRAM, productRecipe.getUnit());
+
+
+    }
+
+
     private static List<Recipe> createRecipesToTest() {
-        ProductRecipe firstProduct = new ProductRecipe(1L, "first product", 1.0, ProductUnit.GRAM, null);
-        ProductRecipe secondProduct = new ProductRecipe(2L, "second product", 2.0, ProductUnit.GRAM, null);
-        ProductRecipe thirdProduct = new ProductRecipe(3L, "third product", 3.0, ProductUnit.GRAM, null);
+        ProductRecipe firstProduct = new ProductRecipe(1L, "First product", 1.0, ProductUnit.GRAM, null);
+        ProductRecipe secondProduct = new ProductRecipe(2L, "Second product", 2.0, ProductUnit.GRAM, null);
+        ProductRecipe thirdProduct = new ProductRecipe(3L, "Third product", 3.0, ProductUnit.GRAM, null);
 
         RecipeAllergens firstAllergens = new RecipeAllergens(null, true, true, true, true, true, true, "a", true, true, true, null);
         RecipeAllergens secondAllergens = new RecipeAllergens();
@@ -147,21 +284,19 @@ class RecipeServiceTest {
         thirdAllergens.setChocolate(false);
         thirdAllergens.setOther("c");
 
-        Recipe firstRecipe = new Recipe(1L, "first", "first recipe", 15, Meal.BREAKFAST, List.of(firstProduct), null, firstAllergens, 1L);
-        Recipe secondRecipe = new Recipe(2L, "second", "second recipe", 30, Meal.DINNER, Arrays.asList(firstProduct, secondProduct), null, secondAllergens, 1L);
-        Recipe thirdRecipe = new Recipe(3L, "third", "third recipe", 45, Meal.LUNCH, Arrays.asList(firstProduct, secondProduct, thirdProduct), null, thirdAllergens, 1L);
+        Recipe firstRecipe = new Recipe(1L, "first", "First recipe", 15, Meal.BREAKFAST, List.of(firstProduct), null, firstAllergens, 1L);
+        Recipe secondRecipe = new Recipe(2L, "second", "Second recipe", 30, Meal.DINNER, Arrays.asList(firstProduct, secondProduct), null, secondAllergens, 1L);
+        Recipe thirdRecipe = new Recipe(3L, "third", "Third recipe", 45, Meal.LUNCH, Arrays.asList(firstProduct, secondProduct, thirdProduct), null, thirdAllergens, 1L);
 
         return Arrays.asList(firstRecipe, secondRecipe, thirdRecipe);
     }
 
     private static List<RecipeDto> createRecipesDtoToTest() {
-        RecipeDto.ProductRecipeDto firstProduct = new RecipeDto.ProductRecipeDto(1L, "first product", 1.0, ProductUnit.GRAM, null);
-        RecipeDto.ProductRecipeDto secondProduct = new RecipeDto.ProductRecipeDto(2L, "second product", 2.0, ProductUnit.GRAM, null);
-        RecipeDto.ProductRecipeDto thirdProduct = new RecipeDto.ProductRecipeDto(3L, "third product", 3.0, ProductUnit.GRAM, null);
+        RecipeDto.ProductRecipeDto firstProduct = new RecipeDto.ProductRecipeDto(1L, "First product", 1.0, ProductUnit.GRAM, null);
+        RecipeDto.ProductRecipeDto secondProduct = new RecipeDto.ProductRecipeDto(2L, "Second product", 2.0, ProductUnit.GRAM, null);
+        RecipeDto.ProductRecipeDto thirdProduct = new RecipeDto.ProductRecipeDto(3L, "Third product", 3.0, ProductUnit.GRAM, null);
 
-        RecipeDto.RecipeAllergensDto firstAllergens = new RecipeDto.RecipeAllergensDto();
-        firstAllergens.setChocolate(true);
-        firstAllergens.setOther("a");
+        RecipeDto.RecipeAllergensDto firstAllergens = new RecipeDto.RecipeAllergensDto(null, true, true, true, true, true, true, "a", true, true, true, null);
         RecipeDto.RecipeAllergensDto secondAllergens = new RecipeDto.RecipeAllergensDto();
         secondAllergens.setChocolate(true);
         secondAllergens.setOther("b");
@@ -169,10 +304,11 @@ class RecipeServiceTest {
         thirdAllergens.setChocolate(false);
         thirdAllergens.setOther("c");
 
-        RecipeDto firstRecipe = new RecipeDto(1L, "first", "first recipe", 15, Meal.BREAKFAST, List.of(firstProduct), null, firstAllergens, 1L);
-        RecipeDto secondRecipe = new RecipeDto(2L, "second", "second recipe", 30, Meal.DINNER, Arrays.asList(firstProduct, secondProduct), null, secondAllergens, 1L);
-        RecipeDto thirdRecipe = new RecipeDto(3L, "third", "third recipe", 45, Meal.LUNCH, Arrays.asList(firstProduct, secondProduct, thirdProduct), null, thirdAllergens, 1L);
+        RecipeDto firstRecipe = new RecipeDto(1L, "first", "First recipe", 15, Meal.BREAKFAST, List.of(firstProduct), null, firstAllergens, 1L);
+        RecipeDto secondRecipe = new RecipeDto(2L, "second", "Second recipe", 30, Meal.DINNER, Arrays.asList(firstProduct, secondProduct), null, secondAllergens, 1L);
+        RecipeDto thirdRecipe = new RecipeDto(3L, "third", "Third recipe", 45, Meal.LUNCH, Arrays.asList(firstProduct, secondProduct, thirdProduct), null, thirdAllergens, 1L);
 
         return Arrays.asList(firstRecipe, secondRecipe, thirdRecipe);
     }
 }
+
