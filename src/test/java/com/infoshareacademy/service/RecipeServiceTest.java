@@ -1,111 +1,178 @@
-//package com.infoshareacademy.service;
-//
-//import com.infoshareacademy.entity.product.ProductRecipe;
-//import com.infoshareacademy.entity.product.ProductUnit;
-//import com.infoshareacademy.entity.recipe.Meal;
-//import com.infoshareacademy.entity.recipe.Recipe;
-//import com.infoshareacademy.entity.recipe.RecipeAllegrens;
-//import com.infoshareacademy.repository.RecipeAllergensRepository;
-//import com.infoshareacademy.repository.RecipeRepository;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.mockito.junit.jupiter.MockitoExtension;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
-//
-//import java.util.Arrays;
-//import java.util.List;
-//import java.util.Optional;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static org.mockito.Mockito.*;
-//
-//@ExtendWith(MockitoExtension.class)
-//class RecipeServiceTest {
-//
-//    public List<Recipe> createListOfRecipes() {
-//        final ProductRecipe firstProduct = new ProductRecipe("first product", 1.0, ProductUnit.GRAM);
-//        final ProductRecipe secondProduct = new ProductRecipe("second product", 2.0, ProductUnit.LITR);
-//        final ProductRecipe thirdProduct = new ProductRecipe("third product", 3.0, ProductUnit.KILOGRAM);
-//
-//        final RecipeAllegrens recipeAllegrens = new RecipeAllegrens();
-//        final Recipe firstRecipe = new Recipe("first", "first recipe", 15, List.of(firstProduct));
-//        final Recipe secondRecipe = new Recipe("second", "second recipe", 30, Arrays.asList(firstProduct, secondProduct));
-//        final Recipe thirdRecipe = new Recipe("third", "third recipe", 45, Arrays.asList(firstProduct, secondProduct, thirdProduct));
-//
-//        firstRecipe.setMeal(Meal.BREAKFAST);
-//        secondRecipe.setMeal(Meal.DINNER);
-//        thirdRecipe.setMeal(Meal.LUNCH);
-//
-//        firstRecipe.setRecipeAllegrens(recipeAllegrens);
-//        secondRecipe.setRecipeAllegrens(recipeAllegrens);
-//        thirdRecipe.setRecipeAllegrens(recipeAllegrens);
-//
-//        thirdRecipe.setRecipeId(3L);
-//
-//        return Arrays.asList(firstRecipe, secondRecipe, thirdRecipe);
-//    }
-//
-//    RecipeRepository recipeRepositoryMock = mock(RecipeRepository.class);
-//
-//    RecipeAllergensRepository allergensRepositoryMock = mock(RecipeAllergensRepository.class);
-//    private RecipeService recipeService = new RecipeService(recipeRepositoryMock, allergensRepositoryMock);
-//
-//
-//    @Test
-//    void getAllRecipe() {
-//        //given
-//        List<Recipe> listOfRecipes = createListOfRecipes();
-//        when(recipeService.getAllRecipe()).thenReturn(listOfRecipes);
-//
-//        //when
-//        List<Recipe> allRecipe = recipeService.getAllRecipe();
-//
-//        //then
-//        assertThat(allRecipe).hasSize(3)
-//                .contains(listOfRecipes.get(0), listOfRecipes.get(1), listOfRecipes.get(2));
-//    }
-//
-//    @Test
-//    void saveRecipe() {
-//        //given
-//        Recipe fourthRecipe = new Recipe("fourth", "fourth recipe", 60, Arrays.asList(new ProductRecipe("fourth", 4.0, ProductUnit.LITR)));
-//        fourthRecipe.setRecipeAllegrens(new RecipeAllegrens());
-//        //when
-//        when(recipeRepositoryMock.save(any(Recipe.class))).thenReturn(fourthRecipe);
-//        Recipe recipe = recipeService.saveRecipe(fourthRecipe);
-//        //then
-//        assertThat(recipe).isEqualTo(fourthRecipe);
-//        assertThat(recipe.getProductList().get(0).getUnit()).isEqualTo(ProductUnit.LITR);
-//
-//    }
-//
-//    @Test
-//    void updateRecipe() {
-//        //given
-//        Recipe thirdRecipe = new Recipe("third changed", "third changed recipe", 60, List.of(new ProductRecipe("fourth", 4.0, ProductUnit.LITR)));
-//        Recipe fourthRecipe = new Recipe("third changed", "third changed recipe", 60, List.of(new ProductRecipe("fourth", 4.0, ProductUnit.LITR)));
-//        //when
-//        when(recipeRepositoryMock.save(any(Recipe.class))).thenReturn(thirdRecipe);
-//        when(recipeRepositoryMock.findById(any())).thenReturn(Optional.of(thirdRecipe));
-//        recipeService.updateRecipe(3L, fourthRecipe);
-//        //then
-//        assertThat(thirdRecipe.getProductList().get(0).getUnit()).isEqualTo(ProductUnit.LITR);
-//
-//    }
-//
-//    @Test
-//    void getRecipesByMeal(Pageable pageable) {
-//
-//        //given
-//        List<Recipe> listOfRecipes = createListOfRecipes();
-//        when(recipeService.getAllRecipe()).thenReturn(listOfRecipes);
-//
-//
-//        //when
-//        Page<Recipe> recipesByMeal = recipeService.getRecipesByCanFilterByMeal(Meal.BREAKFAST, pageable);
-//
-//        //then
-//        assertThat(recipesByMeal).hasSize(1).contains(listOfRecipes.get(0));
-//    }
-//}
+package com.infoshareacademy.service;
+
+import com.infoshareacademy.DTO.RecipeDto;
+import com.infoshareacademy.entity.product.ProductRecipe;
+import com.infoshareacademy.entity.product.ProductUnit;
+import com.infoshareacademy.entity.recipe.Meal;
+import com.infoshareacademy.entity.recipe.Recipe;
+import com.infoshareacademy.entity.recipe.RecipeAllergens;
+import com.infoshareacademy.repository.RecipeAllergensRepository;
+import com.infoshareacademy.repository.RecipeRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+import static org.testng.AssertJUnit.assertEquals;
+
+
+@ExtendWith(MockitoExtension.class)
+class RecipeServiceTest {
+
+    @Mock
+    RecipeRepository recipeRepository;
+
+    @Mock
+    RecipeAllergensRepository allergensRepositoryMock;
+    @InjectMocks
+    RecipeService recipeService;
+
+    @Mock
+    ModelMapper modelMapper;
+
+    @Mock
+    Pageable pageable;
+
+    @Mock
+    private FridgeService fridgeService;
+
+
+    @Test
+    void getAllRecipe() {
+        //given
+        List<RecipeDto> listOfRecipesDto = createRecipesDtoToTest();
+        List<Recipe> recipesToTest = createRecipesToTest();
+        when(recipeRepository.findAll()).thenReturn(recipesToTest);
+        when(modelMapper.map(recipesToTest.get(0), RecipeDto.class)).thenReturn(listOfRecipesDto.get(0));
+        when(modelMapper.map(recipesToTest.get(1), RecipeDto.class)).thenReturn(listOfRecipesDto.get(1));
+        when(modelMapper.map(recipesToTest.get(2), RecipeDto.class)).thenReturn(listOfRecipesDto.get(2));
+
+
+        //when
+        List<RecipeDto> allRecipe = recipeService.getAllRecipes();
+
+        //then
+        assertThat(allRecipe).hasSize(3)
+                .contains(listOfRecipesDto.get(0), listOfRecipesDto.get(1), listOfRecipesDto.get(2));
+    }
+
+    @Test
+    public void testGetSearchedRecipe() {
+        List<Recipe> recipes = createRecipesToTest();
+        List<RecipeDto> recipesDtoToTest = createRecipesDtoToTest();
+        Mockito.when(recipeRepository.findAll(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(recipes));
+        Mockito.when(recipeRepository.findRecipeBy(Mockito.anyString(), Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(List.of(recipes.get(0))));
+        when(modelMapper.map(recipes.get(0), RecipeDto.class)).thenReturn(recipesDtoToTest.get(0));
+
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<RecipeDto> result = recipeService.getSearchedRecipe("first", pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals("first", result.getContent().get(0).getName());
+    }
+
+    @Test
+    void testSetUserIdForInitRecipes() {
+        // Given
+        List<Recipe> recipes = createRecipesToTest();
+        Mockito.when(recipeRepository.findAll()).thenReturn(recipes);
+
+        when(fridgeService.getUserId()).thenReturn(1L);
+
+        // When
+        recipeService.setUserIdForInitRecipes();
+
+        // Then
+        verify(recipeRepository, times(1)).findAll();
+        assertEquals(1L, recipes.get(0).getUserId().longValue());
+    }
+
+    @Test
+    void tesFindRecipeById() {
+        // Given
+        List<Recipe> recipes = createRecipesToTest();
+        List<RecipeDto> recipesDtoToTest = createRecipesDtoToTest();
+        Mockito.when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipes.get(1)));
+        when(modelMapper.map(recipes.get(1), RecipeDto.class)).thenReturn(recipesDtoToTest.get(1));
+
+
+        // When
+        RecipeDto recipeById = recipeService.getRecipeById(2L);
+
+        // Then
+        verify(recipeRepository, times(1)).findById(2L);
+        assertEquals("second", recipeById.getName().toString());
+    }
+
+    @Test
+    void getRecipesFilteredByMeal() {
+
+        //given
+        List<RecipeDto> listOfRecipes = createRecipesDtoToTest();
+        List<Recipe> recipesToTest = createRecipesToTest();
+        when(recipeRepository.findAll(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(recipesToTest));
+        when(recipeRepository.findRecipeByMeal(Mockito.any(Meal.class), Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(List.of(recipesToTest.get(0))));
+        when(modelMapper.map(recipesToTest.get(0), RecipeDto.class)).thenReturn(listOfRecipes.get(0));
+
+        //when
+        Page<RecipeDto> recipesByMeal = recipeService.getRecipesFilteredByMeal(Meal.BREAKFAST, pageable);
+
+        //then
+        assertThat(recipesByMeal).hasSize(1).contains(listOfRecipes.get(0));
+    }
+
+    private static List<Recipe> createRecipesToTest() {
+        ProductRecipe firstProduct = new ProductRecipe(1L, "first product", 1.0, ProductUnit.GRAM, null);
+        ProductRecipe secondProduct = new ProductRecipe(2L, "second product", 2.0, ProductUnit.GRAM, null);
+        ProductRecipe thirdProduct = new ProductRecipe(3L, "third product", 3.0, ProductUnit.GRAM, null);
+
+        RecipeAllergens firstAllergens = new RecipeAllergens(null, true, true, true, true, true, true, "a", true, true, true, null);
+        RecipeAllergens secondAllergens = new RecipeAllergens();
+        secondAllergens.setChocolate(true);
+        secondAllergens.setOther("b");
+        RecipeAllergens thirdAllergens = new RecipeAllergens();
+        thirdAllergens.setChocolate(false);
+        thirdAllergens.setOther("c");
+
+        Recipe firstRecipe = new Recipe(1L, "first", "first recipe", 15, Meal.BREAKFAST, List.of(firstProduct), null, firstAllergens, 1L);
+        Recipe secondRecipe = new Recipe(2L, "second", "second recipe", 30, Meal.DINNER, Arrays.asList(firstProduct, secondProduct), null, secondAllergens, 1L);
+        Recipe thirdRecipe = new Recipe(3L, "third", "third recipe", 45, Meal.LUNCH, Arrays.asList(firstProduct, secondProduct, thirdProduct), null, thirdAllergens, 1L);
+
+        return Arrays.asList(firstRecipe, secondRecipe, thirdRecipe);
+    }
+
+    private static List<RecipeDto> createRecipesDtoToTest() {
+        RecipeDto.ProductRecipeDto firstProduct = new RecipeDto.ProductRecipeDto(1L, "first product", 1.0, ProductUnit.GRAM, null);
+        RecipeDto.ProductRecipeDto secondProduct = new RecipeDto.ProductRecipeDto(2L, "second product", 2.0, ProductUnit.GRAM, null);
+        RecipeDto.ProductRecipeDto thirdProduct = new RecipeDto.ProductRecipeDto(3L, "third product", 3.0, ProductUnit.GRAM, null);
+
+        RecipeDto.RecipeAllergensDto firstAllergens = new RecipeDto.RecipeAllergensDto();
+        firstAllergens.setChocolate(true);
+        firstAllergens.setOther("a");
+        RecipeDto.RecipeAllergensDto secondAllergens = new RecipeDto.RecipeAllergensDto();
+        secondAllergens.setChocolate(true);
+        secondAllergens.setOther("b");
+        RecipeDto.RecipeAllergensDto thirdAllergens = new RecipeDto.RecipeAllergensDto();
+        thirdAllergens.setChocolate(false);
+        thirdAllergens.setOther("c");
+
+        RecipeDto firstRecipe = new RecipeDto(1L, "first", "first recipe", 15, Meal.BREAKFAST, List.of(firstProduct), null, firstAllergens, 1L);
+        RecipeDto secondRecipe = new RecipeDto(2L, "second", "second recipe", 30, Meal.DINNER, Arrays.asList(firstProduct, secondProduct), null, secondAllergens, 1L);
+        RecipeDto thirdRecipe = new RecipeDto(3L, "third", "third recipe", 45, Meal.LUNCH, Arrays.asList(firstProduct, secondProduct, thirdProduct), null, thirdAllergens, 1L);
+
+        return Arrays.asList(firstRecipe, secondRecipe, thirdRecipe);
+    }
+}
