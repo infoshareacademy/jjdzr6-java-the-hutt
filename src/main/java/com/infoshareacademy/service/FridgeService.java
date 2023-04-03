@@ -47,7 +47,6 @@ public class FridgeService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
         return userRepository.findByUsername(userDetail.getUsername()).map(User::getId).orElse(null);
-
     }
 
     @Transactional
