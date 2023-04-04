@@ -4,6 +4,7 @@ import com.infoshareacademy.DTO.ProductRecipeDto;
 import com.infoshareacademy.DTO.RecipeDto;
 import com.infoshareacademy.entity.product.ProductRecipe;
 import com.infoshareacademy.repository.ProductRecipeRepository;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,9 @@ public class ProductRecipeService {
         }
     }
 
-    public ProductRecipeDto findProductRecipeById(Long productId) throws Exception {
+    public ProductRecipeDto findProductRecipeById(Long productId) throws NotFoundException {
         return productRepository.findById(productId)
-                .map(productRecipe -> modelMapper.map(productRecipe, ProductRecipeDto.class)).orElseThrow(() -> new Exception("Not found Product Recipe for "
+                .map(productRecipe -> modelMapper.map(productRecipe, ProductRecipeDto.class)).orElseThrow(() -> new NotFoundException("Not found Product Recipe for "
                         + "ID: " + productId));
     }
 
