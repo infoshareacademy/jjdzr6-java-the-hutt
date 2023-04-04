@@ -9,6 +9,7 @@ import com.infoshareacademy.entity.recipe.Meal;
 import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import com.infoshareacademy.repository.ProductRecipeRepository;
+import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -50,23 +51,57 @@ class ProductRecipeServiceTest {
         when(productRecipeRepository.findAllProductsByRecipeRecipeId(1L)).thenReturn(defaultProductList);
         //when
         List<ProductRecipeDto> listOfRecipes = productRecipeService.getAllProductRecipeByRecipeId(1L);
-
         //then
         assertEquals(defaultProductList.get(0).getProductName(),listOfRecipes.get(0).getProductName());
+    }
 
+    @Test
+    void findProductRecipeById() throws Exception {
+        //given
+        RecipeDto.ProductRecipeDto productRecipeDto = createRecipesDtoToTest().get(0).getProductList().get(0);
+        ProductRecipe productRecipe = createRecipesToTest().get(0).getProductList().get(0);
+        when(productRecipeRepository.findById(1L)).thenReturn(Optional.of(productRecipe));
+        //when
+        ProductRecipeDto productRecipeById = productRecipeService.findProductRecipeById(1L);
+        //then
+        assertEquals(productRecipeById.getProductName(), productRecipeDto.getProductName());
+        assertThrows(Exception.class, () -> productRecipeService.findProductRecipeById(3L));
 
     }
 
     @Test
-    void findProductRecipeById() {
-    }
-
-    @Test
-    void deleteProductRecipe() {
+    void deleteProductRecipe() throws Exception {
+        //given
+        RecipeDto.ProductRecipeDto productRecipeDto = createRecipesDtoToTest().get(0).getProductList().get(0);
+        ProductRecipe productRecipe = createRecipesToTest().get(0).getProductList().get(0);
+        when(productRecipeRepository.findById(1L)).thenReturn(Optional.of(productRecipe));
+        //when
+        productRecipeService.deleteProductRecipe(1L);
+        //then
+        verify(productRecipeRepository, times(1)).delete(productRecipe);
+        assertThrows(Exception.class, () -> productRecipeService.deleteProductRecipe(3L));
     }
 
     @Test
     void saveProductRecipe() {
+        //given
+        RecipeDto recipeDto = createRecipesDtoToTest().get(0);
+        RecipeDto.ProductRecipeDto product = new RecipeDto.ProductRecipeDto();
+        product.setProductName("woda");
+        product.setAmount(50.0);
+        product.setUnit(ProductUnit.MILILITR);
+        ProductRecipe productSaved = new ProductRecipe();
+        productSaved.setProductName("woda");
+        productSaved.setAmount(50.0);
+        productSaved.setUnit(ProductUnit.MILILITR);
+
+        //when
+        productRecipeService.saveProductRecipe(product, recipeDto);
+
+        //then
+        verify(productRecipeRepository, times(1)).save(productSaved);
+        assertThrows(Exception.class, () -> productRecipeService.saveProductRecipe(null, recipeDto));
+
     }
     private static List<Recipe> createRecipesToTest() {
         ProductRecipe firstProduct = new ProductRecipe(1L, "First product", 1.0, ProductUnit.GRAM, null);
