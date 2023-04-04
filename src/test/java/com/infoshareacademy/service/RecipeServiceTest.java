@@ -9,6 +9,7 @@ import com.infoshareacademy.entity.recipe.Recipe;
 import com.infoshareacademy.entity.recipe.RecipeAllergens;
 import com.infoshareacademy.repository.RecipeAllergensRepository;
 import com.infoshareacademy.repository.RecipeRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertTrue;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -74,7 +74,7 @@ class RecipeServiceTest {
     }
 
     @Test
-    public void testGetSearchedRecipe() {
+    void testGetSearchedRecipe() {
         List<Recipe> recipes = createRecipesToTest();
         Mockito.when(recipeRepository.findAll(Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(recipes));
         Mockito.when(recipeRepository.findRecipeBy(Mockito.anyString(), Mockito.any(Pageable.class))).thenReturn(new PageImpl<>(List.of(recipes.get(0))));
@@ -82,8 +82,8 @@ class RecipeServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
         Page<RecipeDto> result = recipeService.getSearchedRecipe("first", pageable);
 
-        assertEquals(1, result.getTotalElements());
-        assertEquals("first", result.getContent().get(0).getName());
+        Assertions.assertEquals(1, result.getTotalElements());
+        Assertions.assertEquals("first", result.getContent().get(0).getName());
     }
 
     @Test
@@ -99,14 +99,13 @@ class RecipeServiceTest {
 
         // Then
         verify(recipeRepository, times(1)).findAll();
-        assertEquals(1L, recipes.get(0).getUserId().longValue());
+        Assertions.assertEquals(1L, recipes.get(0).getUserId().longValue());
     }
 
     @Test
     void tesFindRecipeById() {
         // Given
         List<Recipe> recipes = createRecipesToTest();
-        List<RecipeDto> recipesDtoToTest = createRecipesDtoToTest();
         Mockito.when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipes.get(1)));
 
         // When
@@ -114,7 +113,7 @@ class RecipeServiceTest {
 
         // Then
         verify(recipeRepository, times(1)).findById(2L);
-        assertEquals("second", recipeById.getName().toString());
+        Assertions.assertEquals("second", recipeById.getName());
     }
 
     @Test
@@ -169,7 +168,7 @@ class RecipeServiceTest {
     }
 
     @Test
-    public void shouldSaveRecipeAllergens() {
+    void shouldSaveRecipeAllergens() {
         // given
         Recipe recipe = new Recipe();
         recipe.setRecipeId(1L);
@@ -193,14 +192,14 @@ class RecipeServiceTest {
 
         // then
         verify(allergensRepository).save(any());
-        assertTrue(recipe.getRecipeAllergens().isChocolate());
-        assertTrue(recipe.getRecipeAllergens().isEggs());
-        assertTrue(recipe.getRecipeAllergens().isShellfish());
+        Assertions.assertTrue(recipe.getRecipeAllergens().isChocolate());
+        Assertions.assertTrue(recipe.getRecipeAllergens().isEggs());
+        Assertions.assertTrue(recipe.getRecipeAllergens().isShellfish());
 
     }
 
     @Test
-    public void shouldUpdateRecipe() {
+    void shouldUpdateRecipe() {
         // given
         RecipeDto recipe = new RecipeDto();
         recipe.setName("Old Recipe Name");
@@ -218,7 +217,7 @@ class RecipeServiceTest {
     }
 
     @Test
-    public void shouldDeleteRecipeById() {
+    void shouldDeleteRecipeById() {
         // given
         Long recipeId = 1L;
         Recipe recipe = new Recipe();
@@ -232,7 +231,7 @@ class RecipeServiceTest {
     }
 
     @Test
-    public void shouldDeleteAllRecipes() {
+    void shouldDeleteAllRecipes() {
 
         // when
         recipeService.deleteAllRecipes();
@@ -250,7 +249,7 @@ class RecipeServiceTest {
         //when
         List<RecipeDto> lowerCaseRecipes = recipeService.getRecipesWithProductsToLowerCase();
         //then
-        assertEquals("first product", lowerCaseRecipes.get(0).getProductList().get(0).getProductName());
+        Assertions.assertEquals("first product", lowerCaseRecipes.get(0).getProductList().get(0).getProductName());
     }
 
     @Test
@@ -264,8 +263,8 @@ class RecipeServiceTest {
         //when
         recipeService.convertUnitsInProducts(productRecipe);
         //then
-        assertEquals(10.0, productRecipe.getAmount());
-        assertEquals(ProductUnit.GRAM, productRecipe.getUnit());
+        Assertions.assertEquals(10.0, productRecipe.getAmount());
+        Assertions.assertEquals(ProductUnit.GRAM, productRecipe.getUnit());
 
 
     }
